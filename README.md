@@ -1,1 +1,1 @@
-# Gesion Aulas UNRN
+# Gestion Aulas UNRN
