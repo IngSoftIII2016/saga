@@ -75,10 +75,10 @@ $query_builder = TRUE;
 
 $db['default'] = array(
 	'dsn'	=> '',
-	'hostname' => 'proyectodesoftware.lia.unrn.edu.ar',
-	'username' => 'UNRN_2935',
-	'password' => 'UNRN_2935',
-	'database' => 'UNRN_2935',
+	'hostname' => 'dev.lia.unrn.edu.ar',
+	'username' => 'gestion_aulas',
+	'password' => 'aulas.ing3',
+	'database' => 'gestion_aulas',
 	'dbdriver' => 'mysqli',
 	'dbprefix' => '',
 	'pconnect' => FALSE,
