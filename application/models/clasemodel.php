@@ -7,7 +7,6 @@ class Clase_model extends CI_Model {
 	
 
 	public function get_clase($id) {
-		
 		if($id != FALSE) {
 			$query = $this->db->get_where('clase', array('id' => $id));
 			return $query->row_array();
@@ -18,7 +17,7 @@ class Clase_model extends CI_Model {
 	}
 	
 	public function get_clase_dia($dia) {
-		$query = $this->db->query("select ");
+		$query = $this->db->query("select * from clase ");
 		return $query->row_array();
 	}
 	
