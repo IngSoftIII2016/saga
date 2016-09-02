@@ -312,6 +312,40 @@ ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8;
 
 
+-- -----------------------------------------------------
+-- Table `gestion_aulas`.`recurso`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `gestion_aulas`.`recurso` ;
+
+CREATE TABLE IF NOT EXISTS `gestion_aulas`.`recurso` (
+  `id` INT(11) NOT NULL AUTO_INCREMENT,
+  `disponible` TINYINT(1) NOT NULL,
+  `Aula_id` INT(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  INDEX `Aula_id` (`Aula_id` ASC),
+  CONSTRAINT `recurso_ibfk_1`
+    FOREIGN KEY (`Aula_id`)
+    REFERENCES `gestion_aulas`.`aula` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8;
+
+
+-- -----------------------------------------------------
+-- Table `gestion_aulas`.`tipo_recurso`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `gestion_aulas`.`tipo_recurso` ;
+
+CREATE TABLE IF NOT EXISTS `gestion_aulas`.`tipo_recurso` (
+  `id` INT(11) NOT NULL AUTO_INCREMENT,
+  `nombre` VARCHAR(45) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE INDEX `nombre` (`nombre` ASC))
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8;
+
+
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
