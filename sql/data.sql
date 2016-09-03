@@ -1,23 +1,36 @@
--- phpMyAdmin SQL Dump
--- version 3.4.10.1deb1
--- http://www.phpmyadmin.net
---
--- Servidor: localhost
--- Tiempo de generación: 02-09-2016 a las 14:03:44
--- Versión del servidor: 5.5.29
--- Versión de PHP: 5.3.10-1ubuntu3.14
-
-SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
-
-
-/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
-/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
-/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8 */;
-
 --
 -- Base de datos: `gestion_aulas`
 --
+--
+-- Volcado de datos para la tabla `tipo_recurso`
+--
+USE gestion_aulas;
+
+INSERT INTO `tipo_recurso` (`id`, `nombre`) VALUES
+  (1, 'Proyector');
+
+
+--
+-- Volcado de datos para la tabla `sede`
+--
+
+INSERT INTO `sede` (`id`, `nombre`) VALUES
+  (1, 'Atlántica');
+
+--
+-- Volcado de datos para la tabla `localidad`
+--
+
+INSERT INTO `localidad` (`id`, `nombre`, `Sede_id`) VALUES
+  (1, 'Viedma', 1);
+
+
+--
+-- Volcado de datos para la tabla `edificio`
+--
+
+INSERT INTO `edificio` (`id`, `nombre`, `Localidad_id`) VALUES
+  (1, 'Campus', 1);
 
 --
 -- Volcado de datos para la tabla `aula`
@@ -47,41 +60,9 @@ INSERT INTO `aula` (`id`, `nombre`, `capacidad`, `Edificio_id`) VALUES
 --
 
 INSERT INTO `carrera` (`id`, `nombre`) VALUES
-(1, 'LICENCIATURA EN KINESIOLOGÍA Y FISIATRÍA'),
-(2, 'LICENCIATURA EN COMUNICACIÓN SOCIAL'),
-(3, 'LICENCIATURA EN SISTEMAS'),
-(4, 'LICENCIATURA EN CIENCIAS DEL AMBIENTE'),
-(5, 'INGENIERÍA AGRONÓMICA'),
-(6, 'ABOGACÍA');
-
---
--- Volcado de datos para la tabla `edificio`
---
-
-INSERT INTO `edificio` (`id`, `nombre`, `Localidad_id`) VALUES
-(1, 'Campus', 1);
-
---
--- Volcado de datos para la tabla `localidad`
---
-
-INSERT INTO `localidad` (`id`, `nombre`, `Sede_id`) VALUES
-(1, 'Viedma', 1);
-
---
--- Volcado de datos para la tabla `sede`
---
-
-INSERT INTO `sede` (`id`, `nombre`) VALUES
-(1, 'Atlántica');
-
---
--- Volcado de datos para la tabla `tipo_recurso`
---
-
-INSERT INTO `tipo_recurso` (`id`, `nombre`) VALUES
-(1, 'Proyector');
-
-/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
-/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
-/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+  (1, 'LICENCIATURA EN KINESIOLOGÍA Y FISIATRÍA'),
+  (2, 'LICENCIATURA EN COMUNICACIÓN SOCIAL'),
+  (3, 'LICENCIATURA EN SISTEMAS'),
+  (4, 'LICENCIATURA EN CIENCIAS DEL AMBIENTE'),
+  (5, 'INGENIERÍA AGRONÓMICA'),
+  (6, 'ABOGACÍA');

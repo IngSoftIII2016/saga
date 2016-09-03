@@ -40,6 +40,8 @@ DROP TABLE IF EXISTS `gestion_aulas`.`asignatura_carrera` ;
 CREATE TABLE IF NOT EXISTS `gestion_aulas`.`asignatura_carrera` (
   `Asignatura_id` INT(11) NOT NULL,
   `Carrera_id` INT(11) NOT NULL,
+  `anio` INT(11) NOT NULL,
+  `regimen` ENUM('1ºC','2ºC','Anual') NOT NULL,
   PRIMARY KEY (`Asignatura_id`, `Carrera_id`),
   INDEX `fk_asignatura_has_carrera_carrera1_idx` (`Carrera_id` ASC),
   INDEX `fk_asignatura_has_carrera_asignatura1_idx` (`Asignatura_id` ASC),
@@ -313,26 +315,6 @@ DEFAULT CHARACTER SET = utf8;
 
 
 -- -----------------------------------------------------
--- Table `gestion_aulas`.`recurso`
--- -----------------------------------------------------
-DROP TABLE IF EXISTS `gestion_aulas`.`recurso` ;
-
-CREATE TABLE IF NOT EXISTS `gestion_aulas`.`recurso` (
-  `id` INT(11) NOT NULL AUTO_INCREMENT,
-  `disponible` TINYINT(1) NOT NULL,
-  `Aula_id` INT(11) NOT NULL,
-  PRIMARY KEY (`id`),
-  INDEX `Aula_id` (`Aula_id` ASC),
-  CONSTRAINT `recurso_ibfk_1`
-    FOREIGN KEY (`Aula_id`)
-    REFERENCES `gestion_aulas`.`aula` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
-ENGINE = InnoDB
-DEFAULT CHARACTER SET = utf8;
-
-
--- -----------------------------------------------------
 -- Table `gestion_aulas`.`tipo_recurso`
 -- -----------------------------------------------------
 DROP TABLE IF EXISTS `gestion_aulas`.`tipo_recurso` ;
@@ -342,6 +324,33 @@ CREATE TABLE IF NOT EXISTS `gestion_aulas`.`tipo_recurso` (
   `nombre` VARCHAR(45) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE INDEX `nombre` (`nombre` ASC))
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8;
+
+
+-- -----------------------------------------------------
+-- Table `gestion_aulas`.`recurso`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `gestion_aulas`.`recurso` ;
+
+CREATE TABLE IF NOT EXISTS `gestion_aulas`.`recurso` (
+  `id` INT(11) NOT NULL AUTO_INCREMENT,
+  `Tipo_recurso_id` INT(11) NOT NULL,
+  `Aula_id` INT(11) NOT NULL,
+  `disponible` TINYINT(1) NOT NULL,
+  PRIMARY KEY (`id`),
+  INDEX `Aula_id` (`Aula_id` ASC),
+  INDEX `Tipo_recurso_id` (`Tipo_recurso_id` ASC),
+  CONSTRAINT `recurso_ibfk_2`
+    FOREIGN KEY (`Tipo_recurso_id`)
+    REFERENCES `gestion_aulas`.`tipo_recurso` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `recurso_ibfk_1`
+    FOREIGN KEY (`Aula_id`)
+    REFERENCES `gestion_aulas`.`aula` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8;
 
