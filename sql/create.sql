@@ -13,7 +13,7 @@ DROP TABLE IF EXISTS `gestion_aulas`.`asignatura` ;
 
 CREATE TABLE IF NOT EXISTS `gestion_aulas`.`asignatura` (
   `id` INT(11) NOT NULL AUTO_INCREMENT,
-  `anio` INT(11) NULL DEFAULT NULL,
+  `nombre` VARCHAR(45) NOT NULL,
   PRIMARY KEY (`id`))
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8;
