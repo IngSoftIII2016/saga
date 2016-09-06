@@ -7,7 +7,6 @@ class Clase_model extends CI_Model {
 	
 
 	public function get_clase($id) {
-		
 		if($id != FALSE) {
 			$query = $this->db->get_where('clase', array('id' => $id));
 			return $query->row_array();
@@ -25,6 +24,7 @@ class Clase_model extends CI_Model {
 	
 	
 	public function get_clase_dia($dia) {
+<<<<<<< HEAD
 		//tener en cuenta las comiciones, el nombre de la materia pasaria a estar formado por
 		//su nombre + el nombre de la comision.
 		
@@ -79,6 +79,10 @@ class Clase_model extends CI_Model {
 		$this->db->where('aula.id',$id);
 		$query = $this->db->get();
 		return $query->result();
+=======
+		$query = $this->db->query("select * from clase ");
+		return $query->row_array();
+>>>>>>> 42d47024bd515d0cd6a8579b3e2fd0bc6550f29f
 	}
 	
 	//util para cambiar un horario y fechas disponible para asignar eventos 
