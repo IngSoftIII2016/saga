@@ -13,9 +13,10 @@ DROP TABLE IF EXISTS `gestion_aulas`.`asignatura` ;
 
 CREATE TABLE IF NOT EXISTS `gestion_aulas`.`asignatura` (
   `id` INT(11) NOT NULL AUTO_INCREMENT,
-  `nombre` VARCHAR(45) NOT NULL,
+  `nombre` VARCHAR(140) NOT NULL,
   PRIMARY KEY (`id`))
 ENGINE = InnoDB
+AUTO_INCREMENT = 244
 DEFAULT CHARACTER SET = utf8;
 
 
@@ -29,6 +30,7 @@ CREATE TABLE IF NOT EXISTS `gestion_aulas`.`carrera` (
   `nombre` VARCHAR(45) NOT NULL,
   PRIMARY KEY (`id`))
 ENGINE = InnoDB
+AUTO_INCREMENT = 7
 DEFAULT CHARACTER SET = utf8;
 
 
@@ -41,7 +43,7 @@ CREATE TABLE IF NOT EXISTS `gestion_aulas`.`asignatura_carrera` (
   `Asignatura_id` INT(11) NOT NULL,
   `Carrera_id` INT(11) NOT NULL,
   `anio` INT(11) NOT NULL,
-  `regimen` ENUM('1ºC','2ºC','Anual') NOT NULL,
+  `regimen` ENUM('C','1C','2C','Anual') NOT NULL DEFAULT 'C',
   PRIMARY KEY (`Asignatura_id`, `Carrera_id`),
   INDEX `fk_asignatura_has_carrera_carrera1_idx` (`Carrera_id` ASC),
   INDEX `fk_asignatura_has_carrera_asignatura1_idx` (`Asignatura_id` ASC),
@@ -70,6 +72,7 @@ CREATE TABLE IF NOT EXISTS `gestion_aulas`.`sede` (
   PRIMARY KEY (`id`),
   UNIQUE INDEX `nombre_UNIQUE` (`nombre` ASC))
 ENGINE = InnoDB
+AUTO_INCREMENT = 2
 DEFAULT CHARACTER SET = utf8;
 
 
@@ -91,6 +94,7 @@ CREATE TABLE IF NOT EXISTS `gestion_aulas`.`localidad` (
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB
+AUTO_INCREMENT = 2
 DEFAULT CHARACTER SET = utf8;
 
 
@@ -112,6 +116,7 @@ CREATE TABLE IF NOT EXISTS `gestion_aulas`.`edificio` (
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB
+AUTO_INCREMENT = 5
 DEFAULT CHARACTER SET = utf8;
 
 
@@ -133,6 +138,7 @@ CREATE TABLE IF NOT EXISTS `gestion_aulas`.`aula` (
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB
+AUTO_INCREMENT = 23
 DEFAULT CHARACTER SET = utf8;
 
 
@@ -147,6 +153,7 @@ CREATE TABLE IF NOT EXISTS `gestion_aulas`.`periodo` (
   `fecha_fin` DATE NOT NULL,
   PRIMARY KEY (`id`))
 ENGINE = InnoDB
+AUTO_INCREMENT = 2
 DEFAULT CHARACTER SET = utf8;
 
 
@@ -157,22 +164,24 @@ DROP TABLE IF EXISTS `gestion_aulas`.`comision` ;
 
 CREATE TABLE IF NOT EXISTS `gestion_aulas`.`comision` (
   `id` INT(11) NOT NULL AUTO_INCREMENT,
+  `nombre` VARCHAR(45) NOT NULL,
   `Periodo_id` INT(11) NOT NULL,
   `Asignatura_id` INT(11) NOT NULL,
   PRIMARY KEY (`id`),
   INDEX `fk_Cursada_Periodo1_idx` (`Periodo_id` ASC),
   INDEX `fk_Cursada_Asignatura1_idx` (`Asignatura_id` ASC),
-  CONSTRAINT `fk_Cursada_Periodo1`
-    FOREIGN KEY (`Periodo_id`)
-    REFERENCES `gestion_aulas`.`periodo` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
   CONSTRAINT `fk_Cursada_Asignatura1`
     FOREIGN KEY (`Asignatura_id`)
     REFERENCES `gestion_aulas`.`asignatura` (`id`)
     ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_Cursada_Periodo1`
+    FOREIGN KEY (`Periodo_id`)
+    REFERENCES `gestion_aulas`.`periodo` (`id`)
+    ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB
+AUTO_INCREMENT = 143
 DEFAULT CHARACTER SET = utf8;
 
 
@@ -183,6 +192,7 @@ DROP TABLE IF EXISTS `gestion_aulas`.`horario` ;
 
 CREATE TABLE IF NOT EXISTS `gestion_aulas`.`horario` (
   `id` INT(11) NOT NULL AUTO_INCREMENT,
+  `descripcion` VARCHAR(45) NULL DEFAULT NULL,
   `frecuencia_semanas` INT(11) NOT NULL DEFAULT '1',
   `dia` INT(11) NOT NULL,
   `hora_inicio` TIME NOT NULL,
@@ -203,6 +213,7 @@ CREATE TABLE IF NOT EXISTS `gestion_aulas`.`horario` (
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB
+AUTO_INCREMENT = 226
 DEFAULT CHARACTER SET = utf8;
 
 
@@ -246,6 +257,7 @@ CREATE TABLE IF NOT EXISTS `gestion_aulas`.`estado` (
   PRIMARY KEY (`id`),
   UNIQUE INDEX `nombre_UNIQUE` (`nombre` ASC))
 ENGINE = InnoDB
+AUTO_INCREMENT = 6
 DEFAULT CHARACTER SET = utf8;
 
 
@@ -325,6 +337,7 @@ CREATE TABLE IF NOT EXISTS `gestion_aulas`.`tipo_recurso` (
   PRIMARY KEY (`id`),
   UNIQUE INDEX `nombre` (`nombre` ASC))
 ENGINE = InnoDB
+AUTO_INCREMENT = 2
 DEFAULT CHARACTER SET = utf8;
 
 
