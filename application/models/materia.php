@@ -1,4 +1,4 @@
 <?php
-class Materia extend CI_Model {
+class Materia extends CI_Model {
     
 }
