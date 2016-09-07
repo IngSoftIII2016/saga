@@ -77,8 +77,6 @@ class Clase_model extends CI_Model {
 		$this->db->order_by("aula.nombre", "asc");
 		$this->db->where('aula.id',$id);
 		$query = $this->db->get();
-		return $query->result();
-
 		$query = $this->db->query("select * from clase ");
 		return $query->row_array();
 
@@ -93,13 +91,6 @@ class Clase_model extends CI_Model {
 		$this->db->where("clase.hora_inicio BETWEEN $hora_inicio AND $hora_fin");
 		$this->db->where("clase.hora_fin BETWEEN $hora_inicio AND $hora_fin");
 		$query = $this->db->get();
-		return $query->result();
-		if($query->num_rows() > 0) {
-			return 0;
-		} else {
-			return 1;
-		}
-
+		return $query->num_rows() == 0;
 	}
-
 }
