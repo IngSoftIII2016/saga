@@ -13,7 +13,6 @@ class CargaClaseController extends CI_Controller {
         $horarios = $this->Horario_model->get_all();
 
         foreach($horarios as $h) {
-
            $this->Horario_model->insert_clases($h);
         }
     }

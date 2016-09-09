@@ -18,68 +18,48 @@ class Clase_model extends CI_Model {
 	}
 	
 	public function get_clases() {
-	
 		$query = $this->db->get('clase');
 		return $query->result();
 	}
+
+	public function get_docentes($Comision_id) {
+	    $this->db-from('docente');
+        $this->db->join('comision_docente AS cd', 'cd.Docente_id = docente.id');
+        $this->db->where('cd.Comision_id', $Comision_id);
+        return $this->db->get()->result();
+    }
 	
 	
-	public function get_clase_dia($dia) {
-		//tener en cuenta las comiciones, el nombre de la materia pasaria a estar formado por
-		//su nombre + el nombre de la comision.
+	public function get_clases_dia($fecha, $edificio_id = null) {
 		
-		/*
-		select a.nombre as 'aula', c.hora_inicio, c.hora_fin, concat(p.nombre, ' ',p.apellido) as 'profesor', m.nombre as 'materia'
-		from clase as c
-		left join cursada as cur on (c.Cursada_id=cur.id)
-		left join docente as p on (cur.Docente_id=p.id)
-		left join materia m on (cur.Materia_id=m.id)
-		left join aula as a on (c.Aula_id = a.id)
-		where (c.fecha= '2016-9-1')
-		 */
-		
-		$this->db->select('select a.id AS aula_id , a.nombre AS aula, clase.hora_inicio AS hora_inicio, clase.hora_fin AS hora_fin, CONCAT(p.nombre, " ",p.apellido) AS profesor, m.nombre AS materia, e.nombre AS eficio');
+		$this->db->select('au.id AS aula_id, ed.nombre AS edificio, au.nombre AS aula, clase.hora_inicio AS hora_inicio, clase.hora_fin AS hora_fin, as.nombre AS materia, ed.nombre AS edificio');
 		$this->db->from('clase');
-		$this->db->join('cursada AS cur', 'clase.Cursada_id=cur.id', 'left');
-		$this->db->join('docente  AS p', 'cur.Docente_id=p.id', 'left');
-		$this->db->join('asignatura AS m', 'cur.Asignatura_id=m.id', 'left');
-		$this->db->join('aula AS a', 'c.Aula_id = a.id', 'left');
-		$this->db->join('edificio AS e ', 'a.Edificio_id=e.id', 'left');
+		$this->db->join('horario AS ho', 'clase.Horario_id=ho.id', 'left');
+		$this->db->join('comision AS co', 'ho.Comision_id=co.id', 'left');
+		$this->db->join('asignatura AS as', 'co.Asignatura_id=as.id', 'left');
+		$this->db->join('aula AS au', 'ho.Aula_id = au.id', 'left');
+		$this->db->join('edificio AS ed ', 'au.Edificio_id=ed.id', 'left');
 		$this->db->order_by("clase.hora_inicio", "asc");
-		$this->db->order_by("aula.nombre", "asc");
-		$this->db->where('clase.fecha',$dia);
+		$this->db->order_by("au.nombre", "asc");
+		$this->db->where('clase.fecha',$fecha);
+		if(!is_null($edificio_id))
+		    $this->db->where('ed.id', $edificio_id);
 		$query = $this->db->get();
 		return $query->result();
 	}
 	
 	public function get_clase_aula($id) {
-		//tener en cuenta las comiciones, el nombre de la materia pasaria a estar formado por
-		//su nombre + el nombre de la comision.
-	
-		/*
-			select a.nombre as 'aula', c.hora_inicio, c.hora_fin, concat(p.nombre, ' ',p.apellido) as 'profesor', m.nombre as 'materia'
-			from clase as c
-			left join cursada as cur on (c.Cursada_id=cur.id)
-			left join docente as p on (cur.Docente_id=p.id)
-			left join materia m on (cur.Materia_id=m.id)
-			left join aula as a on (c.Aula_id = a.id)
-			where (c.fecha= '2016-9-1')
-			*/
-	
-		$this->db->select('select a.id AS aula_id, a.nombre AS aula, clase.hora_inicio, clase.hora_fin, CONCAT(p.nombre, " ",p.apellido) AS profesor, m.nombre AS materia');
-		$this->db->from('clase');
-		$this->db->join('cursada AS cur', 'clase.Cursada_id=cur.id', 'left');
-		$this->db->join('docente  AS p', 'cur.Docente_id=p.id', 'left');
-		$this->db->join('materia   AS m', 'cur.Materia_id=m.id', 'left');
-		$this->db->join('aula   AS a', 'c.Aula_id = a.id', 'left');
-		$this->db->join('edificio AS e ', 'a.Edificio_id=e.id', 'left');
-		$this->db->order_by("clase.hora_inicio", "asc");
-		$this->db->order_by("aula.nombre", "asc");
-		$this->db->where('aula.id',$id);
-		$query = $this->db->get();
-		$query = $this->db->query("select * from clase ");
-		return $query->row_array();
 
+        $this->db->select('au.id AS aula_id, ed.nombre AS edificio, au.nombre AS aula, clase.hora_inicio AS hora_inicio, clase.hora_fin AS hora_fin, as.nombre AS materia, ed.nombre AS edificio');
+        $this->db->from('clase');
+        $this->db->join('horario AS ho', 'clase.Horario_id=ho.id', 'left');
+        $this->db->join('comision AS co', 'ho.Comision_id=co.id', 'left');
+        $this->db->join('asignatura AS as', 'co.Asignatura_id=as.id', 'left');
+        $this->db->join('edificio AS ed ', 'au.Edificio_id=ed.id', 'left');
+        $this->db->order_by("clase.hora_inicio", "asc");
+		$this->db->where('ho.Aula_id',$id);
+		$query = $this->db->get();
+		return $query->row_array();
 	}
 	
 	//util para cambiar un horario y fechas disponible para asignar eventos 
