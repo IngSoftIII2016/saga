@@ -10,8 +10,8 @@ class AulasController extends CI_Controller {
 
     public function index($fecha = null) {
         $this->load->model('Clase_model');
-        if(is_null($fecha)) $fecha = new DateTime();
-        $aulas = $this->aulas_edificio(1);
+        if(is_null($fecha)) $fecha = new DateTime(); //arreglar
+        $aulas = $this->aulas_edificio(1); //campus
         $clases = $this->Clase_model->get_clases_dia($fecha->format("Y-m-d"));
         $data['fecha'] = $fecha;
         $data['aulas'] = $aulas;
