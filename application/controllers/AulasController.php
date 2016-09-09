@@ -9,10 +9,22 @@
 class AulasController extends CI_Controller {
 
     public function index($fecha = null) {
+		$dias = array (
+							"Domingo",
+							"Lunes",
+							"Martes",
+							"Mi&eacute;rcoles",
+							"Jueves",
+							"Viernes",
+							"S&aacute;bado" 
+					);
+		date_default_timezone_set ( "America/Argentina/Buenos_Aires" );
+		$fecha= $dias [date ( "w" )] . ' ' . date ( 'd/m/Y' );
         $this->load->model('Clase_model');
-        if(is_null($fecha)) $fecha = new DateTime(); //arreglar
+        //if(is_null($fecha)) $fecha = new DateTime(); //arreglar
         $aulas = $this->aulas_edificio(1); //campus
-        $clases = $this->Clase_model->get_clases_dia($fecha->format("Y-m-d"));
+        $clases = $this->Clase_model->get_clases_dia(date("Y-m-d"));
+		$data['fecha_parametro']	= date ( 'd-m-Y' );
         $data['fecha'] = $fecha;
         $data['aulas'] = $aulas;
         $data['clases'] = $clases;
