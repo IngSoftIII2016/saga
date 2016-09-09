@@ -8,6 +8,8 @@ USE `gestion_aulas` ;
 
 -- -----------------------------------------------------
 -- Table `gestion_aulas`.`asignatura`
+
+SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
 -- -----------------------------------------------------
 DROP TABLE IF EXISTS `gestion_aulas`.`asignatura` ;
 

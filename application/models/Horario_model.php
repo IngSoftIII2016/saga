@@ -22,8 +22,16 @@ class Horario_model extends CI_Model {
         return $this->db->get('horario')->result();
     }
 
+    public function get_by_periodo_id($periodo_id) {
+        //$this->db->select('*');
+        //$this->db->from('horario');
+        $this->db->join('comision', 'Comision_id = comision.id', 'left');
+        $this->db->where('comision.Periodo_id', $periodo_id);
+        return $this->db->get('horario')->result();
+    }
+
     public function load($id) {
-        $this->db->select('id, descripcion, frecuencia_semanas, dia, hora_inicio, duracion, Comision_id, Aula_id');
+        //$this->db->select('id, descripcion, frecuencia_semanas, dia, hora_inicio, duracion, Comision_id, Aula_id');
         $this->db->where('id', $id);
         $result = $this->db->get('horario')->result()[0];
         $this->id = $result->id;
@@ -36,12 +44,13 @@ class Horario_model extends CI_Model {
         $this->aula_id = $result->Aula_id;
     }
 
-    public function get_periodo_rango()
+    public function get_periodo_rango($horario)
     {
         $this->db->select('p.fecha_inicio AS inicio, p.fecha_fin AS fin');
         $this->db->from('horario AS h');
         $this->db->join('comision AS c', 'h.Comision_id = c.id', 'left');
         $this->db->join('periodo AS p', 'c.Periodo_id = p.id');
+        $this->db->where('h.id', $horario->id);
         return $this->db->get()->result()[0];
     }
 
@@ -57,22 +66,26 @@ class Horario_model extends CI_Model {
         return $query->num_rows() == 0;
     }
 
-    public function insert_clases()
+    public function insert_clases($horario)
     {
-        $rango = $this->get_periodo_rango();
+        $rango = $this->get_periodo_rango($horario);
         $interval = DateInterval::createFromDateString('1 day');
         $period = new DatePeriod(new DateTime($rango->inicio), $interval, new DateTime($rango->fin));
         foreach( $period as $dt ) {
-            if ($this->dia == $dt->format("w"))
-                $this->db->insert('clase', array(
-                    'fecha' => $dt->format("Y-m-d"),
-                    'hora_inicio' => $this->hora_inicio,
-                    'hora_fin' => date("H:i:s", strtotime($this->hora_inicio) + strtotime($this->duracion)),
-                    'Aula_id' => $this->aula_id,
-                    'Horario_id' => $this->id
-                ));
-        }
+            if ($horario->dia == $dt->format("w")) {
 
+                $hora_fin = strtotime($horario->hora_inicio) + strtotime($horario->duracion) - strtotime("00:00:00");
+                $clase = array(
+                    'fecha' => $dt->format("Y-m-d"),
+                    'hora_inicio' => $horario->hora_inicio,
+                    'hora_fin' => date("H:i:s", $hora_fin),
+                    'Aula_id' => $horario->Aula_id,
+                    'Horario_id' => $horario->id
+                );
+
+                $this->db->insert('clase', $clase);
+            }
+        }
     }
 
     public function insert($id)
