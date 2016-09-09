@@ -68,26 +68,25 @@
 <body>
 <section class="content" id="contect">
 		<div class="col-md-12 tabla">				
-				<input type="hidden" value="<?php echo $fecha_parametro?>" id="fecha"></input>
+				<input type="hidden" value="<?php echo $fecha->format('d-m-Y')?>" id="fecha"></input>
 				<div class="row">
 					<button type="reset" class="btn col-md-1 col-md-offset-3 btn-primary btn-ant">Ant</button>
-					<h3 class="text-center text-primary col-md-3"><?=$fecha?></h3>
-					<a href="<?php echo base_url("grilla")?>"  data-toggle="tooltip" data-placement="bottom" title="Hoy"class="hoy">
+					<h3 class="text-center text-primary col-md-3"><?=$fecha_formateada?></h3>
+					<a href="<?php echo base_url("AulasController")?>"  data-toggle="tooltip" data-placement="bottom" title="Hoy"class="hoy">
 					<i class="fa fa-clock-o fa-2x" aria-hidden="true"></i></a>
 					<button type="reset" class="btn col-md-1 btn-primary btn-sig">Sig</button>
 					<div class="input-group col-md-2 buscar buscador">
 					<i class="fa fa-search fa-2x" id="input" data-toggle="tooltip" title="Buscar" data-placement="bottom" aria-hidden="true" style=" float: right;"></i>
-					<input id="buscador" 
-						type="hidden" class="col-md-10">						
+					<input id="buscador" type="hidden" class="col-md-10">						
 					</div>
 				</div>
 				<div id="grilla" class="row col-md-12" style=" display: table;" >
 					<div style="display: table-row">
 						<?php
 						$w = floor(100 / (count($aulas) + 1));
-						$hei = 40;
+						$hei = 80;
 						$px_min = 1;
-						$interval = DateInterval::createFromDateString("15 minutes");
+						$interval = DateInterval::createFromDateString("30 minutes");
 						$horas = new DatePeriod(new DateTime("08:00:00"), $interval, new DateTime("21:00:00"));
 						?>
 
@@ -100,10 +99,10 @@
 								$offset = 0;
 								foreach ($horas as $h) {
 									?>
-									<div  class="color" style="position: absolute; height: <?php echo 15 * $px_min?>px; top: <?php echo $offset * $px_min + $hei?>px">
+									<div  class="color" style="position: absolute; height: <?php echo 30 * $px_min?>px; top: <?php echo $offset * $px_min + $hei?>px">
 										<?php echo $h->format("H:i"); ?>
 									</div>
-								<?php $offset += 15;} ?>
+								<?php $offset += 30;} ?>
 							</div>
 
 						</div>
@@ -112,7 +111,7 @@
 							?>
 							<div style="width:<?php echo $w; ?>%; display: table-cell;">
 								<div style="position: relative;">
-									<div class="color" style="position: absolute; height: 40px">
+									<div class="color" style="position: absolute; height: <?php echo $hei;?>px">
 										<?php echo $aula->nombre; ?>
 									</div>
 									<?php
@@ -122,8 +121,8 @@
 											$min_duracion = (strtotime($clase->hora_fin) - strtotime($clase->hora_inicio)) / 60;
 											?>
 
-											<div class="materia buscar" style="position: absolute; height: <?php echo $min_duracion * $px_min; ?>px; top:<?php echo $min_offset * $px_min + 40; ?>px">
-												<?php echo $clase->materia; ?>
+											<div class="materia buscar" style="position: absolute; height: <?php echo $min_duracion * $px_min; ?>px; top:<?php echo $min_offset * $px_min + $hei; ?>px">
+												<?php echo $clase->materia . ' De ' . substr($clase->hora_inicio, 0,5) . ' a ' . substr($clase->hora_fin, 0,5)  ?>
 											</div>
 											<?php
 										}
@@ -136,5 +135,30 @@
 				</div>
 				<script src="<?php echo base_url('assets/js/buscador-and-modal.js') ?>"></script>	
 </section>
+<script>
+
+$(document).ready(function(){
+ $(".btn.col-md-1.btn-primary.btn-sig").click(function(e){
+	var url =  base_url + 'AulasController/horario';
+   var form = $('<form action="' + url + '" method="post">' +
+  '<input type="hidden" name="fecha" value="' + $('#fecha').val() + '" />' +
+  '<input type="hidden" name="operacion" value="+" />' +
+  '</form>');
+	$('body').append(form);
+	form.submit();   
+  });
+   $(".btn.col-md-1.col-md-offset-3.btn-primary.btn-ant").click(function(e){
+	var url = base_url + 'AulasController/horario';
+   var form = $('<form action="' + url + '" method="post">' +
+  '<input type="hidden" name="fecha" value="' + $('#fecha').val() + '" />' +
+  '<input type="hidden" name="operacion" value="-" />' +
+  '</form>');
+	$('body').append(form);
+	form.submit();   
+  });
+  
+
+});
+</script>
 </body>
 </html>

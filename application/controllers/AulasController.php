@@ -8,7 +8,36 @@
  */
 class AulasController extends CI_Controller {
 
-    public function index($fecha = null) {
+    public function index() {
+		$this->cargar(new DateTime());
+		
+    }
+	public function cargar($fecha){
+		date_default_timezone_set ( "America/Argentina/Buenos_Aires" );
+		
+        $this->load->model('Clase_model');
+        $aulas = $this->aulas_edificio(1); //campus
+        $clases = $this->Clase_model->get_clases_dia($fecha->format("Y-m-d"));
+        $data['fecha'] = $fecha;
+		$data['fecha_formateada'] = $this->formatear_fecha($fecha);
+        $data['aulas'] = $aulas;
+        $data['clases'] = $clases;
+
+        $this->load->view('aulas_diario', $data);
+	}
+	public function horario(){
+		$fecha = DateTime::createFromFormat("d-m-Y", $this->input->post ("fecha"));
+		$operacion = $this->input->post("operacion");
+		$i = DateInterval::createFromDateString('1 day');
+		if($operacion == '+')			
+			$fecha->add($i);
+		else 
+			$fecha->sub($i);
+		$this->cargar($fecha);
+	}
+	
+	
+	private function formatear_fecha($fecha) {
 		$dias = array (
 							"Domingo",
 							"Lunes",
@@ -18,19 +47,8 @@ class AulasController extends CI_Controller {
 							"Viernes",
 							"S&aacute;bado" 
 					);
-		date_default_timezone_set ( "America/Argentina/Buenos_Aires" );
-		$fecha= $dias [date ( "w" )] . ' ' . date ( 'd/m/Y' );
-        $this->load->model('Clase_model');
-        //if(is_null($fecha)) $fecha = new DateTime(); //arreglar
-        $aulas = $this->aulas_edificio(1); //campus
-        $clases = $this->Clase_model->get_clases_dia(date("Y-m-d"));
-		$data['fecha_parametro']	= date ( 'd-m-Y' );
-        $data['fecha'] = $fecha;
-        $data['aulas'] = $aulas;
-        $data['clases'] = $clases;
-
-        $this->load->view('aulas_diario', $data);
-    }
+		return $dias[$fecha->format("w")] . ' ' . $fecha->format('d/m/Y');
+	}
 
     public function get_clase_dia($fecha) {
         $this->load->model('Clase_model');
