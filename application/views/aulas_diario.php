@@ -9,8 +9,12 @@
             content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"
             name="viewport">
     <style type="text/css">
-        tr {
+        .materia {
             border: #7a2926 solid 2px;
+            background: #CCFFCC;
+        }
+        .celdas {
+            border: #000000 solid 1px;
         }
 
     </style>
@@ -28,48 +32,43 @@
         ?>
 
         <div style="width:<?php echo $w; ?>%; display: table-cell;">
-            <table>
-                <tr>
-                    <th>
-                        Horarios
-                    </th>
-                </tr>
+            <div style="position: relative;">
+                <div style="position: absolute; height: 40px">
+                    Horarios
+                </div>
                 <?php
+                $offset = 0;
                 foreach ($horas as $h) {
                     ?>
-                    <tr style="height: <?php echo 15 * $px_min ?>px">
-                        <td>
-                            <?php echo $h->format("H:i"); ?>
-                        </td>
-                    </tr>
-                <?php } ?>
-            </table>
+                    <div style="position: absolute; height: <?php echo 15 * $px_min?>px; top: <?php echo $offset * $px_min +40?>px">
+                        <?php echo $h->format("H:i"); ?>
+                    </div>
+                <?php $offset += 15;} ?>
+            </div>
 
         </div>
         <?php
         foreach ($aulas as $aula) {
             ?>
-            <div style="width:<?php echo $w; ?>%; display: table-cell;">
-                <table style="position: relative;">
-                    <tr style="position: absolute">
-                        <th>
-                            <?php echo $aula->nombre; ?>
-                        </th>
-                    </tr>
+            <div class="celdas" style="width:<?php echo $w; ?>%; display: table-cell;">
+                <div style="position: relative;">
+                    <div style="position: absolute; height: 40px">
+                        <?php echo $aula->nombre; ?>
+                    </div>
                     <?php
                     foreach ($clases as $clase) {
                         if ($clase->aula_id == $aula->id) {
-                            $min_offset = (strtotime($clase->hora_inicio) - strtotime("08:00:00")) / 60 ;
+                            $min_offset = (strtotime($clase->hora_inicio) - strtotime("08:00:00")) / 60;
                             $min_duracion = (strtotime($clase->hora_fin) - strtotime($clase->hora_inicio)) / 60;
                             ?>
-                            <tr style="position: absolute; height: <?php echo $min_duracion * $px_min + $hei; ?>px; top:<?php echo $min_offset * $px_min +$hei;?>px; background: #CCFFCC">
-                                <td><?php echo $clase->materia; ?></td>
-                            </tr>
+                            <div class="materia" style="position: absolute; height: <?php echo $min_duracion * $px_min; ?>px; top:<?php echo $min_offset * $px_min + 40; ?>px">
+                                <?php echo $clase->materia; ?>
+                            </div>
                             <?php
                         }
                     }
                     ?>
-                </table>
+                </div>
             </div>
         <?php } ?>
     </div>
