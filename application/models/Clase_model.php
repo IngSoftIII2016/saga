@@ -32,10 +32,11 @@ class Clase_model extends CI_Model {
 	
 	public function get_clases_dia($fecha, $edificio_id = null) {
 		
-		$this->db->select('au.id AS aula_id, ed.nombre AS edificio, au.nombre AS aula, clase.hora_inicio AS hora_inicio, clase.hora_fin AS hora_fin, as.nombre AS materia, ed.nombre AS edificio');
+		$this->db->select('au.id AS aula_id, ed.nombre AS edificio, au.nombre AS aula, clase.hora_inicio AS hora_inicio, clase.hora_fin AS hora_fin, as.nombre AS materia, ed.nombre AS edificio, concat(do.nombre, do.apellido) as docente');
 		$this->db->from('clase');
 		$this->db->join('horario AS ho', 'clase.Horario_id=ho.id', 'left');
 		$this->db->join('comision AS co', 'ho.Comision_id=co.id', 'left');
+		$this->db->join('docente AS do', 'co.Docente_id=do.id', 'left');
 		$this->db->join('asignatura AS as', 'co.Asignatura_id=as.id', 'left');
 		$this->db->join('aula AS au', 'ho.Aula_id = au.id', 'left');
 		$this->db->join('edificio AS ed ', 'au.Edificio_id=ed.id', 'left');

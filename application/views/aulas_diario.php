@@ -43,7 +43,6 @@
 	href="<?php echo base_url('assets/plugins/sweetalert/sweetalert.css') ?>"
 	rel="stylesheet">
 <!-- end: CSS -->
-
 <!-- start: Favicon -->
 <link rel="shortcut icon"
 	href="<?php echo base_url('assets/img/icon.png') ?>">
@@ -56,11 +55,25 @@
 <script
 	src="<?php echo base_url('assets/plugins/jQueryUI/jquery-ui.min.js');?>">
 </script>
-
+<script
+	src="<?php echo base_url('assets/plugins/slimScroll/jquery.slimscroll.min.js');?>">
+</script>
 <!-- Bootstrap 3.3.5 -->
 <script src="<?php echo base_url('assets/js/bootstrap.min.js') ?>"></script>
+<script type="text/javascript"
+	src="//cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+<script
+	src="<?php echo base_url('assets/plugins/bootstrap-datepicker/bootstrap-datepicker.js'); ?>">
+</script>
+
+<script
+	src="<?php echo base_url('assets/plugins/bootstrap-datepicker/locales/bootstrap-datepicker.es.js'); ?>"
+	charset="UTF-8"></script>
 <link rel="stylesheet"
 	href="<?php echo base_url('assets/css/planilla.css') ?>">
+<link rel="stylesheet" type="text/css"
+	href="<?php echo base_url('assets/plugins/bootstrap-datepicker/css/datepicker.css'); ?>" />
+
 <script type="text/javascript" >
 	var base_url = "<?= base_url(); ?>"; // URL base, usada en buscador-and-modal.js
 </script>
@@ -68,51 +81,73 @@
 <body>
 <section class="content" id="contect">
 		<div class="col-md-12 tabla">				
-				<input type="hidden" value="<?php echo $fecha->format('d-m-Y')?>" id="fecha"></input>
-				<div class="row">
-					<button type="reset" class="btn col-md-1 col-md-offset-3 btn-primary btn-ant">Ant</button>
-					<h3 class="text-center text-primary col-md-3"><?=$fecha_formateada?></h3>
-					<a href="<?php echo base_url("AulasController")?>"  data-toggle="tooltip" data-placement="bottom" title="Hoy"class="hoy">
-					<i class="fa fa-clock-o fa-2x" aria-hidden="true"></i></a>
+				<input type="hidden" value="<?php echo $fecha->format('d-m-Y')?>" id="fecha"></input>				
+				<div class="row">				
+					<div class="col-md-2">
+						<div class="form-group">
+							<div class='input-group date' >
+									<input name="calendario" id="calendario"
+											type='text' 
+											class="form-control validate"
+											value="<?php if (isset($calendario)) echo $calendario; ?>"/> <span
+											class="input-group-addon"> <span
+											class="glyphicon glyphicon-calendar"></span>
+											</span>
+							</div>
+						</div>
+					</div>
+					<button type="reset" class="btn col-md-1 col-md-offset-1 btn-primary btn-ant">Ant</button>
+					<h3 class="text-center text-primary col-md-3 "><?=$fecha_formateada?></h3>
+					<a href="<?php echo base_url("planilla")?>"  data-toggle="tooltip" data-placement="bottom" title="Hoy" class="hoy">
+						<i class="fa fa-clock-o fa-2x" aria-hidden="true"></i>
+					</a>
 					<button type="reset" class="btn col-md-1 btn-primary btn-sig">Sig</button>
 					<div class="input-group col-md-2 buscar buscador">
-					<i class="fa fa-search fa-2x" id="input" data-toggle="tooltip" title="Buscar" data-placement="bottom" aria-hidden="true" style=" float: right;"></i>
-					<input id="buscador" type="hidden" class="col-md-10">						
+						<i class="fa fa-search fa-2x icon-buscar" id="input" 
+							data-toggle="tooltip" title="Buscar" 
+							data-placement="bottom" aria-hidden="true" 
+							style=" float: right;">
+						</i>
+						<input id="buscador" type="hidden" class="col-md-9">						
 					</div>
-				</div>
-				<div id="grilla" class="row col-md-12" style=" display: table;" >
-					<div style="display: table-row">
+				</div>				
+				<div id="grilla" class="row col-md-12 grilla">
+					<div class="contenedor">
 						<?php
-						$w = floor(100 / (count($aulas) + 1));
+						$w = 100 / (count($aulas) + 1);
 						$hei = 80;
 						$px_min = 1;
 						$interval = DateInterval::createFromDateString("30 minutes");
 						$horas = new DatePeriod(new DateTime("08:00:00"), $interval, new DateTime("21:00:00"));
-						?>
-
-						<div style="width:auto; display: table-cell;">
-							<div style="position: relative;">
-								<div class="color" style="position: absolute; height: <?php echo $hei?>px">
+						?>						
+						<div class="contenedor-horario">
+							<div class="horario">
+								<div class="color" style="height: <?php echo $hei?>px">
 									Horarios
 								</div>
 								<?php
 								$offset = 0;
 								foreach ($horas as $h) {
 									?>
-									<div  class="color" style="position: absolute; height: <?php echo 30 * $px_min?>px; top: <?php echo $offset * $px_min + $hei?>px">
+									<div  class="color hora" 
+										style="height: <?php echo 30 * $px_min?>px; top: <?php echo $offset * $px_min + $hei?>px">
 										<?php echo $h->format("H:i"); ?>
 									</div>
 								<?php $offset += 30;} ?>
 							</div>
-
 						</div>
-						<?php
+						<?php						
 						foreach ($aulas as $aula) {
 							?>
-							<div style="width:<?php echo $w; ?>%; display: table-cell;">
+							<div style="width:<?php echo $w; ?>%; display: table-cell;" >
 								<div style="position: relative;">
-									<div class="color" style="position: absolute; height: <?php echo $hei;?>px">
-										<?php echo $aula->nombre; ?>
+									<div class="color clickable-row"
+									data-toggle="modal" data-target="#exampleModalAula"
+											data-whatever="<?php echo $aula->nombre; ?>"
+											data-capacidad="<?php echo $aula->capacidad; ?>"
+											data-edificio="<?php echo $aula->edificio; ?>"
+									style="position:absolute; height: <?php echo $hei;?>px">
+										<a><?php echo $aula->nombre; ?></a>
 									</div>
 									<?php
 									foreach ($clases as $clase) {
@@ -120,9 +155,14 @@
 											$min_offset = (strtotime($clase->hora_inicio) - strtotime("08:00:00")) / 60;
 											$min_duracion = (strtotime($clase->hora_fin) - strtotime($clase->hora_inicio)) / 60;
 											?>
-
-											<div class="materia buscar" style="position: absolute; height: <?php echo $min_duracion * $px_min; ?>px; top:<?php echo $min_offset * $px_min + $hei; ?>px">
-												<?php echo $clase->materia . ' De ' . substr($clase->hora_inicio, 0,5) . ' a ' . substr($clase->hora_fin, 0,5)  ?>
+											<div class="materia buscar" id="style-3"
+												style="position: absolute; height: <?php echo $min_duracion * $px_min; ?>px; top:<?php echo $min_offset * $px_min + $hei; ?>px">
+												<a class="clickable-row materia-a buscara"  
+													data-toggle="modal" data-target="#exampleModal"
+													data-whatever="<?php echo $clase->materia ?>"
+													data-horario= "<?php echo 'Horario de ' . substr($clase->hora_inicio, 0,5) . ' a ' . substr($clase->hora_fin, 0,5) ?>" 
+													title="Ver Detalle"><?php echo $clase->materia . ' De ' . substr($clase->hora_inicio, 0,5) . ' a ' . substr($clase->hora_fin, 0,5) . ' Profesor: ' . $clase->docente  ?>
+												</a>
 											</div>
 											<?php
 										}
@@ -130,16 +170,73 @@
 									?>
 								</div>
 							</div>
-						<?php } ?>
+						<?php } ?>						
 					</div>
 				</div>
-				<script src="<?php echo base_url('assets/js/buscador-and-modal.js') ?>"></script>	
+				<div class="modal fade" id="exampleModal" tabindex="-1"
+						role="dialog" aria-labelledby="exampleModalLabel"
+						aria-hidden="true">
+						<div class="modal-dialog" role="document">
+							<div class="modal-content">
+								<div class="modal-header">
+									<button type="button" class="close" data-dismiss="modal"
+										aria-label="Close">
+										<span aria-hidden="true">&times;</span>
+									</button>
+									<h3 class="modal-title" id="exampleModalLabel"></h3>
+								</div>
+								<div class="modal-body">
+								<p class="modal-text text-modal" id="exampleModalLabel" >
+								</p>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="modal fade" id="exampleModalAula" tabindex="-1"
+						role="dialog" aria-labelledby="exampleModalLabel"
+						aria-hidden="true">
+						<div class="modal-dialog" role="document">
+							<div class="modal-content">
+								<div class="modal-header">
+									<button type="button" class="close" data-dismiss="modal"
+										aria-label="Close">
+										<span aria-hidden="true">&times;</span>
+									</button>
+									<h3 class="modal-title-aula" id="exampleModalLabel"></h3>
+								</div>
+								<div class="modal-body">
+								<p class="modal-text-aula text-modal"  id="exampleModalLabel">
+								</p>
+								<p class="modal-text2-aula text-modal" id="exampleModalLabel">
+								</p>
+								</div>
+							</div>
+						</div>
+					</div>
+				<script src="<?php echo base_url('assets/js/buscador-and-modal.js') ?>"></script>
 </section>
 <script>
-
+$('#exampleModal').on('show.bs.modal', function (event) {
+var button = $(event.relatedTarget);
+var materia = button.data('whatever');
+var horario = button.data('horario');
+var modal = $(this);
+modal.find('.modal-title').text( materia );
+modal.find('.modal-text').text( horario );
+});
+$('#exampleModalAula').on('show.bs.modal', function (event) {
+var button = $(event.relatedTarget);
+var aula = button.data('whatever');
+var capacidad = button.data('capacidad');
+var edificio = button.data('edificio');
+var modal = $(this);
+modal.find('.modal-title-aula').text( aula );
+modal.find('.modal-text-aula').text( 'Capacidad: ' + capacidad );  
+modal.find('.modal-text2-aula').text( 'Edificio: ' + edificio );
+});
 $(document).ready(function(){
  $(".btn.col-md-1.btn-primary.btn-sig").click(function(e){
-	var url =  base_url + 'AulasController/horario';
+	var url =  base_url + 'planilla/horario';
    var form = $('<form action="' + url + '" method="post">' +
   '<input type="hidden" name="fecha" value="' + $('#fecha').val() + '" />' +
   '<input type="hidden" name="operacion" value="+" />' +
@@ -147,8 +244,8 @@ $(document).ready(function(){
 	$('body').append(form);
 	form.submit();   
   });
-   $(".btn.col-md-1.col-md-offset-3.btn-primary.btn-ant").click(function(e){
-	var url = base_url + 'AulasController/horario';
+   $(".btn.col-md-1.col-md-offset-1.btn-primary.btn-ant").click(function(e){
+	var url = base_url + 'planilla/horario';
    var form = $('<form action="' + url + '" method="post">' +
   '<input type="hidden" name="fecha" value="' + $('#fecha').val() + '" />' +
   '<input type="hidden" name="operacion" value="-" />' +
@@ -156,9 +253,25 @@ $(document).ready(function(){
 	$('body').append(form);
 	form.submit();   
   });
-  
-
 });
+	$('#calendario').datepicker({
+			language : "es",
+			startDate : new Date(),
+			orientation : "bottom auto"
+		});
+	$('#calendario').datepicker().on('changeDate', function() {
+		var url = base_url + 'planilla/calendario';
+		var calendario=$('#calendario').val();
+		valor = calendario.replace("/", "-");
+		valor = valor.replace("/", "-");
+		var form = $('<form action="' + url + '" method="post">' +
+		'<input type="hidden" name="fecha" value="' + valor + '" />' +
+		'<input type="hidden" name="fecha_calendario" value="' + calendario + '" />' +
+		'</form>');
+	$('body').append(form);
+	form.submit();
+	});
+   
 </script>
 </body>
 </html>
