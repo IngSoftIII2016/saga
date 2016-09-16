@@ -230,10 +230,11 @@ var horario = button.data('horario');
 var profesor = button.data('profesor');
 var modal = $(this);
 modal.find('.modal-title').text( materia );
-$( ".modal-text" ).append( "<strong>Horario: </strong>" );
-modal.find('.modal-text').append( horario );
-$( ".modal-text2" ).append( "<strong>Profesor: </strong>" );
-modal.find('.modal-text2').append( profesor );
+$( ".modal-text" ).empty();
+$( ".modal-text2" ).empty();
+$( ".strong" ).remove();
+$( ".modal-text" ).append( "<strong class='strong'>Horario: </strong>" + horario);
+$( ".modal-text2" ).append( "<strong class='strong'>Profesor: </strong>" + profesor );
 });
 $('#exampleModalAula').on('show.bs.modal', function (event) {
 var button = $(event.relatedTarget);
@@ -242,8 +243,12 @@ var capacidad = button.data('capacidad');
 var edificio = button.data('edificio');
 var modal = $(this);
 modal.find('.modal-title-aula').text( aula );
-modal.find('.modal-text-aula').text( 'Capacidad: ' + capacidad );  
-modal.find('.modal-text2-aula').text( 'Edificio: ' + edificio );
+$( ".modal-text-aula" ).empty();
+$( ".modal-text2-aula" ).empty();
+$( ".strong" ).remove();
+$( ".modal-text-aula" ).append( "<strong class='strong'>Capacidad: </strong>"  + capacidad);
+
+$( ".modal-text2-aula" ).append( "<strong class='strong'>Edificio: </strong>" + edificio );
 
 });
 $(document).ready(function(){
