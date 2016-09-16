@@ -93,9 +93,10 @@
 								</div>
 									<input name="calendario" id="calendario"
 											type='text' 
+											readonly
 											class="form-control validate"
 											value="<?php if (isset($calendario)) echo $calendario; ?>">
-											</input>
+									</input>
 						</div>
 					</div>
 					<button type="reset" class="btn col-md-1 btn-primary btn-ant">Ant</button>
@@ -163,8 +164,9 @@
 												<a class="clickable-row materia-a buscara"  
 													data-toggle="modal" data-target="#exampleModal"
 													data-whatever="<?php echo $clase->materia ?>"
-													data-horario= "<?php echo 'Horario de ' . substr($clase->hora_inicio, 0,5) . ' a ' . substr($clase->hora_fin, 0,5) ?>" 
-													title="Ver Detalle"><?php echo $clase->materia . ' De ' . substr($clase->hora_inicio, 0,5) . ' a ' . substr($clase->hora_fin, 0,5) . ' Profesor: ' . $clase->docente  ?>
+													data-horario= "<?php echo 'de ' . substr($clase->hora_inicio, 0,5) . ' a ' . substr($clase->hora_fin, 0,5) . ' hs' ?>" 
+													data-profesor= "<?php echo $clase->docente?>" 
+													title="Ver Detalle"><?php echo $clase->materia . ' Horario de ' . substr($clase->hora_inicio, 0,5) . ' a ' . substr($clase->hora_fin, 0,5) . ' Profesor: ' . $clase->docente  ?>
 												</a>
 											</div>
 											<?php
@@ -190,6 +192,8 @@
 								</div>
 								<div class="modal-body">
 								<p class="modal-text text-modal" id="exampleModalLabel" >
+								</p>
+								<p class="modal-text2 text-modal" id="exampleModalLabel">
 								</p>
 								</div>
 							</div>
@@ -223,9 +227,13 @@ $('#exampleModal').on('show.bs.modal', function (event) {
 var button = $(event.relatedTarget);
 var materia = button.data('whatever');
 var horario = button.data('horario');
+var profesor = button.data('profesor');
 var modal = $(this);
 modal.find('.modal-title').text( materia );
-modal.find('.modal-text').text( horario );
+$( ".modal-text" ).append( "<strong>Horario: </strong>" );
+modal.find('.modal-text').append( horario );
+$( ".modal-text2" ).append( "<strong>Profesor: </strong>" );
+modal.find('.modal-text2').append( profesor );
 });
 $('#exampleModalAula').on('show.bs.modal', function (event) {
 var button = $(event.relatedTarget);
@@ -236,6 +244,7 @@ var modal = $(this);
 modal.find('.modal-title-aula').text( aula );
 modal.find('.modal-text-aula').text( 'Capacidad: ' + capacidad );  
 modal.find('.modal-text2-aula').text( 'Edificio: ' + edificio );
+
 });
 $(document).ready(function(){
  $(".btn.col-md-1.btn-primary.btn-sig").click(function(e){
