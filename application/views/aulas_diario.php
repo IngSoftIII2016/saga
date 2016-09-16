@@ -65,6 +65,9 @@
 <script
 	src="<?php echo base_url('assets/plugins/bootstrap-datepicker/bootstrap-datepicker.js'); ?>">
 </script>
+<script
+	src="<?php echo base_url('assets/js/jquery.sticky.js'); ?>">
+</script>
 
 <script
 	src="<?php echo base_url('assets/plugins/bootstrap-datepicker/locales/bootstrap-datepicker.es.js'); ?>"
@@ -83,20 +86,19 @@
 		<div class="col-md-12 tabla">				
 				<input type="hidden" value="<?php echo $fecha->format('d-m-Y')?>" id="fecha"></input>				
 				<div class="row">				
-					<div class="col-md-2">
-						<div class="form-group">
-							<div class='input-group date' >
+					<div class="col-md-2 col-md-offset-1">
+						<div class='input-group date'>
+								<div class="input-group-addon">
+									<i class="fa fa-calendar"></i>
+								</div>
 									<input name="calendario" id="calendario"
 											type='text' 
 											class="form-control validate"
-											value="<?php if (isset($calendario)) echo $calendario; ?>"/> <span
-											class="input-group-addon"> <span
-											class="glyphicon glyphicon-calendar"></span>
-											</span>
-							</div>
+											value="<?php if (isset($calendario)) echo $calendario; ?>">
+											</input>
 						</div>
 					</div>
-					<button type="reset" class="btn col-md-1 col-md-offset-1 btn-primary btn-ant">Ant</button>
+					<button type="reset" class="btn col-md-1 btn-primary btn-ant">Ant</button>
 					<h3 class="text-center text-primary col-md-3 "><?=$fecha_formateada?></h3>
 					<a href="<?php echo base_url("planilla")?>"  data-toggle="tooltip" data-placement="bottom" title="Hoy" class="hoy">
 						<i class="fa fa-clock-o fa-2x" aria-hidden="true"></i>
@@ -118,7 +120,7 @@
 						$hei = 80;
 						$px_min = 1;
 						$interval = DateInterval::createFromDateString("30 minutes");
-						$horas = new DatePeriod(new DateTime("08:00:00"), $interval, new DateTime("21:00:00"));
+						$horas = new DatePeriod(new DateTime("08:00:00"), $interval, new DateTime("21:30:00"));
 						?>						
 						<div class="contenedor-horario">
 							<div class="horario">
@@ -141,7 +143,7 @@
 							?>
 							<div style="width:<?php echo $w; ?>%; display: table-cell;" >
 								<div style="position: relative;">
-									<div class="color clickable-row"
+									<div class="color clickable-row" id="<?php echo $aula->id?>"
 									data-toggle="modal" data-target="#exampleModalAula"
 											data-whatever="<?php echo $aula->nombre; ?>"
 											data-capacidad="<?php echo $aula->capacidad; ?>"
@@ -154,6 +156,7 @@
 										if ($clase->aula_id == $aula->id) {
 											$min_offset = (strtotime($clase->hora_inicio) - strtotime("08:00:00")) / 60;
 											$min_duracion = (strtotime($clase->hora_fin) - strtotime($clase->hora_inicio)) / 60;
+											
 											?>
 											<div class="materia buscar" id="style-3"
 												style="position: absolute; height: <?php echo $min_duracion * $px_min; ?>px; top:<?php echo $min_offset * $px_min + $hei; ?>px">
@@ -244,7 +247,7 @@ $(document).ready(function(){
 	$('body').append(form);
 	form.submit();   
   });
-   $(".btn.col-md-1.col-md-offset-1.btn-primary.btn-ant").click(function(e){
+   $(".btn.col-md-1.btn-primary.btn-ant").click(function(e){
 	var url = base_url + 'planilla/horario';
    var form = $('<form action="' + url + '" method="post">' +
   '<input type="hidden" name="fecha" value="' + $('#fecha').val() + '" />' +
@@ -253,10 +256,13 @@ $(document).ready(function(){
 	$('body').append(form);
 	form.submit();   
   });
+  for (i = 1; i < 25; i++) { 
+    $("#" + i ).sticky({topSpacing:0});
+  }
+  
 });
 	$('#calendario').datepicker({
 			language : "es",
-			startDate : new Date(),
 			orientation : "bottom auto"
 		});
 	$('#calendario').datepicker().on('changeDate', function() {
