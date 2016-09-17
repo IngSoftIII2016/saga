@@ -117,7 +117,7 @@
 				<div id="grilla" class="row col-md-12 grilla">
 					<div class="contenedor">
 						<?php
-						$w = 100 / (count($aulas) + 1);
+						$w = 96 / count($aulas); // 100% - 4% de columna horario
 						$hei = 80;
 						$px_min = 1;
 						$interval = DateInterval::createFromDateString("30 minutes");
@@ -142,8 +142,8 @@
 						<?php						
 						foreach ($aulas as $aula) {
 							?>
-							<div style="width:<?php echo $w; ?>%; display: table-cell;" >
-								<div style="position: relative;">
+							<div style="width:<?php echo $w; ?>%; display: table-cell; position: relative;" >
+
 									<div class="color clickable-row" id="<?php echo $aula->id?>"
 									data-toggle="modal" data-target="#exampleModalAula"
 											data-whatever="<?php echo $aula->nombre; ?>"
@@ -173,7 +173,7 @@
 										}
 									}
 									?>
-								</div>
+
 							</div>
 						<?php } ?>						
 					</div>

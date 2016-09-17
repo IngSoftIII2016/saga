@@ -1,121 +1,147 @@
-.grilla{
-	display: table !important;
+.grilla {
+    display: table !important;
+    padding-left: 0;
+    padding-right: 0;
+    margin-left: 0;
+    margin-right: 0;
 }
-.contenedor{
-	display: table-row !important;
-	height:890px;
-	background:repeating-linear-gradient(0deg, rgb(158, 158, 158) 0,rgba(158, 158, 158, 0.69) 1px, white 0, white 15px);
-	    
-		 
+
+.contenedor {
+    display: table-row !important;
+    height: 890px;
+    background: repeating-linear-gradient(0deg, rgb(158, 158, 158) 0, rgba(158, 158, 158, 0.69) 1px, white 0, white 15px);
+
 }
-.hora{
-	    font-size: medium;
+
+.hora {
+    font-size: medium;
 }
-.contenedor-horario{
-	width:4%; 
-	display: table-cell; 
+
+.contenedor-horario {
+    width: 4%;
+    display: table-cell;
 }
-.horario{
-	position: relative;	
-	    
+
+.horario {
+    position: relative;
+
 }
-.color{
-	background-color: #FFC107;
-	border: 1px solid black !important;
-	    width: 100%;
-	position:absolute;
-	text-align: center;
+
+.color {
+    background-color: #FFC107;
+    border: 1px solid black !important;
+    width: 100%;
+    position: absolute;
+    text-align: center;
     font-weight: bold;
-	    
+
 }
-.text-modal{
-	font-size: large !important;
+
+.text-modal {
+    font-size: large !important;
 }
+
 .materia {
-            border: #000000 solid 1px;
-            background: #4CAF50;
-			max-width:65px !important;
-			overflow: auto;
-			font-weight: bold;
-			box-shadow: 3px 3px 15px #999;
-			    color: white;
-        }
+    border: #000000 solid 1px;
+    background: #4CAF50;
+    min-width: 100%;
+    max-width: 100% !important;
+    overflow: auto;
+    font-weight: bold;
+    box-shadow: 3px 3px 15px #999;
+    color: white;
+}
+
 .celdas {
-	border: #000000 solid 1px;
+    border: #000000 solid 1px;
 }
+
 div {
-	font-size: small;
+    font-size: small;
 }
-.btn{
-	    font-size: medium !important;
+
+.btn {
+    font-size: medium !important;
     font-weight: bold !important;
 }
-a{
-	cursor: pointer; 
-	color: black;
-}
-.resaltar{
-	background-color:#FF0;
-	color:black !important;
-}
-.materia-a{
-	color:white;
-}
-.buscador{
-	float: right !important; 
-}
-.hoy{
-	float:left; 
-	padding-right: 20px;
-	margin-top: 3px !important;
-}
-.icon-buscar{
-	padding-right: 30px;
-}
-p {
-	margin: 0px;
+
+a {
+    cursor: pointer;
+    color: black;
 }
 
+.resaltar {
+    background-color: #FF0;
+    color: black !important;
+}
+
+.materia-a {
+    color: white;
+}
+
+.buscador {
+    float: right !important;
+}
+
+.hoy {
+    float: left;
+    padding-right: 20px;
+    margin-top: 3px !important;
+}
+
+.icon-buscar {
+    padding-right: 30px;
+}
+
+p {
+    margin: 0px;
+}
 
 h3 {
-	margin-top: 6px;
+    margin-top: 6px;
 }
 
-.tabla{
-	 padding-left: 5px;
+.tabla {
+    padding-left: 5px;
     padding-right: 2px;
 }
+
 .content {
-	background-color: white;
-	height: 1000px;	
+    background-color: white;
+    height: 1000px;
     padding-left: 0px;
     padding-right: 0px;
 
 }
-.color a:hover, a:active, a:focus{
-	color:black;
+
+.color a:hover, a:active, a:focus {
+    color: black;
 }
-.hoy i:hover, i:active, i:focus{
-	color:black;
+
+.hoy i:hover, i:active, i:focus {
+    color: black;
 }
-a:hover, a:active, a:focus{
-	color:white;
+
+a:hover, a:active, a:focus {
+    color: white;
 }
-#style-3::-webkit-scrollbar-track{
-	border-radius: 10px;
-	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
-	background-color: #F5F5F5;
+
+#style-3::-webkit-scrollbar-track {
+    border-radius: 10px;
+    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+    background-color: #F5F5F5;
 }
+
 #style-3::-webkit-scrollbar-track-piece {
     height: 30px;
 }
 
-#style-3::-webkit-scrollbar{
-	width: 5px;
-	height: 5px;
-	background-color: #F5F5F5;
+#style-3::-webkit-scrollbar {
+    width: 5px;
+    height: 5px;
+    background-color: #F5F5F5;
 }
 
-#style-3::-webkit-scrollbar-thumb{
-	background-color: gray;
+#style-3::-webkit-scrollbar-thumb {
+    background-color: gray;
 }
