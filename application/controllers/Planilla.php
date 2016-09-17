@@ -18,8 +18,16 @@ class Planilla extends CI_Controller {
 	}
 	public function cargar($fecha, $calendario = null){
 		date_default_timezone_set ( "America/Argentina/Buenos_Aires" );		
+
         $this->load->model('Clase_model');
-        $aulas = $this->aulas_edificio(1); //campus
+        $this->load->model('Aula_model');
+
+        $ids_aulas = array(1,2,3,4,5,11,6,7,8,9,10,12,13,14,15,16,17); // Harcode: Obtener desde la base
+
+        $aulas = array();
+        foreach($ids_aulas as $id)
+            $aulas[] = $this->Aula_model->get_by_id($id);
+
         $clases = $this->Clase_model->get_clases_dia($fecha->format("Y-m-d"));
 		$data['calendario']= $calendario;
         $data['fecha'] = $fecha;
@@ -61,11 +69,6 @@ class Planilla extends CI_Controller {
 
     public function aulas_campus() {
         echo json_encode($this->aulas_edificio(1));
-    }
-
-    private function aulas_edificio($edificio_id) {
-        $this->load->model('Aula_model');
-        return $this->Aula_model->get_aulas_edificio($edificio_id);
     }
 
 }
