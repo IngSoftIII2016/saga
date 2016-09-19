@@ -19,6 +19,7 @@ class Planilla extends CI_Controller {
 	public function cargar($fecha, $calendario = null){
 		date_default_timezone_set ( "America/Argentina/Buenos_Aires" );		
         $this->load->model('Clase_model');
+		$this->load->model('Edificio_model');
         $aulas = $this->aulas_edificio(1); //campus
         $clases = $this->Clase_model->get_clases_dia($fecha->format("Y-m-d"));
 		$data['calendario']= $calendario;
@@ -26,6 +27,7 @@ class Planilla extends CI_Controller {
 		$data['fecha_formateada'] = $this->formatear_fecha($fecha);
         $data['aulas'] = $aulas;
         $data['clases'] = $clases;
+		$data['edificios'] = $this->Edificio_model->get_edificios();
 
         $this->load->view('aulas_diario', $data);
 	}

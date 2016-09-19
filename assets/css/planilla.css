@@ -28,6 +28,22 @@
     font-weight: bold;
 	    
 }
+.navclass:focus, .navclass:hover, .navclass:active {
+	background-color: #337ab7 !important;
+	color:white !important;
+	
+}
+
+.menudesplegable{
+	 color: white;
+    font-size: medium;
+    font-weight: bold;
+}
+.header{
+	    color: white;
+    font-size: x-large;
+    font-weight: bold;
+}
 .text-modal{
 	font-size: large !important;
 }

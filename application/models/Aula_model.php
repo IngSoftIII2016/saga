@@ -14,7 +14,7 @@ class Aula_model extends CI_Model {
     }
 
     public function get_aulas() {
-        return $this->db->get('aula')-result();
+        return $this->db->get('aula')->result();
     }
 
     public function get_aulas_edificio($edificio_id) {

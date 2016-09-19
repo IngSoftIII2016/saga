@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
-<title>Administración | Aulas</title>
+<title>SAGA</title>
 <!-- Tell the browser to be responsive to screen width -->
 <meta
 	content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"
@@ -45,7 +45,7 @@
 <!-- end: CSS -->
 <!-- start: Favicon -->
 <link rel="shortcut icon"
-	href="<?php echo base_url('assets/img/icon.png') ?>">
+	href="<?php echo base_url('assets/img/favicon.ico') ?>">
 <!-- end: Favicon -->
 
 <!-- jQuery 2.1.4 -->
@@ -82,6 +82,7 @@
 </script>
 </head>
 <body>
+ <?php $this->load->view ( 'header' );?>
 <section class="content" id="contect">
 		<div class="col-md-12 tabla">				
 				<input type="hidden" value="<?php echo $fecha->format('d-m-Y')?>" id="fecha"></input>				
