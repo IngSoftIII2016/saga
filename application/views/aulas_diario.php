@@ -76,7 +76,6 @@
 	href="<?php echo base_url('assets/css/planilla.css') ?>">
 <link rel="stylesheet" type="text/css"
 	href="<?php echo base_url('assets/plugins/bootstrap-datepicker/css/datepicker.css'); ?>" />
-
 <script type="text/javascript" >
 	var base_url = "<?= base_url(); ?>"; // URL base, usada en buscador-and-modal.js
 </script>
@@ -155,18 +154,19 @@
 									</div>
 									<?php
 									foreach ($clases as $clase) {
-										if ($clase->aula_id == $aula->id) {
+										if ($clase->aula_id == $aula->ubicacion) {
 											$min_offset = (strtotime($clase->hora_inicio) - strtotime("08:00:00")) / 60;
 											$min_duracion = (strtotime($clase->hora_fin) - strtotime($clase->hora_inicio)) / 60;
 											
 											?>
-											<div class="materia buscar" id="style-3"
+											<div class="materia buscar style-3" 
 												style="position: absolute; height: <?php echo $min_duracion * $px_min; ?>px; top:<?php echo $min_offset * $px_min + $hei; ?>px">
 												<a class="clickable-row materia-a buscara"  
 													data-toggle="modal" data-target="#exampleModal"
 													data-whatever="<?php echo $clase->materia ?>"
 													data-horario= "<?php echo 'de ' . substr($clase->hora_inicio, 0,5) . ' a ' . substr($clase->hora_fin, 0,5) . ' hs' ?>" 
 													data-profesor= "<?php echo $clase->docente?>" 
+													data-aula="<?php echo $clase->aula?>" 
 													title="Ver Detalle"><?php echo $clase->materia . ' Horario de ' . substr($clase->hora_inicio, 0,5) . ' a ' . substr($clase->hora_fin, 0,5) . ' Profesor: ' . $clase->docente  ?>
 												</a>
 											</div>
@@ -192,6 +192,8 @@
 									<h3 class="modal-title" id="exampleModalLabel"></h3>
 								</div>
 								<div class="modal-body">
+								<p class="modal-text3 text-modal" id="exampleModalLabel">
+								</p>
 								<p class="modal-text text-modal" id="exampleModalLabel" >
 								</p>
 								<p class="modal-text2 text-modal" id="exampleModalLabel">
@@ -229,11 +231,14 @@ var button = $(event.relatedTarget);
 var materia = button.data('whatever');
 var horario = button.data('horario');
 var profesor = button.data('profesor');
+var aula = button.data('aula');
 var modal = $(this);
 modal.find('.modal-title').text( materia );
+$( ".modal-text3" ).empty();
 $( ".modal-text" ).empty();
 $( ".modal-text2" ).empty();
 $( ".strong" ).remove();
+$( ".modal-text3" ).append( "<strong class='strong'>Aula: </strong>" + aula );
 $( ".modal-text" ).append( "<strong class='strong'>Horario: </strong>" + horario);
 $( ".modal-text2" ).append( "<strong class='strong'>Profesor: </strong>" + profesor );
 });
@@ -292,7 +297,7 @@ $(document).ready(function(){
 	$('body').append(form);
 	form.submit();
 	});
-   
+ 
 </script>
 </body>
 </html>

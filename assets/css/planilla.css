@@ -117,21 +117,22 @@ h3 {
 a:hover, a:active, a:focus{
 	color:white;
 }
-#style-3::-webkit-scrollbar-track{
+
+.style-3::-webkit-scrollbar-track{
 	border-radius: 10px;
 	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
 	background-color: #F5F5F5;
 }
-#style-3::-webkit-scrollbar-track-piece {
+.style-3::-webkit-scrollbar-track-piece {
     height: 30px;
 }
 
-#style-3::-webkit-scrollbar{
+.style-3::-webkit-scrollbar{
 	width: 5px;
 	height: 5px;
 	background-color: #F5F5F5;
 }
 
-#style-3::-webkit-scrollbar-thumb{
+.style-3::-webkit-scrollbar-thumb{
 	background-color: gray;
 }
