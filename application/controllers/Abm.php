@@ -69,4 +69,13 @@ class Abm extends CI_Controller
         $output = $crud->render();
         $this->load->view('vacia.php', $output);
     }
+	
+	    public function evento()
+    {
+        $crud = new grocery_CRUD();
+
+        $crud->set_table('evento');
+        $output = $crud->render();
+        $this->load->view('vacia.php', $output);
+    }
 }
