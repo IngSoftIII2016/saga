@@ -14,6 +14,7 @@ class evento extends CI_Controller
 
     public function index()
     {
+		$this->load->model('Edificio_model');
         $crud = new grocery_CRUD();
 
         $crud->set_table('evento');
@@ -23,6 +24,8 @@ class evento extends CI_Controller
 		$crud->field_type('hora_fin', 'time');
 		$crud->field_type('motivo', 'text');
         $output = $crud->render();
+		$data['edificios'] = $this->Edificio_model->get_edificios();
+		 $this->load->view('header.php', $data);
         $this->load->view('vacia.php', $output);
     }
 
