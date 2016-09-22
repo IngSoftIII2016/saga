@@ -72,10 +72,11 @@
 <script
 	src="<?php echo base_url('assets/plugins/bootstrap-datepicker/locales/bootstrap-datepicker.es.js'); ?>"
 	charset="UTF-8"></script>
-<link rel="stylesheet"
-	href="<?php echo base_url('assets/css/planilla.css') ?>">
+
 <link rel="stylesheet" type="text/css"
 	href="<?php echo base_url('assets/plugins/bootstrap-datepicker/css/datepicker.css'); ?>" />
+<link rel="stylesheet"
+	href="<?php echo base_url('assets/css/planilla.css') ?>">
 <script type="text/javascript" >
 	var base_url = "<?= base_url(); ?>"; // URL base, usada en buscador-and-modal.js
 </script>

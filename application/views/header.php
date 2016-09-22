@@ -8,7 +8,9 @@
     <!-- Collect the nav links, forms, and other content for toggling -->
     <div class="collapse navbar-collapse bg-primary" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav navbar-right">
-        <li class="dropdown">
+		<li><a href="#" class="header navclass" style=" font-size: medium;">Buscador</a>
+        </li>
+		<li class="dropdown">
           <a href="#" class="dropdown-toggle header navclass" style=" font-size: medium;"data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Edificio <span class="caret"></span></a>
           <ul class="dropdown-menu menudesplegable">
 				<?php
@@ -16,6 +18,12 @@
 				?>
 					<li><a href="#"><?=$edificio->nombre?></a></li>
 				<?php	endforeach; ?>
+          </ul>
+        </li>
+		<li class="dropdown">
+          <a href="#" class="dropdown-toggle header navclass" style=" font-size: medium;"data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Perfil <span class="caret"></span></a>
+          <ul class="dropdown-menu menudesplegable">
+				<li><a href="#">Salir</a></li>
           </ul>
         </li>
       </ul>

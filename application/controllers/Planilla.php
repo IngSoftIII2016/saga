@@ -20,7 +20,9 @@ class Planilla extends CI_Controller {
 		date_default_timezone_set ( "America/Argentina/Buenos_Aires" );		
         $this->load->model('Clase_model');
 		$this->load->model('Edificio_model');
-        $aulas = $this->aulas_edificio(1); //campus
+        
+		
+		$aulas = $this->aulas_edificio(1); //campus
         $clases = $this->Clase_model->get_clases_dia($fecha->format("Y-m-d"));
 		$data['calendario']= $calendario;
         $data['fecha'] = $fecha;
