@@ -82,6 +82,9 @@
 </script>
 </head>
 <body>
+<script type="text/javascript" >
+	var base_url = "<?= base_url(); ?>"; // URL base, usada en js
+</script>
 
 <nav class="navbar navbar-dark bg-primary">
   <div class="container-fluid">

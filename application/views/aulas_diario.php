@@ -1,7 +1,8 @@
 <?php $this->load->view ( 'header' );?>
 <section class="content" id="contect">
-		<div class="col-md-12 tabla">				
-				<input type="hidden" value="<?php echo $fecha->format('d-m-Y')?>" id="fecha"></input>				
+		<div class="col-md-12 tabla" id="contenido">
+			
+			<input type="hidden" value="<?php echo $fecha->format('d-m-Y')?>" id="fecha"></input>				
 				<div class="row">				
 					<div class="col-md-2 col-md-offset-1">
 						<div class='input-group date'>
@@ -12,16 +13,16 @@
 											type='text' 
 											readonly
 											class="form-control validate"
-											value="<?php if (isset($calendario)) echo $calendario; ?>">
+											value="<?php if (isset($calendario)) echo $calendario->format('d/m/Y'); ?>">
 									</input>
 						</div>
 					</div>
-					<button type="reset" class="btn col-md-1 btn-primary btn-ant">Ant</button>
+					<button type="reset" id="reload-ant" class="btn col-md-1 btn-primary btn-ant">Ant</button>
 					<h3 class="text-center text-primary col-md-3 "><?=$fecha_formateada?></h3>
-					<a href="<?php echo base_url("planilla")?>"  data-toggle="tooltip" data-placement="bottom" title="Hoy" class="hoy">
+					<a data-toggle="tooltip" data-placement="bottom" title="Hoy" class="hoy" id="reload-hoy">
 						<i class="fa fa-clock-o fa-2x" aria-hidden="true"></i>
 					</a>
-					<button type="reset" class="btn col-md-1 btn-primary btn-sig">Sig</button>
+					<button type="reset" id="reload-sig" class="btn col-md-1 btn-primary btn-sig">Sig</button>
 					<div class="input-group col-md-2 buscar buscador">
 						<i class="fa fa-search fa-2x icon-buscar" id="input" 
 							data-toggle="tooltip" title="Buscar" 
@@ -30,7 +31,7 @@
 						</i>
 						<input id="buscador" type="hidden" class="col-md-9">						
 					</div>
-				</div>				
+				</div>						
 				<div id="grilla" class="row col-md-12 grilla">
 					<div class="contenedor">
 						<?php
@@ -114,6 +115,7 @@
 						<?php } ?>						
 					</div>
 				</div>
+				
 				<div class="modal fade" id="exampleModal" tabindex="-1"
 						role="dialog" aria-labelledby="exampleModalLabel"
 						aria-hidden="true">
@@ -179,93 +181,10 @@
 							</div>
 						</div>
 					</div>
-				<script src="<?php echo base_url('assets/js/buscador-and-modal.js') ?>"></script>
+					<script src="<?php echo base_url('assets/js/buscador-and-modal.js') ?>"></script>
+				</div>
+				
 </section>
-<script>
-$('#exampleModal').on('show.bs.modal', function (event) {
-var button = $(event.relatedTarget);
-var materia = button.data('whatever');
-var horario = button.data('horario');
-var profesor = button.data('profesor');
-var aula = button.data('aula');
-var modal = $(this);
-modal.find('.modal-title').text( materia );
-$( ".modal-text3" ).empty();
-$( ".modal-text" ).empty();
-$( ".modal-text2" ).empty();
-$( ".strong" ).remove();
-$( ".modal-text3" ).append( "<strong class='strong'>Aula: </strong>" + aula );
-$( ".modal-text" ).append( "<strong class='strong'>Horario: </strong>" + horario);
-$( ".modal-text2" ).append( "<strong class='strong'>Profesor: </strong>" + profesor );
-});
-$('#exampleModalEvento').on('show.bs.modal', function (event) {
-	var button = $(event.relatedTarget);
-	var motivo = button.data('motivo');
-	var horario = button.data('horario');
-	var modal = $(this);
-	modal.find('.modal-title-evento').text( 'Evento' );
-	$( ".modal-text-evento" ).empty();
-	$( ".modal-text2-evento" ).empty();
-	$( ".strong" ).remove();
-	$( ".modal-text-evento" ).append( "<strong class='strong'>Motivo: </strong>" + motivo);
-	$( ".modal-text2-evento" ).append( "<strong class='strong'>Horario: </strong>" + horario );
-	});
-$('#exampleModalAula').on('show.bs.modal', function (event) {
-var button = $(event.relatedTarget);
-var aula = button.data('whatever');
-var capacidad = button.data('capacidad');
-var edificio = button.data('edificio');
-var modal = $(this);
-modal.find('.modal-title-aula').text( aula );
-$( ".modal-text-aula" ).empty();
-$( ".modal-text2-aula" ).empty();
-$( ".strong" ).remove();
-$( ".modal-text-aula" ).append( "<strong class='strong'>Capacidad: </strong>"  + capacidad);
 
-$( ".modal-text2-aula" ).append( "<strong class='strong'>Edificio: </strong>" + edificio );
-
-});
-$(document).ready(function(){
- $(".btn.col-md-1.btn-primary.btn-sig").click(function(e){
-	var url =  base_url + 'planilla/horario';
-   var form = $('<form action="' + url + '" method="post">' +
-  '<input type="hidden" name="fecha" value="' + $('#fecha').val() + '" />' +
-  '<input type="hidden" name="operacion" value="+" />' +
-  '</form>');
-	$('body').append(form);
-	form.submit();   
-  });
-   $(".btn.col-md-1.btn-primary.btn-ant").click(function(e){
-	var url = base_url + 'planilla/horario';
-   var form = $('<form action="' + url + '" method="post">' +
-  '<input type="hidden" name="fecha" value="' + $('#fecha').val() + '" />' +
-  '<input type="hidden" name="operacion" value="-" />' +
-  '</form>');
-	$('body').append(form);
-	form.submit();   
-  });
-  for (i = 1; i < 25; i++) { 
-    $("#" + i ).sticky({topSpacing:0});
-  }
-  
-});
-	$('#calendario').datepicker({
-			language : "es",
-			orientation : "bottom auto"
-		});
-	$('#calendario').datepicker().on('changeDate', function() {
-		var url = base_url + 'planilla/calendario';
-		var calendario=$('#calendario').val();
-		valor = calendario.replace("/", "-");
-		valor = valor.replace("/", "-");
-		var form = $('<form action="' + url + '" method="post">' +
-		'<input type="hidden" name="fecha" value="' + valor + '" />' +
-		'<input type="hidden" name="fecha_calendario" value="' + calendario + '" />' +
-		'</form>');
-	$('body').append(form);
-	form.submit();
-	});
- 
-</script>
 </body>
 </html>
