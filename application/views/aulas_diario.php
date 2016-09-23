@@ -1,5 +1,4 @@
-
- <?php $this->load->view ( 'header' );?>
+<?php $this->load->view ( 'header' );?>
 <section class="content" id="contect">
 		<div class="col-md-12 tabla">				
 				<input type="hidden" value="<?php echo $fecha->format('d-m-Y')?>" id="fecha"></input>				
@@ -86,6 +85,26 @@
 													data-profesor= "<?php echo $clase->docente?>" 
 													data-aula="<?php echo $clase->aula?>" 
 													title="Ver Detalle"><?php echo $clase->materia . ' Horario de ' . substr($clase->hora_inicio, 0,5) . ' a ' . substr($clase->hora_fin, 0,5) . ' Profesor: ' . $clase->docente  ?>
+												</a>
+											</div>
+											<?php
+										}
+									}
+									foreach ($eventos as $evento){
+										if($evento->aula_id == $aula->ubicacion){
+											$min_offset = (strtotime($evento->hora_inicio) - strtotime("08:00:00")) / 60;
+											$min_duracion = (strtotime($evento->hora_fin) - strtotime($evento->hora_inicio)) / 60;
+												
+											?>
+											<div class="evento buscar style-3" 
+												style="position: absolute; height: <?php echo $min_duracion * $px_min; ?>px; top:<?php echo $min_offset * $px_min + $hei; ?>px">
+												<a class="clickable-row materia-a buscara"  
+													data-toggle="modal" data-target="#exampleModal"
+													data-whatever="<?php echo $clase->materia ?>"
+													data-horario= "<?php echo 'de ' . substr($clase->hora_inicio, 0,5) . ' a ' . substr($clase->hora_fin, 0,5) . ' hs' ?>" 
+													data-profesor= "<?php echo $clase->docente?>" 
+													data-aula="<?php echo $clase->aula?>" 
+													title="Ver Detalle"><?php echo 'Motivo: ' . $evento->motivo. ' Horario de ' . substr($evento->hora_inicio, 0,5) . ' a ' . substr($evento->hora_fin, 0,5) ?>
 												</a>
 											</div>
 											<?php

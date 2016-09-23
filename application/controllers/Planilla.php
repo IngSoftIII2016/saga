@@ -20,6 +20,7 @@ class Planilla extends CI_Controller {
 		date_default_timezone_set ( "America/Argentina/Buenos_Aires" );		
         $this->load->model('Clase_model');
 		$this->load->model('Edificio_model');
+		$this->load->model('Evento_Model');
         
 		
 		$aulas = $this->aulas_edificio(1); //campus
@@ -30,8 +31,8 @@ class Planilla extends CI_Controller {
         $data['aulas'] = $aulas;
         $data['clases'] = $clases;
 		$data['edificios'] = $this->Edificio_model->get_edificios();
-
-        $this->load->view('aulas_diario', $data);
+		$data['eventos']= $this->Evento_Model->get_eventos_dia($fecha->format("Y-m-d"));
+		$this->load->view('aulas_diario', $data);
 	}
 	public function horario(){
 		$fecha = DateTime::createFromFormat("d-m-Y", $this->input->post ("fecha"));

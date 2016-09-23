@@ -47,6 +47,15 @@
 .text-modal{
 	font-size: large !important;
 }
+.evento{
+	background:#31b0d5;
+	border: #000000 solid 1px;
+	max-width:65px !important;
+	overflow: auto;
+	font-weight: bold;
+	box-shadow: 3px 3px 15px #999;
+	color: white;
+}
 .materia {
             border: #000000 solid 1px;
             background: #4CAF50;
