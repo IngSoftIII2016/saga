@@ -20,7 +20,8 @@
 	    
 }
 .color{
-	background-color: #FFC107;
+	background-color: #7986CB;
+	color:white;
 	border: 1px solid black !important;
 	    width: 100%;
 	position:absolute;
@@ -29,7 +30,7 @@
 	    
 }
 .navclass:focus, .navclass:hover, .navclass:active {
-	background-color: #337ab7 !important;
+	background-color: rgb(179,19,10) !important;
 	color:white !important;
 	
 }
@@ -47,6 +48,9 @@
 .text-modal{
 	font-size: large !important;
 }
+.text-primary{
+	color:rgb(179,19,10) !important;
+}
 .evento{
 	background:#31b0d5;
 	border: #000000 solid 1px;
@@ -58,7 +62,7 @@
 }
 .materia {
             border: #000000 solid 1px;
-            background: #4CAF50;
+            background: #449d44;
 			max-width:65px !important;
 			overflow: auto;
 			font-weight: bold;
@@ -77,7 +81,7 @@ div {
 }
 a{
 	cursor: pointer; 
-	color: black;
+	color: white;
 }
 .resaltar{
 	background-color:#FF0;
@@ -93,6 +97,7 @@ a{
 	float:left; 
 	padding-right: 20px;
 	margin-top: 3px !important;
+	color:black !important;
 }
 .icon-buscar{
 	padding-right: 30px;
@@ -100,7 +105,10 @@ a{
 p {
 	margin: 0px;
 }
-
+.btn-primary{
+	color: #fff;
+	background-color:rgb(179,19,10) !important;
+	}
 
 h3 {
 	margin-top: 6px;
@@ -117,7 +125,7 @@ h3 {
     padding-right: 0px;
 
 }
-.color a:hover, a:active, a:focus{
+.hoy a:hover, a:active, a:focus{
 	color:black;
 }
 .hoy i:hover, i:active, i:focus{
