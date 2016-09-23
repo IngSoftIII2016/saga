@@ -20,7 +20,7 @@
 	    
 }
 .color{
-	background-color: #7986CB;
+	background-color: #706c6c;
 	color:white;
 	border: 1px solid black !important;
 	    width: 100%;
@@ -62,7 +62,7 @@
 }
 .materia {
             border: #000000 solid 1px;
-            background: #449d44;
+            background: #4CAF50;
 			max-width:65px !important;
 			overflow: auto;
 			font-weight: bold;
