@@ -99,11 +99,9 @@
 											<div class="evento buscar style-3" 
 												style="position: absolute; height: <?php echo $min_duracion * $px_min; ?>px; top:<?php echo $min_offset * $px_min + $hei; ?>px">
 												<a class="clickable-row materia-a buscara"  
-													data-toggle="modal" data-target="#exampleModal"
-													data-whatever="<?php echo $clase->materia ?>"
-													data-horario= "<?php echo 'de ' . substr($clase->hora_inicio, 0,5) . ' a ' . substr($clase->hora_fin, 0,5) . ' hs' ?>" 
-													data-profesor= "<?php echo $clase->docente?>" 
-													data-aula="<?php echo $clase->aula?>" 
+													data-toggle="modal" data-target="#exampleModalEvento"
+													data-horario= "<?php echo 'de ' . substr($evento->hora_inicio, 0,5) . ' a ' . substr($evento->hora_fin, 0,5) . ' hs' ?>" 
+													data-motivo= "<?php echo $evento->motivo?>" 
 													title="Ver Detalle"><?php echo 'Motivo: ' . $evento->motivo. ' Horario de ' . substr($evento->hora_inicio, 0,5) . ' a ' . substr($evento->hora_fin, 0,5) ?>
 												</a>
 											</div>
@@ -160,6 +158,27 @@
 							</div>
 						</div>
 					</div>
+					<div class="modal fade" id="exampleModalEvento" tabindex="-1"
+						role="dialog" aria-labelledby="exampleModalLabel"
+						aria-hidden="true">
+						<div class="modal-dialog" role="document">
+							<div class="modal-content">
+								<div class="modal-header">
+									<button type="button" class="close" data-dismiss="modal"
+										aria-label="Close">
+										<span aria-hidden="true">&times;</span>
+									</button>
+									<h3 class="modal-title-evento" id="exampleModalLabel"></h3>
+								</div>
+								<div class="modal-body">
+								<p class="modal-text-evento text-modal"  id="exampleModalLabel">
+								</p>
+								<p class="modal-text2-evento text-modal" id="exampleModalLabel">
+								</p>
+								</div>
+							</div>
+						</div>
+					</div>
 				<script src="<?php echo base_url('assets/js/buscador-and-modal.js') ?>"></script>
 </section>
 <script>
@@ -179,6 +198,18 @@ $( ".modal-text3" ).append( "<strong class='strong'>Aula: </strong>" + aula );
 $( ".modal-text" ).append( "<strong class='strong'>Horario: </strong>" + horario);
 $( ".modal-text2" ).append( "<strong class='strong'>Profesor: </strong>" + profesor );
 });
+$('#exampleModalEvento').on('show.bs.modal', function (event) {
+	var button = $(event.relatedTarget);
+	var motivo = button.data('motivo');
+	var horario = button.data('horario');
+	var modal = $(this);
+	modal.find('.modal-title-evento').text( 'Evento' );
+	$( ".modal-text-evento" ).empty();
+	$( ".modal-text2-evento" ).empty();
+	$( ".strong" ).remove();
+	$( ".modal-text-evento" ).append( "<strong class='strong'>Motivo: </strong>" + motivo);
+	$( ".modal-text2-evento" ).append( "<strong class='strong'>Horario: </strong>" + horario );
+	});
 $('#exampleModalAula').on('show.bs.modal', function (event) {
 var button = $(event.relatedTarget);
 var aula = button.data('whatever');
