@@ -33,7 +33,7 @@ class Horario_model extends CI_Model {
     public function load($id) {
         //$this->db->select('id, descripcion, frecuencia_semanas, dia, hora_inicio, duracion, Comision_id, Aula_id');
         $this->db->where('id', $id);
-        $result = $this->db->get('horario')->result()[0];
+        $result = $this->db->get('horario')->row();
         $this->id = $result->id;
         $this->descripcion = $result->descripcion;
         $this->frecuencia_semanas = $result->frecuencia_semanas;
@@ -51,19 +51,32 @@ class Horario_model extends CI_Model {
         $this->db->join('comision AS c', 'h.Comision_id = c.id', 'left');
         $this->db->join('periodo AS p', 'c.Periodo_id = p.id');
         $this->db->where('h.id', $horario->id);
-        return $this->db->get()->result()[0];
+        return $this->db->get()->row();
     }
 
-    public function dispoible()
+    public function get_rango_periodo() {
+        $this->db->select('p.fecha_inicio AS inicio, p.fecha_fin AS fin');
+        $this->db->from('horario AS h');
+        $this->db->join('comision AS c', 'h.Comision_id = c.id', 'left');
+        $this->db->join('periodo AS p', 'c.Periodo_id = p.id');
+        $this->db->where('h.id', $this->id);
+        return $this->db->get()->row();
+    }
+
+    public function get_colisiones($periodo_id)
     {
         $hora_fin = date("H:i:s", strtotime($this->hora_inicio) + strtotime($this->duracion) - strtotime("00:00:00"));
-        $this->db->select('ADDTIME(hora_inicio, duracion) AS hora_fin');
-        $this->db->where('dia', $this->dia);
-        $this->db->where('Aula_id', $this->aula_id);
-        $this->db->where("hora_inicio BETWEEN '$this->hora_inicio' AND '$hora_fin' ");
-        $this->db->where("hora_fin BETWEEN '$this->hora_inicio' AND '$hora_fin' ");
-        $query = $this->db->get('horario');
-        return $query->num_rows() == 0;
+        $this->db->select('ho.id AS Horario_id, co.id AS Comision_id, as.nombre AS asignatura, co.nombre AS comision');
+        $this->db->from('horario AS ho');
+        $this->db->join('comision AS co', 'ho.Comision_id = co.id', 'left');
+        $this->db->join('asignatura AS as', 'co.Asignatura_id = as.id', 'left');
+        $this->db->where('co.Periodo_id', $periodo_id);
+        $this->db->where('ho.dia', $this->dia);
+        $this->db->where('ho.Aula_id', $this->aula_id);
+        $this->db->where("ho.hora_inicio BETWEEN '$this->hora_inicio' AND '$hora_fin' ");
+        $this->db->where("(SELECT ADDTIME(ho.hora_inicio, ho.duracion)) BETWEEN '$this->hora_inicio' AND '$hora_fin' ");
+        $query = $this->db->get();
+        return $query->result();
     }
 
     public function insert_clases($horario)
@@ -87,18 +100,42 @@ class Horario_model extends CI_Model {
             }
         }
     }
+    public function insertar_clases()
+    {
+        $rango = $this->get_rango_periodo();
+        $interval = DateInterval::createFromDateString('1 day');
+        $period = new DatePeriod(new DateTime($rango->inicio), $interval, new DateTime($rango->fin));
+        foreach( $period as $dt ) {
+            if ($this->dia == $dt->format("w")) {
 
-    public function insert($id)
+                $hora_fin = strtotime($this->hora_inicio) + strtotime($this->duracion) - strtotime("00:00:00");
+                $clase = array(
+                    'fecha' => $dt->format("Y-m-d"),
+                    'hora_inicio' => $this->hora_inicio,
+                    'hora_fin' => date("H:i:s", $hora_fin),
+                    'Aula_id' => $this->Aula_id,
+                    'Horario_id' => $this->id
+                );
+
+                $this->db->insert('clase', $clase);
+            }
+        }
+    }
+
+    public function insert()
     {
         $this->db->trans_start();
-
-        if(!$this->dispoible())
-            throw new Exception('Horario ocupado!');
+        $colisiones = $this->get_colisiones();
+        if(count($colisiones) > 0) {
+            $msg = "Horario ocupado!";
+            foreach ($colisiones as $c) $msg = $msg . "\n" . $c;
+            throw new Exception($msg);
+        }
 
         $this->db->insert('horario', $this);
-        var_dump($this->db->set($this)->get_compiled_insert('horario'));
+        //var_dump($this->db->set($this)->get_compiled_insert('horario'));
 
-        $this->insert_clases();
+        $this->insertar_clases();
 
         $this->db->trans_complete();
     }

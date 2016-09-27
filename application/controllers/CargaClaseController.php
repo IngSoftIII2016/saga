@@ -7,6 +7,13 @@ class CargaClaseController extends CI_Controller {
         echo "hello world";
     }
 
+    function colisiones($id) {
+        $this->load->model('Horario_model');
+        $this->Horario_model->load($id);
+        var_dump($this->Horario_model->get_colisiones(2));
+
+    }
+/*
     function insert() {
         $this->load->model('Horario_model');
 
@@ -23,7 +30,7 @@ class CargaClaseController extends CI_Controller {
         $this->Horario_model->load($id);
         $this->Horario_model->insert_clases();
     }
-
+*/
     function insert_periodo_id($periodo_id){
         $this->load->model('Horario_model');
 
@@ -37,7 +44,6 @@ class CargaClaseController extends CI_Controller {
         }
         */
     }
-
 
     function horario($id) {
         $this->load->model('Horario_model');
