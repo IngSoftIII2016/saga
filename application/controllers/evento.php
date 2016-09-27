@@ -27,6 +27,7 @@ class evento extends CI_Controller
 		
 		//var_dump($fields);
 		$crud->callback_insert(array($this,'agregar_evento_callback'));
+		
         $output = $crud->render();
 		$data['edificios'] = $this->Edificio_model->get_edificios();
 		//
@@ -48,7 +49,22 @@ class evento extends CI_Controller
 		$motivo = $post_array['motivo'];
 		
 		$this->load->model('Evento_Model');
-		return $this->Evento_Model->agregar_evento($aula, $fecha, $hora_inicio, $hora_fin, $motivo);
+		//return $this->Evento_Model->agregar_evento($aula, $fecha, $hora_inicio, $hora_fin, $motivo);
+		if(($this->Evento_Model->evento_disponible($aula, $fecha, $hora_inicio, $hora_fin))) {
+			// $evento_datos = array(
+			// 'Aula_id' => $aula,
+			// 'fecha' => $fecha,
+			// 'hora_inicio' => $hora_inicio,
+			// 'hora_fin' => $hora_fin,
+			// 'motivo' => $motivo
+			// );
+ 
+			$this->db->insert('evento',$post_array);
+			return $post_array;
+		}
+		//} else {
+		//	return false;
+		//}
 	}
 	 
 	 

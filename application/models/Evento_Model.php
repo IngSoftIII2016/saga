@@ -58,6 +58,28 @@ class Evento_Model extends CI_Model {
 			return FALSE;
 		}
 		
-		
 		} 
+		
+		public function insertar($aula, $fecha, $hora_inicio, $hora_fin, $motivo) {
+		
+			$evento_datos = array(
+			'Aula_id' => $aula,
+			'fecha' => $fecha,
+			'hora_inicio' => $hora_inicio,
+			'hora_fin' => $hora_fin,
+			'motivo' => $motivo
+			);
+			$this->db->insert('evento',$evento_datos);
+		}
+		
+		function aula_disponible($aula, $fecha, $hora_inicio, $hora_fin) {
+		$this->db->select('clase.id');
+		$this->db->from('clase');
+		$this->db->where('clase.fecha', $fecha);
+		$this->db->where("clase.hora_inicio BETWEEN $hora_inicio AND $hora_fin");
+		$this->db->where("clase.hora_fin BETWEEN $hora_inicio AND $hora_fin");
+		$query = $this->db->get();
+		return $query->num_rows() == 0;
+	}
+		
 }
