@@ -16,7 +16,7 @@ class abm extends CI_Controller
     public function docente()
     {
         $crud = new grocery_CRUD();
-
+		$crud->set_language("spanish");
         $crud->set_table('docente');
         $output = $crud->render();
         $this->load->view('vacia.php', $output);
@@ -25,7 +25,7 @@ class abm extends CI_Controller
     public function asignatura()
     {
         $crud = new grocery_CRUD();
-
+		$crud->set_language("spanish");
         $crud->set_table('asignatura');
         $output = $crud->render();
         $this->load->view('vacia.php', $output);
@@ -34,7 +34,7 @@ class abm extends CI_Controller
     public function carrera()
     {
         $crud = new grocery_CRUD();
-
+		$crud->set_language("spanish");
         $crud->set_table('carrera');
         $output = $crud->render();
         $this->load->view('vacia.php', $output);
@@ -44,7 +44,7 @@ class abm extends CI_Controller
     public function aula()
     {
         $crud = new grocery_CRUD();
-
+		$crud->set_language("spanish");
         $crud->set_table('aula');
         $crud->set_relation('Edificio_id', 'edificio', 'nombre');
         $output = $crud->render();
@@ -54,7 +54,7 @@ class abm extends CI_Controller
     public function edificio()
     {
         $crud = new grocery_CRUD();
-
+		$crud->set_language("spanish");
         $crud->set_table('edificio');
         $crud->set_relation('Localidad_id', 'localidad', 'nombre');
         $output = $crud->render();
@@ -64,7 +64,7 @@ class abm extends CI_Controller
     public function localidad()
     {
         $crud = new grocery_CRUD();
-
+		$crud->set_language("spanish");
         $crud->set_table('localidad');
         $output = $crud->render();
         $this->load->view('vacia.php', $output);

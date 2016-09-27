@@ -99,7 +99,7 @@ foreach($css_files as $file): ?>
 </body>
 <script>
 $( "table" ).addClass( "table" );
-$("a").css( "color", "black" );
+$("table").find("a").css( "color", "black" );
 $("span.delete-icon").removeClass("delete-icon").addClass("glyphicon glyphicon-trash");
 $("span.read-icon").removeClass("read-icon").addClass("glyphicon glyphicon-search");
 $("span.edit-icon").removeClass("edit-icon").addClass("glyphicon glyphicon-pencil");
