@@ -65,13 +65,23 @@ class Clase_model extends CI_Model {
 	
 	//util para cambiar un horario y fechas disponible para asignar eventos 
 	function aula_disponible($aula, $fecha, $hora_inicio, $hora_fin) {
+		$hora_fin = date("H:i:s", strtotime($hora_fin));
+		$hora_inicio = date("H:i:s", strtotime($hora_inicio));
 		$this->db->select('clase.id');
 		$this->db->from('clase');
-		$this->db->where('clase.fecha', $fecha);
-		$this->db->where('clase.hora_inicio');
-		$this->db->where("clase.hora_inicio BETWEEN $hora_inicio AND $hora_fin");
-		$this->db->where("clase.hora_fin BETWEEN $hora_inicio AND $hora_fin");
+		
+		$this->db->join('horario AS ho', 'clase.Horario_id=ho.id', 'left');
+
+		$this->db->where('ho.Aula_id',$aula);
+		$this->db->where('fecha', $fecha);
+		$this->db->where('clase.hora_inicio >=', $hora_inicio);
+		$this->db->where('clase.hora_inicio <=', $hora_fin);
+		$this->db->where('clase.hora_fin >=', $hora_inicio);
+		$this->db->where('clase.hora_fin <=', $hora_fin);
+		//$this->db->where_between("hora_inicio BETWEEN $hora_inicio AND $hora_fin");
+		//$this->db->where("clase.hora_fin BETWEEN $hora_inicio AND $hora_fin");
 		$query = $this->db->get();
+		
 		return $query->num_rows() == 0;
 	}
 }
