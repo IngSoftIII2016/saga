@@ -43,7 +43,10 @@ class Evento_Model extends CI_Model {
 		}
 	
 		public function agregar_evento($aula, $fecha, $hora_inicio, $hora_fin, $motivo) {
-		if(evento_disponible($aula, $fecha, $hora_inicio, $hora_fin)) {
+
+			$this->load->model('Horario_model');
+		//return $this->Evento_Model->agregar_evento($aula, $fecha, $hora_inicio, $hora_fin, $motivo);
+		if($this->Horario_model->disponible($aula, $fecha, $hora_inicio, $hora_fin)) {
 			$evento_datos = array(
 			'Aula_id' => $aula,
 			'fecha' => $fecha,

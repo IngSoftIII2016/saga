@@ -1,6 +1,6 @@
 <?php if (!defined('BASEPATH')) exit('No direct script access allowed');
 
-class evento extends CI_Controller
+class Evento extends CI_Controller
 {
 
     public function __construct()
@@ -14,7 +14,7 @@ class evento extends CI_Controller
 
     public function index()
     {
-		$this->load->model('Edificio_model');
+		//$this->load->model('Edificio_model');
         $crud = new grocery_CRUD();
 
         $crud->set_table('evento');
@@ -26,15 +26,14 @@ class evento extends CI_Controller
 
 		
 		//var_dump($fields);
-		$crud->callback_insert(array($this,'agregar_evento_callback'));
+		//$crud->callback_insert(array($this,'agregar_evento_callback'));
 		
         $output = $crud->render();
-		$data['edificios'] = $this->Edificio_model->get_edificios();
+		//$data['edificios'] = $this->Edificio_model->get_edificios();
 		//
 		
 		
 		//
-		$this->load->view('header.php', $data);
         $this->load->view('vacia.php', $output);
 
 		
@@ -49,22 +48,7 @@ class evento extends CI_Controller
 		$motivo = $post_array['motivo'];
 		
 		$this->load->model('Evento_Model');
-		//return $this->Evento_Model->agregar_evento($aula, $fecha, $hora_inicio, $hora_fin, $motivo);
-		if(($this->Evento_Model->evento_disponible($aula, $fecha, $hora_inicio, $hora_fin))) {
-			// $evento_datos = array(
-			// 'Aula_id' => $aula,
-			// 'fecha' => $fecha,
-			// 'hora_inicio' => $hora_inicio,
-			// 'hora_fin' => $hora_fin,
-			// 'motivo' => $motivo
-			// );
- 
-			$this->db->insert('evento',$post_array);
-			return $post_array;
-		}
-		//} else {
-		//	return false;
-		//}
+		return $this->Evento_Model->agregar_evento($aula, $fecha, $hora_inicio, $hora_fin, $motivo);
 	}
 	 
 	 
