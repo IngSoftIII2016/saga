@@ -86,7 +86,7 @@
 	var base_url = "<?= base_url(); ?>"; // URL base, usada en js
 </script>
 
-<nav class="navbar navbar-dark" style="background-color: rgb(179,19,10) !important;">
+<nav class="navbar navbar-dark" style="background-color: #881300 !important;">
   <div class="container-fluid">
     <!-- Brand and toggle get grouped for better mobile display -->
     <div class="navbar-header">
@@ -94,7 +94,7 @@
     </div>
 
     <!-- Collect the nav links, forms, and other content for toggling -->
-    <div class="collapse navbar-collapse " id="bs-example-navbar-collapse-1" style="background-color: rgb(179,19,10) !important;">
+    <div class="collapse navbar-collapse " id="bs-example-navbar-collapse-1" style="background-color: #881300 !important;">
       <ul class="nav navbar-nav navbar-right">
 		<li><a href="#" class="header navclass" style=" font-size: medium;">Buscador</a>
         </li>

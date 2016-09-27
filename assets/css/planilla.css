@@ -20,7 +20,7 @@
 	    
 }
 .color{
-	background-color: #706c6c;
+	background-color: #9e9e9e !important;
 	color:white;
 	border: 1px solid black !important;
 	    width: 100%;
@@ -30,7 +30,7 @@
 	    
 }
 .navclass:focus, .navclass:hover, .navclass:active {
-	background-color: rgb(179,19,10) !important;
+	background-color: #881300 !important;
 	color:white !important;
 	
 }
@@ -49,7 +49,7 @@
 	font-size: large !important;
 }
 .text-primary{
-	color:rgb(179,19,10) !important;
+	color:#881300 !important;
 }
 .evento{
 	background:#31b0d5;
@@ -107,7 +107,7 @@ p {
 }
 .btn-primary{
 	color: #fff;
-	background-color:rgb(179,19,10) !important;
+	background-color:#881300 !important;
 	}
 
 h3 {
