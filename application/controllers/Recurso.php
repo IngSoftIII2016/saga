@@ -1,7 +1,7 @@
 <?php
 
-class EdificioController extends CI_Controller
-{
+class Recurso extends CI_Controller {
+
     public function __construct()
     {
         parent::__construct();
@@ -13,12 +13,14 @@ class EdificioController extends CI_Controller
     }
 
     public function index() {
-        $this->load->model('Edificio_Model');
+        $this->load->model('Recurso_Model');
         $crud = new grocery_CRUD();
-        $crud->set_model('Edificio_Model');
-        $crud->set_table('edificio');
-        $crud->set_relation('Localidad_id', 'localidad', 'nombre');
+        $crud->set_model('Recurso_Model');
+        $crud->set_table('recurso');
+        $crud->set_relation('Tipo_recurso_id', 'tipo_recurso', 'nombre');
+        $crud->set_relation('Aula_id', 'aula', 'id');
         $output = $crud->render();
         $this->load->view('vacia.php', $output);
     }
+
 }

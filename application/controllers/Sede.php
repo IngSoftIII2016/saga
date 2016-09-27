@@ -1,6 +1,6 @@
 <?php
 
-class AulaController extends CI_Controller
+class Sede extends CI_Controller
 {
     public function __construct()
     {
@@ -13,11 +13,10 @@ class AulaController extends CI_Controller
     }
 
     public function index() {
-        $this->load->model('Aula_model');
+        $this->load->model('Sede_Model');
         $crud = new grocery_CRUD();
-        $crud->set_model('Aula_model');
-        $crud->set_table('aula');
-        $crud->set_relation('Edificio_id', 'edificio', 'nombre');
+        $crud->set_model('Sede_Model');
+        $crud->set_table('sede');
         $output = $crud->render();
         $this->load->view('vacia.php', $output);
     }

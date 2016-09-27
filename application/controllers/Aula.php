@@ -1,6 +1,7 @@
 <?php
 
-class TipoRecursoController extends CI_Controller{
+class Aula extends CI_Controller
+{
     public function __construct()
     {
         parent::__construct();
@@ -12,10 +13,11 @@ class TipoRecursoController extends CI_Controller{
     }
 
     public function index() {
-        $this->load->model('TipoRecurso_Model');
+        $this->load->model('Aula_model');
         $crud = new grocery_CRUD();
-        $crud->set_model('TipoRecurso_Model');
-        $crud->set_table('tipo_recurso');
+        $crud->set_model('Aula_model');
+        $crud->set_table('aula');
+        $crud->set_relation('Edificio_id', 'edificio', 'nombre');
         $output = $crud->render();
         $this->load->view('vacia.php', $output);
     }
