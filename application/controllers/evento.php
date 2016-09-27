@@ -23,11 +23,35 @@ class evento extends CI_Controller
 		$crud->field_type('hora_inicio', 'time');
 		$crud->field_type('hora_fin', 'time');
 		$crud->field_type('motivo', 'text');
+
+		
+		//var_dump($fields);
+		$crud->callback_insert(array($this,'agregar_evento_callback'));
         $output = $crud->render();
 		$data['edificios'] = $this->Edificio_model->get_edificios();
-		 $this->load->view('header.php', $data);
+		//
+		
+		
+		//
+		$this->load->view('header.php', $data);
         $this->load->view('vacia.php', $output);
-    }
 
+		
+		
+    }
+	
+	public function agregar_evento_callback($post_array) {
+		$aula = $post_array['aula'];
+		$fecha = $post_array['fecha'];
+		$hora_inicio = $post_array['hora_inicio'];
+		$hora_fin = $post_array['hora_fin'];
+		$motivo = $post_array['motivo'];
+		
+		$this->load->model('Evento_Model');
+		return $this->Evento_Model->agregar_evento($aula, $fecha, $hora_inicio, $hora_fin, $motivo);
+	}
+	 
+	 
+	 
   
 }
