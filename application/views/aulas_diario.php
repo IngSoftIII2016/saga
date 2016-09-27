@@ -1,4 +1,12 @@
-<?php $this->load->view ( 'header' );?>
+<!DOCTYPE html>
+<html>
+<head>
+<?php 
+$this->load->view ( 'css-script' );?>
+</head>
+<body>
+<?php 
+$this->load->view ( 'header' );?>
 <section class="content" id="contect">
 		<div class="col-md-12 tabla" id="contenido">
 			

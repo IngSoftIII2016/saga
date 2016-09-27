@@ -14,7 +14,6 @@ class Evento extends CI_Controller
 
     public function index()
     {
-		//$this->load->model('Edificio_model');
         $crud = new grocery_CRUD();
 
         $crud->set_table('evento');
@@ -29,11 +28,6 @@ class Evento extends CI_Controller
 		//$crud->callback_insert(array($this,'agregar_evento_callback'));
 		
         $output = $crud->render();
-		//$data['edificios'] = $this->Edificio_model->get_edificios();
-		//
-		
-		
-		//
         $this->load->view('vacia.php', $output);
 
 		
