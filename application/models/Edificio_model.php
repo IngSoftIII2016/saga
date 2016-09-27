@@ -1,6 +1,7 @@
 <?php
 
-class Edificio_model extends CI_Model {
+require_once('Grocery_crud_model.php');
+class Edificio_model extends Grocery_crud_model {
     public function __construct()
     {
         parent::__construct();
