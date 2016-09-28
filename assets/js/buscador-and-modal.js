@@ -22,7 +22,6 @@ $(document).ready(function(){
 		$(document).ready(function(){
     $('[data-toggle*="tooltip"]').tooltip(); 
 });
-
 		
 });
 $('#exampleModal').on('show.bs.modal', function (event) {
