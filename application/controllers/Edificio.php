@@ -17,6 +17,7 @@ class Edificio extends CI_Controller
         $crud->set_model('Edificio_Model');
         $crud->set_table('edificio');
         $crud->set_relation('Localidad_id', 'localidad', 'nombre');
+        $crud->required_fields('nombre', 'Localidad_id');
         $output = $crud->render();
         $this->load->view('vacia.php', $output);
     }

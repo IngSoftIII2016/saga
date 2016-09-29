@@ -17,6 +17,7 @@ class Docente extends CI_Controller
         $crud = new grocery_CRUD();
         $crud->set_model('Docente_Model');
         $crud->set_table('docente');
+        $crud->required_fields('nombre', 'apellido');
         $output = $crud->render();
         $this->load->view('vacia.php', $output);
     }

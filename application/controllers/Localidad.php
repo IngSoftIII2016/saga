@@ -18,6 +18,7 @@ class Localidad extends CI_Controller
         $crud->set_model('Localidad_Model');
         $crud->set_table('localidad');
         $crud->set_relation('Sede_id', 'sede', 'nombre');
+        $crud->required_fields('nombre', 'Sede_id');
         $output = $crud->render();
         $this->load->view('vacia.php', $output);
     }

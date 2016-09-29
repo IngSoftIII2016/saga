@@ -19,6 +19,7 @@ class Recurso extends CI_Controller {
         $crud->set_table('recurso');
         $crud->set_relation('Tipo_recurso_id', 'tipo_recurso', 'nombre');
         $crud->set_relation('Aula_id', 'aula', 'id');
+        $crud->required_fields('Tipo_recurso_id', 'Aula_id', 'disponible');
         $output = $crud->render();
         $this->load->view('vacia.php', $output);
     }

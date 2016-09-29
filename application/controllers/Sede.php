@@ -17,6 +17,7 @@ class Sede extends CI_Controller
         $crud = new grocery_CRUD();
         $crud->set_model('Sede_Model');
         $crud->set_table('sede');
+        $crud->required_fields('nombre');
         $output = $crud->render();
         $this->load->view('vacia.php', $output);
     }

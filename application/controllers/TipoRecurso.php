@@ -16,6 +16,7 @@ class TipoRecurso extends CI_Controller{
         $crud = new grocery_CRUD();
         $crud->set_model('TipoRecurso_Model');
         $crud->set_table('tipo_recurso');
+        $crud->required_fields('nombre');
         $output = $crud->render();
         $this->load->view('vacia.php', $output);
     }

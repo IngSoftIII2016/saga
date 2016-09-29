@@ -18,6 +18,7 @@ class Aula extends CI_Controller
         $crud->set_model('Aula_model');
         $crud->set_table('aula');
         $crud->set_relation('Edificio_id', 'edificio', 'nombre');
+        $crud->required_fields('nombre', 'capacidad', 'Edificio_id');
         $output = $crud->render();
         $this->load->view('vacia.php', $output);
     }

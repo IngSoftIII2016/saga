@@ -17,6 +17,8 @@ class Asignatura extends CI_Controller
         $crud = new grocery_CRUD();
         $crud->set_model('Asignatura_Model');
         $crud->set_table('asignatura');
+        $crud->required_fields('nombre');
+        $crud->field_type('fruits','set',array('banana','orange','apple','lemon'));
         $output = $crud->render();
         $this->load->view('vacia.php', $output);
     }

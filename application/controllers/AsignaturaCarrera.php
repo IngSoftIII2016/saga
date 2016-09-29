@@ -19,6 +19,7 @@ class AsignaturaCarrera extends CI_Controller
         $crud->set_table('asignatura_carrera');
         $crud->set_relation('Asignatura_id', 'asignatura', 'nombre');
         $crud->set_relation('Carrera_id', 'carrera', 'nombre');
+        $crud->required_fields('Asignatura_id', 'Carrera_id', 'regimen', 'anio');
         $output = $crud->render();
         $this->load->view('vacia.php', $output);
     }

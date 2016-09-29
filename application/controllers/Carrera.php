@@ -17,6 +17,7 @@ class Carrera extends CI_Controller
         $crud = new grocery_CRUD();
         $crud->set_model('Carrera_Model');
         $crud->set_table('carrera');
+        $crud->required_fields('nombre');
         $output = $crud->render();
         $this->load->view('vacia.php', $output);
     }

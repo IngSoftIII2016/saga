@@ -17,6 +17,7 @@ class Periodo extends CI_Controller
         $crud = new grocery_CRUD();
         $crud->set_model('Periodo_Model');
         $crud->set_table('periodo');
+        $crud->required_fields('fecha_inicio', 'fecha_fin');
         $output = $crud->render();
         $this->load->view('vacia.php', $output);
     }
