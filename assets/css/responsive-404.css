@@ -1,0 +1,134 @@
+ @media (max-width: 1200px){
+
+.container{
+	width:940px;
+}
+}
+
+@media (min-width: 768px) and (max-width: 980px) {
+.container{
+	width:750px;
+}
+
+
+#clock-wrap {
+    float: none;
+    height: 400px;
+    margin-bottom: 0;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 58px 0 0;
+    width: auto;
+}
+.error-area {
+    display: table;
+    float: none;
+    margin: 112px auto 0;
+}
+
+
+
+}
+
+@media (max-width: 767px) {
+.container {
+    padding: 0 20px;
+    width: 100%;
+	-webkit-box-sizing:border-box;
+	-moz-box-sizing:border-box;
+	-ms-box-sizing:border-box;
+	-o-box-sizing:border-box;
+	box-sizing:border-box;
+}
+
+#clock-wrap {
+    float: none;
+    height: 400px;
+    margin: 0 auto;
+    padding: 58px 0 0;
+    width: auto;
+}
+
+.menu li {
+    margin-left: 10px;
+}
+
+.menu {
+    padding-top: 23px;
+}
+
+.menu li {
+    margin-bottom: 10px;
+    margin-left: 10px;
+}
+
+.error-area {
+    float: none;
+}
+
+.error-area img {
+    display: table;
+    height: 125px;
+    margin: 0 auto;
+    width: 259px;
+}
+
+#clock {
+    display: table;
+    margin: 0 auto;
+    top: 21%;
+    width: 400px;
+	top:0;
+	left:0;
+}
+h2 span{
+	font-size:25px;
+}
+h2{
+	font-size:25px;
+}
+h3{
+	font-size:16px;
+}
+.search {
+    background: url("../img/404/search-bg.png") repeat scroll 0 0 / 100% 100% rgba(0, 0, 0, 0);
+    width: auto;
+}
+
+.search input {
+    width: 250px;
+}
+}
+@media (max-width: 480px)  {
+#clock-wrap {
+	display:none;
+}
+h2{
+    line-height: 50px;
+}
+.search {
+    background: url("../img/404/search-bg.png") repeat scroll 0 0 / 100% 100% rgba(0, 0, 0, 0);
+    width: 68%;
+}
+
+
+.search input {
+    width: 125px;
+}
+
+header {
+    float: none;
+}
+
+.error-area img {
+    display: table;
+    height: 125px;
+    padding-top: 50px;
+    width: 259px;
+}
+
+.error-area {
+    float: none;
+    margin-top: 0;
+}
+}

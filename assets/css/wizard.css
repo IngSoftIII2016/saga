@@ -1,0 +1,202 @@
+.costo {
+	padding-right: 5px;
+	padding-left: 5px;
+}
+
+.costoLeft {
+	padding-right: 5px;
+	padding-left: 10px;
+}
+
+.costoRight {
+	padding-right: 10px;
+	padding-left: 5px;
+}
+.columna {
+	    padding-right: 3px;
+}
+.input-precio{
+	    margin-bottom: 0px;
+}
+.input-subtotal{
+	margin-bottom: 8px;
+}
+
+.precio {
+	padding-left: 8px;
+	padding-right: 8px;
+}
+
+#remove-cliente {
+	position: absolute;
+	left: 90%;
+	top: 61%;
+}
+
+.tarjeta {
+	background-color: white;
+	border-radius: 3px;
+	padding-top: 8px;
+	padding-bottom: 8px;
+	margin-left: 46px;
+}
+.precioAzul {
+    color: #3c8dbc;
+    font-weight: bold;
+    }
+}
+
+.subtotal {
+	margin: 0px;
+	border-top: 2px solid #eee;
+}
+
+#small-divisor{
+	margin-top: 8px;
+    margin-bottom: 8px;    
+}
+div.precio-center{
+	padding-top: 5px;
+}
+
+.total {
+	margin: 0px;
+	border-top: 2px solid #080808;
+}
+
+.stepwizard-step p {
+	margin-top: 10px;
+}
+
+.stepwizard-row {
+	display: table-row;
+}
+
+.stepwizard {
+	display: table;
+	width: 100%;
+	position: relative;
+}
+
+.stepwizard-step button[disabled] {
+	opacity: 1 !important;
+	filter: alpha(opacity = 100) !important;
+}
+
+.stepwizard-row:before {
+	top: 14px;
+	bottom: 0;
+	position: absolute;
+	content: " ";
+	width: 100%;
+	height: 1px;
+	background-color: #ccc;
+	z-order: 0;
+}
+
+.stepwizard-step {
+	display: table-cell;
+	text-align: center;
+	position: relative;
+}
+
+.btn-circle {
+	width: 30px;
+	height: 30px;
+	text-align: center;
+	padding: 6px 0;
+	font-size: 12px;
+	line-height: 1.428571429;
+	border-radius: 15px;
+}
+
+.material-switch>input[type="checkbox"] {
+	display: none;
+}
+
+.material-switch>label {
+	cursor: pointer;
+	height: 0px;
+	position: relative;
+	width: 40px;
+}
+
+.material-switch>label::before {
+	background: rgb(0, 0, 0);
+	box-shadow: inset 0px 0px 10px rgba(0, 0, 0, 0.5);
+	border-radius: 8px;
+	content: '';
+	height: 16px;
+	margin-top: -8px;
+	position: absolute;
+	opacity: 0.3;
+	transition: all 0.4s ease-in-out;
+	width: 40px;
+}
+
+.material-switch>label::after {
+	background: rgb(255, 255, 255);
+	border-radius: 16px;
+	box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.3);
+	content: '';
+	height: 24px;
+	left: -4px;
+	margin-top: -8px;
+	position: absolute;
+	top: -4px;
+	transition: all 0.3s ease-in-out;
+	width: 24px;
+}
+
+.material-switch>input[type="checkbox"]:checked+label::before {
+	background: inherit;
+	opacity: 0.5;
+}
+
+.material-switch>input[type="checkbox"]:checked+label::after {
+	background: inherit;
+	left: 20px;
+}
+
+#step-1 .box-contacto {
+	border: #E6E6E6 1px solid;
+	border-radius: 4px;
+	padding: 10px 5px 5px 5px;
+	margin: 12px 0px;
+}
+
+#step-4 .box-contacto {
+	border: #E6E6E6 1px solid;
+	border-radius: 4px;
+	padding: 10px 5px 5px 5px;
+	margin: 12px 0px;
+}
+
+.nav-tabs-custom .nav-tabs .disabled-tab {
+	border-top-color: #BC3C3C;
+}
+
+.nav-tabs-custom .nav-tabs .disabled-tab a {
+	background-color: #eee;
+	opacity: 1;
+	cursor: not-allowed;
+	color: #B7B7B7;
+}
+
+.nav-tabs-custom .nav-tabs .disabled-tab a:hover {
+	background-color: #eee;
+	opacity: 1;
+}
+
+.box-fechas {
+	margin-bottom: 15px;
+}
+
+.monto-final-success {
+	background-color: #dff0d8;
+}
+
+.monto-final-error {
+	background-color: #f2dede;
+	color: red;
+}

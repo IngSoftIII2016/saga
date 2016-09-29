@@ -1,0 +1,473 @@
+@charset "utf-8";
+/* CSS Document */
+      	  
+
+body {
+    background: url("../img/404/pattern5.jpg") repeat scroll 0 0 rgba(0, 0, 0, 0);
+    margin: 0;
+    padding: 0;
+}
+
+
+.wrapper {
+    float: left;
+    width: 100%;
+}
+
+
+
+/*** Header Section ***/
+header {
+    border-top: 4px solid rgba(0, 0, 0, 0.07);
+    float: left;
+    width: 100%;
+}
+.container {
+    display: table;
+    margin: 0 auto;
+    width: 980px;
+}
+
+/*** Logo ***/
+.logo {
+    background: none repeat scroll 0 0 rgba(0, 0, 0, 0.07);
+    height: 54px;
+    width: 138px;
+	float:left;
+}
+.logo span {
+    color: #D12A33;
+    font-family: open sans;
+    font-size: 24px;
+}
+.logo {
+    color: #161616;
+    font-family: open sans;
+    font-size: 24px;
+    font-weight: bold;
+    line-height: 58px;
+    position: relative;
+    text-align: center;
+}
+.logo:before {
+    border-left: 0 solid rgba(0, 0, 0, 0);
+    border-right: 139px solid rgba(0, 0, 0, 0);
+    border-top: 30px solid rgba(0, 0, 0, 0.07);
+    content: "";
+    height: 0;
+    left: 0;
+    position: absolute;
+    top: 54px;
+    width: 0;
+}
+
+
+/*** Menu ***/
+
+.menu {
+    float: right;
+    padding: 19px 0;
+}
+.menu.animated{
+	-webkit-animation-duration:3s;
+	-moz-animation-duration:3s;
+	-ms-animation-duration:3s;
+	-o-animation-duration:3s;
+	animation-duration:3s;
+}
+
+.menu > ul {
+    margin: 0;
+    padding: 0;
+}
+.menu li {
+    float: left;
+    list-style: none outside none;
+    margin-left: 20px;
+}
+
+.menu li a:hover {
+    background: none repeat scroll 0 0 #E5414A;
+    border: 1px solid #8c0108;
+    color: #FFFFFF;
+}
+.menu li a {
+    background: none repeat scroll 0 0 #F5F5F5;
+    border: 1px solid #D4D4D4;
+    color: #161616;
+    float: left;
+    font-family: open sans;
+    font-size: 13px;
+    line-height: 9px;
+    padding: 10px 20px;
+    text-decoration: none;
+	
+	-webkit-border-radius: 2px;
+	-moz-border-radius: 2px;
+	-ms-border-radius: 2px;
+	-o-border-radius: 2px;
+	border-radius: 2px;
+	
+	-webkit-transition: all 0.4s ease 0s;
+	-moz-transition: all 0.4s ease 0s;
+	-ms-transition: all 0.4s ease 0s;
+	-o-transition: all 0.4s ease 0s;
+	transition: all 0.4s ease 0s;
+}
+
+/*** Error Area ***/
+.error-area{
+	float: right;
+    margin-top: 80px;
+	text-align:center;
+}
+
+/*** 404 Image ***/
+.error-area img {
+    margin: 0 auto;
+}
+.error-area img.animated{
+	-webkit-animation-duration:3s;
+	-moz-animation-duration:3s;
+	-ms-animation-duration:3s;
+	-o-animation-duration:3s;
+	animation-duration:3s;
+}
+
+/*** H2 ***/
+h2 span {
+    color: #D12A33;
+    font-family: open sans;
+    font-size: 37px;
+    font-weight: bold;
+}
+h2{
+	color: #242426;
+    font-family: open sans;
+    font-size: 37px;
+    font-weight: 500;
+    line-height: 27px;
+    margin: 50px 0;
+	text-align: center;
+}
+h2.animated{
+	-webkit-animation-duration:3s;
+	-moz-animation-duration:3s;
+	-ms-animation-duration:3s;
+	-o-animation-duration:3s;
+	animation-duration:3s;
+}
+
+/*** H3 ***/
+h3 {
+    color: #242426;
+    font-family: open sans;
+    font-size: 20px;
+    font-weight: normal;
+    margin: 0 0 30px;
+    text-align: center;
+}
+
+/*** Search Box ***/
+.search {
+    /*background: url("../img/search-bg.png") repeat scroll 0 0 rgba(0, 0, 0, 0);*/
+    display: table;
+    height: 52px;
+    margin: 0 auto;
+    padding: 7px;
+    width: 515px;
+}
+.search.animated{
+	-webkit-animation-duration:3s;
+	-moz-animation-duration:3s;
+	-ms-animation-duration:3s;
+	-o-animation-duration:3s;
+	animation-duration:3s;
+}
+.search input {
+	border: 1px solid #D5D5D5;
+    color: #D5D5D5;
+    float: left;
+    height: 44px;
+    padding-left: 14px;
+    width: 414px;
+	
+	-webkit-border-radius: 2px;
+	-moz-border-radius: 2px;
+	-ms-border-radius: 2px;
+	-o-border-radius: 2px;
+	border-radius: 2px;
+}	
+
+.search > a {
+    background: none repeat scroll 0 0 #E5414A;
+    border: 1px solid #8C0108;
+    color: #FFFFFF;
+    float: left;
+    font-family: open sans;
+    font-size: 15px;
+    margin-left: 7px;
+    padding: 12px 24px;
+    text-decoration: none;
+	
+	-webkit-border-radius: 2px;
+	-moz-border-radius: 2px;
+	-ms-border-radius: 2px;
+	-o-border-radius: 2px;
+	border-radius: 2px;
+}	
+
+/*** Social Buttons ***/
+.social {
+    display: table;
+    margin: 30px auto;
+}
+.social.animated{
+	-webkit-animation-duration:3s;
+	-moz-animation-duration:3s;
+	-ms-animation-duration:3s;
+	-o-animation-duration:3s;
+	animation-duration:3s;
+}
+.social > ul {
+    float: left;
+    margin: 0;
+    padding: 0;
+}
+.social li {
+    float: left;
+    list-style: none outside none;
+    margin-left: 7px;
+}
+
+.social li a:hover {
+    background: none repeat scroll 0 0 #E5414A;
+    border: 1px solid #E5414A;
+    color: #FFFFFF;
+}
+.social li a {
+    background: none repeat scroll 0 0 #F5F5F5;
+    border: 1px solid #D4D4D4;
+    color: #A7A7A7;
+    float: left;
+    font-size: 20px;
+    height: 40px;
+    line-height: 42px;
+    text-align: center;
+    text-decoration: none;
+    width: 41px;
+
+	-webkit-transition: all 0.4s ease 0s;
+	-moz-transition: all 0.4s ease 0s;
+	-ms-transition: all 0.4s ease 0s;
+	-o-transition: all 0.4s ease 0s;
+	transition: all 0.4s ease 0s;
+}		
+		
+		
+/*** Clock ***/		
+#clock {
+    background-image: url("../img/404/clockface.png");
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: 400px 400px;
+    height: 400px;
+    left: 22%;
+    list-style: none outside none;
+    margin: 0;
+    padding: 0;
+    position: relative;
+    top: 21%;
+    width: 400px;
+}
+
+
+#clock-wrap {
+    float: left;
+    height: 400px;
+    margin: -60px 0 0 -141px;
+    padding: 0;
+    width: 400px;
+}
+
+#sec{
+	position: absolute;												/* Seconds, minutes and hour hands can go anywhere they want */
+	width: 20px;													/* Width of containers */
+	height: 400px;													/* Height of containers */
+	top: 0px;														/* No extra distance from top */
+	left: 195px;													/* A little extra distance from left */
+} 
+#min{
+	position: absolute;												/* Seconds, minutes and hour hands can go anywhere they want */
+	width: 20px;													/* Width of containers */
+	height: 400px;													/* Height of containers */
+	top: 0px;														/* No extra distance from top */
+	left: 190px;													/* A little extra distance from left */
+} 
+#hour {
+	position: absolute;												/* Seconds, minutes and hour hands can go anywhere they want */
+	width: 20px;													/* Width of containers */
+	height: 400px;													/* Height of containers */
+	top: 0px;														/* No extra distance from top */
+	left: 190px;													/* A little extra distance from left */
+}
+#sec {
+	background-image: url("../img/404/sechand.png");					/* Sets background image of second hand */
+	z-index: 3;	
+    top: -19px;	
+    top: 27px;										/* This is on top */
+	
+	animation: secSpin 5s ease;										/* Sets up animations for second hand spinning, easing for 5 seconds duration */
+	/* Firefox: */
+	-moz-animation: secSpin 5s ease;
+	/* Safari and Chrome: */
+	-webkit-animation: secSpin 5s ease;
+	/* Opera: */
+	-o-animation: secSpin 5s ease;
+}
+   
+#min {
+	background-image: url("../img/404/minhand.png");					/* Sets minute hand background image */
+	z-index: 2;	
+    left: 51%;
+    top: 17px;	/* Below second hand */
+	
+	animation: minSpin 4s ease;										/* Animation for minute hand, only 4s for spinning at different rates */
+	/* Firefox: */
+	-moz-animation: minSpin 4s ease;
+	/* Safari and Chrome: */
+	-webkit-animation: minSpin 4s ease;
+	/* Opera: */
+	-o-animation: minSpin 4s ease;
+}
+   
+#hour {
+	background-image: url("../img/404/hourhand.png");					/* Sets hour hand background image */
+	z-index: 1;	
+	    left: 46%;
+    top: 21px;
+													/* Below all other hands */
+	
+	animation: hourSpin 3.5s ease;									/* Animation for hour hand, only 3.5s for spinning at different rates */
+	/* Firefox: */
+	-moz-animation: hourSpin 3.5s ease;
+	/* Safari and Chrome: */
+	-webkit-animation: hourSpin 3.5s ease;
+	/* Opera: */
+	-o-animation: hourSpin 3.5s ease;
+}
+
+
+
+
+
+.side-panel.show {
+    left: 0;
+}
+.side-panel {
+    background: none repeat scroll 0 0 #FFFFFF;
+    border-radius: 0 5px 0 0;
+    height: auto;
+    left: -280px;
+    position: fixed;
+    top: 30%;
+    transition: all 0.4s ease 0s;
+    width: 280px;
+}
+
+.button {
+    background-image: linear-gradient(bottom, rgb(235,235,235) 15%, rgb(252,252,252) 58%);
+	background-image: -o-linear-gradient(bottom, rgb(235,235,235) 15%, rgb(252,252,252) 58%);
+	background-image: -moz-linear-gradient(bottom, rgb(235,235,235) 15%, rgb(252,252,252) 58%);
+	background-image: -webkit-linear-gradient(bottom, rgb(235,235,235) 15%, rgb(252,252,252) 58%);
+	background-image: -ms-linear-gradient(bottom, rgb(235,235,235) 15%, rgb(252,252,252) 58%);
+
+	background-image: -webkit-gradient(
+		linear,
+		left bottom,
+		left top,
+		color-stop(0.15, rgb(235,235,235)),
+		color-stop(0.58, rgb(252,252,252))
+	);
+    border-radius: 0 3px 3px 0;
+    color: #333333;
+    padding: 13px;
+    position: absolute;
+    right: -43px;
+    text-decoration: none;
+}
+
+.patterns {
+    margin: 0 auto;
+    position: relative;
+    width: 89%;
+}
+.pat1 {
+    background: url("../img/404/pattern1.jpg") repeat scroll 0 0 / cover rgba(0, 0, 0, 0);
+}
+.pat2 {
+    background: url("../img/404/pattern2.jpg") repeat scroll 0 0 / cover rgba(0, 0, 0, 0);
+}
+.pat3 {
+    background: url("../img/404/pattern3.jpg") repeat scroll 0 0 / cover rgba(0, 0, 0, 0);
+}
+.pat4 {
+    background: url("../img/404/pattern4.jpg") repeat scroll 0 0 / cover rgba(0, 0, 0, 0);
+}
+.pat5 {
+    background: url("../img/404/pattern5.jpg") repeat scroll 0 0 / cover rgba(0, 0, 0, 0);
+}
+.pat6 {
+    background: url("../img/404/pattern6.jpg") repeat scroll 0 0 / cover rgba(0, 0, 0, 0);
+}
+.pattern1{
+		background: url('../img/404/pattern1.jpg');
+}
+.pattern2{
+		background: url('../img/404/pattern2.jpg');
+}
+.pattern3{
+		background: url('../img/404/pattern3.jpg');
+}
+.pattern4{
+		background: url('../img/404/pattern4.jpg');
+}
+.pattern5{
+		background: url('../img/404/pattern5.jpg');
+}
+.pattern6{
+		background: url('../img/404/pattern6.jpg');
+}
+.pictures {
+    border-radius: 2px;
+    float: left;
+    height: 32px;
+    margin-bottom: 8px;
+    margin-left: 8px;
+    width: 32px;
+}
+.side-panel h4 {
+    background-image: linear-gradient(bottom, rgb(235,235,235) 15%, rgb(252,252,252) 58%);
+	background-image: -o-linear-gradient(bottom, rgb(235,235,235) 15%, rgb(252,252,252) 58%);
+	background-image: -moz-linear-gradient(bottom, rgb(235,235,235) 15%, rgb(252,252,252) 58%);
+	background-image: -webkit-linear-gradient(bottom, rgb(235,235,235) 15%, rgb(252,252,252) 58%);
+	background-image: -ms-linear-gradient(bottom, rgb(235,235,235) 15%, rgb(252,252,252) 58%);
+
+	background-image: -webkit-gradient(
+		linear,
+		left bottom,
+		left top,
+		color-stop(0.15, rgb(235,235,235)),
+		color-stop(0.58, rgb(252,252,252))
+	);
+    border-bottom: 1px solid #D6D6D6;
+    color: #333333;
+    float: left;
+    font-family: open sans;
+    font-size: 12px;
+    font-weight: lighter;
+    margin: 0 0 8px;
+    padding: 14px 0;
+    text-align: center;
+    width: 100%;
+}
