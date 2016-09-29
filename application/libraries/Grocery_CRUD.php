@@ -996,11 +996,14 @@ class grocery_CRUD_Model_Driver extends grocery_CRUD_Field_Types
 					{
 						return false;
 					}
+<<<<<<< HEAD
 					//here we sure that this is not true so what this is? sure it can be only ID
 					elseif($callback_return !== true)
 					{
 					   $insert_primary_key =  $callback_return;
 					}
+=======
+>>>>>>> 57957ea02b23a0a92188330e35903c538b5efdd7
 			}
 
 			if(isset($insert_primary_key))

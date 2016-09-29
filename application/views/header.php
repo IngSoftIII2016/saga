@@ -23,13 +23,13 @@
           	<li><a href="<?php echo base_url('edificio') ?>">Edificio</a></li>          	
           	<li><a href="<?php echo base_url('evento') ?>">Evento</a></li>
 			<li><a href="<?php echo base_url('usuario') ?>">Usuario</a></li>
-
           	</ul>
         </li>
 		<li class="dropdown">
           <a href="#" class="dropdown-toggle header navclass" style=" font-size: medium;"data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Perfil <span class="caret"></span></a>
           <ul class="dropdown-menu menudesplegable">
 				<li><a href="<?php echo base_url('Autenticacion/logout') ?>">Salir</a></li>
+
           </ul>
         </li>
       </ul>

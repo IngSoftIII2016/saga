@@ -82,6 +82,10 @@ $db['default'] = array(
 //	'password' => 'aulas.ing3',
 	'password' => '',
 //	'database' => 'gestion_aulas',
+
+	'hostname' => 'dev.lia.unrn.edu.ar',
+	'username' => 'gestion_aulas',
+	'password' => 'aulas.ing3',
 	'database' => 'gestion_aulas',
 	'dbdriver' => 'mysqli',
 	'dbprefix' => '',
