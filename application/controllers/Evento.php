@@ -29,7 +29,7 @@ class Evento extends CI_Controller
 
 		
 		//var_dump($fields);
-		$crud->callback_insert(array($this,'agregar_evento_callback'));
+		//$crud->callback_insert(array($this,'agregar_evento_callback'));
 		
         $output = $crud->render();
 		//$data['edificios'] = $this->Edificio_model->get_edificios();

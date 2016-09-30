@@ -1,5 +1,6 @@
 .grilla{
 	display: table !important;
+	margin-right: 0;
 }
 .contenedor{
 	display: table-row !important;
@@ -54,7 +55,7 @@
 .evento{
 	background:#31b0d5;
 	border: #000000 solid 1px;
-	max-width:65px !important;
+	min-width:100% !important;
 	overflow: auto;
 	font-weight: bold;
 	box-shadow: 3px 3px 15px #999;
@@ -62,12 +63,12 @@
 }
 .materia {
             border: #000000 solid 1px;
-            background: #4CAF50;
-			max-width:65px !important;
+            background: #ebcfad;
+			min-width:100% !important;
 			overflow: auto;
-			font-weight: bold;
+			/*font-weight: bold;*/
 			box-shadow: 3px 3px 15px #999;
-			    color: white;
+			    color: black;
         }
 .celdas {
 	border: #000000 solid 1px;
@@ -88,7 +89,7 @@ a{
 	color:black !important;
 }
 .materia-a{
-	color:white;
+	color:black;
 }
 .buscador{
 	float: right !important; 
