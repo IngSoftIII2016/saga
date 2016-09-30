@@ -52,6 +52,20 @@ $('#exampleModal').on('show.bs.modal', function (event) {
 		$( ".modal-text-evento" ).append( "<strong class='strong'>Motivo: </strong>" + motivo);
 		$( ".modal-text2-evento" ).append( "<strong class='strong'>Horario: </strong>" + horario );
 		});
+		
+		$('#ModalInsertarEvento').on('show.bs.modal', function (event) {
+		var button = $(event.relatedTarget);
+		//var motivo = button.data('motivo');
+		//var horario = button.data('horario');
+		var modal = $(this);
+		//modal.find('.modal-title-evento').text( 'Evento' );
+		//$( ".modal-text-evento" ).empty();
+		//$( ".modal-text2-evento" ).empty();
+		//$( ".strong" ).remove();
+		//$( ".modal-text-evento" ).append( "<strong class='strong'>Motivo: </strong>" + motivo);
+		//$( ".modal-text2-evento" ).append( "<strong class='strong'>Horario: </strong>" + horario );
+		});
+		
 	$('#exampleModalAula').on('show.bs.modal', function (event) {
 	var button = $(event.relatedTarget);
 	var aula = button.data('whatever');

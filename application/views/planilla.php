@@ -1,7 +1,11 @@
-<div class="col-md-12 tabla" id="contenido">				
-				<input type="hidden" value="<?php echo $fecha->format('d-m-Y')?>" id="fecha"></input>				
+<div class="col-md-12 tabla" id="contenido">		
+
+				<input type="hidden" value="<?php echo $fecha->format('d-m-Y')?>" id="fecha"></input>	
+				<button type="reset" id="reload-ant" class="btn col-md-4 btn-primary btn-ant">Evento</button>				
 				<div class="row">				
-					<div class="col-md-2 col-md-offset-1">
+					<div class="col-md-2">
+					
+
 						<div class='input-group date'>
 								<div class="input-group-addon">
 									<i class="fa fa-calendar"></i>
