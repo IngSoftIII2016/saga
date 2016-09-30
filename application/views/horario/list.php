@@ -1,4 +1,3 @@
-
 <form class="form-inline" action="<?=$action_url?>" method="post">
     <div class="form-group">
         <label for="Periodo_id" class="col-sm-2 control-label">Periodo:</label>
@@ -118,5 +117,4 @@
 </table>
 <script type="text/javascript">
     $('select').select2();
-
 </script>
