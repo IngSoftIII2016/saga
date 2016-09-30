@@ -2,7 +2,6 @@
 
 class Horario_model extends CI_Model
 {
-
     public $id;
     public $descripcion;
     public $frecuencia_semanas;
@@ -141,7 +140,6 @@ class Horario_model extends CI_Model
 
     public function insert()
     {
-
         $this->db->trans_start();
 
         $periodo_id = $this->get_periodo()->id;
@@ -174,7 +172,11 @@ class Horario_model extends CI_Model
             throw new Exception($msg);
         }
         $this->db->update('horario', $this, array('id' => $this->id));
+        //$this->db->delete(  )
+        $clases = $this->get_clases();
+        foreach ($clases as $clase) {
 
+        }
         // Acá cambiar todas las clases con este id en Horario_id a partir de la fecha actual
     }
 
@@ -185,10 +187,11 @@ class Horario_model extends CI_Model
     }
 
 
-    private function insertar_clases()
+    private function insertar_clases($start = null)
     {
         $periodo = $this->get_periodo();
-        $start = new DateTime($periodo->fecha_inicio);
+        if($start == null)
+            $start = new DateTime($periodo->fecha_inicio);
         $end = new DateTime($periodo->fecha_fin);
 
         $interval = DateInterval::createFromDateString('1 day');
