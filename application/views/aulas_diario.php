@@ -12,7 +12,8 @@ $this->load->view ( 'header' );?>
 			
 			<input type="hidden" value="<?php echo $fecha->format('d-m-Y')?>" id="fecha"></input>				
 				<div class="row">				
-					<div class="col-md-2 col-md-offset-1">
+					<div class="col-md-2">
+					<button type="reset" class="btn col-md-4 btn-primary btn-ant" data-target="#ModalInsertarEvento">Evento</button>			
 						<div class='input-group date'>
 								<div class="input-group-addon">
 									<i class="fa fa-calendar"></i>
@@ -189,6 +190,35 @@ $this->load->view ( 'header' );?>
 							</div>
 						</div>
 					</div>
+					
+					
+					<div class="modal fade" id="ModalInsertarEvento" tabindex="-1"
+						role="dialog" aria-labelledby="exampleModalLabel"
+						aria-hidden="true">
+						<div class="modal-dialog" role="document">
+							<div class="modal-content">
+								<div class="modal-header">
+									<button type="button" class="close" data-dismiss="modal"
+										aria-label="Close">
+										<span aria-hidden="true">&times;</span>
+									</button>
+									<h3 class="modal-title-evento" id="exampleModalLabel"></h3>
+								</div>
+								<div class="modal-body">
+								      <select class="form-control" id="sel1">
+									  <?
+										foreach ($aulas as $aula) {
+											echo "<option>".$aula->nombre."</option>"
+										} ?>
+									  </select>	
+										
+								<p class="modal-text2-aula text-modal" id="exampleModalLabel">
+								</p>
+								</div>
+							</div>
+						</div>
+					</div>
+					
 					<script src="<?php echo base_url('assets/js/buscador-and-modal.js') ?>"></script>
 				</div>
 				
