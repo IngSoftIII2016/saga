@@ -19,9 +19,8 @@ $(document).ready(function(){
 						    $(".buscara:icontains('" + buscar + "')").addClass('resaltar');
 						}
 		});
-		$(document).ready(function(){
     $('[data-toggle*="tooltip"]').tooltip(); 
-});
+		
 		
 });
 $('#exampleModal').on('show.bs.modal', function (event) {
@@ -55,17 +54,8 @@ $('#exampleModal').on('show.bs.modal', function (event) {
 		
 		$('#ModalInsertarEvento').on('show.bs.modal', function (event) {
 		var button = $(event.relatedTarget);
-		//var motivo = button.data('motivo');
-		//var horario = button.data('horario');
 		var modal = $(this);
-		//modal.find('.modal-title-evento').text( 'Evento' );
-		//$( ".modal-text-evento" ).empty();
-		//$( ".modal-text2-evento" ).empty();
-		//$( ".strong" ).remove();
-		//$( ".modal-text-evento" ).append( "<strong class='strong'>Motivo: </strong>" + motivo);
-		//$( ".modal-text2-evento" ).append( "<strong class='strong'>Horario: </strong>" + horario );
 		});
-		
 	$('#exampleModalAula').on('show.bs.modal', function (event) {
 	var button = $(event.relatedTarget);
 	var aula = button.data('whatever');
@@ -114,6 +104,7 @@ $('#exampleModal').on('show.bs.modal', function (event) {
 	    $("#" + i ).sticky({topSpacing:0});
 	  }
 	  $("#horario").sticky({topSpacing:0});
+	  
 		function reload(fecha,operacion,calendario){
 				$.ajax({
 					type : "POST",
@@ -136,6 +127,8 @@ $('#exampleModal').on('show.bs.modal', function (event) {
 					}
 				});
 			}
+		
+		
 
 		$("button[id='reload-sig']").click(function(e){
 			e.preventDefault();
@@ -163,3 +156,4 @@ $('#exampleModal').on('show.bs.modal', function (event) {
 				}
 			});		
 			});
+		

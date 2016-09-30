@@ -13,7 +13,7 @@ $this->load->view ( 'header' );?>
 			<input type="hidden" value="<?php echo $fecha->format('d-m-Y')?>" id="fecha"></input>				
 				<div class="row">				
 					<div class="col-md-3">
-					<button type="reset" class="btn col-md-4 btn-primary btn-ant" data-target="#ModalInsertarEvento">Evento</button>			
+					<button type="reset" class="btn col-md-4 btn-primary btn-ant" data-toggle="modal" data-target="#modalInsertarEvento">Evento</button>			
 						<div class='input-group date'>
 								<div class="input-group-addon">
 									<i class="fa fa-calendar"></i>
@@ -192,7 +192,7 @@ $this->load->view ( 'header' );?>
 					</div>
 					
 					
-					<div class="modal fade" id="ModalInsertarEvento" tabindex="-1"
+					<div class="modal fade" id="modalInsertarEvento" tabindex="-1"
 						role="dialog" aria-labelledby="exampleModalLabel"
 						aria-hidden="true">
 						<div class="modal-dialog" role="document">
@@ -202,18 +202,44 @@ $this->load->view ( 'header' );?>
 										aria-label="Close">
 										<span aria-hidden="true">&times;</span>
 									</button>
-									<h3 class="modal-title-evento" id="exampleModalLabel"></h3>
+									<h3 class="modal-title-insert-evento" id="exampleModalLabel">Agregar Evento</h3>
 								</div>
 								<div class="modal-body">
+								<div class="row">
+									<div class="form-group col-md-3">
+										<label class="control-label">Hora Inicio</label> <input type="time"
+												class="form-control" name="horainicio" required max="20:00:00"
+												min="08:00:00" />
+									</div>
+									<div class="form-group col-md-3">
+										<label class="control-label">Hora Fin</label> <input type="time"
+												class="form-control" name="horafin" required max="21:00:00"
+												min="09:00:00" />
+									</div>				
+									<div class='form-group col-md-3'>
+												<label class="control-label">Fecha</label>
+													<input name="calendario" id="calendario"
+															type='text' 
+															readonly
+															class="form-control validate"
+															value="<?php if (isset($calendario)) echo $calendario->format('d/m/Y'); ?>">
+													</input>
+										</div>
+									<div class='form-group col-md-8'>
 								      <select class="form-control" id="sel1">
 									  <?
 										foreach ($aulas as $aula) {
 											echo "<option>".$aula->nombre."</option>" ;
 										} ?>
 									  </select>	
-										
-								<p class="modal-text2-aula text-modal" id="exampleModalLabel">
-								</p>
+									  </div>
+									  <div class="row">
+									  <div class="col-md-2 col-md-offset-9">
+									<button id="btn-agregar" class="btn btn-success btn-lg pull-right"
+										type="submit">Agregar</button>
+								</div>
+								</div>
+								</div>
 								</div>
 							</div>
 						</div>

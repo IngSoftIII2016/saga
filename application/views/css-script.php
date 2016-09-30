@@ -34,6 +34,7 @@
       href="<?php echo base_url('assets/plugins/datatables/dataTables.bootstrap.css') ?>">
 <link rel="stylesheet"
       href="https://cdn.datatables.net/buttons/1.1.0/css/buttons.dataTables.min.css"/>
+<link rel="stylesheet" href="<?php echo base_url('assets/plugins/timepicker/bootstrap-timepicker.min.css'); ?>">
 
 <!-- Sweet Alert Styles -->
 <link
@@ -68,6 +69,7 @@
 <script
         src="<?php echo base_url('assets/plugins/bootstrap-datepicker/locales/bootstrap-datepicker.es.js'); ?>"
         charset="UTF-8"></script>
+
 
 <link rel="stylesheet" type="text/css"
       href="<?php echo base_url('assets/plugins/bootstrap-datepicker/css/datepicker.css'); ?>"/>

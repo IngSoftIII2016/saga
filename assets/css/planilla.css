@@ -63,10 +63,11 @@
 }
 .materia {
             border: #000000 solid 1px;
-            background: #72afd2;
+            background: #9dd1ef;
 			min-width:100% !important;
-			overflow: auto;
-			    font-size: medium;
+			overflow: scroll;
+			width:100%;
+			font-size: medium;
 			box-shadow: 3px 3px 15px #999;
 			    color: black;
         }
@@ -133,7 +134,7 @@ h3 {
 	color:black;
 }
 a:hover, a:active, a:focus{
-	color:white;
+	color:black;
 }
 .style-3::-webkit-scrollbar-track{
 	border-radius: 10px;
