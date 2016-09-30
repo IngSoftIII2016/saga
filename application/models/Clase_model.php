@@ -54,7 +54,7 @@ class Clase_model extends CI_Model {
         $this->db->select('au.id AS aula_id, ed.nombre AS edificio, au.nombre AS aula, clase.hora_inicio AS hora_inicio, clase.hora_fin AS hora_fin, as.nombre AS materia, ed.nombre AS edificio');
         $this->db->from('clase');
         $this->db->join('horario AS ho', 'clase.Horario_id=ho.id', 'left');
-        $this->db->join('comision AS co', 'ho.Comision_id=co.id', 'left');
+        $this->db->join('horario AS co', 'ho.Comision_id=co.id', 'left');
         $this->db->join('asignatura AS as', 'co.Asignatura_id=as.id', 'left');
         $this->db->join('edificio AS ed ', 'au.Edificio_id=ed.id', 'left');
         $this->db->order_by("clase.hora_inicio", "asc");
