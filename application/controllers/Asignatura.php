@@ -1,14 +1,10 @@
-<?php
+<?php defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Asignatura extends CI_Controller
 {
     public function __construct()
     {
         parent::__construct();
-
-        $this->load->database();
-        $this->load->helper('url');
-
         $this->load->library('grocery_CRUD');
     }
 
@@ -18,7 +14,6 @@ class Asignatura extends CI_Controller
         $crud->set_model('Asignatura_Model');
         $crud->set_table('asignatura');
         $crud->required_fields('nombre');
-        $crud->field_type('fruits','set',array('banana','orange','apple','lemon'));
         $output = $crud->render();
         $this->load->view('vacia.php', $output);
     }

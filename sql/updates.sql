@@ -1,1 +1,0 @@
-USE gestion_aulas;

@@ -1,11 +1,5 @@
 <?php
 
-/**
- * Created by PhpStorm.
- * User: juan
- * Date: 08/09/16
- * Time: 22:41
- */
 class Planilla extends CI_Controller {
 	public function index() {
 		$this->cargar ( new DateTime () );
@@ -27,7 +21,7 @@ class Planilla extends CI_Controller {
 		$data ['fecha_formateada'] = $this->formatear_fecha ( $fecha );
 		$data ['aulas'] = $aulas;
 		$data ['clases'] = $clases;
-		$data ['edificios'] = $this->Edificio_model->get_edificios ();
+		$data ['edificios'] = $this->Edificio_model->get_edificios();
 		$data ['eventos'] = $this->Evento_Model->get_eventos_dia ( $fecha->format ( "Y-m-d" ) );
 		$this->load->view ( 'aulas_diario', $data );
 	}
@@ -66,6 +60,7 @@ class Planilla extends CI_Controller {
 		$this->cargar_ajax ( $fecha);
 	}
 	private function formatear_fecha($fecha) {
+
 		$dias = array (
 				"Domingo",
 				"Lunes",
@@ -86,6 +81,6 @@ class Planilla extends CI_Controller {
 	}
 	private function aulas_edificio($edificio_id) {
 		$this->load->model ( 'Aula_model' );
-		return $this->Aula_model->get_aulas_edificio ( $edificio_id );
+		return $this->Aula_model->get_aulas_by_edificio ( $edificio_id );
 	}
 }
