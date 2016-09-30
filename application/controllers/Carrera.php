@@ -15,10 +15,8 @@ class Carrera extends CI_Controller
         $crud->set_model('Carrera_Model');
         $crud->set_table('carrera');
         $crud->required_fields('nombre');
-
-        $crud->set_lang_string('delete_error_message', 'NO PODES ELIMINAR UNA CARRERA ANIMAL!!!!!!!');
         $crud->callback_before_delete(array($this,'cek_before_delete'));
-
+        $crud->set_crud_url_path(site_url(strtolower(__CLASS__."/".__FUNCTION__)),site_url(strtolower(__CLASS__."/")));
         $output = $crud->render();
         $this->load->view('vacia.php', $output);
     }
