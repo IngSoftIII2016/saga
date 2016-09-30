@@ -12,7 +12,7 @@ $this->load->view ( 'header' );?>
 			
 			<input type="hidden" value="<?php echo $fecha->format('d-m-Y')?>" id="fecha"></input>				
 				<div class="row">				
-					<div class="col-md-2">
+					<div class="col-md-3">
 					<button type="reset" class="btn col-md-4 btn-primary btn-ant" data-target="#ModalInsertarEvento">Evento</button>			
 						<div class='input-group date'>
 								<div class="input-group-addon">
@@ -26,7 +26,7 @@ $this->load->view ( 'header' );?>
 									</input>
 						</div>
 					</div>
-					<button type="reset" id="reload-ant" class="btn col-md-1 btn-primary btn-ant">Ant</button>
+					<button type="reset" id="reload-ant" class="btn col-md-1 col-md-offset-1 btn-primary btn-ant">Ant</button>
 					<h3 class="text-center text-primary col-md-3 "><?=$fecha_formateada?></h3>
 					<a data-toggle="tooltip" data-placement="bottom" title="Hoy" class="hoy" id="reload-hoy">
 						<i class="fa fa-clock-o fa-2x" aria-hidden="true"></i>
@@ -51,8 +51,8 @@ $this->load->view ( 'header' );?>
 						$horas = new DatePeriod(new DateTime("08:00:00"), $interval, new DateTime("21:30:00"));
 						?>						
 						<div class="contenedor-horario">
-							<div class="horario">
-								<div class="color" style="height: <?php echo $hei?>px">
+							<div class="horario" style="position: relative;">
+								<div class="color" id="horario" style="height: <?php echo $hei?>px">
 									Horarios
 								</div>
 								<?php
@@ -94,7 +94,7 @@ $this->load->view ( 'header' );?>
 													data-horario= "<?php echo 'de ' . substr($clase->hora_inicio, 0,5) . ' a ' . substr($clase->hora_fin, 0,5) . ' hs' ?>" 
 													data-profesor= "<?php echo $clase->docente?>" 
 													data-aula="<?php echo $clase->aula?>" 
-													title="Ver Detalle"><?php echo $clase->materia . ' Horario de ' . substr($clase->hora_inicio, 0,5) . ' a ' . substr($clase->hora_fin, 0,5) . ' Profesor: ' . $clase->docente  ?>
+													title="Ver Detalle"><?php echo $clase->materia . ' Profesor: ' . $clase->docente  ?>
 												</a>
 											</div>
 											<?php
@@ -112,7 +112,7 @@ $this->load->view ( 'header' );?>
 													data-toggle="modal" data-target="#exampleModalEvento"
 													data-horario= "<?php echo 'de ' . substr($evento->hora_inicio, 0,5) . ' a ' . substr($evento->hora_fin, 0,5) . ' hs' ?>" 
 													data-motivo= "<?php echo $evento->motivo?>" 
-													title="Ver Detalle"><?php echo 'Motivo: ' . $evento->motivo. ' Horario de ' . substr($evento->hora_inicio, 0,5) . ' a ' . substr($evento->hora_fin, 0,5) ?>
+													title="Ver Detalle"><?php echo 'Motivo: ' . $evento->motivo ?>
 												</a>
 											</div>
 											<?php
@@ -208,7 +208,7 @@ $this->load->view ( 'header' );?>
 								      <select class="form-control" id="sel1">
 									  <?
 										foreach ($aulas as $aula) {
-											echo "<option>".$aula->nombre."</option>"
+											echo "<option>".$aula->nombre."</option>" ;
 										} ?>
 									  </select>	
 										

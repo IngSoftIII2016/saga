@@ -113,6 +113,7 @@ $('#exampleModal').on('show.bs.modal', function (event) {
 	for (i = 1; i < 25; i++) { 
 	    $("#" + i ).sticky({topSpacing:0});
 	  }
+	  $("#horario").sticky({topSpacing:0});
 		function reload(fecha,operacion,calendario){
 				$.ajax({
 					type : "POST",

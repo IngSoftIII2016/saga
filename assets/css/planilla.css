@@ -63,10 +63,10 @@
 }
 .materia {
             border: #000000 solid 1px;
-            background: #ebcfad;
+            background: #72afd2;
 			min-width:100% !important;
 			overflow: auto;
-			/*font-weight: bold;*/
+			    font-size: medium;
 			box-shadow: 3px 3px 15px #999;
 			    color: black;
         }
