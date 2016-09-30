@@ -1,6 +1,6 @@
-<?php
+<?php defined('BASEPATH') OR exit('No direct script access allowed');
 
-class AsignaturaCarrera extends CI_Controller
+class Asignatura_carrera extends CI_Controller
 {
     public function __construct()
     {
