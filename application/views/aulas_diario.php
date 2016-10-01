@@ -26,7 +26,7 @@ $this->load->view ( 'header' );?>
 									</input>
 						</div>
 					</div>
-					<button type="reset" id="reload-ant" class="btn col-md-1 col-md-offset-1 btn-primary btn-ant">Ant</button>
+					<button type="reset" id="reload-ant" class="btn col-md-1 btn-primary btn-ant">Ant</button>
 					<h3 class="text-center text-primary col-md-3 "><?=$fecha_formateada?></h3>
 					<a data-toggle="tooltip" data-placement="bottom" title="Hoy" class="hoy" id="reload-hoy">
 						<i class="fa fa-clock-o fa-2x" aria-hidden="true"></i>
@@ -45,7 +45,7 @@ $this->load->view ( 'header' );?>
 					<div class="contenedor">
 						<?php
 						$w = 100 / (count($aulas) + 1);
-						$hei = 80;
+						$hei = 90;
 						$px_min = 1;
 						$interval = DateInterval::createFromDateString("30 minutes");
 						$horas = new DatePeriod(new DateTime("08:00:00"), $interval, new DateTime("21:30:00"));
@@ -218,7 +218,7 @@ $this->load->view ( 'header' );?>
 									</div>				
 									<div class='form-group col-md-3'>
 												<label class="control-label">Fecha</label>
-													<input name="calendario" id="calendario"
+													<input name="calendarioevento" id="calendarioevento"
 															type='text' 
 															readonly
 															class="form-control validate"
