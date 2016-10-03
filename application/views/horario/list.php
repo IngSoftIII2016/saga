@@ -93,12 +93,12 @@
         <th>asignatura</th>
         <th>comisión</th>
         <th>descripción</th>
-        <th>cada # semanas</th>
         <th>día</th>
         <th>hora</th>
         <th>duración</th>
         <th>edificio</th>
         <th>aula</th>
+        <th>editar</th>
     </tr>
     <?php foreach($horarios as $horario): ?>
     <tr>
@@ -106,12 +106,12 @@
         <td><?=$horario->asignatura?></td>
         <td><?=$horario->comision?></td>
         <td><?=$horario->descripcion?></td>
-        <td><?=$horario->frecuencia_semanas?></td>
         <td><?=$dias[$horario->dia]?></td>
         <td><?=$horario->hora_inicio?></td>
         <td><?=$horario->duracion?></td>
         <td><?=$horario->edificio?></td>
         <td><?=$horario->aula?></td>
+        <td><a href="<?=base_url("horario/editar/$horario->Comision_id")?>">Editar</a></td>
     </tr>
     <?php endforeach;?>
 </table>

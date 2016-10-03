@@ -44,11 +44,39 @@ class Horario extends CI_Controller
     }
 
 
-    public function insert(){
+    public function editar($Comision_id){
+        $this->load->library("grocery_CRUD");
         $this->load->model('Horario_model');
-        $this->Horario_model->from_array($this->input->post());
-        $this->Horario_model->insert();
 
+        $crud = new grocery_CRUD();
+        $crud->set_table('horario');
+        $crud->where('Comision_id', $Comision_id);
+        $crud->set_relation('Aula_id', 'aula', 'nombre');
+        $crud->display_as('Aula_id', 'aula');
+        $crud->callback_insert(array($this, 'horario_insert_callback'));
+        $crud->callback_update(array($this, 'horario_update_callback'));
+        $crud->callback_delete(array($this, 'horario_delete_callback'));
+        $out = $crud->render();
+        $this->load->view('vacia', $out);
     }
+
+    function horario_insert_callback($post_array) {
+        $this->load->model('Horario_model');
+        $this->Horario_model->from_array($post_array);
+        $this->Horario_model->insert();
+    }
+
+    function horario_update_callback($post_array) {
+        $this->load->model('Horario_model');
+        $this->Horario_model->from_array($post_array);
+        $this->Horario_model->update();
+    }
+
+    function horario_delete_callback($post_array) {
+        $this->load->model('Horario_model');
+        $this->Horario_model->from_array($post_array);
+        $this->Horario_model->delete();
+    }
+
 
 }

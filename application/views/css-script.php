@@ -75,7 +75,7 @@
       href="<?php echo base_url('assets/plugins/bootstrap-datepicker/css/datepicker.css'); ?>"/>
 <link rel="stylesheet"
       href="<?php echo base_url('assets/css/planilla.css') ?>">
-<script type="text/javascript">
+<script t ype="text/javascript">
     var base_url = "<?= base_url(); ?>"; // URL base, usada en buscador-and-modal.js
 </script>
 
