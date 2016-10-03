@@ -62,6 +62,8 @@ class Horario extends CI_Controller
 
     function horario_insert_callback($post_array) {
         $this->load->model('Horario_model');
+        var_dump($post_array);
+
         $this->Horario_model->from_array($post_array);
         $this->Horario_model->insert();
     }

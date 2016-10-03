@@ -165,9 +165,7 @@ class Horario_model extends CI_Model
         $this->db->update('horario', $this, array('id' => $this->id));
 
         // actualizar todas las clases correspondientes a este horario a partir de la fecha establecida
-        $this->db->where('Horario_id', $this->id);
-        $this->db->where('fecha >=', $desde_date);
-        $this->db->delete('clase');
+        $this->eliminar_clases($desde_date);
 
         $this->insertar_clases($desde_date);
 
