@@ -12,7 +12,8 @@ $this->load->view ( 'header' );?>
 			
 			<input type="hidden" value="<?php echo $fecha->format('d-m-Y')?>" id="fecha"></input>				
 				<div class="row">				
-					<div class="col-md-2 col-md-offset-1">
+					<div class="col-md-3">
+					<button type="reset" class="btn col-md-4 btn-primary btn-ant" data-toggle="modal" data-target="#modalInsertarEvento">Evento</button>			
 						<div class='input-group date'>
 								<div class="input-group-addon">
 									<i class="fa fa-calendar"></i>
@@ -44,14 +45,14 @@ $this->load->view ( 'header' );?>
 					<div class="contenedor">
 						<?php
 						$w = 100 / (count($aulas) + 1);
-						$hei = 80;
+						$hei = 90;
 						$px_min = 1;
 						$interval = DateInterval::createFromDateString("30 minutes");
 						$horas = new DatePeriod(new DateTime("08:00:00"), $interval, new DateTime("21:30:00"));
 						?>						
 						<div class="contenedor-horario">
-							<div class="horario">
-								<div class="color" style="height: <?php echo $hei?>px">
+							<div class="horario" style="position: relative;">
+								<div class="color" id="horario" style="height: <?php echo $hei?>px">
 									Horarios
 								</div>
 								<?php
@@ -93,7 +94,7 @@ $this->load->view ( 'header' );?>
 													data-horario= "<?php echo 'de ' . substr($clase->hora_inicio, 0,5) . ' a ' . substr($clase->hora_fin, 0,5) . ' hs' ?>" 
 													data-profesor= "<?php echo $clase->docente?>" 
 													data-aula="<?php echo $clase->aula?>" 
-													title="Ver Detalle"><?php echo $clase->materia . ' Horario de ' . substr($clase->hora_inicio, 0,5) . ' a ' . substr($clase->hora_fin, 0,5) . ' Profesor: ' . $clase->docente  ?>
+													title="Ver Detalle"><?php echo $clase->materia . ' Profesor: ' . $clase->docente  ?>
 												</a>
 											</div>
 											<?php
@@ -111,7 +112,7 @@ $this->load->view ( 'header' );?>
 													data-toggle="modal" data-target="#exampleModalEvento"
 													data-horario= "<?php echo 'de ' . substr($evento->hora_inicio, 0,5) . ' a ' . substr($evento->hora_fin, 0,5) . ' hs' ?>" 
 													data-motivo= "<?php echo $evento->motivo?>" 
-													title="Ver Detalle"><?php echo 'Motivo: ' . $evento->motivo. ' Horario de ' . substr($evento->hora_inicio, 0,5) . ' a ' . substr($evento->hora_fin, 0,5) ?>
+													title="Ver Detalle"><?php echo 'Motivo: ' . $evento->motivo ?>
 												</a>
 											</div>
 											<?php
@@ -189,6 +190,61 @@ $this->load->view ( 'header' );?>
 							</div>
 						</div>
 					</div>
+					
+					
+					<div class="modal fade" id="modalInsertarEvento" tabindex="-1"
+						role="dialog" aria-labelledby="exampleModalLabel"
+						aria-hidden="true">
+						<div class="modal-dialog" role="document">
+							<div class="modal-content">
+								<div class="modal-header">
+									<button type="button" class="close" data-dismiss="modal"
+										aria-label="Close">
+										<span aria-hidden="true">&times;</span>
+									</button>
+									<h3 class="modal-title-insert-evento" id="exampleModalLabel">Agregar Evento</h3>
+								</div>
+								<div class="modal-body">
+								<div class="row">
+									<div class="form-group col-md-3">
+										<label class="control-label">Hora Inicio</label> <input type="time"
+												class="form-control" name="horainicio" required max="20:00:00"
+												min="08:00:00" />
+									</div>
+									<div class="form-group col-md-3">
+										<label class="control-label">Hora Fin</label> <input type="time"
+												class="form-control" name="horafin" required max="21:00:00"
+												min="09:00:00" />
+									</div>				
+									<div class='form-group col-md-3'>
+												<label class="control-label">Fecha</label>
+													<input name="calendarioevento" id="calendarioevento"
+															type='text' 
+															readonly
+															class="form-control validate"
+															value="<?php if (isset($calendario)) echo $calendario->format('d/m/Y'); ?>">
+													</input>
+										</div>
+									<div class='form-group col-md-8'>
+								      <select class="form-control" id="sel1">
+									  <?
+										foreach ($aulas as $aula) {
+											echo "<option>".$aula->nombre."</option>" ;
+										} ?>
+									  </select>	
+									  </div>
+									  <div class="row">
+									  <div class="col-md-2 col-md-offset-9">
+									<button id="btn-agregar" class="btn btn-success btn-lg pull-right"
+										type="submit">Agregar</button>
+								</div>
+								</div>
+								</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					
 					<script src="<?php echo base_url('assets/js/buscador-and-modal.js') ?>"></script>
 				</div>
 				
