@@ -5,6 +5,7 @@
             <a class="navbar-brand header navclass" href="<?php echo base_url('planilla') ?>">SAGA</a>
         </div>
 
+
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse " id="bs-example-navbar-collapse-1"
              style="background-color: #881300 !important;">
@@ -39,7 +40,7 @@
                        data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Perfil <span
                                 class="caret"></span></a>
                     <ul class="dropdown-menu menudesplegable">
-                        <li><a href="<?php echo base_url('Autenticacion/logout') ?>">Salir</a></li>
+                        <li><a href="<?php echo base_url('login/salir') ?>">Salir</a></li>
 
                     </ul>
                 </li>

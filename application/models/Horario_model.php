@@ -48,15 +48,6 @@ class Horario_model extends CI_Model
         return $data;
     }
 
-    public function get_by_periodo_id($periodo_id)
-    {
-        //$this->db->select('*');
-        //$this->db->from('horario');
-        $this->db->join('horario', 'Comision_id = horario.id', 'left');
-        $this->db->where('horario.Periodo_id', $periodo_id);
-        return $this->db->get('horario')->result();
-    }
-
     public function get_horarios($filtros)
     {
         $this->db->select("ho.*, au.nombre AS aula, ed.id AS Edificio_id, ed.nombre AS edificio, co.nombre AS comision, a.id AS Asignatura_id, a.nombre AS asignatura, IF(COUNT(DISTINCT ca.id) > 1, 'Varias', ca.nombre) AS carrera, do.id AS Docente_id, CONCAT(do.nombre, ' ', do.apellido) AS docente, pe.id AS Periodo_id");
@@ -172,18 +163,20 @@ class Horario_model extends CI_Model
             throw new Exception($msg);
         }
         $this->db->update('horario', $this, array('id' => $this->id));
-        //$this->db->delete(  )
-        $clases = $this->get_clases();
-        foreach ($clases as $clase) {
 
-        }
-        // Acá cambiar todas las clases con este id en Horario_id a partir de la fecha actual
+        // actualizar todas las clases correspondientes a este horario a partir de la fecha establecida
+        $this->eliminar_clases($desde_date);
+
+        $this->insertar_clases($desde_date);
+
+        $this->db->trans_complete();
     }
 
-    public function delete($id)
+    public function delete($desde_date = null)
     {
-        // Acá borrar todas las clases con este id en Horario_id hasta la fecha actual
-        $this->db->delete('horario', array('id' => $id));
+        // borrar todas las clases con este id en Horario_id hasta la fecha actual
+        $this->eliminar_clases($desde_date);
+        $this->db->delete('horario', array('id' => $this->id));
     }
 
 
@@ -215,11 +208,11 @@ class Horario_model extends CI_Model
         }
     }
 
-    public function get_clases($desde) {
-        $this->db->from('clase');
+    public function eliminar_clases($start = null) {
+        if ($start == null) $desde_date = new DateTime();
         $this->db->where('Horario_id', $this->id);
-        $this->db->where('fecha >=', $desde);
-        return $this->db->get()->result();
+        $this->db->where('fecha >=', $desde_date->format("Y-m-d"));
+        $this->db->delete('clase');
     }
 
     public function get_dias()
