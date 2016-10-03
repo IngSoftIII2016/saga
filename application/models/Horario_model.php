@@ -80,12 +80,11 @@ class Horario_model extends CI_Model
             $this->db->where('do.id', $filtros['Docente_id']);
 
         $result = $this->db->get()->result_array();
-        foreach($result as $horario)
-            $horario['carrera'] = $this->get_carrera($horario['Asignatura_id']);
+        foreach($result as $i=>$value)
+            $result[$i]['carrera'] = $this->get_carrera($value['Asignatura_id']);
 
         return $result;
     }
-
 
     public function load($id)
     {
@@ -224,6 +223,7 @@ class Horario_model extends CI_Model
         $this->db->join('carrera AS c', 'ac.Carrera_id = c.id');
         $this->db->group_by('ac.Asignatura_id');
         $this->db->where('ac.Asignatura_id', $Asignatura_id);
+        return $this->db->get()->row()->carrera;
     }
 
 
