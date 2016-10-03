@@ -50,37 +50,26 @@ class Horario_model extends CI_Model
 
     public function get_horarios($filtros)
     {
-        $this->db->select("ho.*, au.nombre AS aula, ed.id AS Edificio_id, ed.nombre AS edificio, co.nombre AS comision, a.id AS Asignatura_id, a.nombre AS asignatura, IF(COUNT(DISTINCT ca.id) > 1, 'Varias', ca.nombre) AS carrera, do.id AS Docente_id, CONCAT(do.nombre, ' ', do.apellido) AS docente, pe.id AS Periodo_id");
+        $this->db->select("ho.*, au.nombre AS aula, ed.id AS Edificio_id, ed.nombre AS edificio, co.nombre AS comision, a.id AS Asignatura_id, a.nombre AS asignatura, do.id AS Docente_id, CONCAT(do.nombre, ' ', do.apellido) AS docente, pe.id AS Periodo_id");
         $this->db->from('horario AS ho');
-        $this->db->join('aula AS au', 'ho.Aula_id = au.id', 'left');
-        $this->db->join('edificio AS ed', 'au.Edificio_id = ed.id', 'left');
-        $this->db->join('comision AS co', 'ho.Comision_id = co.id', 'left');
-        $this->db->join('asignatura AS a', 'co.Asignatura_id = a.id', 'left');
-        $this->db->join('asignatura_carrera AS ac', 'a.id = ac.Asignatura_id', 'left');
-        $this->db->join('carrera AS ca', 'ac.Carrera_id = ca.id', 'left');
+        $this->db->join('aula AS au', 'ho.Aula_id = au.id');
+        $this->db->join('edificio AS ed', 'au.Edificio_id = ed.id');
+        $this->db->join('comision AS co', 'ho.Comision_id = co.id');
+        $this->db->join('asignatura AS a', 'co.Asignatura_id = a.id');
         $this->db->join('docente AS do', 'co.Docente_id = do.id', 'left');
         $this->db->join('periodo AS pe', 'co.Periodo_id = pe.id', 'left');
-        $this->db->group_by('co.id');
         if (isset($filtros['Comision_id']) && trim($filtros['Comision_id']) != "")
             $this->db->where('co.id', $filtros['Comision_id']);
         elseif (isset($filtros['Asignatura_id']) && trim($filtros['Asignatura_id']) != "")
             $this->db->where('a.id', $filtros['Asignatura_id']);
-        elseif (isset($filtros['asignatura']) && trim($filtros['asignatura']) != "") {
-            $this->db->like('a.nombre', $filtros['asignatura']);
-            if (isset($filtros['horario']) && trim($filtros['horario']) != "")
-                $this->db->like('co.nombre', $filtros['horario']);
-        } elseif (isset($filtros['Carrera_id']) && trim($filtros['Carrera_id']) != "")
+        elseif (isset($filtros['Carrera_id']) && trim($filtros['Carrera_id']) != "")
             $this->db->where('ca.id', $filtros['Carrera_id']);
-        elseif (isset($filtros['carrera']) && trim($filtros['carrera']) != "")
-            $this->db->like('ca.nombre', $filtros['carrera']);
+        if(isset($filtros['Aula_id']) && trim($filtros['Aula_id']) != "")
+            $this->db->where('ho.Aula_id', $filtros['Aula_id']);
+        elseif(isset($filtros['Edificio_id']) && trim($filtros['Aula_id'] != ""))
+            $this->db->where('ed.id', $filtros['Edificio_id']);
         if (isset($filtros['dia']) && trim($filtros['dia']) != "")
             $this->db->where('ho.dia', $filtros['dia']);
-        if (isset($filtros['Aula_id']) && trim($filtros['Aula_id']) != "")
-            $this->db->where('ho.Aula_id', $filtros['Aula_id']);
-        elseif (isset($filtros['aula']) && trim($filtros['aula']) != "")
-            $this->db->where("(SELECT CONCAT(au.nombre, ' ', ed.nombre)) LIKE '%{$filtros['aula']}%'");
-        if (isset($filtros['Edificio_id']) && trim($filtros['Edificio_id']) != "")
-            $this->db->where('ed.id', $filtros['Edificio_id']);
         if (isset($filtros['anio']) && trim($filtros['anio']) != "")
             $this->db->where('ac.anio', $filtros['anio']);
         if (isset($filtros['regimen']) && trim($filtros['regimen']) != "")
@@ -89,11 +78,12 @@ class Horario_model extends CI_Model
             $this->db->where('pe.id', $filtros['Periodo_id']);
         if (isset($filtros['Docente_id']) && trim($filtros['Docente_id']) != "")
             $this->db->where('do.id', $filtros['Docente_id']);
-        elseif (isset($filtros['docente']) && trim($filtros['docente']) != "") {
-            $this->db->like('do.nombre', $filtros['docente']);
-            $this->db->or_like('do.apellido', $filtros['docente']);
-        }
-        return $this->db->get()->result();
+
+        $result = $this->db->get()->result_array();
+        foreach($result as $horario)
+            $horario['carrera'] = $this->get_carrera($horario['Asignatura_id']);
+
+        return $result;
     }
 
 
@@ -226,6 +216,14 @@ class Horario_model extends CI_Model
             "Viernes",
             "S&aacute;bado"
         );
+    }
+
+    public function get_carrera($Asignatura_id) {
+        $this->db->select('IF(COUNT(DISTINCT c.id) > 1, \'VARIAS\', c.nombre) AS carrera');
+        $this->db->from('asignatura_carrera AS ac');
+        $this->db->join('carrera AS c', 'ac.Carrera_id = c.id');
+        $this->db->group_by('ac.Asignatura_id');
+        $this->db->where('ac.Asignatura_id', $Asignatura_id);
     }
 
 
