@@ -26,7 +26,7 @@
 <body>
 	<div id="login-page">
 		<div class="container">
-	  		<form id="form-login" class="form-login" action="<?php echo base_url('/autenticacion/login'); ?>" method="POST">
+	  		<form id="form-login" class="form-login" action="<?php echo base_url('/login'); ?>" method="POST">
 		    	<h2 class="form-login-heading">SAGA - Ingreso</h2>
 		        <div class="login-wrap">
 		        	<input type="text" class="form-control" placeholder="Email" autofocus name="identity" value id="identity" required>

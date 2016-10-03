@@ -16,7 +16,7 @@ class Usuario extends CI_Controller
     }
 
 	
-	public function _example_output($output = null)
+	public function _grill_output($output = null)
 	{
 		$this->load->view('vacia.php',$output);
 	}
@@ -24,19 +24,17 @@ class Usuario extends CI_Controller
 	public function index(){
 		
 		$this->config->load('grocery_crud');
-		$this->config->set_item('grocery_crud_dialog_forms',true);
-		$this->config->set_item('grocery_crud_default_per_page',10);
-
+		//$this->config->set_item('grocery_crud_dialog_forms',true);
+	    $this->config->set_item('grocery_crud_default_per_page',10);
+	
 		$output1 = $this->usuario();
-
 		$output2 = $this->grupo();
-
 
 		$js_files = $output1->js_files + $output2->js_files;
 		$css_files = $output1->css_files + $output2->css_files;
-		$output = "<h4>USUARIOS</h4>".$output1->output."<h4>GRUPOS</h4>".$output2->output;
-		
-		$this->_example_output((object)array(
+		$output = "<h4><b style=margin-left:20px; >USUARIOS</b></h4>".$output1->output."<h4><b style=margin-left:20px;>GRUPOS</b></h4>".$output2->output;
+
+		$this->_grill_output((object)array(
 				'js_files' => $js_files,
 				'css_files' => $css_files,
 				'output'	=> $output
@@ -55,13 +53,13 @@ class Usuario extends CI_Controller
 		//las columnas de la vista principal
 		$crud->columns('name','description');
 		//reasignacion de nombres
-		$crud->display_as('name','nombre');
-		$crud->display_as('description','descripcion');
-		$crud->set_crud_url_path(site_url(strtolower(__CLASS__."/".__FUNCTION__)),site_url(strtolower(__CLASS__."/index")));
+		$crud->display_as('name','Nombre');
+		$crud->display_as('description','Descripción');
+		$crud->set_crud_url_path(site_url(strtolower(__CLASS__."/".__FUNCTION__)),site_url(strtolower(__CLASS__."/")));
 
 		$output = $crud->render();
 		if($crud->getState() != 'list') {
-			$this->_example_output($output);
+			$this->_grill_output($output);
 		} else {
 			return $output;
 		}
@@ -85,14 +83,14 @@ class Usuario extends CI_Controller
 		// campos obligatorios
 		$crud->required_fields ('first_name','last_name','password' , 'email', 'active' ,'password_confirm' );
 		//reasignacion de nombres
-		$crud->display_as('username','usuario');
-		$crud->display_as('password','contraseña');
-		$crud->display_as('active','estado');
-		$crud->display_as('first_name','nombre');
-		$crud->display_as('last_name','apellido');
-		$crud->display_as('phone','telefono');
-		$crud->display_as('password','contraseña');
-		$crud->display_as('password_confirm','confirmar contraseña');
+		$crud->display_as('username','Usuario');
+		$crud->display_as('password','Contraseña');
+		$crud->display_as('active','Estado');
+		$crud->display_as('first_name','Nombre');
+		$crud->display_as('last_name','Apellido');
+		$crud->display_as('phone','Telefono');
+		$crud->display_as('password','Contraseña');
+		$crud->display_as('password_confirm','Confirmar contraseña');
 		//validaciones
 		$crud->set_rules('password', 'Password', 'required|matches[password_confirm]');
 		$crud->set_rules('email', 'E-mail', 'required|valid_email');
@@ -110,12 +108,12 @@ class Usuario extends CI_Controller
 		$crud->callback_insert (array($this, 'create_user_callback'));
 		$crud->callback_update(array($this, 'edit_user_callback'));
 		
-		$crud->set_crud_url_path(site_url(strtolower(__CLASS__."/".__FUNCTION__)),site_url(strtolower(__CLASS__."/index")));
+		$crud->set_crud_url_path(site_url(strtolower(__CLASS__."/".__FUNCTION__)),site_url(strtolower(__CLASS__."/")));
 		
 		$output = $crud->render();
 
 	if($crud->getState() != 'list') {
-			$this->_example_output($output);
+			$this->_grill_output($output);
 		} else {
 			return $output;
 		}
