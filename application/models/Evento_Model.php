@@ -76,6 +76,10 @@ class Evento_Model extends CI_Model {
 			$this->db->insert('evento',$evento_datos);
 		}
 		
+		public function borrar($evento) {
+			$this->db->delete('evento', array('id' => $evento));
+		}
+		
 		function aula_disponible_evento($aula, $fecha, $hora_inicio, $hora_fin) {
 		$this->db->select('evento.id');
 		$this->db->from('evento');
