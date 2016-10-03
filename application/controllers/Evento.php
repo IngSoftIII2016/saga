@@ -75,6 +75,10 @@ class Evento extends CI_Controller
 	
 	
 	}
+	public function borrar(){
+		$this->Evento_Model->borrar( $this->input->post ( "id" ));
+			
+	}
 	 
 
   

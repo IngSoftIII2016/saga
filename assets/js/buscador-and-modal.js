@@ -203,11 +203,11 @@ jQuery('#form-evento').on(
 			return false;
 		});
 
-jQuery('btn.btn-danger.btn-delete-evento.col-md-offset-11').click(
+jQuery('.btn.btn-danger.btn-delete-evento.col-md-offset-11').click(
 		function() {
 			var id = $(this).attr('id');
 			swal({
-				title : "¿Seguro que desea eliminar el evento ",
+				title : "¿Seguro que desea eliminar el evento?",
 				text : "No podrás deshacer esta acción",
 				type : "warning",
 				showCancelButton : true,
@@ -224,16 +224,14 @@ jQuery('btn.btn-danger.btn-delete-evento.col-md-offset-11').click(
 							id : id
 						},
 						success : function() {
-							swal({
-								title : "¡Hecho!",
-								text : "Evento borrado con éxito",
-								type : "success"
-							},
-									function(isConfirm) {
-										if (isConfirm)
-											window.location.href = base_url
-													+ "planilla";
-									});
+								swal({
+									title : "¡Hecho!",
+									text : "Evento eliminado con éxito!",
+									type : "success"
+								}, function(isConfirm) {
+									if (isConfirm)
+										window.location.href = base_url + "planilla";
+								}); 
 						},
 						error : function(xhr, ajaxOptions, thrownError) {
 							swal("¡Error Detectado!",
