@@ -129,8 +129,12 @@ $('#exampleModal').on('show.bs.modal', function (event) {
 				});
 			}
 		
-		
-
+		$( "#aulaevento" ).change(function() {
+			$( "#horainicioevento" ).val('');
+			$( "#horafinevento" ).val('');
+			$( "#horainicioevento" ).attr('readonly', false);
+			$( "#horafinevento" ).attr('readonly', false);
+			});		
 		$("button[id='reload-sig']").click(function(e){
 			e.preventDefault();
 			reload($('#fecha').val(), '+',$('#calendario').val());		
@@ -158,3 +162,41 @@ $('#exampleModal').on('show.bs.modal', function (event) {
 			});		
 			});
 });		
+
+
+//Alta o modificacion
+jQuery('#form-evento').on(
+		'submit',
+		function(e) {
+			var formData = $('#form-evento').serialize();
+			var formAction = $('#form-evento').attr('action');
+			$.ajax({
+				type : "POST",
+				url : formAction,
+				data : formData,
+				success : function(msg) {
+					if (msg == 1) {
+						swal({
+							title : "¡Hecho!",
+							text : "Evento agregado con éxito!",
+							type : "success"
+						}, function(isConfirm) {
+							if (isConfirm)
+								window.location.href = base_url + "planilla";
+						});
+					} else {
+						swal({
+							title : "¡Error!",
+							text : "Evento no fue agregado, verifique que el aula este disponible!",
+							type : "error"
+						});
+					}
+				},
+				error : function(xhr, ajaxOptions, thrownError) {
+					swal("¡Error Detectado!", "Por favor, intentelo de nuevo",
+							"error");
+				}
+			});
+			e.preventDefault();
+			return false;
+		});

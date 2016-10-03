@@ -13,8 +13,8 @@ $this->load->view ( 'header' );?>
 			<input type="hidden" value="<?php echo $fecha->format('d-m-Y')?>" id="fecha"></input>				
 				<div class="row">				
 					<div class="col-md-3">
-					<button type="reset" class="btn col-md-4 btn-primary btn-ant" data-toggle="modal" data-target="#modalInsertarEvento">Evento</button>			
-						<div class='input-group date'>
+					<button type="reset" class="btn col-md-4 btn-primary btn-ant" data-toggle="modal" data-target="#modalInsertarEvento">Evento <i class="fa fa-plus-square" aria-hidden="true"></i></button>			
+						<div class="input-group date" style="    padding-left: 20%;">
 								<div class="input-group-addon">
 									<i class="fa fa-calendar"></i>
 								</div>
@@ -26,7 +26,7 @@ $this->load->view ( 'header' );?>
 									</input>
 						</div>
 					</div>
-					<button type="reset" id="reload-ant" class="btn col-md-1 btn-primary btn-ant">Ant</button>
+					<button type="reset" id="reload-ant" class="btn col-md-1 btn-primary btn-ant" style="margin-left: 5%;">Ant</button>
 					<h3 class="text-center text-primary col-md-3 "><?=$fecha_formateada?></h3>
 					<a data-toggle="tooltip" data-placement="bottom" title="Hoy" class="hoy" id="reload-hoy">
 						<i class="fa fa-clock-o fa-2x" aria-hidden="true"></i>
@@ -205,16 +205,27 @@ $this->load->view ( 'header' );?>
 									<h3 class="modal-title-insert-evento" id="exampleModalLabel">Agregar Evento</h3>
 								</div>
 								<div class="modal-body">
-								<div class="row">
+								<form role="form" id="form-evento"
+								action="<?php echo base_url('evento/agregar_evento'); ?>" method="POST">
+								<div class="row">									
+										<div class='form-group col-md-10'>
+									      <select class="form-control" required id="aulaevento" name="aulaevento">
+									      	<option value="" disabled selected>Seleccione Aula</option>
+										  <?
+											foreach ($aulas as $aula) {
+												echo "<option value=".$aula->id.">".$aula->nombre."</option>" ;
+											} ?>
+										  </select>	
+									  	</div>
 									<div class="form-group col-md-3">
 										<label class="control-label">Hora Inicio</label> <input type="time"
-												class="form-control" name="horainicio" required max="20:00:00"
-												min="08:00:00" />
+												class="form-control" id="horainicioevento" name="horainicioevento" required max="20:00:00"
+												min="08:00:00" readonly/>
 									</div>
 									<div class="form-group col-md-3">
 										<label class="control-label">Hora Fin</label> <input type="time"
-												class="form-control" name="horafin" required max="21:00:00"
-												min="09:00:00" />
+												class="form-control" id="horafinevento" name="horafinevento" required max="21:00:00"
+												min="09:00:00" readonly/>
 									</div>				
 									<div class='form-group col-md-3'>
 												<label class="control-label">Fecha</label>
@@ -224,31 +235,29 @@ $this->load->view ( 'header' );?>
 															class="form-control validate"
 															value="<?php if (isset($calendario)) echo $calendario->format('d/m/Y'); ?>">
 													</input>
-										</div>
-									<div class='form-group col-md-8'>
-								      <select class="form-control" id="sel1">
-									  <?
-										foreach ($aulas as $aula) {
-											echo "<option>".$aula->nombre."</option>" ;
-										} ?>
-									  </select>	
+									</div>									
+									  <div class='form-group col-md-6'>
+									      <label class="control-label">Motivo</label>
+													<textarea class="form-control" required name="motivoevento" id="motivoevento"></textarea>
 									  </div>
 									  <div class="row">
-									  <div class="col-md-2 col-md-offset-9">
-									<button id="btn-agregar" class="btn btn-success btn-lg pull-right"
-										type="submit">Agregar</button>
-								</div>
-								</div>
+									  	<div class="col-md-2 col-md-offset-9">
+											<button id="btn-agregar" class="btn btn-success btn-lg pull-right addevento"
+											type="submit">Agregar</button>
+										</div>
+										</div>
+										</form>
 								</div>
 								</div>
 							</div>
 						</div>
 					</div>
-					
+					<!-- Sweet Alert Script -->
+					<script src="<?php echo base_url('assets/plugins/sweetalert/sweetalert.min.js') ?>"></script>
 					<script src="<?php echo base_url('assets/js/buscador-and-modal.js') ?>"></script>
-				</div>
-				
+								
 </section>
+
 
 </body>
 </html>
