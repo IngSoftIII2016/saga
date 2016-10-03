@@ -18,4 +18,6 @@ class Asignatura_Model extends Grocery_crud_model
         $this->db->join('asignatura AS a', 'ac.Asignatura_id = a.id', 'left');
         $this->db->where('ac.Carrera_id', $carrera_id);
     }
+
+
 }

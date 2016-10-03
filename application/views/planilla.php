@@ -201,7 +201,7 @@
 										<div class='form-group col-md-10'>
 									      <select class="form-control" required id="aulaevento" name="aulaevento">
 									      	<option value="" disabled selected>Seleccione Aula</option>
-										  <?
+										  <?php
 											foreach ($aulas as $aula) {
 												echo "<option value=".$aula->id.">".$aula->nombre."</option>" ;
 											} ?>
