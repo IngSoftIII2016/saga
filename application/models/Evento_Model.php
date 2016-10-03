@@ -19,7 +19,7 @@ class Evento_Model extends CI_Model {
 
 		public function get_eventos_dia($fecha, $edificio_id = null) {
 		
-			$this->db->select('au.ubicacion AS aula_id, ed.nombre AS edificio, au.nombre AS aula, evento.hora_inicio AS hora_inicio, evento.hora_fin AS hora_fin, ed.nombre AS edificio, motivo');
+			$this->db->select('au.ubicacion AS aula_id, ed.nombre AS edificio, au.nombre AS aula, evento.id, evento.hora_inicio AS hora_inicio, evento.hora_fin AS hora_fin, ed.nombre AS edificio, motivo');
 			$this->db->from('evento');
 			$this->db->join('aula AS au', 'evento.Aula_id = au.id', 'left');
 			$this->db->join('edificio AS ed ', 'au.Edificio_id=ed.id', 'left');
