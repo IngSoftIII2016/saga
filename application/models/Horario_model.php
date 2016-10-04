@@ -25,14 +25,14 @@ class Horario_model extends CI_Model
 
     public function from_array($data)
     {
-        $this->id = $data['id'];
-        $this->descripcion = $data['descripcion'];
-        $this->frecuencia_semanas = $data['frecuencia_semanas'];
-        $this->dia = $data['dia'];
-        $this->hora_inicio = $data['hora_inicio'];
-        $this->duracion = $data['duracion'];
-        $this->Comision_id = $data['Comision_id'];
-        $this->Aula_id = $data['Aula_id'];
+        if(isset($data['id'])) $this->id = $data['id'];
+        if(isset($data['descripcion']))$this->descripcion = $data['descripcion'];
+        if(isset($data['frecuencia_semanas']))$this->frecuencia_semanas = $data['frecuencia_semanas'];
+        if(isset($data['dia'])) $this->dia = $data['dia'];
+        if(isset($data['hora_inicio'])) $this->hora_inicio = $data['hora_inicio'];
+        if(isset($data['duracion'])) $this->duracion = $data['duracion'];
+        if(isset($data['Comision_id'])) $this->Comision_id = $data['Comision_id'];
+        if(isset($data['Aula_id'])) $this->Aula_id = $data['Aula_id'];
     }
 
     public function to_array()
@@ -56,14 +56,16 @@ class Horario_model extends CI_Model
         $this->db->join('edificio AS ed', 'au.Edificio_id = ed.id');
         $this->db->join('comision AS co', 'ho.Comision_id = co.id');
         $this->db->join('asignatura AS a', 'co.Asignatura_id = a.id');
+        $this->db->join('asignatura_carrera ac', 'a.id = ac.Asignatura_id');
         $this->db->join('docente AS do', 'co.Docente_id = do.id', 'left');
-        $this->db->join('periodo AS pe', 'co.Periodo_id = pe.id', 'left');
+        $this->db->join('periodo AS pe', 'co.Periodo_id = pe.id');
+        $this->db->group_by('ho.id');
         if (isset($filtros['Comision_id']) && trim($filtros['Comision_id']) != "")
             $this->db->where('co.id', $filtros['Comision_id']);
         elseif (isset($filtros['Asignatura_id']) && trim($filtros['Asignatura_id']) != "")
             $this->db->where('a.id', $filtros['Asignatura_id']);
         elseif (isset($filtros['Carrera_id']) && trim($filtros['Carrera_id']) != "")
-            $this->db->where('ca.id', $filtros['Carrera_id']);
+            $this->db->where('ac.Carrera_id', $filtros['Carrera_id']);
         if(isset($filtros['Aula_id']) && trim($filtros['Aula_id']) != "")
             $this->db->where('ho.Aula_id', $filtros['Aula_id']);
         elseif(isset($filtros['Edificio_id']) && trim($filtros['Aula_id'] != ""))
@@ -90,6 +92,7 @@ class Horario_model extends CI_Model
     {
         $this->db->where('id', $id);
         $result = $this->db->get('horario')->row_array();
+        //var_dump($result);
         $this->from_array($result);
     }
 
@@ -102,18 +105,21 @@ class Horario_model extends CI_Model
         return $this->db->get()->row();
     }
 
-    public function get_colisiones($periodo_id, $aula_id, $dia, $hora, $duracion)
+    public function get_colisiones()
     {
-        $hora_fin = date("H:i:s", strtotime($hora) + strtotime($duracion) - strtotime("00:00:00"));
-        $this->db->select('ho.id AS Horario_id, co.id AS Comision_id, as.nombre AS asignatura, co.nombre AS horario');
+        $periodo_id = $this->get_periodo()->id;
+        $hora_fin = date("H:i:s", strtotime($this->hora_inicio) +
+            strtotime($this->duracion) - strtotime("00:00:00"));
+        $this->db->select('ho.* , co.nombre AS comision, a.nombre AS asignatura');
         $this->db->from('horario AS ho');
-        $this->db->join('horario AS co', 'ho.Comision_id = co.id', 'left');
-        $this->db->join('asignatura AS as', 'co.Asignatura_id = as.id', 'left');
+        $this->db->join('comision AS co', 'ho.Comision_id = co.id', 'left');
+        $this->db->join('asignatura AS a', 'co.Asignatura_id = a.id', 'left');
+        $this->db->where('ho.id !=', $this->id);
         $this->db->where('co.Periodo_id', $periodo_id);
-        $this->db->where('ho.dia', $dia);
-        $this->db->where('ho.Aula_id', $aula_id);
-        $this->db->where("ho.hora_inicio BETWEEN '$hora' AND '$hora_fin' ");
-        $this->db->where("(SELECT ADDTIME(ho.hora_inicio, ho.duracion)) BETWEEN '$hora' AND '$hora_fin' ");
+        $this->db->where('ho.dia', $this->dia);
+        $this->db->where('ho.Aula_id', $this->Aula_id);
+        $this->db->where("ho.hora_inicio BETWEEN '$this->hora_inicio' AND '$hora_fin' ");
+        $this->db->where("(SELECT ADDTIME(ho.hora_inicio, ho.duracion)) BETWEEN '$this->hora_inicio' AND '$hora_fin' ");
         $query = $this->db->get();
         return $query->result();
     }
@@ -122,12 +128,12 @@ class Horario_model extends CI_Model
     {
         $this->db->trans_start();
 
-        $periodo_id = $this->get_periodo()->id;
 
-        $colisiones = $this->get_colisiones($periodo_id, $this->Aula_id, $this->dia, $this->hora_inicio, $this->duracion);
+
+        $colisiones = $this->get_colisiones();
         if (count($colisiones) > 0) {
             $msg = "Horario ocupado!";
-            foreach ($colisiones as $c) $msg = $msg . "\n" . $c;
+            foreach ($colisiones as $c) $msg = $msg . "\n" . $c->asignatura;
             throw new Exception($msg);
         }
 
@@ -143,12 +149,11 @@ class Horario_model extends CI_Model
         if ($desde_date == null) $desde_date = new DateTime();
 
         $this->db->trans_start();
-        $periodo_id = $this->get_periodo()->id;
-        $colisiones = $this->get_colisiones($periodo_id, $this->Aula_id, $this->dia, $this->hora_inicio, $this->duracion);
+        $colisiones = $this->get_colisiones();
 
         if (count($colisiones) > 0) {
             $msg = "Horario ocupado!";
-            foreach ($colisiones as $c) $msg = $msg . "\n" . $c;
+            foreach ($colisiones as $c) $msg = $msg . "\n" . $c->asignatura;
             throw new Exception($msg);
         }
         $this->db->update('horario', $this, array('id' => $this->id));
@@ -163,9 +168,13 @@ class Horario_model extends CI_Model
 
     public function delete($desde_date = null)
     {
-        // borrar todas las clases con este id en Horario_id hasta la fecha actual
+        $this->db->trans_start();
+
         $this->eliminar_clases($desde_date);
+
         $this->db->delete('horario', array('id' => $this->id));
+
+        $this->db->trans_complete();
     }
 
 
@@ -198,9 +207,9 @@ class Horario_model extends CI_Model
     }
 
     public function eliminar_clases($start = null) {
-        if ($start == null) $desde_date = new DateTime();
+        if ($start == null) $start = new DateTime();
         $this->db->where('Horario_id', $this->id);
-        $this->db->where('fecha >=', $desde_date->format("Y-m-d"));
+        $this->db->where('fecha >=', $start->format("Y-m-d"));
         $this->db->delete('clase');
     }
 

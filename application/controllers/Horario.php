@@ -15,14 +15,14 @@ class Horario extends CI_Controller
     public function index() {
         $this->load->model('Periodo_Model');
         $p = $this->Periodo_Model->get_periodo_actual();
-        $this->cargar(array('Periodo_id' => $p->id));
+        $this->listar(array('Periodo_id' => $p->id));
     }
 
     public function filtrar() {
-        $this->cargar($this->input->post());
+        $this->listar($this->input->post());
     }
 
-    private function cargar($filtros){
+    private function listar($filtros){
         $this->load->model('Horario_model');
         $this->load->model('Aula_model');
         $this->load->model('Asignatura_Model');
@@ -44,20 +44,30 @@ class Horario extends CI_Controller
     }
 
 
-    public function editar($Comision_id){
-        $this->load->library("grocery_CRUD");
+    public function editar($id, $error = null) {
         $this->load->model('Horario_model');
+        $this->load->model('Aula_model');
+        $this->Horario_model->load($id);
+        $data['horario'] = $this->Horario_model->to_array();
+        if($error != null) $data['error'] = $error;
+        $data['dias'] = $this->Horario_model->get_dias();
+        $data['aulas'] = $this->Aula_model->get_aulas_join_edificio();
+        $data['action_url'] = base_url("horario/update/$id");
+        $out['body'] = 'horario/editar';
+        $out['data'] = $data;
+        $this->load->view('templates/base', $out);
+    }
 
-        $crud = new grocery_CRUD();
-        $crud->set_table('horario');
-        $crud->where('Comision_id', $Comision_id);
-        $crud->set_relation('Aula_id', 'aula', 'nombre');
-        $crud->display_as('Aula_id', 'aula');
-        $crud->callback_insert(array($this, 'horario_insert_callback'));
-        $crud->callback_update(array($this, 'horario_update_callback'));
-        $crud->callback_delete(array($this, 'horario_delete_callback'));
-        $out = $crud->render();
-        $this->load->view('vacia', $out);
+    public function update($id){
+        $this->load->model('Horario_model');
+        $this->Horario_model->load($id);
+        $this->Horario_model->from_array($this->input->post());
+        try {
+            $this->Horario_model->update();
+        }catch (Exception $e){
+            $this->editar($id, $e->getMessage());
+        }
+        redirect(base_url('horario'), 'refresh');
     }
 
     function horario_insert_callback($post_array) {
