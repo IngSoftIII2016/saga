@@ -12,12 +12,12 @@
             <ul class="nav navbar-nav navbar-right">
                 <li><a href="<?=base_url('horario')?>" class="header navclass" style=" font-size: medium;">Buscador</a>
                 </li>
-                <li class="dropdown" id="edificios">
-                    <a href="#" class="dropdown-toggle header navclass" style=" font-size: medium;"
-                       data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Edificio <span
-                                class="caret"></span></a>
+<!--                 <li class="dropdown" id="edificios"> -->
+<!--                    <a href="#" class="dropdown-toggle header navclass" style=" font-size: medium;" -->
+<!--                       data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Edificio <span -->
+<!--                                 class="caret"></span></a> -->
 
-                </li>
+<!--                 </li> -->
                 <li class="dropdown" id="administrar">
                     <a href="#" class="dropdown-toggle header navclass" style=" font-size: medium;"
                        data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Administrar <span
