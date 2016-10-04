@@ -67,7 +67,7 @@ class Horario_model extends CI_Model
             $this->db->where('ac.Carrera_id', $filtros['Carrera_id']);
         if(isset($filtros['Aula_id']) && trim($filtros['Aula_id']) != "")
             $this->db->where('ho.Aula_id', $filtros['Aula_id']);
-        elseif(isset($filtros['Edificio_id']) && trim($filtros['Aula_id'] != ""))
+        elseif(isset($filtros['Edificio_id']) && trim($filtros['Edificio_id'] != ""))
             $this->db->where('ed.id', $filtros['Edificio_id']);
         if (isset($filtros['dia']) && trim($filtros['dia']) != "")
             $this->db->where('ho.dia', $filtros['dia']);
@@ -144,8 +144,8 @@ class Horario_model extends CI_Model
             return array('error' => $msg, 'colisiones' => $colisiones);
         } else {
 
-            $this->db->insert('horario', $this);
-
+            $id = $this->db->insert('horario', $this);
+            if($id) $this->id = $id;
             $this->insertar_clases();
 
             $this->db->trans_complete();

@@ -57,6 +57,18 @@
             </select>
         </div>
         <div class="form-group">
+            <label for="Edificio_id" class="control-label">Edificio:</label>
+            <select class="form-control select2" name="Edificio_id" id="Edificio_id">
+                <option value="">Todos</option>
+                <?php foreach ($edificios as $edificio): ?>
+                    <option value="<?= $edificio->id; ?>" <?= isset($filtros['Edificio_id']) && $edificio->id == $filtros['Edificio_id'] ? "selected=\"selected\" " : " "; ?>>
+                        <?= $edificio->nombre ?>
+                    </option>
+                <?php endforeach; ?>
+            </select>
+
+        </div>
+        <div class="form-group">
             <label for="Aula_id" class="control-label">Aula:</label>
             <select class="form-control select2" name="Aula_id" id="Aula_id">
                 <option value="">Todas</option>

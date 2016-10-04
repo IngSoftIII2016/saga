@@ -14,6 +14,10 @@
         </select>
     </div>
     <div class="form-group">
+        <label for="frecuencia_semanas">Cada # semanas</label>
+        <input type="number" name="frecuencia_semanas" value="1" />
+    </div>
+    <div class="form-group">
         <label for="dia">Día</label>
         <select class="form-control" name="dia" id="dia">
             <?php foreach ($dias as $i => $dia): ?>
