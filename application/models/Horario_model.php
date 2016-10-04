@@ -26,8 +26,8 @@ class Horario_model extends CI_Model
     public function from_array($data)
     {
         if(isset($data['id'])) $this->id = $data['id'];
-        if(isset($data['descripcion']))$this->descripcion = $data['descripcion'];
-        if(isset($data['frecuencia_semanas']))$this->frecuencia_semanas = $data['frecuencia_semanas'];
+        if(isset($data['descripcion'])) $this->descripcion = $data['descripcion'];
+        if(isset($data['frecuencia_semanas'])) $this->frecuencia_semanas = $data['frecuencia_semanas'];
         if(isset($data['dia'])) $this->dia = $data['dia'];
         if(isset($data['hora_inicio'])) $this->hora_inicio = $data['hora_inicio'];
         if(isset($data['duracion'])) $this->duracion = $data['duracion'];
@@ -92,7 +92,6 @@ class Horario_model extends CI_Model
     {
         $this->db->where('id', $id);
         $result = $this->db->get('horario')->row_array();
-        //var_dump($result);
         $this->from_array($result);
     }
 
@@ -107,19 +106,21 @@ class Horario_model extends CI_Model
 
     public function get_colisiones()
     {
+
         $periodo_id = $this->get_periodo()->id;
         $hora_fin = date("H:i:s", strtotime($this->hora_inicio) +
             strtotime($this->duracion) - strtotime("00:00:00"));
         $this->db->select('ho.* , co.nombre AS comision, a.nombre AS asignatura');
         $this->db->from('horario AS ho');
-        $this->db->join('comision AS co', 'ho.Comision_id = co.id', 'left');
-        $this->db->join('asignatura AS a', 'co.Asignatura_id = a.id', 'left');
+        $this->db->join('comision AS co', 'ho.Comision_id = co.id');
+        $this->db->join('asignatura AS a', 'co.Asignatura_id = a.id');
         $this->db->where('ho.id !=', $this->id);
         $this->db->where('co.Periodo_id', $periodo_id);
         $this->db->where('ho.dia', $this->dia);
         $this->db->where('ho.Aula_id', $this->Aula_id);
-        $this->db->where("ho.hora_inicio BETWEEN '$this->hora_inicio' AND '$hora_fin' ");
-        $this->db->where("(SELECT ADDTIME(ho.hora_inicio, ho.duracion)) BETWEEN '$this->hora_inicio' AND '$hora_fin' ");
+    //    $this->db->where("(ho.hora_inicio BETWEEN '$this->hora_inicio' AND '$hora_fin' OR (SELECT ADDTIME(ho.hora_inicio, ho.duracion)) BETWEEN '$this->hora_inicio' AND '$hora_fin' )");
+        $this->db->where("((ho.hora_inicio > '$this->hora_inicio' AND ho.hora_inicio < '$hora_fin') OR ( (SELECT ADDTIME(ho.hora_inicio, ho.duracion)) > '$this->hora_inicio' AND (SELECT ADDTIME(ho.hora_inicio, ho.duracion)) < '$hora_fin' ))");
+        //var_dump($this->db->get_compiled_select());
         $query = $this->db->get();
         return $query->result();
     }
@@ -127,8 +128,6 @@ class Horario_model extends CI_Model
     public function insert()
     {
         $this->db->trans_start();
-
-
 
         $colisiones = $this->get_colisiones();
         if (count($colisiones) > 0) {
@@ -149,21 +148,26 @@ class Horario_model extends CI_Model
         if ($desde_date == null) $desde_date = new DateTime();
 
         $this->db->trans_start();
+
         $colisiones = $this->get_colisiones();
 
         if (count($colisiones) > 0) {
+            $this->db->trans_rollback();
             $msg = "Horario ocupado!";
             foreach ($colisiones as $c) $msg = $msg . "\n" . $c->asignatura;
-            throw new Exception($msg);
+            return array( 'error' => $msg, 'colisiones' => $colisiones);
+        }else {
+            $this->db->update('horario', $this->to_array(), array('id' => $this->id));
+
+            // actualizar todas las clases correspondientes a este horario a partir de la fecha establecida
+            $this->eliminar_clases($desde_date);
+
+            $this->insertar_clases($desde_date);
+
+            $this->db->trans_complete();
+
+            return array( 'success' => 'Horario actualizado con exito');
         }
-        $this->db->update('horario', $this, array('id' => $this->id));
-
-        // actualizar todas las clases correspondientes a este horario a partir de la fecha establecida
-        $this->eliminar_clases($desde_date);
-
-        $this->insertar_clases($desde_date);
-
-        $this->db->trans_complete();
     }
 
     public function delete($desde_date = null)

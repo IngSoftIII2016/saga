@@ -61,13 +61,15 @@ class Horario extends CI_Controller
     public function update($id){
         $this->load->model('Horario_model');
         $this->Horario_model->load($id);
+        //var_dump($this->Horario_model->to_array());
         $this->Horario_model->from_array($this->input->post());
-        try {
-            $this->Horario_model->update();
-        }catch (Exception $e){
-            $this->editar($id, $e->getMessage());
+        //var_dump($this->Horario_model->to_array());
+        $result = $this->Horario_model->update();
+        if(isset($result['error'])){
+            $this->editar($id, $result['error']);
+        }else {
+            redirect(base_url('horario'), 'refresh');
         }
-        redirect(base_url('horario'), 'refresh');
     }
 
     function horario_insert_callback($post_array) {
