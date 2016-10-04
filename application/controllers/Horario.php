@@ -43,13 +43,13 @@ class Horario extends CI_Controller
         $this->load->view('templates/base', $out);
     }
 
-
     public function editar($id, $error = null) {
         $this->load->model('Horario_model');
         $this->load->model('Aula_model');
         $this->Horario_model->load($id);
         $data['horario'] = $this->Horario_model->to_array();
         if($error != null) $data['error'] = $error;
+        $data['comision'] = $this->Horario_model->get_comision();
         $data['dias'] = $this->Horario_model->get_dias();
         $data['aulas'] = $this->Aula_model->get_aulas_join_edificio();
         $data['action_url'] = base_url("horario/update/$id");
@@ -72,25 +72,30 @@ class Horario extends CI_Controller
         }
     }
 
-    function horario_insert_callback($post_array) {
+    public function nuevo($error = null) {
         $this->load->model('Horario_model');
-        var_dump($post_array);
-
-        $this->Horario_model->from_array($post_array);
-        $this->Horario_model->insert();
+        $this->load->model('Aula_model');
+        $this->load->model('Comision_Model');
+        $data['horario'] = $this->Horario_model->to_array();
+        if($error != null) $data['error'] = $error;
+        $data['dias'] = $this->Horario_model->get_dias();
+        $data['aulas'] = $this->Aula_model->get_aulas_join_edificio();
+        $data['comisiones'] = $this->Comision_Model->get_comisiones();
+        $data['action_url'] = base_url("horario/create");
+        $out['body'] = 'horario/nuevo';
+        $out['data'] = $data;
+        $this->load->view('templates/base', $out);
     }
 
-    function horario_update_callback($post_array) {
+    public function create(){
         $this->load->model('Horario_model');
-        $this->Horario_model->from_array($post_array);
-        $this->Horario_model->update();
+        $this->Horario_model->from_array($this->input->post());
+        $result = $this->Horario_model->insert();
+        if(isset($result['error'])){
+            $this->nuevo($result['error']);
+        }else {
+            redirect(base_url('horario'), 'refresh');
+        }
     }
-
-    function horario_delete_callback($post_array) {
-        $this->load->model('Horario_model');
-        $this->Horario_model->from_array($post_array);
-        $this->Horario_model->delete();
-    }
-
 
 }

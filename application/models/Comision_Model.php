@@ -30,12 +30,9 @@ class Comision_Model extends Grocery_crud_model
         $array['Asignatura_id'] = $this->Asignatura_id;
     }
 
-    public function get_comisiones($filtros) {
-
+    public function get_comisiones()  {
+        $this->db->select('co.*, a.nombre');
+        $this->db->from('comision AS co');
+        $this->db->join('asignatura AS a', 'co.Asignatura_id = a.id');
     }
-
-    public function insert() {
-
-    }
-
 }

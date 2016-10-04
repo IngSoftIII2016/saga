@@ -83,6 +83,7 @@
             <button type="submit" class="btn btn-default">Aplicar Filtros</button>
         </div>
     </form>
+<a style="color: black;" href="<?=base_url('horario/nuevo')?>">Nuevo Horario</a>
     <table class="table table-bordered tabla-horarios">
         <tr id="cabecera">
             <th>carrera</th>

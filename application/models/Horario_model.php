@@ -22,7 +22,6 @@ class Horario_model extends CI_Model
         return $this->db->get('horario')->result();
     }
 
-
     public function from_array($data)
     {
         if(isset($data['id'])) $this->id = $data['id'];
@@ -104,6 +103,14 @@ class Horario_model extends CI_Model
         return $this->db->get()->row();
     }
 
+    public function get_comision(){
+        $this->db->select("co.*, a.nombre asignatura");
+        $this->db->from('comision AS co');
+        $this->db->join('asignatura AS a', 'co.Asignatura_id = a.id');
+        $this->db->where('co.id', $this->Comision_id);
+        return $this->db->get()->row();
+    }
+
     public function get_colisiones()
     {
 
@@ -118,9 +125,7 @@ class Horario_model extends CI_Model
         $this->db->where('co.Periodo_id', $periodo_id);
         $this->db->where('ho.dia', $this->dia);
         $this->db->where('ho.Aula_id', $this->Aula_id);
-    //    $this->db->where("(ho.hora_inicio BETWEEN '$this->hora_inicio' AND '$hora_fin' OR (SELECT ADDTIME(ho.hora_inicio, ho.duracion)) BETWEEN '$this->hora_inicio' AND '$hora_fin' )");
         $this->db->where("((ho.hora_inicio > '$this->hora_inicio' AND ho.hora_inicio < '$hora_fin') OR ( (SELECT ADDTIME(ho.hora_inicio, ho.duracion)) > '$this->hora_inicio' AND (SELECT ADDTIME(ho.hora_inicio, ho.duracion)) < '$hora_fin' ))");
-        //var_dump($this->db->get_compiled_select());
         $query = $this->db->get();
         return $query->result();
     }
@@ -130,17 +135,23 @@ class Horario_model extends CI_Model
         $this->db->trans_start();
 
         $colisiones = $this->get_colisiones();
+
         if (count($colisiones) > 0) {
+            $this->db->trans_rollback();
+
             $msg = "Horario ocupado!";
             foreach ($colisiones as $c) $msg = $msg . "\n" . $c->asignatura;
-            throw new Exception($msg);
+            return array('error' => $msg, 'colisiones' => $colisiones);
+        } else {
+
+            $this->db->insert('horario', $this);
+
+            $this->insertar_clases();
+
+            $this->db->trans_complete();
+
+            return array( 'success' => 'Horario agregado con exito');
         }
-
-        $this->db->insert('horario', $this);
-
-        $this->insertar_clases();
-
-        $this->db->trans_complete();
     }
 
     public function update($desde_date = null)

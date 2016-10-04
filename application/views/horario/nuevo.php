@@ -1,14 +1,23 @@
 <?php if (isset($error)): ?>
     <p class="bg-danger"> <?= $error ?></p>
 <?php endif; ?>
-<h3><?=$comision->asignatura . ' ' . $comision->nombre?></h3>
+<h3></h3>
 <form class="form-inline" action="<?= $action_url ?>" method="post">
+    <div class="form-group">
+        <label for="Comision_id">Comision</label>
+        <select class="form-control" name="Comision_id" id="Comision_id">
+            <?php foreach ($comisiones as $comision): ?>
+                <option value="<?= $comision->id ?>" >
+                    <?= $comision->asignatura . ' ' . $comision->nombre ?>
+                </option>
+            <?php endforeach; ?>
+        </select>
+    </div>
     <div class="form-group">
         <label for="dia">Día</label>
         <select class="form-control" name="dia" id="dia">
             <?php foreach ($dias as $i => $dia): ?>
-                <option value="<?= $i ?>"
-                    <?= $horario['dia'] == $i ? 'selected' : '' ?>>
+                <option value="<?= $i ?>" >
                     <?= $dia ?>
                 </option>
             <?php endforeach; ?>
@@ -16,10 +25,10 @@
     </div>
     <div class="form-group">
         <label for="hora_inicio">Hora de comienzo</label>
-        <input id="hora_inicio" name="hora_inicio" value="<?= $horario['hora_inicio'] ?>"
+        <input id="hora_inicio" name="hora_inicio"
                class="timepicker text-center" jt-timepicker="" time="model.time"
                time-string="model.timeString"
-               default-time="<?php substr($horario['hora_inicio'], 3); ?>"
+
                time-format="model.options.timeFormat"
                start-time="model.options.startTime" min-time="model.options.minTime"
                max-time="model.options.maxTime" interval="model.options.interval"
@@ -28,10 +37,9 @@
     </div>
     <div class="form-group">
         <label for="duracion">Duración</label>
-        <input id="duracion" name="duracion" value="<?= $horario['duracion'] ?>"
+        <input id="duracion" name="duracion"
                class="timepicker text-center" jt-timepicker="" time="model.time"
                time-string="model.timeString"
-               default-time="<?php substr($horario['duracion'], 3); ?>"
                time-format="model.options.timeFormat"
                start-time="model.options.startTime" min-time="model.options.minTime"
                max-time="model.options.maxTime" interval="model.options.interval"
@@ -42,18 +50,17 @@
         <label for="Aula_id">Aula</label>
         <select name="Aula_id" id="Aula_id" class="form-control" >
             <?php foreach ($aulas as $aula): ?>
-                <option value="<?= $aula->id ?>"
-                    <?= $horario['Aula_id'] == $aula->id ? 'selected' : '' ?>>
+                <option value="<?= $aula->id ?>">
                     <?= $aula->nombre . ' - ' . $aula->edificio; ?>
                 </option>
             <?php endforeach; ?>
         </select>
     </div>
-    <button type="submit" class="btn btn-default">Actualizar</button>
+    <button type="submit" class="btn btn-default">Guardar</button>
 </form>
 
 <script
-        src="//cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.js"></script>
+    src="//cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.js"></script>
 <script type="text/javascript">
     $(function () {
         $('#hora_inicio');
