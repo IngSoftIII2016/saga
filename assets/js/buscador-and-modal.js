@@ -43,6 +43,7 @@ $('#exampleModal').on('show.bs.modal', function (event) {
 		var button = $(event.relatedTarget);
 		var motivo = button.data('motivo');
 		var horario = button.data('horario');
+		var id = button.data('id');
 		var modal = $(this);
 		modal.find('.modal-title-evento').text( 'Evento' );
 		$( ".modal-text-evento" ).empty();
@@ -50,6 +51,7 @@ $('#exampleModal').on('show.bs.modal', function (event) {
 		$( ".strong" ).remove();
 		$( ".modal-text-evento" ).append( "<strong class='strong'>Motivo: </strong>" + motivo);
 		$( ".modal-text2-evento" ).append( "<strong class='strong'>Horario: </strong>" + horario );
+		$( ".btn.btn-danger.btn-delete-evento.col-md-offset-11" ).attr( 'id', id );		
 		});
 		
 		$('#ModalInsertarEvento').on('show.bs.modal', function (event) {
@@ -164,7 +166,7 @@ $('#exampleModal').on('show.bs.modal', function (event) {
 });		
 
 
-//Alta o modificacion
+//Alta Evento
 jQuery('#form-evento').on(
 		'submit',
 		function(e) {
@@ -199,4 +201,47 @@ jQuery('#form-evento').on(
 			});
 			e.preventDefault();
 			return false;
+		});
+
+jQuery('.btn.btn-danger.btn-delete-evento.col-md-offset-11').click(
+		function() {
+			var id = $(this).attr('id');
+			swal({
+				title : "¿Seguro que desea eliminar el evento?",
+				text : "No podrás deshacer esta acción",
+				type : "warning",
+				showCancelButton : true,
+				cancelButtonText : "Cancelar",
+				confirmButtonColor : "#DD6B55",
+				confirmButtonText : "Aceptar",
+				closeOnConfirm : false
+			}, function(isConfirm) {
+				if (isConfirm) {
+					$.ajax({
+						type : "POST",
+						url : base_url + "evento/borrar",
+						data : {
+							id : id
+						},
+						success : function() {
+								swal({
+									title : "¡Hecho!",
+									text : "Evento eliminado con éxito!",
+									type : "success"
+								}, function(isConfirm) {
+									if (isConfirm)
+										window.location.href = base_url + "planilla";
+								}); 
+						},
+						error : function(xhr, ajaxOptions, thrownError) {
+							swal("¡Error Detectado!",
+									"Vuelva a intentarlo en un momento.",
+									"error");
+						}
+					});
+				} else {
+					swal("Cancelado", "Tu archivo imaginario está a salvo :)",
+							"error");
+				}
+			});
 		});

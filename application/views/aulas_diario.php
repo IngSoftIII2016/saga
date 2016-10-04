@@ -112,6 +112,7 @@ $this->load->view ( 'header' );?>
 													data-toggle="modal" data-target="#exampleModalEvento"
 													data-horario= "<?php echo 'de ' . substr($evento->hora_inicio, 0,5) . ' a ' . substr($evento->hora_fin, 0,5) . ' hs' ?>" 
 													data-motivo= "<?php echo $evento->motivo?>" 
+													data-id="<?php echo $evento->id?>"
 													title="Ver Detalle"><?php echo 'Motivo: ' . $evento->motivo ?>
 												</a>
 											</div>
@@ -186,6 +187,8 @@ $this->load->view ( 'header' );?>
 								</p>
 								<p class="modal-text2-evento text-modal" id="exampleModalLabel">
 								</p>
+								<a class="btn btn-danger btn-delete-evento col-md-offset-11"><i class="fa fa-trash-o"></i>
+											</a>
 								</div>
 							</div>
 						</div>
