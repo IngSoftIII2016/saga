@@ -107,7 +107,7 @@
                 <td><?= $horario['duracion'] ?></td>
                 <td><?= $horario['edificio'] ?></td>
                 <td><?= $horario['aula'] ?></td>
-                <td><a href="<?= base_url("horario/editar/{$horario['id']}") ?>">Editar</a></td>
+                <td><a style="color:black;" href="<?= base_url("horario/editar/{$horario['id']}") ?>"><i class="fa fa-pencil-square-o fa-lg" aria-hidden="true"></i></a></td>
             </tr>
         <?php endforeach; ?>
     </table>
