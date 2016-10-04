@@ -69,7 +69,7 @@
 <script
         src="<?php echo base_url('assets/plugins/bootstrap-datepicker/locales/bootstrap-datepicker.es.js'); ?>"
         charset="UTF-8"></script>
-
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.css">
 
 <link rel="stylesheet" type="text/css"
       href="<?php echo base_url('assets/plugins/bootstrap-datepicker/css/datepicker.css'); ?>"/>
