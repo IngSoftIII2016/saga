@@ -107,10 +107,9 @@ class Clase_model extends CI_Model {
 
 		$this->db->where('ho.Aula_id',$aula);
 		$this->db->where('fecha', $fecha);
-		$this->db->where('clase.hora_inicio >=', $hora_inicio);
-		$this->db->where('clase.hora_inicio <=', $hora_fin);
-		$this->db->where('clase.hora_fin >=', $hora_inicio);
-		$this->db->where('clase.hora_fin <=', $hora_fin);
+		$this->db->where('clase.hora_inicio <', $hora_fin);
+		$this->db->where('clase.hora_fin >', $hora_inicio);
+
 		//$this->db->where_between("hora_inicio BETWEEN $hora_inicio AND $hora_fin");
 		//$this->db->where("clase.hora_fin BETWEEN $hora_inicio AND $hora_fin");
 		$query = $this->db->get();
