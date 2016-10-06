@@ -29,16 +29,92 @@ $('#exampleModal').on('show.bs.modal', function (event) {
 	var horario = button.data('horario');
 	var profesor = button.data('profesor');
 	var aula = button.data('aula');
+	var id = button.data('idclase');
+	var comentario = button.data('comentario');
 	var modal = $(this);
 	modal.find('.modal-title').text( materia );
 	$( ".modal-text3" ).empty();
 	$( ".modal-text" ).empty();
 	$( ".modal-text2" ).empty();
+	$( ".modal-text4" ).empty();
+	$( "#clasemodal" ).remove();
+	$( ".btn.btn-info.btn-agregar-comentario.col-md-offset-11" ).remove();
 	$( ".strong" ).remove();
 	$( ".modal-text3" ).append( "<strong class='strong'>Aula: </strong>" + aula );
 	$( ".modal-text" ).append( "<strong class='strong'>Horario: </strong>" + horario);
 	$( ".modal-text2" ).append( "<strong class='strong'>Profesor: </strong>" + profesor );
+	if(comentario != ''){
+		$( ".modal-text4" ).append( "<strong class='strong'>Comentario: </strong>" + comentario );
+	}else {
+		$( ".modal-body.boton-comentario" ).append( "  <input type='hidden' id='clasemodal' name='idclase' value='" + id +   "'>" );
+		$( ".modal-body.boton-comentario" ).append( "  <a id='agregarevento' class='btn btn-info btn-agregar-comentario col-md-offset-11' action='" +  base_url + "clase/agregar_comentario_ajax" + "'><i class='fa fa-plus-square'></i></a>" );
+		$('#agregarevento').click(function(e){
+			e.preventDefault();
+			var id = $("input[id='clasemodal']").val();
+			var action = $('#agregarevento').attr("action");
+			agregar_comentario(action, id);
+
+		});
+	}
 	});
+function agregar_comentario(urlAction, id) {
+	$('#exampleModal').modal('hide');
+	swal({
+		title : "¿Seguro que desea agregar un comentario?",
+		text : "Escribe un comentario",
+		type : "input",
+		showCancelButton : true,
+		cancelButtonText : "Cancelar",
+		confirmButtonColor : "#DD6B55",
+		confirmButtonText : "Aceptar",
+		closeOnConfirm : false,
+		animation : "slide-from-top",
+		inputPlaceholder: "Write something"
+	}, function(inputValue) {
+		if (inputValue === false)
+			return false;
+		if (inputValue === "") {
+			swal.showInputError("¡No agregaste ningún comentario!");
+			return false;
+		} else {
+			$.ajax({
+				type : "POST",
+				url : urlAction,
+				data : {
+					idclase : id,
+					comentarioclase : inputValue
+				},
+				success : function(msg) {
+					if (msg == 1) {
+					swal({
+						title : "¡Hecho!",
+						text : "Comentario agregado con exito!",
+						type : "success"
+					}, function(isConfirm) {
+						if (isConfirm)
+								window.location.href = base_url + "planilla";
+					});
+					} else {
+						swal({
+							title : "¡Error!",
+							text : "Comentario no fue agregado!",
+							type : "error"
+						});
+					}
+				},
+				error : function(xhr, ajaxOptions, thrownError) {
+					swal("¡Error Detectado!",
+							"Por favor, vuelva a intentarlo en un momento.",
+							"error");
+				}
+			});
+
+		}
+	});
+
+}
+//Mensaje al aprobar una OP
+
 	$('#exampleModalEvento').on('show.bs.modal', function (event) {
 		var button = $(event.relatedTarget);
 		var motivo = button.data('motivo');
