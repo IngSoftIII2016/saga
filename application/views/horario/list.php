@@ -95,7 +95,7 @@
             <button type="submit" class="btn btn-default">Aplicar Filtros</button>
         </div>
     </form>
-<a style="color: black;" href="<?=base_url('horario/nuevo')?>">Nuevo Horario</a>
+    <a style="margin-top: 10px; margin-left: 5px;" class="btn btn-info"  href="<?=base_url('horario/nuevo')?>"><i class="fa fa-plus-square"></i>Nuevo Horario</a>
     <table class="table table-bordered tabla-horarios">
         <tr id="cabecera">
             <th>carrera</th>
@@ -120,7 +120,7 @@
                 <td><?= $horario['duracion'] ?></td>
                 <td><?= $horario['edificio'] ?></td>
                 <td><?= $horario['aula'] ?></td>
-                <td><a style="color:black;" href="<?= base_url("horario/editar/{$horario['id']}") ?>"><i class="fa fa-pencil-square-o fa-lg" aria-hidden="true"></i></a></td>
+                <td><a style="color:#881300;" href="<?= base_url("horario/editar/{$horario['id']}") ?>"><i class="fa fa-pencil-square-o fa-lg" aria-hidden="true"></i></a></td>
             </tr>
         <?php endforeach; ?>
     </table>

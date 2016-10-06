@@ -94,6 +94,8 @@ $this->load->view ( 'header' );?>
 													data-horario= "<?php echo 'de ' . substr($clase->hora_inicio, 0,5) . ' a ' . substr($clase->hora_fin, 0,5) . ' hs' ?>" 
 													data-profesor= "<?php echo $clase->docente?>" 
 													data-aula="<?php echo $clase->aula?>" 
+													data-idclase="<?php echo $clase->clase_id ?>" 
+													data-comentario="<?php echo $clase->comentario ?>"
 													title="Ver Detalle"><?php echo $clase->materia . ' Profesor: ' . $clase->docente  ?>
 												</a>
 											</div>
@@ -138,12 +140,14 @@ $this->load->view ( 'header' );?>
 									</button>
 									<h3 class="modal-title" id="exampleModalLabel"></h3>
 								</div>
-								<div class="modal-body">
+								<div class="modal-body boton-comentario">
 								<p class="modal-text3 text-modal" id="exampleModalLabel">
 								</p>
 								<p class="modal-text text-modal" id="exampleModalLabel" >
 								</p>
 								<p class="modal-text2 text-modal" id="exampleModalLabel">
+								</p>
+								<p class="modal-text4 text-modal" id="exampleModalLabel">
 								</p>
 								</div>
 							</div>
