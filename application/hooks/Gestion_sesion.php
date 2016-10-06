@@ -22,10 +22,10 @@ class Gestion_sesion {
 					redirect('login', 'refresh');
 				}	
 
-				if(!$this->ci->ion_auth->is_admin()) {
+				if(!$this->ci->ion_auth->is_admin()) {  
 				    //El acceso permitido para el bedel.
 					$controlador = $this->ci->router->class;
-					$controladores_permitidos = array('planilla','horario','login');
+					$controladores_permitidos = array('planilla','horario','login','edificio');
 
 			    if(!in_array($controlador,$controladores_permitidos)){
 					$message='Usted debe ser administrador para acceder a esta pagina. <a href="'.$this->ci->config->config['base_url'].'" >Ir a la planilla</a>';
