@@ -61,7 +61,7 @@ class Clase_model extends CI_Model {
 			}
 	}
 	
-	public function cambiar_clase($clase, $fecha $hora_inicio, $hora_fin, $aula) {
+	public function cambiar_clase($clase, $fecha, $hora_inicio, $hora_fin, $aula) {
 		
 		if(aula_disponible($aula, $fecha, $hora_inicio, $hora_fin)) {
 			$data = array(
