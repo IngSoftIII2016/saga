@@ -125,7 +125,7 @@ class Horario_model extends CI_Model
         $this->db->where('co.Periodo_id', $periodo_id);
         $this->db->where('ho.dia', $this->dia);
         $this->db->where('ho.Aula_id', $this->Aula_id);
-        $this->db->where("((ho.hora_inicio > '$this->hora_inicio' AND ho.hora_inicio < '$hora_fin') OR ( (SELECT ADDTIME(ho.hora_inicio, ho.duracion)) > '$this->hora_inicio' AND (SELECT ADDTIME(ho.hora_inicio, ho.duracion)) < '$hora_fin' ))");
+        $this->db->where("ho.hora_inicio < '$hora_fin' AND (SELECT ADDTIME(ho.hora_inicio, ho.duracion)) > '$this->hora_inicio'");
         $query = $this->db->get();
         return $query->result();
     }
