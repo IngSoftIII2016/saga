@@ -61,6 +61,27 @@ class Clase_model extends CI_Model {
 			}
 	}
 	
+	public function cambiar_clase($clase, $fecha $hora_inicio, $hora_fin, $aula) {
+		
+		if(aula_disponible($aula, $fecha, $hora_inicio, $hora_fin)) {
+			$data = array(
+			'hora_inicio' => $hora_inicio,
+			'fecha' => $fecha,
+			'hora_fin' => $hora_fin,
+			'aula' => $aula
+			);
+
+			$this->db->where('id', $clase);
+			$this->db->update('clase', $data);
+			return true;
+		} else {
+			return false;
+		}
+		
+	}
+	
+
+	
 	public function get_clase_aula($id) {
 
         $this->db->select('au.id AS aula_id, ed.nombre AS edificio, au.nombre AS aula, clase.id as clase_id, clase.hora_inicio AS hora_inicio, clase.hora_fin AS hora_fin, clase.comentario as comentario, as.nombre AS materia, ed.nombre AS edificio');
