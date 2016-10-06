@@ -68,8 +68,7 @@ function agregar_comentario(urlAction, id) {
 		confirmButtonColor : "#DD6B55",
 		confirmButtonText : "Aceptar",
 		closeOnConfirm : false,
-		animation : "slide-from-top",
-		inputPlaceholder: "Write something"
+		animation : "slide-from-top"
 	}, function(inputValue) {
 		if (inputValue === false)
 			return false;
