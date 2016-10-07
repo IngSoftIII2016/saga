@@ -110,8 +110,6 @@ class Clase_model extends CI_Model {
 		$this->db->where('clase.hora_inicio <', $hora_fin);
 		$this->db->where('clase.hora_fin >', $hora_inicio);
 
-		//$this->db->where_between("hora_inicio BETWEEN $hora_inicio AND $hora_fin");
-		//$this->db->where("clase.hora_fin BETWEEN $hora_inicio AND $hora_fin");
 		$query = $this->db->get();
 		
 		return $query->num_rows() == 0;

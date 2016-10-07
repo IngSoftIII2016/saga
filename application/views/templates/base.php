@@ -5,8 +5,6 @@
 </head>
 <body>
 <?php $this->load->view('header'); ?>
-<div>
-    <?php $this->load->view($body, $data); ?>
-</div>
+<?php $this->load->view($body, $data); ?>
 </body>
 </html>
