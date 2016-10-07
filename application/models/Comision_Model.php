@@ -31,8 +31,9 @@ class Comision_Model extends Grocery_crud_model
     }
 
     public function get_comisiones()  {
-        $this->db->select('co.*, a.nombre');
+        $this->db->select('co.*, a.nombre AS asignatura');
         $this->db->from('comision AS co');
         $this->db->join('asignatura AS a', 'co.Asignatura_id = a.id');
+        return $this->db->get()->result();
     }
 }

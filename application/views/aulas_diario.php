@@ -127,33 +127,33 @@ $this->load->view ( 'header' );?>
 						<?php } ?>						
 					</div>
 				</div>
-				
-				<div class="modal fade" id="exampleModal" tabindex="-1"
-						role="dialog" aria-labelledby="exampleModalLabel"
-						aria-hidden="true">
-						<div class="modal-dialog" role="document">
-							<div class="modal-content">
-								<div class="modal-header">
-									<button type="button" class="close" data-dismiss="modal"
-										aria-label="Close">
-										<span aria-hidden="true">&times;</span>
-									</button>
-									<h3 class="modal-title" id="exampleModalLabel"></h3>
-								</div>
-								<div class="modal-body">
-								<p class="modal-text3 text-modal" id="exampleModalLabel">
-								</p>
-								<p class="modal-text text-modal" id="exampleModalLabel" >
-								</p>
-								<p class="modal-text2 text-modal" id="exampleModalLabel">
-								</p>
-								<p class="modal-text4 text-modal" id="exampleModalLabel">
-								</p>
-								<div class="row boton-comentario"></div>
-								</div>
-							</div>
+		
+		<div class="modal fade" id="exampleModal" tabindex="-1"
+				role="dialog" aria-labelledby="exampleModalLabel"
+				aria-hidden="true">
+				<div class="modal-dialog" role="document">
+					<div class="modal-content">
+						<div class="modal-header">
+							<button type="button" class="close" data-dismiss="modal"
+								aria-label="Close">
+								<span aria-hidden="true">&times;</span>
+							</button>
+							<h3 class="modal-title" id="exampleModalLabel"></h3>
+						</div>
+						<div class="modal-body">
+						<p class="modal-text3 text-modal" id="exampleModalLabel">
+						</p>
+						<p class="modal-text text-modal" id="exampleModalLabel" >
+						</p>
+						<p class="modal-text2 text-modal" id="exampleModalLabel">
+						</p>
+						<p class="modal-text4 text-modal" id="exampleModalLabel">
+						</p>
+						<div class="row boton-comentario"></div>
 						</div>
 					</div>
+				</div>
+			</div>
 					<div class="modal fade" id="exampleModalAula" tabindex="-1"
 						role="dialog" aria-labelledby="exampleModalLabel"
 						aria-hidden="true">

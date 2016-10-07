@@ -67,7 +67,7 @@ class Horario_model extends CI_Model
             $this->db->where('ac.Carrera_id', $filtros['Carrera_id']);
         if(isset($filtros['Aula_id']) && trim($filtros['Aula_id']) != "")
             $this->db->where('ho.Aula_id', $filtros['Aula_id']);
-        elseif(isset($filtros['Edificio_id']) && trim($filtros['Aula_id'] != ""))
+        elseif(isset($filtros['Edificio_id']) && trim($filtros['Edificio_id'] != ""))
             $this->db->where('ed.id', $filtros['Edificio_id']);
         if (isset($filtros['dia']) && trim($filtros['dia']) != "")
             $this->db->where('ho.dia', $filtros['dia']);
@@ -125,7 +125,7 @@ class Horario_model extends CI_Model
         $this->db->where('co.Periodo_id', $periodo_id);
         $this->db->where('ho.dia', $this->dia);
         $this->db->where('ho.Aula_id', $this->Aula_id);
-        $this->db->where("((ho.hora_inicio > '$this->hora_inicio' AND ho.hora_inicio < '$hora_fin') OR ( (SELECT ADDTIME(ho.hora_inicio, ho.duracion)) > '$this->hora_inicio' AND (SELECT ADDTIME(ho.hora_inicio, ho.duracion)) < '$hora_fin' ))");
+        $this->db->where("ho.hora_inicio < '$hora_fin' AND (SELECT ADDTIME(ho.hora_inicio, ho.duracion)) > '$this->hora_inicio'");
         $query = $this->db->get();
         return $query->result();
     }
@@ -144,8 +144,8 @@ class Horario_model extends CI_Model
             return array('error' => $msg, 'colisiones' => $colisiones);
         } else {
 
-            $this->db->insert('horario', $this);
-
+            $id = $this->db->insert('horario', $this);
+            if($id) $this->id = $id;
             $this->insertar_clases();
 
             $this->db->trans_complete();

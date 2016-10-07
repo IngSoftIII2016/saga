@@ -29,12 +29,14 @@ class Horario extends CI_Controller
         $this->load->model('Carrera_Model');
         $this->load->model('Docente_Model');
         $this->load->model('Periodo_Model');
+        $this->load->model('Edificio_model');
         $data['dias'] = $this->Horario_model->get_dias();
         $data['aulas'] = $this->Aula_model->get_aulas_join_edificio();
         $data['asignaturas'] = $this->Asignatura_Model->get_asignaturas();
         $data['carreras'] = $this->Carrera_Model->get_carreras();
         $data['docentes'] = $this->Docente_Model->get_docentes();
         $data['periodos'] = $this->Periodo_Model->get_periodos();
+        $data['edificios'] = $this->Edificio_model->get_edificios();
         $data['action_url'] = base_url('horario/filtrar');
         $data['filtros'] = $filtros;
         $data['horarios'] = $this->Horario_model->get_horarios($filtros);

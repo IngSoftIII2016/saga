@@ -2,8 +2,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <title>SAGA</title>
 <!-- Tell the browser to be responsive to screen width -->
-<meta
-        content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"
+<meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"
         name="viewport">
 <!-- Bootstrap 3.3.5 -->
 <link rel="stylesheet"
@@ -32,14 +31,18 @@
 <!-- DataTables -->
 <link rel="stylesheet"
       href="<?php echo base_url('assets/plugins/datatables/dataTables.bootstrap.css') ?>">
+
 <link rel="stylesheet"
       href="https://cdn.datatables.net/buttons/1.1.0/css/buttons.dataTables.min.css"/>
-<link rel="stylesheet" href="<?php echo base_url('assets/plugins/timepicker/bootstrap-timepicker.min.css'); ?>">
+
+<link rel="stylesheet"
+      href="<?php echo base_url('assets/plugins/timepicker/bootstrap-timepicker.min.css'); ?>">
 
 <!-- Sweet Alert Styles -->
-<link
-        href="<?php echo base_url('assets/plugins/sweetalert/sweetalert.css') ?>"
-        rel="stylesheet">
+<link href="<?php echo base_url('assets/plugins/sweetalert/sweetalert.css') ?>"
+      rel="stylesheet">
+
+<link href="<?=base_url('assets/css/bootstrap-datetimepicker.css')?>" rel="stylesheet">
 <!-- end: CSS -->
 <!-- start: Favicon -->
 <link rel="shortcut icon"
@@ -56,20 +59,26 @@
 <script
         src="<?php echo base_url('assets/plugins/slimScroll/jquery.slimscroll.min.js'); ?>">
 </script>
-<!-- Bootstrap 3.3.5 -->
-<script src="<?php echo base_url('assets/js/bootstrap.min.js') ?>"></script>
+
 <script type="text/javascript"
         src="//cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
-<script
-        src="<?php echo base_url('assets/plugins/bootstrap-datepicker/bootstrap-datepicker.js'); ?>">
-</script>
-<script src="<?php echo base_url('assets/js/jquery.sticky.js'); ?>">
-</script>
+<!-- Bootstrap 3.3.5 -->
+<script src="<?php echo base_url('assets/js/bootstrap.min.js') ?>"></script>
+
+<script src="<?php echo base_url('assets/js/bootstrap-datetimepicker.min.js') ?>"></script>
+
+
+
+<script src="<?php echo base_url('assets/plugins/bootstrap-datepicker/bootstrap-datepicker.js'); ?>"></script>
+
+<script src="<?php echo base_url('assets/js/jquery.sticky.js'); ?>"></script>
 
 <script
         src="<?php echo base_url('assets/plugins/bootstrap-datepicker/locales/bootstrap-datepicker.es.js'); ?>"
         charset="UTF-8"></script>
-<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.css">
+
+<link rel="stylesheet"
+      href="//cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.css">
 
 <link rel="stylesheet" type="text/css"
       href="<?php echo base_url('assets/plugins/bootstrap-datepicker/css/datepicker.css'); ?>"/>
