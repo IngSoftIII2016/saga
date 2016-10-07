@@ -38,16 +38,18 @@ $('#exampleModal').on('show.bs.modal', function (event) {
 	$( ".modal-text2" ).empty();
 	$( ".modal-text4" ).empty();
 	$( "#clasemodal" ).remove();
-	$( ".btn.btn-info.btn-agregar-comentario.col-md-offset-11" ).remove();
+	$( "#agregarevento" ).remove();
+	$( "#cambiarhorario" ).remove();
 	$( ".strong" ).remove();
 	$( ".modal-text3" ).append( "<strong class='strong'>Aula: </strong>" + aula );
 	$( ".modal-text" ).append( "<strong class='strong'>Horario: </strong>" + horario);
 	$( ".modal-text2" ).append( "<strong class='strong'>Profesor: </strong>" + profesor );
+	$( ".row.boton-comentario" ).append( "  <a id='cambiarhorario' title='Cambiar horario' class='btn btn-info btn-cambiar-horario col-md-offset-10' action='" +  base_url + "clase/agregar_comentario_ajax" + "'><i class='fa fa-pencil-square-o'></i></a>" );
 	if(comentario != ''){
 		$( ".modal-text4" ).append( "<strong class='strong'>Comentario: </strong>" + comentario );
 	}else {
-		$( ".modal-body.boton-comentario" ).append( "  <input type='hidden' id='clasemodal' name='idclase' value='" + id +   "'>" );
-		$( ".modal-body.boton-comentario" ).append( "  <a id='agregarevento' class='btn btn-info btn-agregar-comentario col-md-offset-11' action='" +  base_url + "clase/agregar_comentario_ajax" + "'><i class='fa fa-plus-square'></i></a>" );
+		$( ".row.boton-comentario" ).append( "  <input type='hidden' id='clasemodal' name='idclase' value='" + id +   "'>" );
+		$( ".row.boton-comentario" ).append( "  <a id='agregarevento' title='Agregar comentario' class='btn btn-info btn-agregar-comentario' action='" +  base_url + "clase/agregar_comentario_ajax" + "'><i class='fa fa-plus-square'></i></a>" );
 		$('#agregarevento').click(function(e){
 			e.preventDefault();
 			var id = $("input[id='clasemodal']").val();

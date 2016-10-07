@@ -140,7 +140,7 @@ $this->load->view ( 'header' );?>
 									</button>
 									<h3 class="modal-title" id="exampleModalLabel"></h3>
 								</div>
-								<div class="modal-body boton-comentario">
+								<div class="modal-body">
 								<p class="modal-text3 text-modal" id="exampleModalLabel">
 								</p>
 								<p class="modal-text text-modal" id="exampleModalLabel" >
@@ -149,6 +149,7 @@ $this->load->view ( 'header' );?>
 								</p>
 								<p class="modal-text4 text-modal" id="exampleModalLabel">
 								</p>
+								<div class="row boton-comentario"></div>
 								</div>
 							</div>
 						</div>

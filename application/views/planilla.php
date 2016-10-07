@@ -116,8 +116,7 @@
 							</div>
 						<?php } ?>						
 					</div>
-				</div>
-				
+				</div>				
 				<div class="modal fade" id="exampleModal" tabindex="-1"
 						role="dialog" aria-labelledby="exampleModalLabel"
 						aria-hidden="true">
@@ -130,7 +129,7 @@
 									</button>
 									<h3 class="modal-title" id="exampleModalLabel"></h3>
 								</div>
-								<div class="modal-body boton-comentario">
+								<div class="modal-body">
 								<p class="modal-text3 text-modal" id="exampleModalLabel">
 								</p>
 								<p class="modal-text text-modal" id="exampleModalLabel" >
@@ -139,6 +138,7 @@
 								</p>
 								<p class="modal-text4 text-modal" id="exampleModalLabel">
 								</p>
+								<div class="row boton-comentario"></div>
 								</div>
 							</div>
 						</div>
