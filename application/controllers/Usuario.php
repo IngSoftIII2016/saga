@@ -15,61 +15,9 @@ class Usuario extends CI_Controller
 
         $this->load->library('grocery_CRUD');
     }
-	
-	
-	
-	public function _grill_output($output = null)
-	{
-		$this->load->view('vacia.php',$output);
-	}
 
-	public function index(){
-		
-		$this->config->load('grocery_crud');
-		//$this->config->set_item('grocery_crud_dialog_forms',true);
-	    $this->config->set_item('grocery_crud_default_per_page',10);
-	
-		$output1 = $this->usuario();
-		$output2 = $this->grupo();
 
-		$js_files = $output1->js_files + $output2->js_files;
-		$css_files = $output1->css_files + $output2->css_files;
-		$output = "<h4><b style=margin-left:20px; >USUARIOS</b></h4>".$output1->output."<h4><b style=margin-left:20px;>GRUPOS</b></h4>".$output2->output;
-
-		$this->_grill_output((object)array(
-				'js_files' => $js_files,
-				'css_files' => $css_files,
-				'output'	=> $output
-		));
-	}
-	
-	
-	
-  	 public function grupo()
-    {
-        $crud = new grocery_CRUD();
-
-        $crud->set_table('grupo');
-		$crud->set_subject('grupo');
-
-		//las columnas de la vista principal
-		$crud->columns('name','description');
-		//reasignacion de nombres
-		$crud->display_as('name','Nombre');
-		$crud->display_as('description','Descripción');
-		$crud->set_crud_url_path(site_url(strtolower(__CLASS__."/".__FUNCTION__)),site_url(strtolower(__CLASS__."/")));
-
-		$output = $crud->render();
-		if($crud->getState() != 'list') {
-			$this->_grill_output($output);
-		} else {
-			return $output;
-		}
-
-    }
-	
-	 
-	 public function usuario()
+	 public function index()
     {
         $crud = new grocery_CRUD();
 
@@ -129,12 +77,8 @@ class Usuario extends CI_Controller
 		$crud->set_crud_url_path(site_url(strtolower(__CLASS__."/".__FUNCTION__)),site_url(strtolower(__CLASS__."/")));
 		
 		$output = $crud->render();
+        $this->load->view('vacia.php',$output);
 
-	if($crud->getState() != 'list') {
-			$this->_grill_output($output);
-		} else {
-			return $output;
-		}
     }
 	
 	
@@ -191,8 +135,8 @@ class Usuario extends CI_Controller
 	
 		$this->ion_auth_model->update($primary_key, $data);
 		if ($groups){
-		$this->ion_auth->remove_from_group('', $primary_key);
-		$this->ion_auth->add_to_group($groups, $primary_key);
+		$this->ion_auth_model->remove_from_group('', $primary_key);
+		$this->ion_auth_model->add_to_group($groups, $primary_key);
 		}
 		return true;
 		

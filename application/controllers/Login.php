@@ -8,9 +8,7 @@ class Login extends CI_Controller {
 		$this->load->database();
 		$this->load->library(array('ion_auth','form_validation'));
 		$this->load->helper(array('url','language'));
-
 		$this->form_validation->set_error_delimiters($this->config->item('error_start_delimiter', 'ion_auth'), $this->config->item('error_end_delimiter', 'ion_auth'));
-
 		$this->lang->load('auth');
 	}
 
@@ -29,13 +27,15 @@ class Login extends CI_Controller {
 			// Comprobar si hay " recuérdame "
 
 			$remember = (bool) $this->input->post('remember');
+			$this->load->model('Login_Model');
 
-			if ($this->ion_auth->login($this->input->post('identity'), $this->input->post('password'), $remember))
+
+			if ($this->Login_Model->login($this->input->post('identity'), $this->input->post('password'), $remember))
 			{
 				// Si el inicio de sesión se realiza correctamente
 				// Redirigirlos volver a la página principal
 
-				$this->session->set_flashdata('message', $this->ion_auth->messages());
+				$this->session->set_flashdata('message', $this->Login_Model->messages());
 				redirect('planilla', 'refresh');
 			}
 			else
@@ -43,7 +43,7 @@ class Login extends CI_Controller {
 				// Si la entrada era un- éxito
 				// Redirigirlos volver a la página de inicio de sesión
 
-				$this->session->set_flashdata('message', $this->ion_auth->errors());
+				$this->session->set_flashdata('message', $this->Login_Model->errors());
 				redirect('login', 'refresh'); 
 				//  se redirecciona en lugar de puntos de vista de carga para la compatibilidad con bibliotecas MY_Controller			
 			}
