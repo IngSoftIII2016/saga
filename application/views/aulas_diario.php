@@ -149,7 +149,7 @@ $this->load->view ( 'header' );?>
 						</p>
 						<p class="modal-text4 text-modal" id="exampleModalLabel">
 						</p>
-						<div class="row boton-comentario"></div>
+						<!-- <div class="row boton-comentario"></div> -->
 						</div>
 					</div>
 				</div>
