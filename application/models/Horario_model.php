@@ -144,8 +144,8 @@ class Horario_model extends CI_Model
             return array('error' => $msg, 'colisiones' => $colisiones);
         } else {
 
-            $id = $this->db->insert('horario', $this);
-            if($id) $this->id = $id;
+            $this->db->insert('horario', $this);
+            $this->id = $this->db->insert_id();
             $this->insertar_clases();
 
             $this->db->trans_complete();
@@ -222,7 +222,11 @@ class Horario_model extends CI_Model
     }
 
     public function eliminar_clases($start = null) {
-        if ($start == null) $start = new DateTime();
+        $periodo = $this->get_periodo();
+        if($start == null)
+            $start = new DateTime($periodo->fecha_inicio);
+        elseif($start->diff($periodo->fecha_fin)->invert==0 )
+            throw new Exception("Fuera del periodo");
         $this->db->where('Horario_id', $this->id);
         $this->db->where('fecha >=', $start->format("Y-m-d"));
         $this->db->delete('clase');
