@@ -303,7 +303,7 @@
 															type='text' 
 															readonly
 															class="form-control validate"
-															value="<?php if (isset($calendario)) echo $calendario->format('d/m/Y'); ?>">
+															value="<?php if (isset($calendario)) echo $calendario; ?>">
 													</input>
 									</div>
 									</div>	
