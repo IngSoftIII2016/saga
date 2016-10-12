@@ -262,6 +262,62 @@
             </div>
         </div>
     </div>
+    <div class="modal fade" id="modalCambiarHorario" tabindex="-1"
+						role="dialog" aria-labelledby="exampleModalLabel"
+						aria-hidden="true">
+						<div class="modal-dialog" role="document">
+							<div class="modal-content">
+								<div class="modal-header">
+									<button type="button" class="close" data-dismiss="modal"
+										aria-label="Close">
+										<span aria-hidden="true">&times;</span>
+									</button>
+									<h3 class="modal-title-cambiar-horario" id="exampleModalLabel">Cambiar horario</h3>
+								</div>
+								<div class="modal-body">
+								<form role="form" id="form-cambiar-horario"
+								action="<?php echo base_url('clase/cambiar_clase'); ?>" method="POST">
+								<div class="row cambiar-horario">							
+										<div class='form-group col-md-10'>
+									      <select class="form-control" required id="idaula" name="idaula">
+									      	<option value="" disabled selected>Seleccione Aula</option>
+										  <?php
+											foreach ($aulas as $aula) {
+												echo "<option value=".$aula->id.">".$aula->nombre."</option>" ;
+											} ?>
+										  </select>	
+									  	</div>
+									<div class="form-group col-md-3">
+										<label class="control-label">Hora Inicio</label> <input type="time"
+												class="form-control" id="horainicio" name="horainicio" required max="20:00:00"
+												min="08:00:00" readonly/>
+									</div>
+									<div class="form-group col-md-3">
+										<label class="control-label">Hora Fin</label> <input type="time"
+												class="form-control" id="horafin" name="horafin" required max="21:00:00"
+												min="09:00:00" readonly/>
+									</div>				
+									<div class='form-group col-md-3'>
+												<label class="control-label">Fecha</label>
+													<input name="fecha" id="fecha"
+															type='text' 
+															readonly
+															class="form-control validate"
+															value="<?php if (isset($calendario)) echo $calendario->format('d/m/Y'); ?>">
+													</input>
+									</div>
+									</div>	
+									  <div class="row">
+									  	<div class="col-md-2 col-md-offset-9">
+											<button id="btn-agregar" class="btn btn-success btn-lg pull-right addevento"
+											type="submit">Agregar</button>
+										</div>
+										</div>
+										</form>
+								</div>
+								</div>
+							</div>
+						</div>
 </div>
 <!-- Sweet Alert Script -->
 <script src="<?php echo base_url('assets/plugins/sweetalert/sweetalert.min.js') ?>"></script>
