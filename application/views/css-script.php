@@ -61,7 +61,7 @@
 </script>
 
 <script type="text/javascript"
-        src="//cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+        src="<?=base_url('assets/js/moment-with-locales.js')?>"></script>
 <!-- Bootstrap 3.3.5 -->
 <script src="<?php echo base_url('assets/js/bootstrap.min.js') ?>"></script>
 

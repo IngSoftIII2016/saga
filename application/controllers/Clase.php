@@ -22,4 +22,23 @@ class Clase extends CI_Controller
 			die ();
 		}
     }
+    
+    public function cambiar_clase() {
+    	date_default_timezone_set ( "America/Argentina/Buenos_Aires" );
+    	$this->load->model('Clase_model');
+    	$idclase = $this->input->post ( 'idclase' );
+    	$fecha= $this->input->post ( 'fecha' );
+    	$fecha = date('Y-d-m',strtotime($fecha));
+    	$hora_inicio= $this->input->post ( 'horainicio' );
+    	$hora_fin= $this->input->post ( 'horafin' );
+    	$idaula= $this->input->post ( 'idaula' );
+    	if($this->Clase_model->agregar_comentario($idclase, $fecha, $hora_inicio, $hora_fin, $idaula)){
+    		echo "1";
+    		die ();
+    	}
+    	else {
+    		echo "Acceso denegado";
+    		die ();
+    	}
+    }
 }

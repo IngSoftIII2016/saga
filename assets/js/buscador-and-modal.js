@@ -38,17 +38,19 @@ $('#exampleModal').on('show.bs.modal', function (event) {
 	$( ".modal-text2" ).empty();
 	$( ".modal-text4" ).empty();
 	$( "#clasemodal" ).remove();
+	$( "#idclase" ).remove();
 	$( "#agregarevento" ).remove();
 	$( "#cambiarhorario" ).remove();
 	$( ".strong" ).remove();
 	$( ".modal-text3" ).append( "<strong class='strong'>Aula: </strong>" + aula );
 	$( ".modal-text" ).append( "<strong class='strong'>Horario: </strong>" + horario);
 	$( ".modal-text2" ).append( "<strong class='strong'>Profesor: </strong>" + profesor );
-	$( ".row.boton-comentario" ).append( "  <a id='cambiarhorario' title='Cambiar horario' class='btn btn-info btn-cambiar-horario col-md-offset-10' action='" +  base_url + "clase/agregar_comentario_ajax" + "'><i class='fa fa-pencil-square-o'></i></a>" );
+	$( ".row.boton-comentario" ).append( "  <button type='reset' id='cambiarhorario' title='Cambiar horario' class='btn btn-info btn-cambiar-horario col-md-offset-10' data-toggle='modal' data-target='#modalCambiarHorario'><i class='fa fa-pencil-square-o'></i></button>" );
 	if(comentario != ''){
 		$( ".modal-text4" ).append( "<strong class='strong'>Comentario: </strong>" + comentario );
 	}else {
 		$( ".row.boton-comentario" ).append( "  <input type='hidden' id='clasemodal' name='idclase' value='" + id +   "'>" );
+		$( ".row.cambiar-horario" ).append( "  <input type='hidden' id='idclase' name='idclase' value='" + id +   "'>" );
 		$( ".row.boton-comentario" ).append( "  <a id='agregarevento' title='Agregar comentario' class='btn btn-info btn-agregar-comentario' action='" +  base_url + "clase/agregar_comentario_ajax" + "'><i class='fa fa-plus-square'></i></a>" );
 		$('#agregarevento').click(function(e){
 			e.preventDefault();
@@ -114,8 +116,6 @@ function agregar_comentario(urlAction, id) {
 	});
 
 }
-//Mensaje al aprobar una OP
-
 	$('#exampleModalEvento').on('show.bs.modal', function (event) {
 		var button = $(event.relatedTarget);
 		var motivo = button.data('motivo');
@@ -131,10 +131,17 @@ function agregar_comentario(urlAction, id) {
 		$( ".btn.btn-danger.btn-delete-evento.col-md-offset-11" ).attr( 'id', id );		
 		});
 		
-		$('#ModalInsertarEvento').on('show.bs.modal', function (event) {
+	$('#ModalInsertarEvento').on('show.bs.modal', function (event) {
+	var button = $(event.relatedTarget);
+	var modal = $(this);
+	});
+	
+	$('#modalCambiarHorario').on('show.bs.modal', function (event) {
+		$('#exampleModal').modal('hide');
 		var button = $(event.relatedTarget);
 		var modal = $(this);
 		});
+	
 	$('#exampleModalAula').on('show.bs.modal', function (event) {
 	var button = $(event.relatedTarget);
 	var aula = button.data('whatever');
@@ -242,6 +249,48 @@ function agregar_comentario(urlAction, id) {
 			});
 });		
 
+//Cambiar Horario
+jQuery('#form-cambiar-horario').on(
+		'submit',
+		function(e) {
+			var formData = $('#form-cambiar-horario').serialize();
+			var formAction = $('#form-cambiar-horario').attr('action');
+			$.ajax({
+				type : "POST",
+				url : formAction,
+				data : formData,
+				success : function(msg) {
+					if (msg == 1) {
+						swal({
+							title : "¡Hecho!",
+							text : "Clase cambiada con éxito!",
+							type : "success"
+						}, function(isConfirm) {
+							if (isConfirm)
+								window.location.href = base_url + "planilla";
+						});
+					} else {
+						swal({
+							title : "¡Error!",
+							text : "Clase no fue cambiada, verifique que el aula este disponible!",
+							type : "error"
+						});
+					}
+				},
+				error : function(xhr, ajaxOptions, thrownError) {
+					swal("¡Error Detectado!", "Por favor, intentelo de nuevo",
+							"error");
+				}
+			});
+			e.preventDefault();
+			return false;
+		});
+$( "#idaula" ).change(function() {
+	$( "#horainicio" ).val('');
+	$( "#horafin" ).val('');
+	$( "#horainicio" ).attr('readonly', false);
+	$( "#horafin" ).attr('readonly', false);
+	});	
 
 //Alta Evento
 jQuery('#form-evento').on(

@@ -43,6 +43,7 @@
                                 class="caret"></span></a>
                     <ul class="dropdown-menu menudesplegable">
 						<li><a href="#"> <?php echo $this->session->userdata('username');?></a></li>
+                        <li><a href="<?php echo base_url('usuario/cambiar_contrasena') ?>">Cambiar mi contraseña</a></li>
                         <li><a href="<?php echo base_url('login/salir') ?>">Salir</a></li>
 
                     </ul>

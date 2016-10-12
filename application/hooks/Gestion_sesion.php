@@ -28,8 +28,10 @@ class Gestion_sesion {
 					$controladores_permitidos = array('planilla','horario','login','edificio');
 
 			    if(!in_array($controlador,$controladores_permitidos)){
+			        if ($this->ci->router->method!=="cambiar_contrasena"){
 					$message='Usted debe ser administrador para acceder a esta pagina. <a href="'.$this->ci->config->config['base_url'].'" >Ir a la planilla</a>';
-					return show_error($message,500, $heading = 'Restricción de acceso'); 
+					return show_error($message,500, $heading = 'Restricción de acceso');
+                    }
 				 }
 			}
 		}

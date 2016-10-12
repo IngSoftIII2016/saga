@@ -50,6 +50,7 @@ class Horario extends CI_Controller
         $this->load->model('Aula_model');
         $this->Horario_model->load($id);
         $data['horario'] = $this->Horario_model->to_array();
+        $data['fecha_desde'] = date('d-m-Y');
         if($error != null) $data['error'] = $error;
         $data['comision'] = $this->Horario_model->get_comision();
         $data['dias'] = $this->Horario_model->get_dias();
@@ -63,10 +64,9 @@ class Horario extends CI_Controller
     public function update($id){
         $this->load->model('Horario_model');
         $this->Horario_model->load($id);
-        //var_dump($this->Horario_model->to_array());
         $this->Horario_model->from_array($this->input->post());
-        //var_dump($this->Horario_model->to_array());
-        $result = $this->Horario_model->update();
+        $fecha_desde = $this->input->post("fecha_desde");
+        $result = $this->Horario_model->update(DateTime::createFromFormat('d-m-Y', $fecha_desde));
         if(isset($result['error'])){
             $this->editar($id, $result['error']);
         }else {
@@ -98,6 +98,12 @@ class Horario extends CI_Controller
         }else {
             redirect(base_url('horario'), 'refresh');
         }
+    }
+
+    public function delete($id) {
+        $this->load->model('Horario_model');
+
+        $this->Horario_model->delete();
     }
 
 }
