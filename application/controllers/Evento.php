@@ -57,14 +57,15 @@ class Evento extends CI_Controller
 	}
 	 
 	public function agregar_evento() {
-		date_default_timezone_set ( "America/Argentina/Buenos_Aires" );
-		$fecha = $this->input->post ( "calendarioevento" );		
-		$fecha = date('Y-d-m',strtotime($fecha));
+		date_default_timezone_set ( "America/Argentina/Buenos_Aires" );		
+		$fecha = $this->input->post ( "calendarioevento" );
+		$date = DateTime::createFromFormat('d/m/Y', $fecha);
+		$dateFormat=$date->format('Y-m-d');		
 		$aula = $this->input->post ( 'aulaevento' );
 		$hora_inicio = $this->input->post ( 'horainicioevento' );
 		$hora_fin = $this->input->post ( 'horafinevento' );
 		$motivo = $this->input->post ( 'motivoevento' );		
-		if($this->Evento_Model->agregar_evento($aula, $fecha, $hora_inicio, $hora_fin, $motivo)){
+		if($this->Evento_Model->agregar_evento($aula, $dateFormat, $hora_inicio, $hora_fin, $motivo)){
 			echo "1";
 			die ();
 		}

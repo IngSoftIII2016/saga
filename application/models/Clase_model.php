@@ -29,6 +29,24 @@ class Clase_model extends CI_Model {
         return $this->db->get()->result();
     }
 	
+    //util para cambiar un horario y fechas disponible para asignar eventos
+    public function aula_disponible($aula, $fecha, $hora_inicio, $hora_fin) {
+    	$hora_fin = date("H:i:s", strtotime($hora_fin));
+    	$hora_inicio = date("H:i:s", strtotime($hora_inicio));
+    	$this->db->select('clase.id');
+    	$this->db->from('clase');
+    
+    	$this->db->join('horario AS ho', 'clase.Horario_id=ho.id', 'left');
+    
+    	$this->db->where('ho.Aula_id',$aula);
+    	$this->db->where('fecha', $fecha);
+    	$this->db->where('clase.hora_inicio <', $hora_fin);
+    	$this->db->where('clase.hora_fin >', $hora_inicio);
+    
+    	$query = $this->db->get();
+    
+    	return $query->num_rows() == 0;
+    }
 	
 	public function get_clases_dia($fecha, $edificio_id = null) {
 		
@@ -60,20 +78,22 @@ class Clase_model extends CI_Model {
 				return false;
 			}
 	}
-	
+	//Debera agregar cambiar tabla horario !!
 	public function cambiar_clase($clase, $fecha, $hora_inicio, $hora_fin, $aula) {
-		
-		if(aula_disponible($aula, $fecha, $hora_inicio, $hora_fin)) {
+		if($this->aula_disponible($aula, $fecha, $hora_inicio, $hora_fin)) {
 			$data = array(
 			'hora_inicio' => $hora_inicio,
 			'fecha' => $fecha,
 			'hora_fin' => $hora_fin,
-			'aula' => $aula
+			'Aula_id' => $aula
 			);
 
 			$this->db->where('id', $clase);
-			$this->db->update('clase', $data);
-			return true;
+			if ($this->db->update ( 'clase', $data)) {
+					return true;
+				} else {
+					return false;
+				}
 		} else {
 			return false;
 		}
@@ -96,22 +116,5 @@ class Clase_model extends CI_Model {
 		return $query->row_array();
 	}
 	
-	//util para cambiar un horario y fechas disponible para asignar eventos 
-	function aula_disponible($aula, $fecha, $hora_inicio, $hora_fin) {
-		$hora_fin = date("H:i:s", strtotime($hora_fin));
-		$hora_inicio = date("H:i:s", strtotime($hora_inicio));
-		$this->db->select('clase.id');
-		$this->db->from('clase');
-		
-		$this->db->join('horario AS ho', 'clase.Horario_id=ho.id', 'left');
-
-		$this->db->where('ho.Aula_id',$aula);
-		$this->db->where('fecha', $fecha);
-		$this->db->where('clase.hora_inicio <', $hora_fin);
-		$this->db->where('clase.hora_fin >', $hora_inicio);
-
-		$query = $this->db->get();
-		
-		return $query->num_rows() == 0;
-	}
+	
 }

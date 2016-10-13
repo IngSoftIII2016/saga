@@ -44,11 +44,12 @@ $(document).ready(function () {
         $(".modal-text").append("<strong class='strong'>Horario: </strong>" + horario);
         $(".modal-text2").append("<strong class='strong'>Profesor: </strong>" + profesor);
         $(".row.boton-comentario").append("  <button type='reset' id='cambiarhorario' title='Cambiar horario' class='btn btn-info btn-cambiar-horario col-md-offset-10' data-toggle='modal' data-target='#modalCambiarHorario'><i class='fa fa-pencil-square-o'></i></button>");
+        $(".row.boton-comentario").append("  <input type='hidden' id='idclase' name='idclase' value='" + id + "'>");
         if (comentario != '') {
             $(".modal-text4").append("<strong class='strong'>Comentario: </strong>" + comentario);
         } else {
             $(".row.boton-comentario").append("  <input type='hidden' id='clasemodal' name='idclase' value='" + id + "'>");
-            $(".row.cambiar-horario").append("  <input type='hidden' id='idclase' name='idclase' value='" + id + "'>");
+          
             $(".row.boton-comentario").append("  <a id='agregarevento' title='Agregar comentario' class='btn btn-info btn-agregar-comentario' action='" + base_url + "clase/agregar_comentario_ajax" + "'><i class='fa fa-plus-square'></i></a>");
             $('#agregarevento').click(function (e) {
                 e.preventDefault();
@@ -137,6 +138,8 @@ $(document).ready(function () {
 
     $('#modalCambiarHorario').on('show.bs.modal', function (event) {
         $('#exampleModal').modal('hide');
+        var id= $('#idclase').val();
+        $(".row.cambiar-clase-horario").append("  <input type='hidden' id='claseid' name='claseid' value='" + id + "'>");
         var button = $(event.relatedTarget);
         var modal = $(this);
     });
@@ -259,7 +262,7 @@ jQuery('#form-cambiar-horario').on(
             url: formAction,
             data: formData,
             success: function (msg) {
-                if (msg == 1) {
+                if (msg == '1') {
                     swal({
                         title: "¡Hecho!",
                         text: "Clase cambiada con éxito!",
