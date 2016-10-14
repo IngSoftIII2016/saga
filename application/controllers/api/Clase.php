@@ -30,11 +30,12 @@ class Clase extends REST_Controller {
     }
 
 
-
-    public function index_get($id)
+    /**
+     * @param $id
+     */
+    public function clase_get ($id=null)
     {
-        $this->response(['data' => $this->get()]);
-        die();
+        //$id = $this->get('id');
 
         if(isset($id)){
             $this->load->model('Clase_model');
@@ -49,6 +50,6 @@ class Clase extends REST_Controller {
 
 
     
-    
+
 
 }
