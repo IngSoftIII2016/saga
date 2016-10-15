@@ -68,29 +68,7 @@ class Evento_Model extends CI_Model
         }
 
     }
-	
-	    public function agregar_evento($aula, $fecha, $hora_inicio, $hora_fin, $motivo)
-    {
 
-        $this->load->model('Clase_model');
-        //return $this->Evento_Model->agregar_evento($aula, $fecha, $hora_inicio, $hora_fin, $motivo);
-        if ($this->Clase_model->aula_disponible($aula, $fecha, $hora_inicio, $hora_fin) && $this->aula_disponible_evento($aula, $fecha, $hora_inicio, $hora_fin)) {
-
-            $evento_datos = array(
-                'Aula_id' => $aula,
-                'fecha' => $fecha,
-                'hora_inicio' => $hora_inicio,
-                'hora_fin' => $hora_fin,
-                'motivo' => $motivo
-            );
-
-            $this->db->insert('evento', $evento_datos);
-            return TRUE;
-        } else {
-            return FALSE;
-        }
-
-    }
 
     public function insertar($aula, $fecha, $hora_inicio, $hora_fin, $motivo)
     {

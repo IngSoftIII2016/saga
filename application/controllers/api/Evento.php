@@ -20,9 +20,10 @@ class Evento extends REST_Controller {
 
     function __construct()
     {
-		$this->load->model('Evento_Model');
+
         // Construct the parent class
         parent::__construct();
+        $this->load->model('Evento_Model');
 
     }
 
@@ -48,26 +49,27 @@ class Evento extends REST_Controller {
         }
     }
 	
-	public evento_post () {
-		
+	public function evento_post () {
+
+
+
 		$json = json_decode($this->post('data'), true);
-		foreach($json['data']as $item) {
-			$aula = $item['Aula_id'];
-			$fecha = $item['fecha'];
-			$hora_inicio = $item['hora_inicio']; 
-			$hora_fin = $item['hora_fin']; 
-			$motivo = $item['motivo']; 
+        echo 'ok';
+
+			$aula = $json['Aula_id'];
+			$fecha = $json['fecha'];
+			$hora_inicio = $json['hora_inicio'];
+			$hora_fin = $json['hora_fin'];
+			$motivo = $json['motivo'];
 			if ($this->Evento_Model->agregar_evento($aula, $fecha, $hora_inicio, $hora_fin, $motivo)) {
-				$this->response($json['data'],201);
+				$this->response($json['data']);
 			} else {
 				$this->response(['error' => 'no se puede insertar el evento, el aula se encuentra ocupada'],500);
 			}
-			
-		}
 		
 	}
 	
-	public evento_put() {
+	public function evento_put() {
 				$json = json_decode($this->put('data'), true);
 		foreach($json['data']as $item) {
 			$aula = $item['Aula_id'];
@@ -84,7 +86,7 @@ class Evento extends REST_Controller {
 		}
 	}
 	
-	public evento_delete($id=null) {
+	public function evento_delete($id=null) {
 		if($id!=null) {
 		$this->Evento_Model->borrar($id);
 		$this->response(202);
