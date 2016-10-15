@@ -37,7 +37,7 @@ class Clase extends REST_Controller {
     {
         //$id = $this->get('id');
 
-        if(isset($id)){
+        if($id!=null){
             $this->load->model('Clase_model');
             $clase = $this->Clase_model->get_clase($id);
             $this->response(['data' => $clase]);
