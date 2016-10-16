@@ -11,6 +11,5 @@ class Edificio_model extends Grocery_crud_model {
     public function get_edificios() {
         return $this->db->get('edificio')->result();
     }
-
    
 }

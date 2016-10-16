@@ -5,7 +5,6 @@ class Clase_model extends CI_Model {
 	    parent::__construct();
 		$this->load->database();
 	}
-	
 
 	public function get_clase($id) {
 		if($id != FALSE) {
@@ -21,6 +20,11 @@ class Clase_model extends CI_Model {
 		$query = $this->db->get('clase');
 		return $query->result();
 	}
+
+	public function get_clases_join() {
+	    $this->clases_base_query();
+	    return $this->db->get()->result();
+    }
 
 	public function get_docentes($Comision_id) {
 	    $this->db-from('docente');
@@ -47,17 +51,21 @@ class Clase_model extends CI_Model {
     
     	return $query->num_rows() == 0;
     }
+
+    private function clases_base_query() {
+        $this->db->select('clase.id, au.ubicacion AS aula_id, ed.nombre AS edificio, au.nombre AS aula, clase.id as clase_id, clase.hora_inicio AS hora_inicio, clase.hora_fin AS hora_fin, clase.comentario as comentario, as.nombre AS materia, ed.nombre AS edificio, concat(do.nombre, " " , do.apellido) as docente');
+        $this->db->from('clase');
+        $this->db->join('horario AS ho', 'clase.Horario_id=ho.id', 'left');
+        $this->db->join('comision AS co', 'ho.Comision_id=co.id', 'left');
+        $this->db->join('docente AS do', 'co.Docente_id=do.id', 'left');
+        $this->db->join('asignatura AS as', 'co.Asignatura_id=as.id', 'left');
+        $this->db->join('aula AS au', 'ho.Aula_id = au.id', 'left');
+        $this->db->join('edificio AS ed ', 'au.Edificio_id=ed.id', 'left');
+    }
 	
 	public function get_clases_dia($fecha, $edificio_id = null) {
 		
-		$this->db->select('clase.id, au.ubicacion AS aula_id, ed.nombre AS edificio, au.nombre AS aula, clase.id as clase_id, clase.hora_inicio AS hora_inicio, clase.hora_fin AS hora_fin, clase.comentario as comentario, as.nombre AS materia, ed.nombre AS edificio, concat(do.nombre, " " , do.apellido) as docente');
-		$this->db->from('clase');
-		$this->db->join('horario AS ho', 'clase.Horario_id=ho.id', 'left');
-		$this->db->join('comision AS co', 'ho.Comision_id=co.id', 'left');
-		$this->db->join('docente AS do', 'co.Docente_id=do.id', 'left');
-		$this->db->join('asignatura AS as', 'co.Asignatura_id=as.id', 'left');
-		$this->db->join('aula AS au', 'ho.Aula_id = au.id', 'left');
-		$this->db->join('edificio AS ed ', 'au.Edificio_id=ed.id', 'left');
+		$this->clases_base_query();
 		$this->db->order_by("clase.hora_inicio", "asc");		
 		$this->db->order_by("au.ubicacion", "asc");
 		$this->db->where('clase.fecha',$fecha);
@@ -79,31 +87,29 @@ class Clase_model extends CI_Model {
 			}
 	}
 	//Debera agregar cambiar tabla horario !!
-	public function cambiar_clase($clase, $fecha, $hora_inicio, $hora_fin, $aula) {
-		if($this->aula_disponible($aula, $fecha, $hora_inicio, $hora_fin)) {
-			$data = array(
-			'hora_inicio' => $hora_inicio,
-			'fecha' => $fecha,
-			'hora_fin' => $hora_fin,
-			'Aula_id' => $aula
-			);
+	public function cambiar_clase($clase, $fecha, $hora_inicio, $hora_fin, $aula)
+    {
+        if ($this->aula_disponible($aula, $fecha, $hora_inicio, $hora_fin)) {
+            $data = array(
+                'hora_inicio' => $hora_inicio,
+                'fecha' => $fecha,
+                'hora_fin' => $hora_fin,
+                'Aula_id' => $aula
+            );
 
-			$this->db->where('id', $clase);
-			if ($this->db->update ( 'clase', $data)) {
-					return true;
-				} else {
-					return false;
-				}
-		} else {
-			return false;
-		}
-		
-	}
-	
+            $this->db->where('id', $clase);
+            if ($this->db->update('clase', $data)) {
+                return true;
+            } else {
+                return false;
+            }
+        } else {
+            return false;
+        }
 
-	
+    }
+
 	public function get_clase_aula($id) {
-
         $this->db->select('au.id AS aula_id, ed.nombre AS edificio, au.nombre AS aula, clase.id as clase_id, clase.hora_inicio AS hora_inicio, clase.hora_fin AS hora_fin, clase.comentario as comentario, as.nombre AS materia, ed.nombre AS edificio');
         $this->db->from('clase');
         $this->db->join('horario AS ho', 'clase.Horario_id=ho.id', 'left');
