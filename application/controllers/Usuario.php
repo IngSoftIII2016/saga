@@ -54,7 +54,6 @@ class Usuario extends CI_Controller
 		$crud->display_as('password_confirm','Confirmar contraseña');
 		//validaciones
 		$crud->set_rules('password', 'Password', 'required|matches[password_confirm]');
-		$crud->set_rules('email', 'E-mail', 'required|valid_email');
 		$crud->set_rules('phone', 'telefono', 'numeric|min_length[6]');
 		
 		//para añadir
@@ -68,7 +67,7 @@ class Usuario extends CI_Controller
 		//no mostrar en ver usuario
 		$crud->unset_read_fields('first_name', 'last_name','id','ip_address','salt','activation_code','forgotten_password_code','password_confirm','active','remember_code','last_login','created_on','password','forgotten_password_time','company');
 		//validacion: verifica que no halla dos emails
-		$crud->set_rules('email', 'E-mail', 'callback_email_check');
+		$crud->set_rules('email', 'Email', 'required|valid_email|callback_email_check');
 
 		//callbacks
 		$crud->callback_insert (array($this, 'create_user_callback'));
