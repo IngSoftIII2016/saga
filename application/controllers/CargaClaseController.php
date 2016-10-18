@@ -56,4 +56,36 @@ class CargaClaseController extends CI_Controller {
         $horarios = $this->Horario_model->get_by_periodo_id($periodo_id);
         echo json_encode($horarios);
     }
+
+    public function clases() {
+        $this->load->model('Clase_model');
+        $clases = $this->Clase_model->get_clases();
+        echo json_encode($clases);
+    }
+
+    public function aulas() {
+        $this->load->model('Aula_model');
+        $aulas = $this->Aula_model->get_aulas();
+        echo json_encode($aulas);
+    }
+    public function edificios() {
+        $this->load->model('Edificio_model');
+        $edificios = $this->Edificio_model->get_edificios();
+        echo json_encode($edificios);
+    }
+    public function horarios() {
+        $this->load->model('Horario_model');
+        $horarios = $this->Horario_model->get_horarios(array());
+        echo json_encode($horarios);
+    }
+    public function comisiones() {
+        $this->load->model('Comision_Model');
+        $comisiones = $this->Comision_Model->get_all();
+        echo json_encode($comisiones);
+    }
+    public function asignaturas() {
+        $this->load->model('Asignatura_Model');
+        $asignaturas = $this->Asignatura_Model->get_asignaturas();
+        echo json_encode($asignaturas);
+    }
 }

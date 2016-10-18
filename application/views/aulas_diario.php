@@ -81,7 +81,7 @@ $this->load->view ( 'header' );?>
 									</div>
 									<?php
 									foreach ($clases as $clase) {
-										if ($clase->aula_id == $aula->ubicacion) {
+										if ($clase->Aula_id == $aula->id) {
 											$min_offset = (strtotime($clase->hora_inicio) - strtotime("08:00:00")) / 60;
 											$min_duracion = (strtotime($clase->hora_fin) - strtotime($clase->hora_inicio)) / 60;
 											
@@ -90,13 +90,13 @@ $this->load->view ( 'header' );?>
 												style="position: absolute; height: <?php echo $min_duracion * $px_min; ?>px; top:<?php echo $min_offset * $px_min + $hei; ?>px">
 												<a class="clickable-row materia-a buscara"  
 													data-toggle="modal" data-target="#exampleModal"
-													data-whatever="<?php echo $clase->materia ?>"
+													data-whatever="<?php echo $clase->asignatura_nombre ?>"
 													data-horario= "<?php echo 'de ' . substr($clase->hora_inicio, 0,5) . ' a ' . substr($clase->hora_fin, 0,5) . ' hs' ?>" 
 													data-profesor= "<?php echo $clase->docente?>" 
-													data-aula="<?php echo $clase->aula?>" 
-													data-idclase="<?php echo $clase->clase_id ?>" 
+													data-aula="<?php echo $clase->aula_nombre?>"
+													data-idclase="<?php echo $clase->id ?>"
 													data-comentario="<?php echo $clase->comentario ?>"
-													title="Ver Detalle"><?php echo $clase->materia . ' Profesor: ' . $clase->docente  ?>
+													title="Ver Detalle"><?php echo $clase->asignatura_nombre . ' Profesor: ' . $clase->docente  ?>
 												</a>
 											</div>
 											<?php

@@ -16,7 +16,8 @@ require APPPATH . '/libraries/REST_Controller.php';
  * @license         MIT
  * @link            https://github.com/chriskacerguis/codeigniter-restserver
  */
-class Evento extends REST_Controller {
+class Evento extends REST_Controller
+{
 
     function __construct()
     {
@@ -27,78 +28,61 @@ class Evento extends REST_Controller {
 
     }
 
-    public function index($id){
-        var_dump($id);
-    }
-
-
     /**
      * @param $id
      */
-    public function evento_get ($id=null)
+    public function eventos_get($id = null)
     {
-        //$id = $this->get('id');
-
-        if($id!=null){
-            
+        if ($id != null) {
             $clase = $this->Evento_Model->get_evento($id);
             $this->response(['data' => $clase]);
-        }else {
+        } else {
             $clases = $this->Evento_Model->get_eventos();
             $this->response(['data' => $clases]);
         }
     }
-	
-	public function evento_post () {
 
+    public function eventos_post()
+    {
+        $json = $this->post('data');
+        $aula = $json['Aula_id'];
+        $fecha = $json['fecha'];
+        $hora_inicio = $json['hora_inicio'];
+        $hora_fin = $json['hora_fin'];
+        $motivo = $json['motivo'];
+        if ($this->Evento_Model->agregar_evento($aula, $fecha, $hora_inicio, $hora_fin, $motivo)) {
+            $this->response($json);
+        } else {
+            $this->response(['error' => 'no se puede insertar el evento, el aula se encuentra ocupada'], 500);
+        }
+    }
 
+    public function eventos_put()
+    {
+        $json = $this->put('data');
+        $id = $json['id'];
+        $aula = $json['Aula_id'];
+        $fecha = $json['fecha'];
+        $hora_inicio = $json['hora_inicio'];
+        $hora_fin = $json['hora_fin'];
+        $motivo = $json['motivo'];
+        if ($this->Evento_Model->modificar($id, $aula, $fecha, $hora_inicio, $hora_fin, $motivo)) {
+            $this->response($json, 202);
+        } else {
+            $this->response(['error' => 'no se puede modificar el evento, el aula se encuentra ocupada'], 500);
+        }
+    }
 
-		$json = json_decode($this->post('data'), true);
-        echo 'ok';
+    public function eventos_delete($id)
+    {
+        if ($id != null) {
+            $this->Evento_Model->borrar($id);
+            $this->response(['data' => ['id' => $id] ], 202);
+        } else {
+            $this->response(['errors' => 'no se pudo borrar el evento'], 500);
+        }
 
-			$aula = $json['Aula_id'];
-			$fecha = $json['fecha'];
-			$hora_inicio = $json['hora_inicio'];
-			$hora_fin = $json['hora_fin'];
-			$motivo = $json['motivo'];
-			if ($this->Evento_Model->agregar_evento($aula, $fecha, $hora_inicio, $hora_fin, $motivo)) {
-				$this->response($json['data']);
-			} else {
-				$this->response(['error' => 'no se puede insertar el evento, el aula se encuentra ocupada'],500);
-			}
-		
-	}
-	
-	public function evento_put() {
-				$json = json_decode($this->put('data'), true);
-		foreach($json['data']as $item) {
-			$aula = $item['Aula_id'];
-			$fecha = $item['fecha'];
-			$hora_inicio = $item['hora_inicio']; 
-			$hora_fin = $item['hora_fin']; 
-			$motivo = $item['motivo']; 
-			if ($this->Evento_Model->modificar($aula, $fecha, $hora_inicio, $hora_fin, $motivo)) {
-				$this->response($json['data'],202);
-			} else {
-				$this->response(['error' => 'no se puede modificar el evento, el aula se encuentra ocupada'],500);
-			}
-			
-		}
-	}
-	
-	public function evento_delete($id=null) {
-		if($id!=null) {
-		$this->Evento_Model->borrar($id);
-		$this->response(202);
-		} else {
-			$this->response(['error' => 'no se pudo borrar el evento'],500);
-			
-		}
-		
-	}
-
-
-    
+    }
 
 
 }

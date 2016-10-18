@@ -53,7 +53,7 @@ class Clase_model extends CI_Model {
     }
 
     private function clases_base_query() {
-        $this->db->select('clase.id, au.ubicacion AS aula_id, ed.nombre AS edificio, au.nombre AS aula, clase.id as clase_id, clase.hora_inicio AS hora_inicio, clase.hora_fin AS hora_fin, clase.comentario as comentario, as.nombre AS materia, ed.nombre AS edificio, concat(do.nombre, " " , do.apellido) as docente');
+        $this->db->select('clase.*, au.nombre AS aula_nombre, au.ubicacion AS aula_ubicacion, ed.id as edificio_id, ed.nombre AS edificio_nombre, as.id as asignatura_nombre, as.nombre AS asignatura_nombre, concat(do.nombre, " " , do.apellido) as docente');
         $this->db->from('clase');
         $this->db->join('horario AS ho', 'clase.Horario_id=ho.id', 'left');
         $this->db->join('comision AS co', 'ho.Comision_id=co.id', 'left');
@@ -74,6 +74,15 @@ class Clase_model extends CI_Model {
 		$query = $this->db->get();
 		return $query->result();
 	}
+
+	public function get_by_filters($filters = null) {
+	    $this->clases_base_query();
+	    if($filters != null)
+	        foreach($filters as $column=>$value)
+	            if(!empty($column))
+	                $this->db->where($column, $value);
+	    return $this->db->get()->result();
+    }
 	
 	public function  agregar_comentario($id, $comentario){
 		$data = array(

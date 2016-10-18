@@ -33,19 +33,18 @@ class Clase extends REST_Controller {
     /**
      * @param $id
      */
-    public function clase_get ($id=null)
+    public function clases_get ($id=null)
     {
-        //$id = $this->get('id');
+        $params = $this->get();
+        $this->load->model('Clase_model');
+        if($id!=null)
+            $clases = $this->Clase_model->get_clase($id);
+        elseif(count(array_keys($params)) > 0)
+            $clases = $this->Clase_model->get_by_filters($params);
+        else
+            $clases = $this->Clase_model->get_by_filters();
 
-        if($id!=null){
-            $this->load->model('Clase_model');
-            $clase = $this->Clase_model->get_clase($id);
-            $this->response(['data' => $clase]);
-        }else {
-            $this->load->model('Clase_model');
-            $clases = $this->Clase_model->get_clases();
-            $this->response(['data' => $clases]);
-        }
+        $this->response(['data' => $clases]);
     }
 
 

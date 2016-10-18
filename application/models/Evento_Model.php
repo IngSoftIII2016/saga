@@ -102,7 +102,7 @@ class Evento_Model extends CI_Model
         return $query->num_rows() == 0;
     }
 
-	    public function modificar($evento,$aula, $fecha, $hora_inicio, $hora_fin, $motivo)
+	    public function modificar($id, $aula, $fecha, $hora_inicio, $hora_fin, $motivo)
     {
 		 $this->load->model('Clase_model');
 		  if ($this->Clase_model->aula_disponible($aula, $fecha, $hora_inicio, $hora_fin) && $this->aula_disponible_evento($aula, $fecha, $hora_inicio, $hora_fin)) {
@@ -114,7 +114,7 @@ class Evento_Model extends CI_Model
             'motivo' => $motivo
         );
 		
-		$this->db->where('id', $evento);
+		$this->db->where('id', $id);
 		return $this->db->update ('evento', $evento_datos);
 		
 		} else {

@@ -8,7 +8,7 @@ class Gestion_sesion {
  }
 
    function index(){
-	   
+
 	 if(!$this->ci->ion_auth->logged_in() && $this->ci->uri->segment(1) != 'login'){
         	redirect(base_url('login'));
         }
@@ -25,7 +25,7 @@ class Gestion_sesion {
 				if(!$this->ci->ion_auth->is_admin()) {  
 				    //El acceso permitido para el bedel.
 					$controlador = $this->ci->router->class;
-					$controladores_permitidos = array('planilla','horario','login','edificio');
+					$controladores_permitidos = array('planilla','horario','login','edificio', 'api/user');
 
 			    if(!in_array($controlador,$controladores_permitidos)){
 			        if ($this->ci->router->method!=="cambiar_contrasena"){
@@ -35,6 +35,6 @@ class Gestion_sesion {
 				 }
 			}
 		}
-	  
+
    }
 }
