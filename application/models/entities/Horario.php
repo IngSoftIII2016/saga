@@ -1,15 +1,15 @@
 <?php
 
-class Horario
+class Horario implements Entity
 {
-    public $id;
-    public $descripcion;
-    public $frecuencia_semanas;
-    public $dia;
-    public $hora_inicio;
-    public $duracion;
-    public $Comision_id;
-    public $Aula_id;
+    private $id;
+    private $descripcion;
+    private $frecuencia_semanas;
+    private $dia;
+    private $hora_inicio;
+    private $duracion;
+    private $Comision_id;
+    private $Aula_id;
 
     public function from_array($data)
     {
@@ -34,6 +34,21 @@ class Horario
         $data['Comision_id'] = $this->Comision_id;
         $data['Aula_id'] = $this->Aula_id;
         return $data;
+    }
+
+    public function getId()
+    {
+        // TODO: Implement getId() method.
+    }
+
+    public function from_row($row)
+    {
+        // TODO: Implement from_row() method.
+    }
+
+    public function to_row()
+    {
+        // TODO: Implement to_row() method.
     }
 
 }
