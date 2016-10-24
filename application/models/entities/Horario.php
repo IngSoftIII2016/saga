@@ -1,4 +1,5 @@
 <?php
+require_once APPPATH . '/models/orm/Entity.php';
 
 class Horario extends Entity
 {
@@ -66,10 +67,9 @@ class Horario extends Entity
     /**
      * Establece las propiedades de la Entity en base al arreglo asociativo recibido.
      * @param array $array
-     * @param string $prefix
      * @return none
      */
-    public function from_row($array, $prefix = '')
+    public function from_row($array)
     {
         if(isset($data['id'])) $this->id = $data['id'];
         if(isset($data['descripcion'])) $this->descripcion = $data['descripcion'];
@@ -77,6 +77,9 @@ class Horario extends Entity
         if(isset($data['dia'])) $this->dia = $data['dia'];
         if(isset($data['hora_inicio'])) $this->hora_inicio = $data['hora_inicio'];
         if(isset($data['duracion'])) $this->duracion = $data['duracion'];
+        if(isset($data['aula'])) $this->aula = $data['aula'];
+        if(isset($data['comision'])) $this->comision = $data['comision'];
+
     }
 
     /**
@@ -92,6 +95,8 @@ class Horario extends Entity
         $data['dia'] = $this->dia;
         $data['hora_inicio'] = $this->hora_inicio;
         $data['duracion'] = $this->duracion;
+        $data['aula'] = $this->aula;
+        $data['comision'] = $this->comision;
         return $data;
     }
 }

@@ -45,10 +45,9 @@ abstract class Entity
     /**
      * Establece las propiedades de la Entity en base al arreglo asociativo recibido.
      * @param array $array
-     * @param string $prefix
      * @return none
      */
-    public abstract function from_row($array, $prefix);
+    public abstract function from_row($array);
 
     /**
      * Devuelve un arreglo asociativo con una representación de ésta instancia de la Entity, cuyas claves coinciden

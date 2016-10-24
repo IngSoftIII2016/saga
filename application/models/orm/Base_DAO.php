@@ -1,4 +1,7 @@
 <?php
+require_once APPPATH . '/models/entities/Aula.php';
+require_once APPPATH . '/models/entities/Comision.php';
+require_once APPPATH . '/models/entities/Horario.php';
 
 /**
  * Class Base_DAO
@@ -28,7 +31,7 @@ abstract class Base_DAO extends CI_Model
     public function query($filters = [], $sorts = [], $page = 1, $size = 20)
     {
         $this->do_base_query();
-        
+        return $this->db->get()->result();
     }
 
         /**
@@ -120,6 +123,8 @@ abstract class Base_DAO extends CI_Model
     {
     }
 
+
+
     public function do_base_query()
     {
         $columns = []; $joins = [];
@@ -129,12 +134,19 @@ abstract class Base_DAO extends CI_Model
 
         foreach($joins as $join_table => $join_condition) {
             if (empty($join_condition)) $this->db->from($join_table);
-            else $this->db->join($join_table, $join_condition);
+            else $this->db->join($join_table, $join_condition, 'left');
+        }
+    }
+
+    public function do_filter($filters)
+    {
+        foreach ($filters as $field => $value){
+
         }
     }
 
 
-    public static function build_base_query_arrays($entity, &$columns, &$joins, $alias_prefix = '', $foreing_key='') {
+    private static function build_base_query_arrays($entity, &$columns, &$joins, $alias_prefix = '', $foreing_key='') {
         $table = $entity->get_table_name();
         $primary_key = $entity->get_primary_key_column_name();
         $alias = $alias_prefix . $table . "_";
@@ -142,14 +154,14 @@ abstract class Base_DAO extends CI_Model
         if(!is_array($columns)) $columns = [];
 
         $columns[] = "$alias.$primary_key AS $alias$primary_key";
-        foreach ($entity->get_propety_column_names() as $column)
+        foreach ($entity->get_property_column_names() as $column)
             $columns[] = "$alias.$column AS $alias$column";
 
         if(!is_array($joins)) $joins = [];
         if(count($joins) == 0)
-            $joins[] = ["$table AS $alias" => ''];
+            $joins["$table AS $alias"] = '';
         else {
-            $joins[] = ["$table AS $alias" => "$alias_prefix.$foreing_key = $alias.$primary_key"];
+            $joins["$table AS $alias"] = "$alias_prefix.$foreing_key = $alias.$primary_key";
         }
 
         foreach ($entity->get_relations_to_one() as $relation) {
@@ -158,6 +170,8 @@ abstract class Base_DAO extends CI_Model
             self::build_base_query_arrays($related_entity, $columns, $joins, $alias, $related_foreing_key);
         }
     }
+
+
 
 
 }
