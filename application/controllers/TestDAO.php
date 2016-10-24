@@ -23,4 +23,9 @@ class TestDAO extends CI_Controller
         var_dump($this->Example_DAO_Model->query([],['horario.hora_inicio' => '+']));
     }
 
+    public function horarios_id($id) {
+        $this->load->model('Example_DAO_Model');
+        var_dump($this->Example_DAO_Model->get_by_id($id));
+    }
+
 }

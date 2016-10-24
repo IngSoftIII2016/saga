@@ -59,7 +59,7 @@ class Horario extends Entity
         // TODO: Implement get_relations_to_many() method. Vamos que se puede!! xD
     }
 
-    public function getId()
+    public function get_id()
     {
         return $this->id;
     }
@@ -95,8 +95,8 @@ class Horario extends Entity
         $data['dia'] = $this->dia;
         $data['hora_inicio'] = $this->hora_inicio;
         $data['duracion'] = $this->duracion;
-        $data['aula'] = $this->aula;
-        $data['comision'] = $this->comision;
+        $data['Aula_id'] = $this->aula;
+        $data['Comision_id'] = $this->comision;
         return $data;
     }
 }

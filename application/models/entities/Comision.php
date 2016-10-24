@@ -55,7 +55,7 @@ class Comision extends Entity
     /**
      * @return mixed
      */
-    public function getId()
+    public function get_id()
     {
         return $this->id;
     }

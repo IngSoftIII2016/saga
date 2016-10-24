@@ -50,7 +50,7 @@ class Aula extends Entity
     /**
      * @return mixed
      */
-    public function getId()
+    public function get_id()
     {
         $this->id;
     }

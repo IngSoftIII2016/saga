@@ -22,6 +22,7 @@ abstract class Base_DAO extends CI_Model
     }
 
     /**
+     * Realiza una consulta con filtros, ordenes y paginación. El resultado es una entity y sus relaciones también
      * @param array $filters
      * @param array $sorts
      * @param int $page
@@ -43,7 +44,9 @@ abstract class Base_DAO extends CI_Model
          */
     public function get_by_id($id)
     {
-
+        $this->do_base_query();
+        $this->do_filter([$this->entity->get_table_name().".".$this->entity->get_primary_key_column_name() => $id]);
+        return $this->get_result_entities();
     }
 
     /**
@@ -52,7 +55,12 @@ abstract class Base_DAO extends CI_Model
      */
     public function insert($entity)
     {
-
+        $this->before_insert($entity);
+        if($error = $this->is_invalid($entity))
+            return ['error' => $error];
+        if(!$this->db->insert($entity->get_table_name(), $entity->to_row()))
+            return ['error' => 'Fails on insert to db.'];
+        $this->after_insert($entity);
     }
 
     /**
@@ -61,22 +69,35 @@ abstract class Base_DAO extends CI_Model
      */
     public function update($entity)
     {
-
+        $this->before_update($entity);
+        if($error = $this->is_invalid($entity))
+            return ['error' => $error];
+        $this->db->where($entity->get_primary_key_column_name(), $entity->get_id());
+        if(!$this->db->update($entity->get_table_name(), $entity->to_row()))
+            return ['error' => 'Fails on update to db'];
+        $this->after_update($entity);
     }
 
     /**
      * @param $entity
+     * @return array
      */
     public function delete($entity)
     {
-
+        $this->before_delete($entity);
+        if($error = $this->is_invalid($entity))
+            return ['error' => $error];
+        $this->db->where($entity->get_primary_key_column_name(), $entity->get_id());
+        if(!$this->db->delete($entity->get_table_name()))
+        return ['error' => 'Fails on delete to db'];
+        $this->after_delete($entity);
     }
 
     /**
      * @param $entity
      * @return Entity
      */
-    protected abstract function validate($entity);
+    protected abstract function is_invalid($entity);
 
     /**
      * @param $entity

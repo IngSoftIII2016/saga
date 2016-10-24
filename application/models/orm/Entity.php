@@ -41,10 +41,10 @@ abstract class Entity
     /**
      * @return mixed
      */
-    public abstract function getId();
+    public abstract function get_id();
     /**
      * Establece las propiedades de la Entity en base al arreglo asociativo recibido.
-     * @param array $array
+     * @param array $data
      * @return none
      */
     public abstract function from_row($data);
