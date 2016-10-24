@@ -31,6 +31,7 @@ abstract class Base_DAO extends CI_Model
     public function query($filters = [], $sorts = [], $page = 1, $size = 20)
     {
         $this->do_base_query();
+        $this->do_filter($filters);
         return $this->db->get()->result();
     }
 
@@ -140,8 +141,15 @@ abstract class Base_DAO extends CI_Model
 
     public function do_filter($filters)
     {
-        foreach ($filters as $field => $value){
-
+        foreach ($filters as $key => $value){
+            if(empty($value)) $this->db->where($key);
+            else {
+                $exp_path = explode('.', $key);
+                $column = array_pop($exp_path);
+                $alias = implode('_', $exp_path) . '_';
+                $field = $alias . '.' . $column;
+                $this->db->where($field, $value);
+            }
         }
     }
 
