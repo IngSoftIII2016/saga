@@ -32,6 +32,7 @@ abstract class Base_DAO extends CI_Model
     {
         $this->do_base_query();
         $this->do_filter($filters);
+        $this->do_sort($sorts);
         return $this->db->get()->result();
     }
 
@@ -153,6 +154,20 @@ abstract class Base_DAO extends CI_Model
         }
     }
 
+    public function do_sort($sorts) {
+        foreach ($sorts as $key => $value) {
+            $exp_path = explode('.', $key);
+            $column = array_pop($exp_path);
+            $alias = implode('_', $exp_path) . '_';
+            $field = $alias . '.' . $column;
+            if($value == 'ASC' || $value == '+' || $value == '') {
+                $this->db->order_by($field, 'ASC');
+            }elseif($value == 'DESC' || $value == '-' || $value == '') {
+                $this->db->order_by($field, 'DESC');
+            }
+        }
+    }
+
 
     private static function build_base_query_arrays($entity, &$columns, &$joins, $alias_prefix = '', $foreing_key='') {
         $table = $entity->get_table_name();
@@ -177,6 +192,10 @@ abstract class Base_DAO extends CI_Model
             $related_foreing_key = $relation['foreing_key_column_name'];
             self::build_base_query_arrays($related_entity, $columns, $joins, $alias, $related_foreing_key);
         }
+    }
+
+    public static function result_to_entity($entity, &$row){
+
     }
 
 
