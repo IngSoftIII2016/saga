@@ -8,6 +8,7 @@ require_once APPPATH . '/models/entities/Horario.php';
  */
 abstract class Base_DAO extends CI_Model
 {
+    protected $entity_class = NULL;
 
     protected $entity;
 
@@ -15,11 +16,10 @@ abstract class Base_DAO extends CI_Model
     {
         parent::__construct();
         if(empty($entity_class)) throw new Exception("Empty Entity class name!");
-        $this->load->database();
+        $this->entity_class = $entity_class;
         $this->entity = new $entity_class;
+        $this->load->database();
     }
-
-
 
     /**
      * @param array $filters
@@ -33,7 +33,8 @@ abstract class Base_DAO extends CI_Model
         $this->do_base_query();
         $this->do_filter($filters);
         $this->do_sort($sorts);
-        return $this->db->get()->result();
+        $this->do_paging($page, $size);
+        return $this->get_result_entities();
     }
 
         /**
@@ -168,6 +169,21 @@ abstract class Base_DAO extends CI_Model
         }
     }
 
+    public function do_paging($page, $size) {
+        $this->db->limit($size * $page, $size);
+    }
+
+    public function get_result_entities() {
+        $rows = $this->db->get()->result_array();
+        $results = [];
+        foreach ($rows as $row) {
+            $object = new $this->entity_class;
+            self::row_to_entity($object, $row);
+            $results[] = $object;
+        }
+        return $results;
+    }
+
 
     private static function build_base_query_arrays($entity, &$columns, &$joins, $alias_prefix = '', $foreing_key='') {
         $table = $entity->get_table_name();
@@ -194,11 +210,23 @@ abstract class Base_DAO extends CI_Model
         }
     }
 
-    public static function result_to_entity($entity, &$row){
+    public static function row_to_entity(&$entity, $row, $alias_prefix = '') {
+        $table = $entity->get_table_name();
+        $primary_key = $entity->get_primary_key_column_name();
+        $alias = $alias_prefix . $table . "_";
+        $columns = $entity->get_property_column_names();
+        array_unshift($columns, $primary_key);
+        $data = [];
+        foreach ($columns as $column) {
+            $data[$column] = $row[$alias.$column];
+        }
 
+        foreach ($entity->get_relations_to_one() as $relation) {
+            $related_entity = new $relation['entity_class_name'];
+            $related_property = $relation['property_name'];
+            self::row_to_entity($related_entity, $row, $alias);
+            $data[$related_property] = $related_entity;
+        }
+        $entity->from_row($data);
     }
-
-
-
-
 }

@@ -3,14 +3,14 @@ require_once APPPATH . '/models/orm/Entity.php';
 
 class Horario extends Entity
 {
-    public $id;
-    public $descripcion;
-    public $frecuencia_semanas;
-    public $dia;
-    public $hora_inicio;
-    public $duracion;
-    public $aula;
-    public $comision;
+    private $id;
+    private $descripcion;
+    private $frecuencia_semanas;
+    private $dia;
+    private $hora_inicio;
+    private $duracion;
+    private $aula;
+    private $comision;
 
     /**
      * Retorna el nombre de la tabla correspondiente a ésta Entity
@@ -66,10 +66,10 @@ class Horario extends Entity
 
     /**
      * Establece las propiedades de la Entity en base al arreglo asociativo recibido.
-     * @param array $array
+     * @param array $data
      * @return none
      */
-    public function from_row($array)
+    public function from_row($data)
     {
         if(isset($data['id'])) $this->id = $data['id'];
         if(isset($data['descripcion'])) $this->descripcion = $data['descripcion'];
