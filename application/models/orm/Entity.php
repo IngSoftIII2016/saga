@@ -24,6 +24,11 @@ abstract class Entity
     public abstract function get_property_column_names();
 
     /**
+     * @return mixed
+     */
+    public abstract function get_relations_one_to_one();
+
+    /**
      * Retorna un arreglo de las relaciones uno-a-uno o uno-a-muchos que posee ésta Entity.
      * Cada relación se representa con un arreglo asociativo que contiene las siguientes claves:
      *  - entity_class_name : string Fully qualifiqued Name de la clase entity correspondiente a la entidad destino
@@ -31,12 +36,17 @@ abstract class Entity
      *  - property_name : string Nombre de la propiedad en donde colocar el objeto Entity
      * @return array Relaciones a uno-a-uno o muchos-a-uno
      */
-    public abstract function get_relations_to_one();
+    public abstract function get_relations_many_to_one();
 
     /**
      * @return mixed
      */
-    public abstract function get_relations_to_many();
+    public abstract function get_relations_one_to_many();
+
+    /**
+     * @return mixed
+     */
+    public abstract function get_relations_many_to_many();
 
     /**
      * @return mixed

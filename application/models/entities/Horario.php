@@ -38,7 +38,7 @@ class Horario extends Entity
      *  - property_name : string Nombre de la propiedad en donde colocar el objeto Entity
      * @return array Relaciones a uno-a-uno o muchos-a-uno
      */
-    public function get_relations_to_one()
+    public function get_relations_many_to_one()
     {
         return [
             [
@@ -54,9 +54,9 @@ class Horario extends Entity
         ];
     }
 
-    public function get_relations_to_many()
+    public function get_relations_one_to_many()
     {
-        // TODO: Implement get_relations_to_many() method. Vamos que se puede!! xD
+        // TODO: Implement get_relations_to_many() method.
     }
 
     public function get_id()
