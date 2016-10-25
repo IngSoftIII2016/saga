@@ -95,8 +95,8 @@ class Horario extends Entity
         $data['dia'] = $this->dia;
         $data['hora_inicio'] = $this->hora_inicio;
         $data['duracion'] = $this->duracion;
-        $data['Aula_id'] = $this->aula;
-        $data['Comision_id'] = $this->comision;
+        $data['Aula_id'] = $this->aula->get_id();
+        $data['Comision_id'] = $this->comision->get_id();
         return $data;
     }
 }
