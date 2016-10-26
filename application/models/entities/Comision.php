@@ -51,11 +51,11 @@ class Comision extends Entity
     public function get_relations_many_to_one()
     {
         return [
-            [
+        /*    [
                 'entity_class_name' => 'Asignatura',
                 'foreign_key_column_name' => 'Asignatura_id',
                 'property_name' => 'asignatura'
-            ]
+            ] */
         ];
     }
 
@@ -79,12 +79,12 @@ class Comision extends Entity
     public function get_relations_many_to_many()
     {
         return [
-            [
+        /*    [
                 'entity_class_name' => 'Docente',
                 'junction_table' => 'comision_docente',
                 'this_foreign_key' => 'Comision_id',
                 'other_foreign_key' => 'Docente_id'
-            ]
+            ] */
         ];
     }
 

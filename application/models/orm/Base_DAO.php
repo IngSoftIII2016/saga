@@ -148,8 +148,10 @@ abstract class Base_DAO extends CI_Model
     protected function after_delete($entity)
     {
     }
-
-
+  
+    public function set_debug_enabled($enabled) {
+        $this->debug = $enabled;
+    }
 
     public function do_base_query()
     {

@@ -66,11 +66,11 @@ class Horario extends Entity
     public function get_relations_one_to_many()
     {
         return [
-            [
+        /*    [
                 'entity_class_name' => 'Clase',
                 'foreign_key_column_name' => 'Horario_id',
                 'property_name' => 'clases'
-            ]
+            ] */
         ];
     }
 

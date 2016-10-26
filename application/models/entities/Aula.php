@@ -46,11 +46,12 @@ class Aula extends Entity
     public function get_relations_many_to_one()
     {
         return [
-            [
+        /*  [
                 'entity_class_name' => 'Edificio',
                 'foreign_key_column_name' => 'Edificio_id',
                 'property_name' => 'edificio'
-            ]
+            ] 
+        */
         ];
     }
 
