@@ -3,14 +3,14 @@ require_once APPPATH . '/models/orm/Entity.php';
 
 class Horario extends Entity
 {
-    private $id;
-    private $descripcion;
-    private $frecuencia_semanas;
-    private $dia;
-    private $hora_inicio;
-    private $duracion;
-    private $aula;
-    private $comision;
+    public $id;
+    public $descripcion;
+    public $frecuencia_semanas;
+    public $dia;
+    public $hora_inicio;
+    public $duracion;
+    public $aula;
+    public $comision;
 
     /**
      * Retorna el nombre de la tabla correspondiente a ésta Entity

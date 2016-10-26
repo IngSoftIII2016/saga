@@ -24,20 +24,36 @@ abstract class Base_DAO extends CI_Model
     }
 
     /**
-     * Realiza una consulta con filtros, ordenes y paginación. El resultado es una entity y sus relaciones también
-     * @param array $filters
-     * @param array $sorts
-     * @param int $page
-     * @param int $size
-     * @return array arreglo de entity
+     * Realiza una consulta con filtros, ordenamiento, paginación e inclusion
+     * relaciones. 
+     * @param array $filters arreglo asociativo de flitros. Cada filtro se 
+     * representa por un par clave valor. La clave es una ruta hacia un 
+     * atributo junto a un operador de comparación. La ruta se representa por 0
+     * o mas propiedades de Entity relacionados separados por puntos y un 
+     * nombre de columna al final. El operador de comparación puede ser =, <, 
+     * <=, >, >= o !=. Si se omite éste se sobreentiende =. El valor 
+     * correspondiente a cada clave el valor con el que comparar el atributo.
+     * Si se omite el valor (es decir se coloca '') se interpretará la clave 
+     * como una condicion literal de la clausula WHERE de sql (usar el modo de 
+     * depuración para ver las alias asignadas).
+     * @param array $sorts arreglo asociativo de ordenamientos. Las claves son
+     * rutas a atributos iguales a las de fliters. Los valores indican si el 
+     * ordenamiento debe ser ascendente o descendente, siendo 'ASC', '+' o ''
+     * ascendente y 'DESC' o '-' descendente.
+     * @param array $includes Un arreglo de rutas a subentidades que seran 
+     * incluidas en los objetos Entity de resultado. 
+     * @param int $page página actual resultados. Si se se devuelve la primera.
+     * @param int $size tamaño de página, en cantidad de resultados. Si se 
+     * omite se utiliza un tamaño de 20.
+     * @return array arreglo de Entity
      */
-    public function query($filters = [], $sorts = [], $page = 1, $size = 20)
+    public function query($filters = [], $sorts = [], $includes = [], $page = 1, $size = 20)
     {
         $this->do_base_query();
         $this->do_filter($filters);
         $this->do_sort($sorts);
         $this->do_paging($page, $size);
-        return $this->get_result_entities();
+        return $this->get_result_entities($includes);
     }
 
         /**
@@ -173,38 +189,40 @@ abstract class Base_DAO extends CI_Model
             else {
                 $exp_path = explode('.', $key);
                 $column = array_pop($exp_path);
+                array_unshift($exp_path, $this->entity->get_table_name());
                 $alias = implode('_', $exp_path) . '_';
                 $field = $alias . '.' . $column;
                 $this->db->where($field, $value);
             }
         }
     }
-
+    
     public function do_sort($sorts) {
         foreach ($sorts as $key => $value) {
             $exp_path = explode('.', $key);
             $column = array_pop($exp_path);
+            array_unshift($exp_path, $this->entity->get_table_name());
             $alias = implode('_', $exp_path) . '_';
             $field = $alias . '.' . $column;
             if($value == 'ASC' || $value == '+' || $value == '') {
                 $this->db->order_by($field, 'ASC');
-            }elseif($value == 'DESC' || $value == '-' || $value == '') {
+            }elseif($value == 'DESC' || $value == '-') {
                 $this->db->order_by($field, 'DESC');
             }
         }
     }
 
     public function do_paging($page, $size) {
-        $this->db->limit($size * $page, $size);
+        $this->db->limit($size, ($page-1) * $size);
     }
 
-    public function get_result_entities() {
+    public function get_result_entities($includes = []) {
         if($this->debug) return $this->db->get_compiled_select();
         $rows = $this->db->get()->result_array();
         $results = [];
         foreach ($rows as $row) {
             $object = new $this->entity_class;
-            self::row_to_entity($object, $row);
+            self::row_to_entity($object, $row, $includes);
             $results[] = $object;
         }
         return $results;
@@ -236,7 +254,7 @@ abstract class Base_DAO extends CI_Model
         }
     }
 
-    public static function row_to_entity(&$entity, $row, $alias_prefix = '') {
+    public static function row_to_entity(&$entity, $row, $includes = [], $alias_prefix = '') {
         $table = $entity->get_table_name();
         $primary_key = $entity->get_primary_key_column_name();
         $alias = $alias_prefix . $table . "_";
@@ -246,12 +264,22 @@ abstract class Base_DAO extends CI_Model
         foreach ($columns as $column) {
             $data[$column] = $row[$alias.$column];
         }
+        $this_includes = [];
+        $next_includes = [];
+        foreach($includes as $include) {
+            $include_path = explode('.', $include);
+            $next = array_shift($include_path);
+            if(!in_array($next, $this_includes)) $this_includes[] = $next;
+            $next_includes[] = implode('.', $include_path);
+        }
 
         foreach ($entity->get_relations_many_to_one() as $relation) {
             $related_entity = new $relation['entity_class_name'];
             $related_property = $relation['property_name'];
-            self::row_to_entity($related_entity, $row, $alias);
-            $data[$related_property] = $related_entity;
+            if(in_array($related_property, $this_includes)) {
+                self::row_to_entity($related_entity, $row, $next_includes, $alias);
+                $data[$related_property] = $related_entity;
+            }
         }
         $entity->from_row($data);
     }

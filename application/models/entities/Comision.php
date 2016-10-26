@@ -9,8 +9,8 @@ require_once APPPATH . '/models/orm/Entity.php';
 class Comision extends Entity
 {
 
-    private $id;
-    private $nombre;
+    public $id;
+    public $nombre;
 
 
     /**

@@ -3,10 +3,10 @@ require_once APPPATH . '/models/orm/Entity.php';
 
 class Aula extends Entity
 {
-    private $id;
-    private $nombre;
-    private $ubicacion;
-    private $capacidad;
+    public $id;
+    public $nombre;
+    public $ubicacion;
+    public $capacidad;
 
     /**
      * Retorna el nombre de la tabla correspondiente a ésta Entity
