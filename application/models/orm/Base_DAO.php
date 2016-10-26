@@ -224,7 +224,7 @@ abstract class Base_DAO extends CI_Model
             $joins["$table AS $alias"] = "$alias_prefix.$foreing_key = $alias.$primary_key";
         }
 
-        foreach ($entity->get_relations_to_one() as $relation) {
+        foreach ($entity->get_relations_many_to_one() as $relation) {
             $related_entity = new $relation['entity_class_name'];
             $related_foreing_key = $relation['foreing_key_column_name'];
             self::build_base_query_arrays($related_entity, $columns, $joins, $alias, $related_foreing_key);
@@ -242,7 +242,7 @@ abstract class Base_DAO extends CI_Model
             $data[$column] = $row[$alias.$column];
         }
 
-        foreach ($entity->get_relations_to_one() as $relation) {
+        foreach ($entity->get_relations_many_to_one() as $relation) {
             $related_entity = new $relation['entity_class_name'];
             $related_property = $relation['property_name'];
             self::row_to_entity($related_entity, $row, $alias);

@@ -32,6 +32,15 @@ class Comision extends Entity
     }
 
     /**
+     * @return mixed
+     */
+    public function get_relations_one_to_one()
+    {
+        // TODO: Implement get_relations_one_to_one() method.
+    }
+
+
+    /**
      * Retorna un arreglo de las relaciones uno-a-uno o uno-a-muchos que posee ésta Entity.
      * Cada relación se representa con un arreglo asociativo que contiene las siguientes claves:
      *  - entity_class_name : string Fully qualifiqued Name de la clase entity correspondiente a la entidad destino
@@ -63,6 +72,14 @@ class Comision extends Entity
     /**
      * @return mixed
      */
+    public function get_relations_many_to_many()
+    {
+        // TODO: Implement get_relations_many_to_many() method.
+    }
+
+    /**
+     * @return mixed
+     */
     public function get_id()
     {
         return $this->id;
@@ -89,4 +106,6 @@ class Comision extends Entity
         $data['id'] = $this->id;
         $data['nombre'] = $this->nombre;
     }
+
+
 }

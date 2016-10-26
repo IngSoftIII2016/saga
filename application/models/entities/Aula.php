@@ -27,6 +27,15 @@ class Aula extends Entity
     }
 
     /**
+     * @return mixed
+     */
+    public function get_relations_one_to_one()
+    {
+        // TODO: Implement get_relations_one_to_one() method.
+    }
+
+
+    /**
      * Retorna un arreglo de las relaciones uno-a-uno o uno-a-muchos que posee ésta Entity.
      * Cada relación se representa con un arreglo asociativo que contiene las siguientes claves:
      *  - entity_class_name : string Fully qualifiqued Name de la clase entity correspondiente a la entidad destino
@@ -45,6 +54,15 @@ class Aula extends Entity
     public function get_relations_one_to_many()
     {
         return [];
+    }
+
+
+    /**
+     * @return mixed
+     */
+    public function get_relations_many_to_many()
+    {
+        // TODO: Implement get_relations_many_to_many() method.
     }
 
     /**
@@ -80,4 +98,6 @@ class Aula extends Entity
         $data['ubicacion'] = $this->ubicacion;
         $data['capacidad'] = $this->capacidad;
     }
+
+
 }

@@ -30,6 +30,15 @@ class Horario extends Entity
         return ['descripcion', 'dia', 'duracion', 'frecuencia_semanas', 'hora_inicio'];
     }
 
+
+    /**
+     * @return mixed
+     */
+    public function get_relations_one_to_one()
+    {
+
+    }
+
     /**
      * Retorna un arreglo de las relaciones uno-a-uno o uno-a-muchos que posee ésta Entity.
      * Cada relación se representa con un arreglo asociativo que contiene las siguientes claves:
@@ -56,7 +65,21 @@ class Horario extends Entity
 
     public function get_relations_one_to_many()
     {
-        // TODO: Implement get_relations_to_many() method.
+        return [
+            [
+                'entity_class_name' => 'Clase',
+                'foreing_key_column_name' => 'Comision_id',
+                'property_name' => 'clases'
+            ]
+        ];
+    }
+
+    /**
+     * @return mixed
+     */
+    public function get_relations_many_to_many()
+    {
+        // TODO: Implement get_relations_many_to_many() method.
     }
 
     public function get_id()
@@ -99,4 +122,5 @@ class Horario extends Entity
         $data['Comision_id'] = $this->comision->get_id();
         return $data;
     }
+
 }

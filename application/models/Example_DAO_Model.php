@@ -13,7 +13,7 @@ class Example_DAO_Model extends Base_DAO
      * @param $entity
      * @return Entity
      */
-    protected function validate($entity)
+    protected function is_invalid($entity)
     {
         return TRUE;
     }

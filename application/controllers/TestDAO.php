@@ -15,17 +15,23 @@ class TestDAO extends CI_Controller
 
     public function horarios_tarde() {
         $this->load->model('Example_DAO_Model');
-        var_dump($this->Example_DAO_Model->query(['horario.hora_inicio' => '14:00:00'], []));
+        var_dump($this->Example_DAO_Model->query(
+            [
+                'horario.hora_inicio >' => '14:00:00',
+                'horario.aula.nombre' => 'Aula 1'
+            ],
+            [
+                'horario.hora_inicio' => '+'
+            ]));
     }
 
     public function horarios_order() {
         $this->load->model('Example_DAO_Model');
-        var_dump($this->Example_DAO_Model->query([],['horario.hora_inicio' => '+']));
+        var_dump($this->Example_DAO_Model->query([],['horario.hora_inicio' => '']));
     }
 
     public function horarios_id($id) {
         $this->load->model('Example_DAO_Model');
         var_dump($this->Example_DAO_Model->get_by_id($id));
     }
-
 }
