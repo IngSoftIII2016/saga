@@ -15,6 +15,6 @@ class Example_DAO_Model extends Base_DAO
      */
     protected function is_invalid($entity)
     {
-        return TRUE;
+        return FALSE;
     }
 }

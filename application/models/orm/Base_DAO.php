@@ -12,6 +12,8 @@ abstract class Base_DAO extends CI_Model
 
     protected $entity;
 
+    protected $debug = FALSE;
+
     public function __construct($entity_class)
     {
         parent::__construct();
@@ -195,6 +197,7 @@ abstract class Base_DAO extends CI_Model
     }
 
     public function get_result_entities() {
+        if($this->debug) return $this->db->get_compiled_select();
         $rows = $this->db->get()->result_array();
         $results = [];
         foreach ($rows as $row) {
@@ -206,7 +209,7 @@ abstract class Base_DAO extends CI_Model
     }
 
 
-    private static function build_base_query_arrays($entity, &$columns, &$joins, $alias_prefix = '', $foreing_key='') {
+    private static function build_base_query_arrays($entity, &$columns, &$joins, $alias_prefix = '', $foreign_key='') {
         $table = $entity->get_table_name();
         $primary_key = $entity->get_primary_key_column_name();
         $alias = $alias_prefix . $table . "_";
@@ -221,13 +224,13 @@ abstract class Base_DAO extends CI_Model
         if(count($joins) == 0)
             $joins["$table AS $alias"] = '';
         else {
-            $joins["$table AS $alias"] = "$alias_prefix.$foreing_key = $alias.$primary_key";
+            $joins["$table AS $alias"] = "$alias_prefix.$foreign_key = $alias.$primary_key";
         }
 
         foreach ($entity->get_relations_many_to_one() as $relation) {
             $related_entity = new $relation['entity_class_name'];
-            $related_foreing_key = $relation['foreing_key_column_name'];
-            self::build_base_query_arrays($related_entity, $columns, $joins, $alias, $related_foreing_key);
+            $related_foreign_key = $relation['foreign_key_column_name'];
+            self::build_base_query_arrays($related_entity, $columns, $joins, $alias, $related_foreign_key);
         }
     }
 

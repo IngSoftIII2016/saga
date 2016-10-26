@@ -36,7 +36,7 @@ class Comision extends Entity
      */
     public function get_relations_one_to_one()
     {
-        // TODO: Implement get_relations_one_to_one() method.
+        return [];
     }
 
 
@@ -44,13 +44,19 @@ class Comision extends Entity
      * Retorna un arreglo de las relaciones uno-a-uno o uno-a-muchos que posee ésta Entity.
      * Cada relación se representa con un arreglo asociativo que contiene las siguientes claves:
      *  - entity_class_name : string Fully qualifiqued Name de la clase entity correspondiente a la entidad destino
-     *  - foreing_key_column_name : string El nombre de la columna correspondiente a la clave foránea de esta relación
+     *  - foreign_key_column_name : string El nombre de la columna correspondiente a la clave foránea de esta relación
      *  - property_name : string Nombre de la propiedad en donde colocar el objeto Entity
      * @return array Relaciones a uno-a-uno o muchos-a-uno
      */
     public function get_relations_many_to_one()
     {
-        return [];
+        return [
+            [
+                'entity_class_name' => 'Asignatura',
+                'foreign_key_column_name' => 'Asignatura_id',
+                'property_name' => 'asignatura'
+            ]
+        ];
     }
 
     /**
@@ -61,10 +67,8 @@ class Comision extends Entity
         return [
             [
                 'entity_class_name' => 'Horario',
-                'one' => [
-
-                ]
-
+                'foreign_key_column_name' => 'Horario_id',
+                'property_name' => 'horarios'
             ]
         ];
     }
@@ -74,7 +78,14 @@ class Comision extends Entity
      */
     public function get_relations_many_to_many()
     {
-        // TODO: Implement get_relations_many_to_many() method.
+        return [
+            [
+                'entity_class_name' => 'Docente',
+                'junction_table' => 'comision_docente',
+                'this_foreign_key' => 'Comision_id',
+                'other_foreign_key' => 'Docente_id'
+            ]
+        ];
     }
 
     /**

@@ -32,7 +32,7 @@ abstract class Entity
      * Retorna un arreglo de las relaciones uno-a-uno o uno-a-muchos que posee ésta Entity.
      * Cada relación se representa con un arreglo asociativo que contiene las siguientes claves:
      *  - entity_class_name : string Fully qualifiqued Name de la clase entity correspondiente a la entidad destino
-     *  - foreing_key_column_name : string El nombre de la columna correspondiente a la clave foránea de esta relación
+     *  - foreign_key_column_name : string El nombre de la columna correspondiente a la clave foránea de esta relación
      *  - property_name : string Nombre de la propiedad en donde colocar el objeto Entity
      * @return array Relaciones a uno-a-uno o muchos-a-uno
      */

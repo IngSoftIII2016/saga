@@ -36,14 +36,14 @@ class Horario extends Entity
      */
     public function get_relations_one_to_one()
     {
-
+        return [];
     }
 
     /**
      * Retorna un arreglo de las relaciones uno-a-uno o uno-a-muchos que posee ésta Entity.
      * Cada relación se representa con un arreglo asociativo que contiene las siguientes claves:
-     *  - entity_class : string Fully qualifiqued Name de la clase entity correspondiente a la entidad destino
-     *  - foreing_key_column_name : string El nombre de la columna correspondiente a la clave foránea de esta relación
+     *  - entity_class : string Fully Qualified Name de la clase entity correspondiente a la entidad destino
+     *  - foreign_key_column_name : string El nombre de la columna correspondiente a la clave foránea de esta relación
      *  - property_name : string Nombre de la propiedad en donde colocar el objeto Entity
      * @return array Relaciones a uno-a-uno o muchos-a-uno
      */
@@ -52,12 +52,12 @@ class Horario extends Entity
         return [
             [
                 'entity_class_name' => 'Aula',
-                'foreing_key_column_name' => 'Aula_id',
+                'foreign_key_column_name' => 'Aula_id',
                 'property_name' => 'aula'
             ],
             [
                 'entity_class_name' => 'Comision',
-                'foreing_key_column_name' => 'Comision_id',
+                'foreign_key_column_name' => 'Comision_id',
                 'property_name' => 'comision'
             ]
         ];
@@ -68,7 +68,7 @@ class Horario extends Entity
         return [
             [
                 'entity_class_name' => 'Clase',
-                'foreing_key_column_name' => 'Comision_id',
+                'foreign_key_column_name' => 'Horario_id',
                 'property_name' => 'clases'
             ]
         ];
@@ -79,7 +79,7 @@ class Horario extends Entity
      */
     public function get_relations_many_to_many()
     {
-        // TODO: Implement get_relations_many_to_many() method.
+        return [];
     }
 
     public function get_id()
