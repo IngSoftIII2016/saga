@@ -10,8 +10,14 @@ class CarreraDAO extends BaseDAO {
      * @param $entity
      * @return array|bool
      */
-    protected function is_invalid($entity){
+    protected function is_invalid_insert($entity){
             return FALSE;
+    }
+    protected function is_invalid_update($entity){
+    	return FALSE;
+    }
+    protected function is_invalid_delete($entity){
+    	return FALSE;
     }
     
 	
