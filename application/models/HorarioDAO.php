@@ -8,25 +8,6 @@ class HorarioDAO extends BaseDAO {
         parent::__construct('Horario');
     }
 
-/*
-    public function get_colisiones() {
-        $periodo_id = $this->get_periodo()->id;
-        $hora_fin = date("H:i:s", strtotime($this->hora_inicio) +
-            strtotime($this->duracion) - strtotime("00:00:00"));
-        $this->db->select('ho.* , co.nombre AS comision, a.nombre AS asignatura');
-        $this->db->from('horario AS ho');
-        $this->db->join('comision AS co', 'ho.Comision_id = co.id');
-        $this->db->join('asignatura AS a', 'co.Asignatura_id = a.id');
-        $this->db->where('ho.id !=', $this->id);
-        $this->db->where('co.Periodo_id', $periodo_id);
-        $this->db->where('ho.dia', $this->dia);
-        $this->db->where('ho.Aula_id', $this->Aula_id);
-        $this->db->where("ho.hora_inicio < '$hora_fin' AND (SELECT ADDTIME(ho.hora_inicio, ho.duracion)) > '$this->hora_inicio'");
-        $query = $this->db->get();
-        return $query->result();
-    }
-*/
-
     public function get_colisiones($horario) {
         $hora_fin = date("H:i:s", strtotime($this->hora_inicio) +
             strtotime($this->duracion) - strtotime("00:00:00"));
@@ -48,100 +29,17 @@ class HorarioDAO extends BaseDAO {
     }
 
 
-
-
-    /**
-     * @param $entity
-     * @return array|bool
-     */
-    protected function is_invalid($entity)
-    {
-        $colisiones = $this->get_colisiones($entity);
-        if (count($colisiones) > 0) {
-            return [
-                'error' => 'Horario ocupado.',
-                'data' => $colisiones
-            ];
-        }else
-            return FALSE;
-    }
-
-/*
-    public function insert()
-    {
-        $this->db->trans_start();
-
-        $colisiones = $this->get_colisiones();
-
-        if (count($colisiones) > 0) {
-            $this->db->trans_rollback();
-
-            $msg = "Horario ocupado!";
-            foreach ($colisiones as $c) $msg = $msg . "\n" . $c->asignatura;
-            return array('error' => $msg, 'colisiones' => $colisiones);
-        } else {
-
-            $this->db->insert('horario', $this);
-            $this->id = $this->db->insert_id();
-            $this->insertar_clases();
-
-            $this->db->trans_complete();
-
-            return array( 'success' => 'Horario agregado con exito');
-        }
-    }
-*/
-
     protected function after_insert($entity)
     {
         $this->insertar_clases($entity);
     }
 
-/*
-    public function update($desde_date = null)
-    {
-        if ($desde_date == null) $desde_date = new DateTime();
-
-        $this->db->trans_start();
-
-        $colisiones = $this->get_colisiones();
-
-        if (count($colisiones) > 0) {
-            $this->db->trans_rollback();
-            $msg = "Horario ocupado!";
-            foreach ($colisiones as $c) $msg = $msg . "\n" . $c->asignatura;
-            return array( 'error' => $msg, 'colisiones' => $colisiones);
-        }else {
-            $this->db->update('horario', $this->to_array(), array('id' => $this->id));
-
-            // actualizar todas las clases correspondientes a este horario a partir de la fecha establecida
-            $this->eliminar_clases($desde_date);
-
-            $this->insertar_clases($desde_date);
-
-            $this->db->trans_complete();
-
-            return array( 'success' => 'Horario actualizado con exito');
-        }
-    }
-*/
     public function after_update($horario)
     {
         $this->eliminar_clases($horario);
         $this->insertar_clases($horario);
     }
-/*
-    public function delete($desde_date = null)
-    {
-        $this->db->trans_start();
 
-        $this->eliminar_clases($desde_date);
-
-        $this->db->delete('horario', array('id' => $this->id));
-
-        $this->db->trans_complete();
-    }
-*/
     public function before_delete($horario)
     {
         $this->eliminar_clases($horario);
@@ -198,5 +96,61 @@ class HorarioDAO extends BaseDAO {
         $this->db->where('fecha >=', $start->format("Y-m-d"));
         $this->db->delete('clase');
     }
+
+    /**
+     * Realiza una validación contra la base de datos previa a la inserción.
+     * Si el resultado de la validación es correcto devuelve FALSE. En caso contrario
+     * devuelve un arreglo asociativo con un mensaje de error en la clave 'error' y
+     * opcionalmente un conjunto de datos asociados al error en la clave 'data'.
+     * @param $entity entidad a validar
+     * @return mixed FALSE o array asociativo con información del error
+     */
+    protected function is_invalid_insert($entity)
+    {
+        return $this->is_invalid($entity);
+    }
+
+    /**
+     * Realiza una validación contra la base de datos previa a la modificación.
+     * Si el resultado de la validación es correcto devuelve FALSE. En caso contrario
+     * devuelve un arreglo asociativo con un mensaje de error en la clave 'error' y
+     * opcionalmente un conjunto de datos asociados al error en la clave 'data'.
+     * @param $entity entidad a validar
+     * @return mixed FALSE o array asociativo con información del error
+     */
+    protected function is_invalid_update($entity)
+    {
+        return $this->is_invalid($entity);
+    }
+
+    /**
+     * Realiza una validación contra la base de datos previa a la eliminición.
+     * Si el resultado de la validación es correcto devuelve FALSE. En caso contrario
+     * devuelve un arreglo asociativo con un mensaje de error en la clave 'error' y
+     * opcionalmente un conjunto de datos asociados al error en la clave 'data'.
+     * @param $entity entidad a validar
+     * @return mixed FALSE o array asociativo con información del error
+     */
+    protected function is_invalid_delete($entity)
+    {
+        return FALSE;
+    }
+
+    /**
+     * @param $entity
+     * @return array|bool
+     */
+    private function is_invalid($entity)
+    {
+        $colisiones = $this->get_colisiones($entity);
+        if (count($colisiones) > 0) {
+            return [
+                'error' => 'Horario ocupado.',
+                'data' => $colisiones
+            ];
+        }else
+            return FALSE;
+    }
+
 
 }
