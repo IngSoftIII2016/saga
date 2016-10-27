@@ -116,6 +116,7 @@ class Comision extends Entity
     {
         $data['id'] = $this->id;
         $data['nombre'] = $this->nombre;
+        return $data;
     }
 
 

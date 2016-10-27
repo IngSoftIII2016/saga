@@ -104,6 +104,7 @@ class Aula extends Entity
         $data['nombre'] = $this->nombre;
         $data['ubicacion'] = $this->ubicacion;
         $data['capacidad'] = $this->capacidad;
+        return $data;
     }
 
 
