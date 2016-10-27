@@ -53,11 +53,11 @@ class Comision extends Entity
     public function get_relations_many_to_one()
     {
         return [
-        		[
+        /*		[
                 'entity_class_name' => 'Asignatura',
                 'foreign_key_column_name' => 'Asignatura_id',
                 'property_name' => 'asignatura'
-            	],
+            	], */
         		[
         		'entity_class_name' => 'Periodo',
         		'foreign_key_column_name' => 'Periodo_id',

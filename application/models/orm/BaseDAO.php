@@ -7,7 +7,7 @@ require_once APPPATH . '/models/entities/Docente.php';
 require_once APPPATH . '/models/entities/Edificio.php';
 require_once APPPATH . '/models/entities/Evento.php';
 require_once APPPATH . '/models/entities/Horario.php';
-require_once APPPATH . '/models/entities/Loacalidad.php';
+require_once APPPATH . '/models/entities/Localidad.php';
 require_once APPPATH . '/models/entities/Periodo.php';
 require_once APPPATH . '/models/entities/Recurso.php';
 require_once APPPATH . '/models/entities/Sede.php';
