@@ -15,7 +15,6 @@ CREATE TABLE IF NOT EXISTS `gestion_aulas`.`asignatura` (
   ENGINE = InnoDB
   DEFAULT CHARACTER SET = utf8;
 
-
 -- -----------------------------------------------------
 -- Table `gestion_aulas`.`carrera`
 -- -----------------------------------------------------
