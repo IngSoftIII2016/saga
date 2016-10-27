@@ -8,6 +8,8 @@ class Evento extends Entity
 	public $hora_inicio;
 	public $hora_fin;
 	public $motivo;
+	public $aula;
+	
 
 	/**
 	 * Retorna el nombre de la tabla correspondiente a ésta Entity
@@ -46,7 +48,13 @@ class Evento extends Entity
 	 */
 	public function get_relations_many_to_one()
 	{
-		return [];
+		return [
+				[
+				 'entity_class_name' => 'Aula',
+				 'foreign_key_column_name' => 'Aula_id',
+				 'property_name' => 'aula'
+				 ]
+		];
 	}
 
 	/**
@@ -86,6 +94,7 @@ class Evento extends Entity
 		if(isset($data['hora_inicio'])) $this->hora_inicio = $data['hora_inicio'];
 		if(isset($data['hora_fin'])) $this->hora_fin = $data['hora_fin'];
 		if(isset($data['motivo'])) $this->motivo = $data['motivo'];
+		if(isset($data['aula'])) $this->aula = $data['aula'];
 	}
 
 	/**
@@ -100,6 +109,7 @@ class Evento extends Entity
 		$data['hora_inicio'] = $this->hora_inicio;
 		$data['hora_fin'] = $this->hora_fin;
 		$data['motivo'] = $this->motivo;
+		$data['Aula_id'] = $this->aula->get_id();
 		return $data;
 	}
 

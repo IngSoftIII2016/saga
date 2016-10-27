@@ -7,6 +7,9 @@ class Clase extends Entity
 	public $fecha;
 	public $hora_inicio;
 	public $hora_fin;
+	public $comentario;
+	public $aula;
+	public $horario;
 
 	/**
 	 * Retorna el nombre de la tabla correspondiente a ésta Entity
@@ -23,7 +26,7 @@ class Clase extends Entity
 	 */
 	public function get_property_column_names()
 	{
-		return ['fecha', 'hora_inicio', 'hora_fin'];
+		return ['fecha', 'hora_inicio', 'hora_fin', 'comentario'];
 	}
 
 	/**
@@ -45,7 +48,18 @@ class Clase extends Entity
 	 */
 	public function get_relations_many_to_one()
 	{
-		return [];
+		return [
+				[
+				'entity_class_name' => 'Aula',
+				'foreign_key_column_name' => 'Aula_id',
+				'property_name' => 'aula'
+				],
+				[
+				'entity_class_name' => 'Horario',
+				'foreign_key_column_name' => 'Horario_id',
+				'property_name' => 'horario'
+				]
+		];
 	}
 
 	/**
@@ -84,6 +98,9 @@ class Clase extends Entity
 		if(isset($data['fecha'])) $this->fecha = $data['fecha'];
 		if(isset($data['hora_inicio'])) $this->hora_inicio = $data['hora_inicio'];
 		if(isset($data['hora_fin'])) $this->hora_fin = $data['hora_fin'];
+		if(isset($data['comentario'])) $this->comentario = $data['comentario'];
+		if(isset($data['aula'])) $this->aula = $data['aula'];
+		if(isset($data['horario'])) $this->horario = $data['horario'];
 	}
 
 	/**
@@ -97,6 +114,9 @@ class Clase extends Entity
 		$data['fecha'] = $this->fecha;
 		$data['hora_inicio'] = $this->hora_inicio;
 		$data['hora_fin'] = $this->hora_fin;
+		$data['comentario'] = $this->comentario;
+		$data['Aula_id'] = $this->aula->get_id();
+		$data['Horario_id'] = $this->horario->get_id();
 		return $data;
 	}
 

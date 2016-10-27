@@ -1,12 +1,12 @@
 <?php
 require_once APPPATH . '/models/orm/Entity.php';
 
-class Edificio extends Entity
+class Recurso extends Entity
 {
 	public $id;
-	public $nombre;
-	public $localidad;
-	
+	public $disponible;
+	public $aula;
+	public $tipo_recurso;
 
 	/**
 	 * Retorna el nombre de la tabla correspondiente a ésta Entity
@@ -14,7 +14,7 @@ class Edificio extends Entity
 	 */
 	public function get_table_name()
 	{
-		return 'edificio';
+		return 'recurso';
 	}
 
 	/**
@@ -23,7 +23,7 @@ class Edificio extends Entity
 	 */
 	public function get_property_column_names()
 	{
-		return ['nombre'];
+		return ['disponible'];
 	}
 
 	/**
@@ -47,10 +47,15 @@ class Edificio extends Entity
 	{
 		return [
 				[
-				 'entity_class_name' => 'Localidad',
-				 'foreign_key_column_name' => 'Localidad_id',
-				 'property_name' => 'localidad'
-				 ] 
+				'entity_class_name' => 'Aula',
+				'foreign_key_column_name' => 'Aula_id',
+				'property_name' => 'aula'
+				],
+				[
+				'entity_class_name' => 'TipoRecurso',
+				'foreign_key_column_name' => 'Tipo_recurso_id',
+				'property_name' => 'tipo_recurso'
+				]
 		];
 	}
 
@@ -87,8 +92,9 @@ class Edificio extends Entity
 	public function from_row($data)
 	{
 		if(isset($data['id'])) $this->id = $data['id'];
-		if(isset($data['nombre'])) $this->nombre = $data['nombre'];
-		if(isset($data['localidad'])) $this->localidad = $data['localidad'];
+		if(isset($data['disponible'])) $this->disponible = $data['disponible'];
+		if(isset($data['aula'])) $this->aula = $data['aula'];
+		if(isset($data['tipo_recurso'])) $this->tipo_recurso = $data['tipo_recurso'];
 	}
 
 	/**
@@ -99,8 +105,9 @@ class Edificio extends Entity
 	public function to_row()
 	{
 		$data['id'] = $this->id;
-		$data['nombre'] = $this->nombre;
-		$data['Localidad_id'] = $this->localidad->get_id();
+		$data['disponible'] = $this->disponible;
+		$data['Aula_id'] = $this->aula->get_id();
+		$data['Tipo_recurso_id'] = $this->tipo_recurso->get_id();
 		return $data;
 	}
 

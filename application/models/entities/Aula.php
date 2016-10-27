@@ -7,6 +7,7 @@ class Aula extends Entity
     public $nombre;
     public $ubicacion;
     public $capacidad;
+    public $edificio;
 
     /**
      * Retorna el nombre de la tabla correspondiente a ésta Entity
@@ -46,12 +47,11 @@ class Aula extends Entity
     public function get_relations_many_to_one()
     {
         return [
-        /*  [
+        		[
                 'entity_class_name' => 'Edificio',
                 'foreign_key_column_name' => 'Edificio_id',
                 'property_name' => 'edificio'
-            ] 
-        */
+        	    ] 
         ];
     }
 
@@ -91,6 +91,7 @@ class Aula extends Entity
         if(isset($data['nombre'])) $this->nombre = $data['nombre'];
         if(isset($data['ubicacion'])) $this->ubicacion = $data['ubicacion'];
         if(isset($data['capacidad'])) $this->capacidad = $data['capacidad'];
+        if(isset($data['edificio'])) $this->edificio = $data['edificio'];
     }
 
     /**
@@ -104,6 +105,7 @@ class Aula extends Entity
         $data['nombre'] = $this->nombre;
         $data['ubicacion'] = $this->ubicacion;
         $data['capacidad'] = $this->capacidad;
+        $data['Edificio_id'] = $this->edificio->get_id();
         return $data;
     }
 

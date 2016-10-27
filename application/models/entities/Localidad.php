@@ -5,6 +5,7 @@ class Localidad extends Entity
 {
 	public $id;
 	public $nombre;
+	public $sede;
 	
 
 	/**
@@ -44,7 +45,13 @@ class Localidad extends Entity
 	 */
 	public function get_relations_many_to_one()
 	{
-		return [];
+		return [
+				[
+				'entity_class_name' => 'Sede',
+				'foreign_key_column_name' => 'Sede_id',
+				'property_name' => 'sede'
+				]
+		];
 	}
 
 	/**
@@ -81,6 +88,7 @@ class Localidad extends Entity
 	{
 		if(isset($data['id'])) $this->id = $data['id'];
 		if(isset($data['nombre'])) $this->nombre = $data['nombre'];
+		if(isset($data['sede'])) $this->sede = $data['sede'];
 	}
 
 	/**
@@ -92,6 +100,7 @@ class Localidad extends Entity
 	{
 		$data['id'] = $this->id;
 		$data['nombre'] = $this->nombre;
+		$data['Sede_id'] = $this->sede->get_id();
 		return $data;
 	}
 

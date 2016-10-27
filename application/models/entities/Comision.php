@@ -11,6 +11,8 @@ class Comision extends Entity
 
     public $id;
     public $nombre;
+    public  $asignatura;
+    public  $periodo;
 
 
     /**
@@ -51,11 +53,16 @@ class Comision extends Entity
     public function get_relations_many_to_one()
     {
         return [
-        /*    [
+        		[
                 'entity_class_name' => 'Asignatura',
                 'foreign_key_column_name' => 'Asignatura_id',
                 'property_name' => 'asignatura'
-            ] */
+            	],
+        		[
+        		'entity_class_name' => 'Periodo',
+        		'foreign_key_column_name' => 'Periodo_id',
+        		'property_name' => 'periodo'
+        				]
         ];
     }
 
@@ -105,6 +112,8 @@ class Comision extends Entity
     {
         if(isset($data['id'])) $this->id = $data['id'];
         if(isset($data['nombre'])) $this->nombre = $data['nombre'];
+        if(isset($data['asignatura'])) $this->asignatura = $data['asignatura'];
+        if(isset($data['periodo'])) $this->periodo= $data['periodo'];
     }
 
     /**
@@ -116,6 +125,8 @@ class Comision extends Entity
     {
         $data['id'] = $this->id;
         $data['nombre'] = $this->nombre;
+        $data['Asignatura_id'] = $this->asignatura->get_id();
+        $data['Periodo_id'] = $this->periodo->get_id();
         return $data;
     }
 

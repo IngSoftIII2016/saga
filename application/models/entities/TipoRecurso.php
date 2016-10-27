@@ -1,12 +1,11 @@
 <?php
 require_once APPPATH . '/models/orm/Entity.php';
 
-class Edificio extends Entity
+class TipoRecurso extends Entity
 {
 	public $id;
 	public $nombre;
-	public $localidad;
-	
+
 
 	/**
 	 * Retorna el nombre de la tabla correspondiente a ésta Entity
@@ -14,7 +13,7 @@ class Edificio extends Entity
 	 */
 	public function get_table_name()
 	{
-		return 'edificio';
+		return 'tipo_recurso';
 	}
 
 	/**
@@ -45,13 +44,7 @@ class Edificio extends Entity
 	 */
 	public function get_relations_many_to_one()
 	{
-		return [
-				[
-				 'entity_class_name' => 'Localidad',
-				 'foreign_key_column_name' => 'Localidad_id',
-				 'property_name' => 'localidad'
-				 ] 
-		];
+		return [];
 	}
 
 	/**
@@ -88,7 +81,6 @@ class Edificio extends Entity
 	{
 		if(isset($data['id'])) $this->id = $data['id'];
 		if(isset($data['nombre'])) $this->nombre = $data['nombre'];
-		if(isset($data['localidad'])) $this->localidad = $data['localidad'];
 	}
 
 	/**
@@ -100,7 +92,6 @@ class Edificio extends Entity
 	{
 		$data['id'] = $this->id;
 		$data['nombre'] = $this->nombre;
-		$data['Localidad_id'] = $this->localidad->get_id();
 		return $data;
 	}
 
