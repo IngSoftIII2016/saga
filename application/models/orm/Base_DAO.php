@@ -37,10 +37,10 @@ abstract class Base_DAO extends CI_Model
      * como una condicion literal de la clausula WHERE de sql (usar el modo de 
      * depuración para ver las alias asignadas).
      * @param array $sorts arreglo asociativo de ordenamientos. Las claves son
-     * rutas a atributos iguales a las de fliters. Los valores indican si el 
-     * ordenamiento debe ser ascendente o descendente, siendo 'ASC', '+' o ''
-     * ascendente y 'DESC' o '-' descendente.
-     * @param array $includes Un arreglo de rutas a subentidades que seran 
+     * rutas a atributos iguales a las de filters aunque sin operador de
+     * comparación. Los valores indican si el ordenamiento debe ser ascendente
+     * o descendente, siendo 'ASC', '+' o '' ascendente y 'DESC' o '-' descendente.
+     * @param array $includes Un arreglo de rutas a subentidades que serán
      * incluidas en los objetos Entity de resultado. 
      * @param int $page página actual resultados. Si se se devuelve la primera.
      * @param int $size tamaño de página, en cantidad de resultados. Si se 
@@ -264,6 +264,7 @@ abstract class Base_DAO extends CI_Model
         foreach ($columns as $column) {
             $data[$column] = $row[$alias.$column];
         }
+
         $this_includes = [];
         $next_includes = [];
         foreach($includes as $include) {
@@ -275,12 +276,27 @@ abstract class Base_DAO extends CI_Model
 
         foreach ($entity->get_relations_many_to_one() as $relation) {
             $related_entity = new $relation['entity_class_name'];
-            $related_property = $relation['property_name'];
-            if(in_array($related_property, $this_includes)) {
+            $relationship_property = $relation['property_name'];
+            if(in_array($relationship_property, $this_includes)) {
                 self::row_to_entity($related_entity, $row, $next_includes, $alias);
-                $data[$related_property] = $related_entity;
+                $data[$relationship_property] = $related_entity;
             }
         }
+/*
+        foreach ($entity->get_relations_one_to_many() as $relation) {
+            $related_entity = new $relation['entity_class_name'];
+            $relationship_property = $relation['property_name'];
+            if(in_array($relationship_property, $this_includes)) {
+
+            }
+        }
+*/
+
         $entity->from_row($data);
+    }
+
+
+    public static function do_one_to_many_query($entity, $relationship) {
+
     }
 }
