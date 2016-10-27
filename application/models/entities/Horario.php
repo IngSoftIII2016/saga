@@ -12,6 +12,10 @@ class Horario extends Entity
     public $aula;
     public $comision;
 
+    // Utilizada durante la creacion o actualización de horarios para indicar la fecha a partir de la cual crear o
+    // actualizar las clases corresponedientes
+    private $fecha_desde = null;
+
     /**
      * Retorna el nombre de la tabla correspondiente a ésta Entity
      * @return string Nombre de la tabla
@@ -103,6 +107,8 @@ class Horario extends Entity
         if(isset($data['aula'])) $this->aula = $data['aula'];
         if(isset($data['comision'])) $this->comision = $data['comision'];
 
+        if(isset($data['fecha_desde'])) $this->fecha_desde = $data['fecha_desde'];
+
     }
 
     /**
@@ -121,6 +127,14 @@ class Horario extends Entity
         $data['Aula_id'] = $this->aula->get_id();
         $data['Comision_id'] = $this->comision->get_id();
         return $data;
+    }
+
+    public function get_fecha_desde() {
+        return $this->fecha_desde;
+    }
+
+    public function set_fecha_desde($fecha_desde = null) {
+        $this->fecha_desde = $fecha_desde == null ? (new DateTime())->format("Y-m-d") : $fecha_desde;
     }
 
 }

@@ -8,7 +8,7 @@ class HorarioDAO extends BaseDAO {
         parent::__construct('Horario');
     }
 
-
+/*
     public function get_colisiones() {
         $periodo_id = $this->get_periodo()->id;
         $hora_fin = date("H:i:s", strtotime($this->hora_inicio) +
@@ -25,7 +25,48 @@ class HorarioDAO extends BaseDAO {
         $query = $this->db->get();
         return $query->result();
     }
+*/
 
+    public function get_colisiones($horario) {
+        $hora_fin = date("H:i:s", strtotime($this->hora_inicio) +
+            strtotime($this->duracion) - strtotime("00:00:00"));
+
+        $this->query(
+            [
+                'id !=' => $horario->id,
+                'comision.periodo.id' => $horario->comision->periodo->id,
+                'dia' => $horario->dia,
+                'aula.id' => $horario->aula->id,
+                'hora_inicio <' => $hora_fin,
+                // al dejar el valor vacio, la clave es evaluada como una condicion WHERE en SQL unida al resto con AND.
+                // Hay que tener en cuenta los alias que genera BaseDAO. horario_ horario_comision_asignatura_
+                "(SELECT ADDTIME(horario_.hora_inicio, horario_.duracion)) > '$this->hora_inicio'" => ''
+            ],
+            [],
+            ['comision.asignatura']
+        );
+    }
+
+
+
+
+    /**
+     * @param $entity
+     * @return array|bool
+     */
+    protected function is_invalid($entity)
+    {
+        $colisiones = $this->get_colisiones($entity);
+        if (count($colisiones) > 0) {
+            return [
+                'error' => 'Horario ocupado.',
+                'data' => $colisiones
+            ];
+        }else
+            return FALSE;
+    }
+
+/*
     public function insert()
     {
         $this->db->trans_start();
@@ -49,7 +90,14 @@ class HorarioDAO extends BaseDAO {
             return array( 'success' => 'Horario agregado con exito');
         }
     }
+*/
 
+    protected function after_insert($entity)
+    {
+        $this->insertar_clases($entity);
+    }
+
+/*
     public function update($desde_date = null)
     {
         if ($desde_date == null) $desde_date = new DateTime();
@@ -76,7 +124,13 @@ class HorarioDAO extends BaseDAO {
             return array( 'success' => 'Horario actualizado con exito');
         }
     }
-
+*/
+    public function after_update($horario)
+    {
+        $this->eliminar_clases($horario);
+        $this->insertar_clases($horario);
+    }
+/*
     public function delete($desde_date = null)
     {
         $this->db->trans_start();
@@ -87,76 +141,62 @@ class HorarioDAO extends BaseDAO {
 
         $this->db->trans_complete();
     }
-
-
-    private function insertar_clases($start = null)
+*/
+    public function before_delete($horario)
     {
-        $periodo = $this->get_periodo();
-        if($start == null)
-            $start = new DateTime($periodo->fecha_inicio);
-        $end = new DateTime($periodo->fecha_fin);
+        $this->eliminar_clases($horario);
+    }
+
+
+    private function insertar_clases($horario)
+    {
+        $fecha_desde = $horario->get_fecha_desde();
+        if($fecha_desde != null)
+            $start = DateTime::createFromFormat("Y-m-d", $fecha_desde);
+        else
+            $start = DateTime::createFromFormat("Y-m-d", $horario->comision->periodo->fecha_inicio);
+
+        $end = DateTime::createFromFormat("Y-m-d", $horario->comision->periodo->fecha_fin);
+
+        if($start->diff($end)->invert==0 )
+            throw new Exception("Fuera del periodo");
 
         $interval = DateInterval::createFromDateString('1 day');
         while ($start->format("w") != $this->dia)
             $start->add($interval);
 
-        $dias = $this->frecuencia_semanas * 7;
+        $dias = $horario->frecuencia_semanas * 7;
         $interval = DateInterval::createFromDateString($dias . ' days');
         $period = new DatePeriod($start, $interval, $end);
 
         foreach ($period as $dt) {
-            $hora_fin = strtotime($this->hora_inicio) + strtotime($this->duracion) - strtotime("00:00:00");
+            $hora_fin = strtotime($horario->hora_inicio) + strtotime($horario->duracion) - strtotime("00:00:00");
+            // TODO: Utilizar Entity Clase
             $clase = array(
                 'fecha' => $dt->format("Y-m-d"),
-                'hora_inicio' => $this->hora_inicio,
+                'hora_inicio' => $horario->hora_inicio,
                 'hora_fin' => date("H:i:s", $hora_fin),
-                'Aula_id' => $this->Aula_id,
-                'Horario_id' => $this->id
+                'Aula_id' => $horario->aula->id,
+                'Horario_id' => $horario->id
             );
             $this->db->insert('clase', $clase);
         }
     }
 
-    public function eliminar_clases($start = null) {
-        $periodo = $this->get_periodo();
-        if($start == null)
-            $start = new DateTime($periodo->fecha_inicio);
-        elseif($start->diff($periodo->fecha_fin)->invert==0 )
+    private function eliminar_clases($horario) {
+        $fecha_desde = $horario->get_fecha_desde();
+        if($fecha_desde != null)
+            $start = DateTime::createFromFormat("Y-m-d", $fecha_desde);
+        else
+            $start = DateTime::createFromFormat("Y-m-d", $horario->comision->periodo->fecha_inicio);
+        $end = DateTime::createFromFormat("Y-m-d", $horario->comision->periodo->fecha_fin);
+
+        if($start->diff($end)->invert==0 )
             throw new Exception("Fuera del periodo");
+
         $this->db->where('Horario_id', $this->id);
         $this->db->where('fecha >=', $start->format("Y-m-d"));
         $this->db->delete('clase');
     }
 
-    public function get_dias()
-    {
-        return array(
-            "Domingo",
-            "Lunes",
-            "Martes",
-            "Mi&eacute;rcoles",
-            "Jueves",
-            "Viernes",
-            "S&aacute;bado"
-        );
-    }
-
-    public function get_carrera($Asignatura_id) {
-        $this->db->select('IF(COUNT(DISTINCT c.id) > 1, \'VARIAS\', c.nombre) AS carrera');
-        $this->db->from('asignatura_carrera AS ac');
-        $this->db->join('carrera AS c', 'ac.Carrera_id = c.id');
-        $this->db->group_by('ac.Asignatura_id');
-        $this->db->where('ac.Asignatura_id', $Asignatura_id);
-        return $this->db->get()->row()->carrera;
-    }
-
-
-    /**
-     * @param $entity
-     * @return Entity
-     */
-    protected function is_invalid($entity)
-    {
-        // TODO: Implement is_invalid() method.
-    }
 }

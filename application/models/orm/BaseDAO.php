@@ -78,46 +78,89 @@ abstract class BaseDAO extends CI_Model
 
     /**
      * @param $entity
-     * @return Entity
+     * @return array
      */
     public function insert($entity)
     {
+        $this->db->trans_start();
+
         $this->before_insert($entity);
-        if($error = $this->is_invalid($entity))
+
+        $error = $this->is_invalid($entity);
+        if ($error) {
+            $this->db->trans_rollback();
             return ['error' => $error];
-        if(!$this->db->insert($entity->get_table_name(), $entity->to_row()))
+        }
+
+        if (!$this->db->insert($entity->get_table_name(), $entity->to_row())) {
+            $this->db->trans_rollback();
             return ['error' => 'Fails on insert to db.'];
+        }
+
+        $id = $this->db->insert_id();
+        $entity->from_row([$entity->get_primary_key_column_name() => $id]);
+
         $this->after_insert($entity);
+
+        $this->db->trans_complete();
+
+        return $entity;
     }
 
     /**
      * @param $entity
-     * @return Entity
+     * @return array|Entity
      */
     public function update($entity)
     {
+        $this->db->trans_start();
+
         $this->before_update($entity);
-        if($error = $this->is_invalid($entity))
+
+        $error = $this->is_invalid($entity);
+        if($error) {
+            $this->db->trans_rollback();
             return ['error' => $error];
+        }
+
         $this->db->where($entity->get_primary_key_column_name(), $entity->get_id());
-        if(!$this->db->update($entity->get_table_name(), $entity->to_row()))
+        if(!$this->db->update($entity->get_table_name(), $entity->to_row())) {
+            $this->db->trans_rollback();
             return ['error' => 'Fails on update to db'];
+        }
+
         $this->after_update($entity);
+
+        $this->db->trans_complete();
+
+        return $entity;
     }
 
     /**
      * @param $entity
-     * @return array
+     * @return array|Entity
      */
     public function delete($entity)
     {
+        $this->db->trans_start();
+
         $this->before_delete($entity);
-        if($error = $this->is_invalid($entity))
+
+        if($error = $this->is_invalid($entity)) {
+            $this->db->trans_rollback();
             return ['error' => $error];
+        }
         $this->db->where($entity->get_primary_key_column_name(), $entity->get_id());
-        if(!$this->db->delete($entity->get_table_name()))
-        return ['error' => 'Fails on delete to db'];
+        if(!$this->db->delete($entity->get_table_name())) {
+            $this->db->trans_rollback();
+            return ['error' => 'Fails on delete to db'];
+        }
+
         $this->after_delete($entity);
+
+        $this->db->trans_complete();
+
+        return $entity;
     }
 
     /**
