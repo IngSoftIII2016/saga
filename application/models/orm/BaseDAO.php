@@ -160,14 +160,34 @@ abstract class BaseDAO extends CI_Model
     }
 
     /**
-     * Realiza una validación contra la base de datos previa a la inserción o modificación.
+     * Realiza una validación contra la base de datos previa a la inserción.
      * Si el resultado de la validación es correcto devuelve FALSE. En caso contrario
      * devuelve un arreglo asociativo con un mensaje de error en la clave 'error' y
      * opcionalmente un conjunto de datos asociados al error en la clave 'data'.
      * @param $entity entidad a validar
      * @return mixed FALSE o array asociativo con información del error
      */
-    protected abstract function is_invalid($entity);
+    protected abstract function is_invalid_insert($entity);
+
+    /**
+     * Realiza una validación contra la base de datos previa a la modificación.
+     * Si el resultado de la validación es correcto devuelve FALSE. En caso contrario
+     * devuelve un arreglo asociativo con un mensaje de error en la clave 'error' y
+     * opcionalmente un conjunto de datos asociados al error en la clave 'data'.
+     * @param $entity entidad a validar
+     * @return mixed FALSE o array asociativo con información del error
+     */
+    protected abstract function is_invalid_update($entity);
+
+    /**
+     * Realiza una validación contra la base de datos previa a la eliminición.
+     * Si el resultado de la validación es correcto devuelve FALSE. En caso contrario
+     * devuelve un arreglo asociativo con un mensaje de error en la clave 'error' y
+     * opcionalmente un conjunto de datos asociados al error en la clave 'data'.
+     * @param $entity entidad a validar
+     * @return mixed FALSE o array asociativo con información del error
+     */
+    protected abstract function is_invalid_delete($entity);
 
     /**
      * @param $entity

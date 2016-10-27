@@ -16,7 +16,7 @@ class Planilla extends CI_Controller {
 		$this->load->model ( 'Evento_Model' );
 		
 		$aulas = $this->aulas_edificio ( 1 ); // campus
-		$clases = $this->Clase_model->get_clases_dia ( $fecha->format ( "Y-m-d" ) );
+		$clases = $this->Clase_model->get_clases_dia ( $fecha->format ("Y-m-d") );
 		$data ['calendario'] = $fecha;
 		$data ['fecha'] = $fecha;
 		$data ['fecha_formateada'] = $this->formatear_fecha ( $fecha );
