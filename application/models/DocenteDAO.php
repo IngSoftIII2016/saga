@@ -1,0 +1,18 @@
+<?php
+require_once APPPATH . '/models/orm/BaseDAO.php';
+class DocenteDAO extends BaseDAO {
+	
+	public function __construct() {
+		parent::__construct ( 'Docente' );
+	}
+	
+	/**
+	 *
+	 * @param
+	 *        	$entity
+	 * @return array|bool
+	 */
+	protected function is_invalid($entity) {
+		return FALSE;
+	}
+}

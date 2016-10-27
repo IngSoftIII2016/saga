@@ -146,10 +146,6 @@ abstract class BaseDAO extends CI_Model
 
         $this->before_delete($entity);
 
-        if($error = $this->is_invalid($entity)) {
-            $this->db->trans_rollback();
-            return ['error' => $error];
-        }
         $this->db->where($entity->get_primary_key_column_name(), $entity->get_id());
         if(!$this->db->delete($entity->get_table_name())) {
             $this->db->trans_rollback();
