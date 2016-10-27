@@ -1,7 +1,7 @@
 <?php
 require_once APPPATH . '/models/orm/Base_DAO.php';
 
-class Example_DAO_Model extends Base_DAO
+class Example_DAO_Model extends BaseDAO
 {
 
     public function __construct()

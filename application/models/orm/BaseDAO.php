@@ -1,12 +1,21 @@
 <?php
 require_once APPPATH . '/models/entities/Aula.php';
+require_once APPPATH . '/models/entities/Carrera.php';
+require_once APPPATH . '/models/entities/Clase.php';
 require_once APPPATH . '/models/entities/Comision.php';
+require_once APPPATH . '/models/entities/Docente.php';
+require_once APPPATH . '/models/entities/Edificio.php';
+require_once APPPATH . '/models/entities/Evento.php';
 require_once APPPATH . '/models/entities/Horario.php';
-
+require_once APPPATH . '/models/entities/Loacalidad.php';
+require_once APPPATH . '/models/entities/Periodo.php';
+require_once APPPATH . '/models/entities/Recurso.php';
+require_once APPPATH . '/models/entities/Sede.php';
+require_once APPPATH . '/models/entities/TipoRecurso.php';
 /**
  * Class Base_DAO
  */
-abstract class Base_DAO extends CI_Model
+abstract class BaseDAO extends CI_Model
 {
     protected $entity_class = NULL;
 
@@ -112,8 +121,12 @@ abstract class Base_DAO extends CI_Model
     }
 
     /**
-     * @param $entity
-     * @return Entity
+     * Realiza una validación contra la base de datos previa a la inserción o modificación.
+     * Si el resultado de la validación es correcto devuelve FALSE. En caso contrario
+     * devuelve un arreglo asociativo con un mensaje de error en la clave 'error' y
+     * opcionalmente un conjunto de datos asociados al error en la clave 'data'.
+     * @param $entity entidad a validar
+     * @return mixed FALSE o array asociativo con información del error
      */
     protected abstract function is_invalid($entity);
 
@@ -284,10 +297,9 @@ abstract class Base_DAO extends CI_Model
         }
 /*
         foreach ($entity->get_relations_one_to_many() as $relation) {
-            $related_entity = new $relation['entity_class_name'];
             $relationship_property = $relation['property_name'];
             if(in_array($relationship_property, $this_includes)) {
-
+                $entity->do_one_to_many_query($relation['entity_class_name'], $relationship_property);
             }
         }
 */
@@ -296,7 +308,7 @@ abstract class Base_DAO extends CI_Model
     }
 
 
-    public static function do_one_to_many_query($entity, $relationship) {
+    public static function do_one_to_many_query($entity, $relationship_entity, $relationship_property) {
 
     }
 }
