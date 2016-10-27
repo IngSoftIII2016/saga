@@ -1,4 +1,5 @@
 <?php
+require_once APPPATH . '/models/orm/BaseDAO.php';
 
 class HorarioDAO extends BaseDAO {
 

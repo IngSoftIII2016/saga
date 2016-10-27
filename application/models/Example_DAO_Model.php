@@ -1,5 +1,5 @@
 <?php
-require_once APPPATH . '/models/orm/Base_DAO.php';
+require_once APPPATH . '/models/orm/BaseDAO.php';
 
 class Example_DAO_Model extends BaseDAO
 {
