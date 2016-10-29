@@ -5,9 +5,9 @@ class Asignatura extends Entity
 {
     public $id;
     public $nombre;
-    public $anio;
-    public $regimen;
-    public $carrera;
+//    public $anio;
+//    public $regimen;
+//    public $carrera;
 
     /**
      * Retorna el nombre de la tabla correspondiente a ésta Entity
@@ -24,7 +24,7 @@ class Asignatura extends Entity
      */
     public function get_property_column_names()
     {
-        return ['nombre', 'anio', 'regimen'];
+        return ['nombre' /* , 'anio', 'regimen' */ ];
     }
 
     /**
@@ -89,9 +89,9 @@ class Asignatura extends Entity
     {
         if(isset($data['id'])) $this->id = $data['id'];
         if(isset($data['nombre'])) $this->nombre = $data['nombre'];
-        if(isset($data['anio'])) $this->anio = $data['anio'];
-        if(isset($data['regimen'])) $this->regimen = $data['regimen'];
-        if(isset($data['carrera'])) $this->carrera = $data['carrera'];
+ //       if(isset($data['anio'])) $this->anio = $data['anio'];
+ //       if(isset($data['regimen'])) $this->regimen = $data['regimen']
+        //      if(isset($data['carrera'])) $this->carrera = $data['carrera'];
     }
 
     /**
@@ -103,8 +103,8 @@ class Asignatura extends Entity
     {
         $data['id'] = $this->id;
         $data['nombre'] = $this->nombre;
-        $data['anio'] = $this->anio;
-        $data['regimen'] = $this->regimen;
+//        $data['anio'] = $this->anio;
+//        $data['regimen'] = $this->regimen;
         $data['Carrera_id'] = $this->carrera->get_id();
     }
 

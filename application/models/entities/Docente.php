@@ -70,7 +70,7 @@ class Docente extends Entity
 	 */
 	public function get_id()
 	{
-		$this->id;
+		return $this->id;
 	}
 
 	/**

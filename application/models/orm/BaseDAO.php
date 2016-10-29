@@ -1,5 +1,6 @@
 <?php
 require_once APPPATH . '/models/entities/Aula.php';
+require_once APPPATH . '/models/entities/Asignatura.php';
 require_once APPPATH . '/models/entities/Carrera.php';
 require_once APPPATH . '/models/entities/Clase.php';
 require_once APPPATH . '/models/entities/Comision.php';
