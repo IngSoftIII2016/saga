@@ -57,26 +57,24 @@ class EventoEndpoint extends BaseEndpoint
     public function eventos_put()
     {
         $json = $this->put('data');
-        $id = $json['id'];
-        $aula = $json['Aula_id'];
-        $fecha = $json['fecha'];
-        $hora_inicio = $json['hora_inicio'];
-        $hora_fin = $json['hora_fin'];
-        $motivo = $json['motivo'];
-        if ($this->Evento_Model->modificar($id, $aula, $fecha, $hora_inicio, $hora_fin, $motivo)) {
-            $this->response($json, 202);
-        } else {
-            $this->response(['error' => 'no se puede modificar el evento, el aula se encuentra ocupada'], 500);
+        $entity = $this->json_to_entity($json);
+        $result = $this->EventoDAO->update($entity);
+        if (array_key_exists('error', $result)) {
+            $this->response($result, 500);
+        }else {
+            $this->response(['data' => $result]);
         }
     }
 
     public function eventos_delete($id)
     {
-        if ($id != null) {
-            $this->Evento_Model->borrar($id);
-            $this->response(['data' => ['id' => $id] ], 202);
-        } else {
-            $this->response(['errors' => 'no se pudo borrar el evento'], 500);
+        $json = $this->delete('data');
+        $entity = $this->json_to_entity($json);
+        $result = $this->EventoDAO->delete($entity);
+        if (array_key_exists('error', $result)) {
+            $this->response($result, 500);
+        }else {
+            $this->response(['data' => $result]);
         }
 
     }
