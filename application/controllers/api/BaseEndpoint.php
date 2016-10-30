@@ -1,5 +1,20 @@
 <?php
+require APPPATH . '/libraries/REST_Controller.php';
 
+require_once APPPATH . '/models/entities/Aula.php';
+require_once APPPATH . '/models/entities/Asignatura.php';
+require_once APPPATH . '/models/entities/Carrera.php';
+require_once APPPATH . '/models/entities/Clase.php';
+require_once APPPATH . '/models/entities/Comision.php';
+require_once APPPATH . '/models/entities/Docente.php';
+require_once APPPATH . '/models/entities/Edificio.php';
+require_once APPPATH . '/models/entities/Evento.php';
+require_once APPPATH . '/models/entities/Horario.php';
+require_once APPPATH . '/models/entities/Localidad.php';
+require_once APPPATH . '/models/entities/Periodo.php';
+require_once APPPATH . '/models/entities/Recurso.php';
+require_once APPPATH . '/models/entities/Sede.php';
+require_once APPPATH . '/models/entities/TipoRecurso.php';
 
 class BaseEndpoint extends REST_Controller
 {
@@ -13,8 +28,9 @@ class BaseEndpoint extends REST_Controller
 
     protected function json_to_entity($json) {
         $entity = new $this->entity_class;
+
         $columns = $entity->get_property_column_names();
-        array_unshift($columns, $primary_key);
+        array_unshift($columns, $entity->get_primary_key_column_name());
         $data = [];
         foreach ($columns as $column) {
             $data[$column] = $json[$column];

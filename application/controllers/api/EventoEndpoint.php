@@ -3,7 +3,7 @@
 defined('BASEPATH') OR exit('No direct script access allowed');
 
 // This can be removed if you use __autoload() in config.php OR use Modular Extensions
-require APPPATH . '/libraries/REST_Controller.php';
+require_once APPPATH . '/controllers/api/BaseEndpoint.php';
 
 /**
  * This is an example of a few basic user interaction methods you could use
@@ -16,15 +16,15 @@ require APPPATH . '/libraries/REST_Controller.php';
  * @license         MIT
  * @link            https://github.com/chriskacerguis/codeigniter-restserver
  */
-class Evento extends REST_Controller
+class EventoEndpoint extends BaseEndpoint
 {
 
     function __construct()
     {
 
         // Construct the parent class
-        parent::__construct();
-        $this->load->model('Evento_Model');
+        parent::__construct('Evento');
+        $this->load->model('EventoDAO');
 
     }
 
@@ -34,26 +34,23 @@ class Evento extends REST_Controller
     public function eventos_get($id = null)
     {
         if ($id != null) {
-            $clase = $this->Evento_Model->get_evento($id);
-            $this->response(['data' => $clase]);
+            $evento = $this->EventoDAO->query(['id' => $id], [], ['aula'])[0];
+            $this->response(['data' => $evento]);
         } else {
-            $clases = $this->Evento_Model->get_eventos();
-            $this->response(['data' => $clases]);
+            $eventos = $this->EventoDAO->query([], [], ['aula']);
+            $this->response(['data' => $eventos]);
         }
     }
 
     public function eventos_post()
     {
         $json = $this->post('data');
-        $aula = $json['Aula_id'];
-        $fecha = $json['fecha'];
-        $hora_inicio = $json['hora_inicio'];
-        $hora_fin = $json['hora_fin'];
-        $motivo = $json['motivo'];
-        if ($this->Evento_Model->agregar_evento($aula, $fecha, $hora_inicio, $hora_fin, $motivo)) {
-            $this->response($json);
-        } else {
-            $this->response(['error' => 'no se puede insertar el evento, el aula se encuentra ocupada'], 500);
+        $entity = $this->json_to_entity($json);
+        $result = $this->EventoDAO->insert($entity);
+        if (array_key_exists('error', $result)) {
+            $this->response($result, 500);
+        }else {
+            $this->response(['data' => $result]);
         }
     }
 

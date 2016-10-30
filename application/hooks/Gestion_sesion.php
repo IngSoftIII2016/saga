@@ -1,6 +1,6 @@
 <?php defined('BASEPATH') OR exit('No direct script access allowed');
 class Gestion_sesion {
-    private $ci;
+/*    private $ci;
     public function __construct()
     {
         $this->ci =& get_instance();
@@ -37,5 +37,5 @@ class Gestion_sesion {
             }
         }
 
-    }
+    }*/
 }
