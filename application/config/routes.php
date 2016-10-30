@@ -80,7 +80,7 @@ $route['api/usuarios/(:num)'] = 'api/UsuarioEndpoint/usuarios/$1';
 $route['api/usuarios'] = 'api/UsuarioEndpoint/usuarios';
 
 $route['api/horarios/(:num)'] = 'api/HorarioEndpoint/horarios/$1';
-$route['api/horarios'] = 'api/UsuarioEndpoint/horarios';
+$route['api/horarios'] = 'api/HorarioEndpoint/horarios';
 
 $route['api/asignaturas/(:num)'] = 'api/AsignaturaEndpoint/asignaturas/$1';
 $route['api/asignaturas'] = 'api/AsignaturaEndpoint/asignaturas';

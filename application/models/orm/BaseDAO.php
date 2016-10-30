@@ -1,4 +1,11 @@
 <?php
+/**
+ * Created by PhpStorm.
+ * User: Juan Pablo Aveggio
+ * Date: 20/10/16
+ * Time: 18:33
+ */
+
 require_once APPPATH . '/models/entities/Aula.php';
 require_once APPPATH . '/models/entities/Asignatura.php';
 require_once APPPATH . '/models/entities/Carrera.php';

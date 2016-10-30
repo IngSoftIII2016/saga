@@ -43,4 +43,11 @@ class BaseEndpoint extends REST_Controller
         $entity->from_row($data);
         return $entity;
     }
+
+    protected function parsed_params() {
+        $params = [];
+
+    }
+
+
 }
