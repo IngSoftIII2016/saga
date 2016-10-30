@@ -47,11 +47,11 @@ class Asignatura extends Entity
     public function get_relations_many_to_one()
     {
         return [
-            [
+        /*    [
                 'entity_class_name' => 'Carrera',
                 'foreign_key_column_name' => 'Carrera_id',
                 'property_name' => 'carrera'
-            ]
+            ]*/
         ];
     }
 

@@ -31,14 +31,13 @@ class TestDAO extends CI_Controller
         $this->load->model('HorarioDAO');
         //$this->Example_DAO_Model->set_debug_enabled('TRUE');
         echo json_encode($this->HorarioDAO->query(
-            ['id' => '278'],
-            []
-        ));
+            ['id' => '278']
+        )[0]);
     }
 
     public function horario_alta() {
         $this->load->model('HorarioDAO');
-
+        
     }
 
     public function horarios_id($id) {
