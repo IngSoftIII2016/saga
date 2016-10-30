@@ -44,9 +44,40 @@ class BaseEndpoint extends REST_Controller
         return $entity;
     }
 
-    protected function parsed_params() {
-        $params = [];
+    protected function parse_params() {
+        $params = [
+            'filters' => [],
+            'sorts' => [],
+            'includes' => [],
+            'page' => 1,
+            'size' => 20
+        ];
+        $get = $this->get();
+        if(!empty($get['sort'])) {
+            $sorts_fields = explode(',', $get['sort']);
+            foreach ($sorts_fields as $sort_field) {
+                $first_char = substr($sort_field, 0, 1);
+                if($first_char == '-' || $first_char == '+')
+                    $params['sorts'][substr($sort_field, 1)] = $first_char;
+                else
+                    $params['sorts'][$sort_field] = '+';
+            }
+            unset($get['sort']);
+        }
+        if(!empty($get['include'])) {
+            $params['includes'] = explode(',', $get['include']);
+            unset($get['include']);
+        }
+        if(!empty($get['page'])) {
+            $params['page'] = $get['page'];
+            unset($get['page']);
+        }if(!empty($get['size'])) {
+            $params['size'] = $get['size'];
+            unset($get['size']);
+        }
+        $params['filters'] = $get;
 
+        return $params;
     }
 
 

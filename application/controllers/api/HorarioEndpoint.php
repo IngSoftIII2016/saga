@@ -23,11 +23,12 @@ class HorarioEndpoint extends BaseEndpoint
             $this->response(['data' => $horarios]);
         } else {
             $horarios = $this->HorarioDAO->query([], [], ['aula.edificio', 'comision.asignatura']);
-            $this->response(['data' => $horarios]);
+            $this->response(['get' => $this->get(), 'data' => $horarios]);
         }
     }
 
     public function horario_get() {
-        var_dump($this->get());
+        $query = $this->get();
+        var_dump(empty($query['sort']));
     }
 }

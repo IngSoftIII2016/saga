@@ -37,7 +37,8 @@ class EventoEndpoint extends BaseEndpoint
             $evento = $this->EventoDAO->query(['id' => $id], [], ['aula'])[0];
             $this->response(['data' => $evento]);
         } else {
-            $eventos = $this->EventoDAO->query([], [], ['aula']);
+            $params = $this->parse_params();
+            $eventos = $this->EventoDAO->query($params['filters'], $params['sorts'], $params['includes'], $params['page'], $params['size']);
             $this->response(['data' => $eventos]);
         }
     }
