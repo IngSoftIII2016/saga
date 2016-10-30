@@ -16,7 +16,7 @@ require APPPATH . '/libraries/REST_Controller.php';
  * @license         MIT
  * @link            https://github.com/chriskacerguis/codeigniter-restserver
  */
-class Usuario extends REST_Controller {
+class UsuarioEndpoint extends REST_Controller {
 
     function __construct()
     {
