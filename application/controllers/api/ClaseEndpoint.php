@@ -21,7 +21,7 @@ class ClaseEndpoint extends BaseEndpoint {
     function __construct()
     {
         // Construct the parent class
-        parent::__construct();
+        parent::__construct('Clase');
         $this->load->model('ClaseDAO');
 
     }
