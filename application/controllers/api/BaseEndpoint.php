@@ -75,8 +75,10 @@ class BaseEndpoint extends REST_Controller
             $params['size'] = $get['size'];
             unset($get['size']);
         }
-        $params['filters'] = $get;
-
+        foreach($get as $field => $value){
+            $dot_path = str_replace('_', '.', $field);
+            $params['filters'][$dot_path] = $value;
+        }
         return $params;
     }
 
