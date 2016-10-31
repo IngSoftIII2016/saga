@@ -22,33 +22,61 @@ class ClaseEndpoint extends REST_Controller {
     {
         // Construct the parent class
         parent::__construct();
+        $this->load->model('ClaseDAO');
 
     }
 
-    public function index($id){
-        var_dump($id);
-    }
-
-
-    /**
-     * @param $id
-     */
-    public function clases_get ($id=null)
+    public function clases_get($id = null)
     {
-        $params = $this->get();
-        $this->load->model('Clase_model');
-        if($id!=null)
-            $clases = $this->Clase_model->get_clase($id);
-        elseif(count(array_keys($params)) > 0)
-            $clases = $this->Clase_model->get_by_filters($params);
-        else
-            $clases = $this->Clase_model->get_by_filters();
+        if ($id != null) {
+            $evento = $this->ClaseDAO->query(['id' => $id], [], ['aula'])[0];
+            $this->response(['data' => $evento]);
+        } else {
+            $params = $this->parse_params();
+            $eventos = $this->ClaseDAO->query($params['filters'], $params['sorts'], $params['includes'], $params['page'], $params['size']);
+            $this->response(['data' => $eventos]);
+        }
+    }
 
-        $this->response(['data' => $clases]);
+    public function clases_post()
+    {
+        $json = $this->post('data');
+        $entity = $this->json_to_entity($json);
+        $result = $this->ClaseDAO->insert($entity);
+        if (array_key_exists('error', $result)) {
+            $this->response($result, 500);
+        }else {
+            $this->response(['data' => $result]);
+        }
+    }
+
+    public function clases_put()
+    {
+        $json = $this->put('data');
+        $entity = $this->json_to_entity($json);
+        $result = $this->ClaseDAO->update($entity);
+        if (array_key_exists('error', $result)) {
+            $this->response($result, 500);
+        }else {
+            $this->response(['data' => $result]);
+        }
+    }
+
+    public function clases_delete($id)
+    {
+        $json = $this->delete('data');
+        $entity = $this->json_to_entity($json);
+        $result = $this->ClaseDAO->delete($entity);
+        if (array_key_exists('error', $result)) {
+            $this->response($result, 500);
+        }else {
+            $this->response(['data' => $result]);
+        }
+
     }
 
 
-    
+
 
 
 }
