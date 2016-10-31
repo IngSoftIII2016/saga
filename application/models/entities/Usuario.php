@@ -2,14 +2,17 @@
 require_once APPPATH . '/models/orm/Entity.php';
 class Usuario extends Entity
 {
-    private $id;
-    private $nombre;
-    private $apellido;
-    private $contraseña;
-    private $email;
-    private $recordar;
-    private $activo;
-    private $telefono;
+    public $id;
+    public $nombre_usuario;
+    public $nombre;
+    public $apellido;
+    public $contraseña;
+    public $email;
+    public $recordarme_codigo;
+    public $estado;
+    public $telefono;
+
+    ////////////////////////////ME FALTA ULTIMA SESSION!!!!!
     /**
      * Retorna el nombre de la tabla correspondiente a ésta Entity
      * @return string Nombre de la tabla
@@ -22,9 +25,11 @@ class Usuario extends Entity
      * Retorna un arreglo de string con los nombres de las columnas que no son claves primarias ni foráneas.
      * @return array columnas
      */
+    ////////////////////////////ME FALTA ULTIMA SESSION!!!!!
+
     public function get_property_column_names()
     {
-        return ['nombre', 'apellido', 'contraseña', 'email', 'recordar','activo','telefono'];
+        return ['nombre_usuario','nombre', 'apellido', 'contraseña', 'email', 'recordarme_codigo','estado','telefono'];
     }
     /**
      * @return mixed
@@ -62,14 +67,7 @@ class Usuario extends Entity
      */
     public function get_relations_many_to_many()
     {
-        return [
-            [
-            'entity_class_name' => 'Grupo',
-            'junction_table' => 'usuario_grupo',
-            'this_foreign_key' => 'User_id',
-            'other_foreign_key' => 'Group_id'
-            ]
-              ];
+        return [];
     }
     public function get_id()
     {
@@ -84,13 +82,14 @@ class Usuario extends Entity
     public function from_row($data)
     {
         if(isset($data['id'])) $this->id = $data['id'];
-        if(isset($data['first_name'])) $this->nombre = $data['nombre'];
-        if(isset($data['las_name'])) $this->apellido = $data['apellido'];
-        if(isset($data['password'])) $this->contraseña = $data['contraseña'];
+	    if(isset($data['nombre_usuario'])) $this->nombre_usuario = $data['nombre_usuario'];
+        if(isset($data['nombre'])) $this->nombre = $data['nombre'];
+        if(isset($data['apellido'])) $this->apellido = $data['apellido'];
+        if(isset($data['contraseña'])) $this->contraseña = $data['contraseña'];
         if(isset($data['email'])) $this->email = $data['email'];
-        if(isset($data['remember_code'])) $this->recordar = $data['recordar'];
-        if(isset($data['active'])) $this->activo = $data['activo'];
-        if(isset($data['phone'])) $this->telefono = $data['telefono'];
+        if(isset($data['recordarme_codigo'])) $this->recordarme_codigo = $data['recordarme_codigo'];
+        if(isset($data['estado'])) $this->estado = $data['estado'];
+        if(isset($data['telefono'])) $this->telefono = $data['telefono'];
     }
     /**
      * Devuelve un arreglo asociativo con una representación de ésta instancia de la Entity, cuyas claves coinciden
@@ -100,13 +99,14 @@ class Usuario extends Entity
     public function to_row()
     {
         $data['id'] = $this->id;
-        $data['first_name'] = $this->nombre;
-        $data['las_name'] = $this->apellido;
-        $data['password'] = $this->contraseña;
+		$data['nombre_usuario']= $this->nombre_usuario;
+        $data['nombre'] = $this->nombre;
+        $data['apellido'] = $this->apellido;
+        $data['contraseña'] = $this->contraseña;
         $data['email'] = $this->email;
-        $data['remember_code'] = $this->recordar;
-        $data['active'] = $this->activo;
-        $data['phone'] = $this->telefono;
+        $data['recordarme_codigo'] = $this->recordarme_codigo;
+        $data['estado'] = $this->estado;
+        $data['telefono'] = $this->telefono;
         return $data;
     }
 }

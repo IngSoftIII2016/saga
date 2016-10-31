@@ -24,12 +24,10 @@ class Grupo extends CI_Controller
         $crud->set_subject('grupo');
 
         //las columnas de la vista principal
-        $crud->columns('name','description');
+        $crud->columns('nombre','descripcion');
         // campos obligatorios
-        $crud->required_fields ('name' );
-        //reasignacion de nombres
-        $crud->display_as('name','Nombre');
-        $crud->display_as('description','Descripción');
+        $crud->required_fields ('nombre' );
+
         //validacion: verifica que no se modifique los nombres de bedel y adminsitrador
         //callback
         $crud->callback_before_delete(array($this,'cek_before_delete'));
@@ -44,19 +42,19 @@ class Grupo extends CI_Controller
     function cek_before_delete($primary_key) {
         $this->load->model('Grupo_model');
         $grupo= $this->Grupo_model->get_grupo($primary_key);
-        if ($grupo[0]->name=='administrador'|| $grupo[0]->name=='bedel')
+        if ($grupo[0]->nombre=='administrador'|| $grupo[0]->nombre=='bedel')
             return false;
     }
     function grupo_before_update($post_array, $primary_key = null){
         $this->load->model('Grupo_model');
         $grupo= $this->Grupo_model->get_grupo($primary_key);
-        if ($grupo[0]->name=='administrador'){
-            if ($post_array['name'] !== 'administrador'){
+        if ($grupo[0]->nombre=='administrador'){
+            if ($post_array['nombre'] !== 'administrador'){
                 return false;
             }
         }
-        if ($grupo[0]->name=='bedel'){
-            if ($post_array['name'] !== 'bedel'){
+        if ($grupo[0]->nombre=='bedel'){
+            if ($post_array['nombre'] !== 'bedel'){
                 return false;
             }
         }

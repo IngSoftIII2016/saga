@@ -40,12 +40,11 @@ class Login extends CI_Controller {
 			}
 			else
 			{
-				// Si la entrada era un- éxito
+
 				// Redirigirlos volver a la página de inicio de sesión
 
 				$this->session->set_flashdata('message', $this->Login_Model->errors());
 				redirect('login', 'refresh'); 
-				//  se redirecciona en lugar de puntos de vista de carga para la compatibilidad con bibliotecas MY_Controller			
 			}
 		}
 		else

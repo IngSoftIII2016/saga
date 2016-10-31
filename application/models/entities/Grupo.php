@@ -2,9 +2,9 @@
 require_once APPPATH . '/models/orm/Entity.php';
 class Grupo extends Entity
 {
-    private $id;
-    private $nombre;
-    private $descripcion;
+    public $id;
+    public $nombre;
+    public $descripcion;
 
     /**
      * Retorna el nombre de la tabla correspondiente a ésta Entity
@@ -58,16 +58,8 @@ class Grupo extends Entity
      */
     public function get_relations_many_to_many()
     {
-        return [
-              [
-            'entity_class_name' => 'Usuario',
-            'junction_table' => 'usuario_grupo',
-            'this_foreign_key' => 'Group_id',
-            'other_foreign_key' => 'User_id'
-             ]
-              ];
-
-	}
+        return [];
+    }
 
     public function get_id()
     {
@@ -90,13 +82,13 @@ class Grupo extends Entity
      * Devuelve un arreglo asociativo con una representación de ésta instancia de la Entity, cuyas claves coinciden
      * con los nombres de las columnas de la tabla a la que corresponde
      * @return array
-     */
-    public function to_row()
-    {
-        $data['id'] = $this->id;
-        $data['nombre'] = $this->nombre;
-        $data['descripcion'] = $this->descripcion;
+     */ public function to_row()
+        {
+            $data['id'] = $this->id;
+            $data['nombre'] = $this->nombre;
+            $data['descripcion'] = $this->descripcion;
 
-        return $data;
-    }
+            return $data;
+        }
+  
 }

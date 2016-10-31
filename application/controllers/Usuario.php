@@ -25,10 +25,10 @@ class Usuario extends CI_Controller
         $crud->set_table('usuario');
 		$crud->set_subject('Usuario');
 
-		$crud->set_relation_n_n('grupos', 'usuario_grupo', 'grupo', 'user_id', 'group_id', 'name');
+		$crud->set_relation_n_n('grupos', 'usuario_grupo', 'grupo', 'usuario_id', 'grupo_id', 'nombre');
 
 		//las columnas de la vista principal
-		$crud->columns('username','email','active','grupos');
+		$crud->columns('nombre_usuario','email','estado','grupos');
 
 		// para editar
 
@@ -36,36 +36,27 @@ class Usuario extends CI_Controller
 
 
 		if ($user_id ==$this->uri->segment(4)){
-			$crud->edit_fields('first_name', 'last_name','phone','grupos');
+			$crud->edit_fields('nombre', 'apellido','telefono','grupos');
 		}
 		else{
-		$crud->edit_fields('first_name', 'last_name','phone','active','grupos');
+		$crud->edit_fields('nombre', 'apellido','telefono','estado','grupos');
 		}
 		// campos obligatorios
-		$crud->required_fields ('first_name','last_name','password' , 'email', 'active' ,'password_confirm' );
-		//reasignacion de nombres
-		$crud->display_as('username','Usuario');
-		$crud->display_as('password','Contraseña');
-		$crud->display_as('active','Estado');
-		$crud->display_as('first_name','Nombre');
-		$crud->display_as('last_name','Apellido');
-		$crud->display_as('phone','Telefono');
-		$crud->display_as('password','Contraseña');
-		$crud->display_as('password_confirm','Confirmar contraseña');
-		//validaciones
-		$crud->set_rules('password', 'Password', 'required|matches[password_confirm]');
-		$crud->set_rules('phone', 'telefono', 'numeric|min_length[6]');
-		
-		//para añadir
+		$crud->required_fields ('nombre','apellido','contraseña' , 'email','confirmar_contraseña' );
 
-		$crud->add_fields('first_name', 'last_name', 'email','grupos', 'phone','password','password_confirm');
+		//para añadir
+		$crud->add_fields('nombre', 'apellido', 'email','grupos', 'telefono','contraseña','confirmar_contraseña');
+
+        //validaciones
+        $crud->set_rules('contraseña', 'Constraseña', 'required|matches[confirmar_contraseña]');
+        $crud->set_rules('telefono', 'Telefono','numeric|min_length[6]');
 
 		// cambiar el tipo
-		$crud->change_field_type ( 'password' , 'password' );
-		$crud->change_field_type ( 'password_confirm' , 'password' );
+		$crud->change_field_type ( 'contraseña' , 'password' );
+		$crud->change_field_type ( 'confirmar_contraseña' , 'password' );
 
 		//no mostrar en ver usuario
-		$crud->unset_read_fields('first_name', 'last_name','id','ip_address','salt','activation_code','forgotten_password_code','password_confirm','active','remember_code','last_login','created_on','password','forgotten_password_time','company');
+		$crud->unset_read_fields('nombre', 'apellido','id','contraseña','estado','confirmar_contraseña', 'recordarme_codigo');
 		//validacion: verifica que no halla dos emails
 		$crud->set_rules('email', 'Email', 'required|valid_email|callback_email_check');
 
@@ -95,14 +86,14 @@ class Usuario extends CI_Controller
 	}
 
 	function create_user_callback($post_array, $primary_key = null) {
-		$username = $post_array['first_name'] . ' ' . $post_array['last_name'];
-		$password = $post_array['password'];
+		$username = $post_array['nombre'] . ' ' . $post_array['apellido'];
+		$password = $post_array['contraseña'];
 		$email = $post_array['email'];
 		$groups  = $post_array['grupos'];
 		$data = array(
-		'phone' => $post_array['phone'],
-		'first_name' => $post_array['first_name'],
-		'last_name' => $post_array['last_name']
+		'telefono' => $post_array['telefono'],
+		'nombre' => $post_array['nombre'],
+		'apellido' => $post_array['apellido']
 		);
 	
 		return $this->ion_auth_model->register($username, $password, $email, $data,$groups );
@@ -110,23 +101,23 @@ class Usuario extends CI_Controller
 
 	
 	function edit_user_callback($post_array, $primary_key = null) {
-		$username = $post_array['first_name'] . ' ' . $post_array['last_name'];
+		$username = $post_array['nombre'] . ' ' . $post_array['apellido'];
 		$groups   = $post_array['grupos'];
 		$data = array(
-		'username' => $username,
-		'phone' => $post_array['phone'],
-		'first_name' => $post_array['first_name'],
-		'last_name' => $post_array['last_name'],
-		'active' => $post_array['active']
+		'nombre_usuario' => $username,
+		'telefono' => $post_array['telefono'],
+		'nombre' => $post_array['nombre'],
+		'apellido' => $post_array['apellido'],
+		'estado' => $post_array['estado']
 		);
 		$grupo =1;
 		$user_id = $this->session->userdata('user_id');
 		if ($primary_key==$user_id  ){
 				$data = array(
-				'username' => $username,
-				'phone' => $post_array['phone'],
-				'first_name' => $post_array['first_name'],
-				'last_name' => $post_array['last_name']
+				'nombre_usuario' => $username,
+				'telefono' => $post_array['telefono'],
+				'nombre' => $post_array['nombre'],
+				'apellido' => $post_array['apellido']
 				);
 			if (!in_array($grupo,$groups)){
 				return false;

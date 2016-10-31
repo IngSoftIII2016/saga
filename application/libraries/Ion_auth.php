@@ -385,7 +385,7 @@ class Ion_auth
 		$this->ion_auth_model->trigger_events('logout');
 
 		$identity = $this->config->item('identity', 'ion_auth');
-                $this->session->unset_userdata( array($identity => '', 'id' => '', 'user_id' => '') );
+                $this->session->unset_userdata( array($identity => '', 'id' => '', 'usuario_id' => '') );
 
 		//delete the remember me cookies if they exist
 		if (get_cookie($this->config->item('identity_cookie_name', 'ion_auth')))
@@ -435,7 +435,7 @@ class Ion_auth
 	 **/
 	public function get_user_id()
 	{
-		$user_id = $this->session->userdata('user_id');
+		$user_id = $this->session->userdata('usuario_id');
 		if (!empty($user_id))
 		{
 			return $user_id;
@@ -473,7 +473,7 @@ class Ion_auth
 	{
 		$this->ion_auth_model->trigger_events('in_group');
 
-		$id || $id = $this->session->userdata('user_id');
+		$id || $id = $this->session->userdata('usuario_id');
 
 		if (!is_array($check_group))
 		{
@@ -490,7 +490,7 @@ class Ion_auth
 			$groups_array = array();
 			foreach ($users_groups as $group)
 			{
-				$groups_array[$group->id] = $group->name;
+				$groups_array[$group->id] = $group->nombre;
 			}
 			$this->_cache_user_in_group[$id] = $groups_array;
 		}

@@ -20,6 +20,9 @@ require_once APPPATH . '/models/entities/Periodo.php';
 require_once APPPATH . '/models/entities/Recurso.php';
 require_once APPPATH . '/models/entities/Sede.php';
 require_once APPPATH . '/models/entities/TipoRecurso.php';
+require_once APPPATH . '/models/entities/Usuario.php';
+require_once APPPATH . '/models/entities/Grupo.php';
+
 /**
  * Class Base_DAO
  */
@@ -80,7 +83,9 @@ abstract class BaseDAO extends CI_Model
     public function get_by_id($id)
     {
         $this->do_base_query();
-        $this->do_filter([$this->entity->get_table_name().".".$this->entity->get_primary_key_column_name() => $id]);
+       // $this->do_filter([$this->entity->get_table_name().".".$this->entity->get_primary_key_column_name() => $id]);
+        $this->do_filter([$this->entity->get_primary_key_column_name() => $id]);
+
         return $this->get_result_entities();
     }
 
@@ -125,7 +130,7 @@ abstract class BaseDAO extends CI_Model
 
         $this->before_update($entity);
 
-        $error = $this->is_invalid($entity);
+        $error = $this->is_invalid_update($entity);
         if($error) {
             $this->db->trans_rollback();
             return ['error' => $error];
@@ -154,6 +159,11 @@ abstract class BaseDAO extends CI_Model
 
         $this->before_delete($entity);
 
+        $error =  $this->is_invalid_delete($entity);
+        if ($error) {
+            $this->db->trans_rollback();
+            return ['error' => $error];
+        }
         $this->db->where($entity->get_primary_key_column_name(), $entity->get_id());
         if(!$this->db->delete($entity->get_table_name())) {
             $this->db->trans_rollback();

@@ -15,7 +15,7 @@ class Gestion_sesion {
         }
         elseif ($this->ci->ion_auth->logged_in() ){
             $user = $this->ci->ion_auth->user()->row();
-            $user_active = $user->active;
+            $user_active = $user->estado;
 
             if ($user_active==0){
                 $this->ci->session->set_flashdata('message', $this->ci->ion_auth->messages());
