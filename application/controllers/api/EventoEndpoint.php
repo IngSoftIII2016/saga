@@ -69,10 +69,11 @@ class EventoEndpoint extends BaseEndpoint
 
     public function eventos_delete($id)
     {
-        $json = $this->delete('data');
-        $entity = $this->json_to_entity($json);
-        $result = $this->EventoDAO->delete($entity);
-        if (array_key_exists('error', $result)) {
+        $evento = $this->EventoDAO->query(['id' => $id], [], ['aula'])[0];
+        if($evento == null)
+            $this->response(['error' => 'Evento inexistente'], 404);
+        $result = $this->EventoDAO->delete($evento);
+        if (is_array($result)) {
             $this->response($result, 500);
         }else {
             $this->response(['data' => $result]);
