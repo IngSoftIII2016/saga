@@ -106,8 +106,8 @@ $route['api/grupos'] = 'api/GrupoEndpoint/grupos';
 $route['api/localidades/(:num)'] = 'api/LocalidadEndpoint/localidades/$1';
 $route['api/localidades'] = 'api/LocalidadEndpoint/localidades';
 
-$route['api/preriodos/(:num)'] = 'api/PreriodoEndpoint/preriodos/$1';
-$route['api/preriodos'] = 'api/PreriodoEndpoint/preriodos';
+$route['api/periodos/(:num)'] = 'api/PeriodoEndpoint/periodos/$1';
+$route['api/periodos'] = 'api/PeriodoEndpoint/periodos';
 
 $route['api/recursos/(:num)'] = 'api/RecursoEndpoint/recursos/$1';
 $route['api/recursos'] = 'api/RecursoEndpoint/recursos';
@@ -115,8 +115,8 @@ $route['api/recursos'] = 'api/RecursoEndpoint/recursos';
 $route['api/sedes/(:num)'] = 'api/SedeEndpoint/sedes/$1';
 $route['api/sedes'] = 'api/SedeEndpoint/sedes';
 
-$route['api/tiporecurso/(:num)'] = 'api/TiporecursoEndpoint/tiporecurso/$1';
-$route['api/tiporecurso'] = 'api/TiporecursoEndpoint/tiporecurso';
+$route['api/tiporecursos/(:num)'] = 'api/TipoRecursoEndpoint/tiporecursos/$1';
+$route['api/tiporecursos'] = 'api/TiporecursoEndpoint/tiporecursos';
 
 
 
