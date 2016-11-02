@@ -53,7 +53,7 @@ class AulaEndpoint extends BaseEndpoint
     {
         $aula = $this->AulaDAO->query(['id' => $id], [], [])[0];
         if($aula == null)
-            $this->response(['error' => 'Recurso inexistente'], 404);
+            $this->response(['error' => 'Aula inexistente'], 404);
         $result = $this->AulaDAO->delete($aula);
         if (is_array($result)) {
             $this->response($result, 500);

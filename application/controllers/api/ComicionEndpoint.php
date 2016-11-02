@@ -53,7 +53,7 @@ class ComicionEndpoint extends BaseEndpoint
     {
         $comicion = $this->ComicionDAO->query(['id' => $id], [], [])[0];
         if($comicion == null)
-            $this->response(['error' => 'Recurso inexistente'], 404);
+            $this->response(['error' => 'Comision inexistente'], 404);
         $result = $this->ComicionDAO->delete($comicion);
         if (is_array($result)) {
             $this->response($result, 500);
