@@ -13,19 +13,19 @@ class AulaEndpoint extends BaseEndpoint
     /**
      * @param $id
      */
-    public function aula_get($id = null)
+    public function aulas_get($id = null)
     {
         if ($id != null) {
             $aula = $this->AulaDAO->query(['id' => $id], [], [])[0];
             $this->response(['data' => $aula]);
         } else {
             $params = $this->parse_params();
-            $aula = $this->AulaDAO->query($params['filters'], $params['sorts'], $params['includes'], $params['page'], $params['size']);
-            $this->response(['data' => $aula]);
+            $aulas = $this->AulaDAO->query($params['filters'], $params['sorts'], $params['includes'], $params['page'], $params['size']);
+            $this->response(['data' => $aulas]);
         }
     }
 
-    public function aula_post()
+    public function aulas_post()
     {
         $json = $this->post('data');
         $entity = $this->json_to_entity($json);
@@ -37,7 +37,7 @@ class AulaEndpoint extends BaseEndpoint
         }
     }
 
-    public function aula_put()
+    public function aulas_put()
     {
         $json = $this->put('data');
         $entity = $this->json_to_entity($json);
@@ -49,7 +49,7 @@ class AulaEndpoint extends BaseEndpoint
         }
     }
 
-    public function aula_delete($id)
+    public function aulas_delete($id)
     {
         $aula = $this->AulaDAO->query(['id' => $id], [], [])[0];
         if($aula == null)

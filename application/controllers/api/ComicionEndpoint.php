@@ -13,19 +13,19 @@ class ComicionEndpoint extends BaseEndpoint
     /**
      * @param $id
      */
-    public function comicion_get($id = null)
+    public function comiciones_get($id = null)
     {
         if ($id != null) {
             $comicion = $this->ComicionDAO->query(['id' => $id], [], [])[0];
             $this->response(['data' => $comicion]);
         } else {
             $params = $this->parse_params();
-            $comicion = $this->ComicionDAO->query($params['filters'], $params['sorts'], $params['includes'], $params['page'], $params['size']);
-            $this->response(['data' => $comicion]);
+            $comiciones = $this->ComicionDAO->query($params['filters'], $params['sorts'], $params['includes'], $params['page'], $params['size']);
+            $this->response(['data' => $comiciones]);
         }
     }
 
-    public function comicion_post()
+    public function comiciones_post()
     {
         $json = $this->post('data');
         $entity = $this->json_to_entity($json);
@@ -37,7 +37,7 @@ class ComicionEndpoint extends BaseEndpoint
         }
     }
 
-    public function comicion_put()
+    public function comiciones_put()
     {
         $json = $this->put('data');
         $entity = $this->json_to_entity($json);
@@ -49,7 +49,7 @@ class ComicionEndpoint extends BaseEndpoint
         }
     }
 
-    public function comicion_delete($id)
+    public function comiciones_delete($id)
     {
         $comicion = $this->ComicionDAO->query(['id' => $id], [], [])[0];
         if($comicion == null)

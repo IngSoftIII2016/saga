@@ -1,4 +1,6 @@
 <?php
+defined('BASEPATH') OR exit('No direct script access allowed');
+// This can be removed if you use __autoload() in config.php OR use Modular Extensions
 require_once APPPATH . '/controllers/api/BaseEndpoint.php';
 
 class AsignaturaEndpoint extends BaseEndpoint
@@ -13,19 +15,19 @@ class AsignaturaEndpoint extends BaseEndpoint
     /**
      * @param $id
      */
-    public function asignatura_get($id = null)
+    public function asignaturas_get($id = null)
     {
         if ($id != null) {
             $asignatura = $this->AsignaturaDAO->query(['id' => $id], [], [])[0];
             $this->response(['data' => $asignatura]);
         } else {
             $params = $this->parse_params();
-            $asignatura = $this->AsignaturaDAO->query($params['filters'], $params['sorts'], $params['includes'], $params['page'], $params['size']);
-            $this->response(['data' => $asignatura]);
+            $asignaturas = $this->AsignaturaDAO->query($params['filters'], $params['sorts'], $params['includes'], $params['page'], $params['size']);
+            $this->response(['data' => $asignaturas]);
         }
     }
 
-    public function asignatura_post()
+    public function asignaturas_post()
     {
         $json = $this->post('data');
         $entity = $this->json_to_entity($json);
@@ -37,7 +39,7 @@ class AsignaturaEndpoint extends BaseEndpoint
         }
     }
 
-    public function asignatura_put()
+    public function asignaturas_put()
     {
         $json = $this->put('data');
         $entity = $this->json_to_entity($json);
@@ -53,7 +55,7 @@ class AsignaturaEndpoint extends BaseEndpoint
     {
         $asignatura = $this->AsignaturaDAO->query(['id' => $id], [], [])[0];
         if($asignatura == null)
-            $this->response(['error' => 'Recurso inexistente'], 404);
+            $this->response(['error' => 'Asignatura inexistente'], 404);
         $result = $this->AsignaturaDAO->delete($asignatura);
         if (is_array($result)) {
             $this->response($result, 500);
