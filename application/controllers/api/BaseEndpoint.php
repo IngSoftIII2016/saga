@@ -15,6 +15,8 @@ require_once APPPATH . '/models/entities/Periodo.php';
 require_once APPPATH . '/models/entities/Recurso.php';
 require_once APPPATH . '/models/entities/Sede.php';
 require_once APPPATH . '/models/entities/TipoRecurso.php';
+require_once APPPATH . '/models/entities/Usuario.php';
+require_once APPPATH . '/models/entities/Grupo.php';
 
 class BaseEndpoint extends REST_Controller
 {

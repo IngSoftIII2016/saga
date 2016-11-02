@@ -15,41 +15,38 @@ require_once APPPATH . '/controllers/api/BaseEndpoint.php';
  * @license         MIT
  * @link            https://github.com/chriskacerguis/codeigniter-restserver
  */
-class DocenteEndpoint extends BaseEndpoint
+class GrupoEndpoint extends BaseEndpoint
 {
 
 	function __construct()
 	{
 
 		// Construct the parent class
-		parent::__construct('Docente');
-		$this->load->model('DocenteDAO');
-		$this->headers = apache_request_headers();
-
+		parent::__construct('Grupo');
+		$this->load->model('GrupoDAO');
 
 	}
 
 	/**
 	 * @param $id
 	 */
-	public function docentes_get($id = null)
+	public function grupos_get($id = null)
 	{
 		if ($id != null) {
-			$docente = $this->DocenteDAO->query(['id' => $id], [], [])[0];
-			$this->response(['data' => $docente]);
+			$grupo = $this->GrupoDAO->query(['id' => $id], [], [])[0];
+			$this->response(['data' => $grupo]);
 		} else {
 			$params = $this->parse_params();
-			$docentes = $this->DocenteDAO->query($params['filters'], $params['sorts'], $params['includes'], $params['page'], $params['size']);
-			$this->response(['data' => $docentes]);
-			//$this->response(array('status' => 200,'body'=>$docentes));
+			$grupos = $this->GrupoDAO->query($params['filters'], $params['sorts'], $params['includes'], $params['page'], $params['size']);
+			$this->response(['data' => $grupos]);
 		}
 	}
 
-	public function docentes_post()
+	public function grupos_post()
 	{
 		$json = $this->post('data');
 		$entity = $this->json_to_entity($json);
-		$result = $this->DocenteDAO->insert($entity);
+		$result = $this->GrupoDAO->insert($entity);
 		if (array_key_exists('error', $result)) {
 			$this->response($result, 500);
 		}else {
@@ -57,11 +54,11 @@ class DocenteEndpoint extends BaseEndpoint
 		}
 	}
 
-	public function docentes_put()
+	public function grupos_put()
 	{
 		$json = $this->put('data');
 		$entity = $this->json_to_entity($json);
-		$result = $this->DocenteDAO->update($entity);
+		$result = $this->GrupoDAO->update($entity);
 		if (array_key_exists('error', $result)) {
 			$this->response($result, 500);
 		}else {
@@ -69,12 +66,12 @@ class DocenteEndpoint extends BaseEndpoint
 		}
 	}
 
-	public function docentes_delete($id)
+	public function grupos_delete($id)
 	{
-		$docente = $this->DocenteDAO->query(['id' => $id], [], [])[0];
-		if($docente == null)
-			$this->response(['error' => 'Docente inexistente'], 404);
-			$result = $this->DocenteDAO->delete($docente);
+		$grupo = $this->GrupoDAO->query(['id' => $id], [], [])[0];
+		if($grupo == null)
+			$this->response(['error' => 'Grupo inexistente'], 404);
+			$result = $this->GrupoDAO->delete($grupo);
 			if (is_array($result)) {
 				$this->response($result, 500);
 			}else {

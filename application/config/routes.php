@@ -115,8 +115,11 @@ $route['api/recursos'] = 'api/RecursoEndpoint/recursos';
 $route['api/sedes/(:num)'] = 'api/SedeEndpoint/sedes/$1';
 $route['api/sedes'] = 'api/SedeEndpoint/sedes';
 
-$route['api/tiporecursos/(:num)'] = 'api/TipoRecursoEndpoint/tiporecursos/$1';
-$route['api/tiporecursos'] = 'api/TiporecursoEndpoint/tiporecursos';
+$route['api/tiporecursos/(:num)'] = 'api/TiporecursoEndpoint/tiporecurso/$1';
+$route['api/tiporecursos'] = 'api/TiporecursoEndpoint/tiporecurso';
+
+$route['api/usuarios/(:num)'] = 'api/UsuarioEndpoint/usuarios/$1';
+$route['api/usuarios'] = 'api/UsuarioEndpoint/usuarios';
 
 
 
