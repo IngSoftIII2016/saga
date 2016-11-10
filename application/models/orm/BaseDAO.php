@@ -99,7 +99,7 @@ abstract class BaseDAO extends CI_Model
 
         $this->before_insert($entity);
 
-        $error = $this->is_invalid($entity);
+        $error = $this->is_invalid_insert($entity);
         if ($error) {
             $this->db->trans_rollback();
             return ['error' => $error];
