@@ -37,6 +37,7 @@ class GrupoEndpoint extends BaseEndpoint
 	 */
 	public function grupos_get($id = null)
 	{
+	    /*
 		if ($id != null) {
 			$grupo = $this->GrupoDAO->query(['id' => $id], [], [])[0];
 			$this->response(['data' => $grupo]);
@@ -45,10 +46,13 @@ class GrupoEndpoint extends BaseEndpoint
 			$grupos = $this->GrupoDAO->query($params['filters'], $params['sorts'], $params['includes'], $params['page'], $params['size']);
 			$this->response(['data' => $grupos]);
 		}
+	    */
+        $this->base_get($id);
 	}
 
 	public function grupos_post()
 	{
+	    /*
 		$json = $this->post('data');
 		$entity = $this->json_to_entity($json);
 		$result = $this->GrupoDAO->insert($entity);
@@ -57,10 +61,13 @@ class GrupoEndpoint extends BaseEndpoint
 		}else {
 			$this->response(['data' => $result]);
 		}
+	    */
+        $this->base_post();
 	}
 
 	public function grupos_put()
 	{
+	    /*
 		$json = $this->put('data');
 		$entity = $this->json_to_entity($json);
 		$result = $this->GrupoDAO->update($entity);
@@ -69,10 +76,13 @@ class GrupoEndpoint extends BaseEndpoint
 		}else {
 			$this->response(['data' => $result]);
 		}
+	    */
+        $this->base_put();
 	}
 
 	public function grupos_delete($id)
 	{
+	    /*
 		$grupo = $this->GrupoDAO->query(['id' => $id], [], [])[0];
 		if($grupo == null)
 			$this->response(['error' => 'Grupo inexistente'], 404);
@@ -82,8 +92,7 @@ class GrupoEndpoint extends BaseEndpoint
 			}else {
 				$this->response(['data' => $result]);
 			}
-
+	    */
+        $this->base_delete($id);
 	}
-
-
 }

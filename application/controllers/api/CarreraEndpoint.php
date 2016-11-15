@@ -37,6 +37,7 @@ class CarreraEndpoint extends BaseEndpoint
 	 */
 	public function carreras_get($id = null)
 	{
+	    /*
 		if ($id != null) {
 			$carrera = $this->CarreraDAO->query(['id' => $id], [], [])[0];
 			$this->response(['data' => $carrera]);
@@ -45,10 +46,13 @@ class CarreraEndpoint extends BaseEndpoint
 			$carreras = $this->CarreraDAO->query($params['filters'], $params['sorts'], $params['includes'], $params['page'], $params['size']);
 			$this->response(['data' => $carreras]);
 		}
+	    */
+        $this->base_get($id);
 	}
 
 	public function carreras_post()
 	{
+	    /*
 		$json = $this->post('data');
 		$entity = $this->json_to_entity($json);
 		$result = $this->CarreraDAO->insert($entity);
@@ -57,10 +61,13 @@ class CarreraEndpoint extends BaseEndpoint
 		}else {
 			$this->response(['data' => $result]);
 		}
+	    */
+        $this->base_post();
 	}
 
 	public function carreras_put()
 	{
+	    /*
 		$json = $this->put('data');
 		$entity = $this->json_to_entity($json);
 		$result = $this->CarreraDAO->update($entity);
@@ -69,10 +76,13 @@ class CarreraEndpoint extends BaseEndpoint
 		}else {
 			$this->response(['data' => $result]);
 		}
+	    */
+        $this->base_put();
 	}
 
 	public function carreras_delete($id)
 	{
+	    /*
 		$carrera = $this->CarreraDAO->query(['id' => $id], [], [])[0];
 		if($carrera == null)
 			$this->response(['error' => 'Carrera inexistente'], 404);
@@ -82,7 +92,8 @@ class CarreraEndpoint extends BaseEndpoint
 			}else {
 				$this->response(['data' => $result]);
 			}
-
+	    */
+        $this->base_delete($id);
 	}
 
 

@@ -37,6 +37,7 @@ class DocenteEndpoint extends BaseEndpoint
 	 */
 	public function docentes_get($id = null)
 	{
+	    /*
 		if ($id != null) {
 			$docente = $this->DocenteDAO->query(['id' => $id], [], [])[0];
 			$this->response(['data' => $docente]);
@@ -46,10 +47,13 @@ class DocenteEndpoint extends BaseEndpoint
 			$this->response(['data' => $docentes]);
 			//$this->response(array('status' => 200,'body'=>$docentes));
 		}
+	    */
+        $this->base_get($id);
 	}
 
 	public function docentes_post()
 	{
+	    /*
 		$json = $this->post('data');
 		$entity = $this->json_to_entity($json);
 		$result = $this->DocenteDAO->insert($entity);
@@ -58,10 +62,13 @@ class DocenteEndpoint extends BaseEndpoint
 		}else {
 			$this->response(['data' => $result]);
 		}
+	    */
+        $this->base_post();
 	}
 
 	public function docentes_put()
 	{
+	    /*
 		$json = $this->put('data');
 		$entity = $this->json_to_entity($json);
 		$result = $this->DocenteDAO->update($entity);
@@ -70,10 +77,13 @@ class DocenteEndpoint extends BaseEndpoint
 		}else {
 			$this->response(['data' => $result]);
 		}
+	    */
+        $this->base_put();
 	}
 
 	public function docentes_delete($id)
 	{
+	    /*
 		$docente = $this->DocenteDAO->query(['id' => $id], [], [])[0];
 		if($docente == null)
 			$this->response(['error' => 'Docente inexistente'], 404);
@@ -83,8 +93,7 @@ class DocenteEndpoint extends BaseEndpoint
 			}else {
 				$this->response(['data' => $result]);
 			}
-
+	    */
+        $this->base_delete($id);
 	}
-
-
 }

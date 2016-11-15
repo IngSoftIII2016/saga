@@ -37,6 +37,7 @@ class RecursoEndpoint extends BaseEndpoint
 	 */
 	public function recursos_get($id = null)
 	{
+	    /*
 		if ($id != null) {
 			$recurso = $this->RecursoDAO->query(['id' => $id], [], [])[0];
 			$this->response(['data' => $recurso]);
@@ -45,10 +46,13 @@ class RecursoEndpoint extends BaseEndpoint
 			$recursos = $this->RecursoDAO->query($params['filters'], $params['sorts'], $params['includes'], $params['page'], $params['size']);
 			$this->response(['data' => $recursos]);
 		}
+	    */
+        $this->base_get($id);
 	}
 
 	public function recursos_post()
 	{
+	    /*
 		$json = $this->post('data');
 		$entity = $this->json_to_entity($json);
 		$result = $this->RecursoDAO->insert($entity);
@@ -57,10 +61,13 @@ class RecursoEndpoint extends BaseEndpoint
 		}else {
 			$this->response(['data' => $result]);
 		}
+	    */
+        $this->base_post();
 	}
 
 	public function recursos_put()
 	{
+	    /*
 		$json = $this->put('data');
 		$entity = $this->json_to_entity($json);
 		$result = $this->RecursoDAO->update($entity);
@@ -69,10 +76,13 @@ class RecursoEndpoint extends BaseEndpoint
 		}else {
 			$this->response(['data' => $result]);
 		}
+	    */
+        $this->base_put();
 	}
 
 	public function recursos_delete($id)
 	{
+	    /*
 		$recurso = $this->RecursoDAO->query(['id' => $id], [], [])[0];
 		if($recurso == null)
 			$this->response(['error' => 'Recurso inexistente'], 404);
@@ -82,8 +92,7 @@ class RecursoEndpoint extends BaseEndpoint
 			}else {
 				$this->response(['data' => $result]);
 			}
-
+	    */
+        this->base_delete($id);
 	}
-
-
 }

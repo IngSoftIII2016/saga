@@ -37,6 +37,7 @@ class TipoRecursoEndpoint extends BaseEndpoint
 	 */
 	public function tiporecursos_get($id = null)
 	{
+	    /*
 		if ($id != null) {
 			$recurso = $this->TipoRecursoDAO->query(['id' => $id], [], [])[0];
 			$this->response(['data' => $recurso]);
@@ -45,10 +46,13 @@ class TipoRecursoEndpoint extends BaseEndpoint
 			$recursos = $this->TipoRecursoDAO->query($params['filters'], $params['sorts'], $params['includes'], $params['page'], $params['size']);
 			$this->response(['data' => $recursos]);
 		}
+	    */
+        $this->base_get($id);
 	}
 
 	public function tiporecursos_post()
 	{
+	    /*
 		$json = $this->post('data');
 		$entity = $this->json_to_entity($json);
 		$result = $this->TipoRecursoDAO->insert($entity);
@@ -57,10 +61,13 @@ class TipoRecursoEndpoint extends BaseEndpoint
 		}else {
 			$this->response(['data' => $result]);
 		}
+	    */
+        $this->base_post();
 	}
 
 	public function tiporecursos_put()
 	{
+	    /*
 		$json = $this->put('data');
 		$entity = $this->json_to_entity($json);
 		$result = $this->TipoRecursoDAO->update($entity);
@@ -69,10 +76,13 @@ class TipoRecursoEndpoint extends BaseEndpoint
 		}else {
 			$this->response(['data' => $result]);
 		}
+	    */
+        $this->base_put();
 	}
 
 	public function tiporecursos_delete($id)
 	{
+	    /*
 		$recurso = $this->TipoRecursoDAO->query(['id' => $id], [], [])[0];
 		if($recurso == null)
 			$this->response(['error' => 'Tipo de recurso inexistente'], 404);
@@ -82,8 +92,7 @@ class TipoRecursoEndpoint extends BaseEndpoint
 			}else {
 				$this->response(['data' => $result]);
 			}
-
+	    */
+        this->base_delete($id);
 	}
-
-
 }

@@ -36,6 +36,7 @@ class LocalidadEndpoint extends BaseEndpoint
 	 */
 	public function localidades_get($id = null)
 	{
+	    /*
 		if ($id != null) {
 			$localidad = $this->LocalidadDAO->query(['id' => $id], [], [])[0];
 			$this->response(['data' => $localidad]);
@@ -44,10 +45,13 @@ class LocalidadEndpoint extends BaseEndpoint
 			$localidades = $this->LocalidadDAO->query($params['filters'], $params['sorts'], $params['includes'], $params['page'], $params['size']);
 			$this->response(['data' => $localidades]);
 		}
+	    */
+        $this->base_get($id);
 	}
 
 	public function localidades_post()
 	{
+	    /*
 		$json = $this->post('data');
 		$entity = $this->json_to_entity($json);
 		$result = $this->LocalidadDAO->insert($entity);
@@ -56,10 +60,13 @@ class LocalidadEndpoint extends BaseEndpoint
 		}else {
 			$this->response(['data' => $result]);
 		}
+	    */
+        $this->base_post();
 	}
 
 	public function localidades_put()
 	{
+	    /*
 		$json = $this->put('data');
 		$entity = $this->json_to_entity($json);
 		$result = $this->LocalidadDAO->update($entity);
@@ -68,10 +75,13 @@ class LocalidadEndpoint extends BaseEndpoint
 		}else {
 			$this->response(['data' => $result]);
 		}
+	    */
+        $this->base_put();
 	}
 
 	public function localidades_delete($id)
 	{
+	    /*
 		$localidad = $this->LocalidadDAO->query(['id' => $id], [], [])[0];
 		if($localidad == null)
 			$this->response(['error' => 'Localidad inexistente'], 404);
@@ -81,8 +91,7 @@ class LocalidadEndpoint extends BaseEndpoint
 			}else {
 				$this->response(['data' => $result]);
 			}
-
+	    */
+        $this->base_delete($id);
 	}
-
-
 }

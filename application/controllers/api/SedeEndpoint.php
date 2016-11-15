@@ -37,6 +37,7 @@ class SedeEndpoint extends BaseEndpoint
 	 */
 	public function sedes_get($id = null)
 	{
+	    /*
 		if ($id != null) {
 			$sede = $this->SedeDAO->query(['id' => $id], [], [])[0];
 			$this->response(['data' => $sede]);
@@ -45,10 +46,13 @@ class SedeEndpoint extends BaseEndpoint
 			$sedes = $this->SedeDAO->query($params['filters'], $params['sorts'], $params['includes'], $params['page'], $params['size']);
 			$this->response(['data' => $sedes]);
 		}
+	    */
+        $this->base_get($id);
 	}
 
 	public function sedes_post()
 	{
+	    /*
 		$json = $this->post('data');
 		$entity = $this->json_to_entity($json);
 		$result = $this->SedeDAO->insert($entity);
@@ -57,10 +61,13 @@ class SedeEndpoint extends BaseEndpoint
 		}else {
 			$this->response(['data' => $result]);
 		}
+	    */
+        $this->base_post();
 	}
 
 	public function sedes_put()
 	{
+	    /*
 		$json = $this->put('data');
 		$entity = $this->json_to_entity($json);
 		$result = $this->SedeDAO->update($entity);
@@ -69,10 +76,13 @@ class SedeEndpoint extends BaseEndpoint
 		}else {
 			$this->response(['data' => $result]);
 		}
+	    */
+        $this->base_put();
 	}
 
 	public function sedes_delete($id)
 	{
+	    /*
 		$sede = $this->SedeDAO->query(['id' => $id], [], [])[0];
 		if($sede == null)
 			$this->response(['error' => 'Sede inexistente'], 404);
@@ -82,8 +92,7 @@ class SedeEndpoint extends BaseEndpoint
 			}else {
 				$this->response(['data' => $result]);
 			}
-
+	    */
+        this->base_delete($id);
 	}
-
-
 }

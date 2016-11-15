@@ -37,6 +37,7 @@ class EdificioEndpoint extends BaseEndpoint
 	 */
 	public function edificios_get($id = null)
 	{
+	    /*
 		if ($id != null) {
 			$edificio = $this->EdificioDAO->query(['id' => $id], [], [])[0];
 			$this->response(['data' => $edificio]);
@@ -45,10 +46,13 @@ class EdificioEndpoint extends BaseEndpoint
 			$edificios = $this->EdificioDAO->query($params['filters'], $params['sorts'], $params['includes'], $params['page'], $params['size']);
 			$this->response(['data' => $edificios]);
 		}
+	    */
+        $this->base_get($id);
 	}
 
 	public function edificios_post()
 	{
+	    /*
 		$json = $this->post('data');
 		$entity = $this->json_to_entity($json);
 		$result = $this->EdificioDAO->insert($entity);
@@ -57,10 +61,13 @@ class EdificioEndpoint extends BaseEndpoint
 		}else {
 			$this->response(['data' => $result]);
 		}
+	    */
+        $this->base_post();
 	}
 
 	public function edificios_put()
 	{
+	    /*
 		$json = $this->put('data');
 		$entity = $this->json_to_entity($json);
 		$result = $this->EdificioDAO->update($entity);
@@ -69,10 +76,13 @@ class EdificioEndpoint extends BaseEndpoint
 		}else {
 			$this->response(['data' => $result]);
 		}
+	    */
+        $this->base_put();
 	}
 
 	public function edificios_delete($id)
 	{
+	    /*
 		$edificio = $this->EdificioDAO->query(['id' => $id], [], [])[0];
 		if($edificio == null)
 			$this->response(['error' => 'Edificio inexistente'], 404);
@@ -82,8 +92,7 @@ class EdificioEndpoint extends BaseEndpoint
 			}else {
 				$this->response(['data' => $result]);
 			}
-
+	    */
+        $this->base_delete($id);
 	}
-
-
 }
