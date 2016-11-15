@@ -1,10 +1,17 @@
 <?php
-require_once APPPATH . '/models/orm/Entity.php';
 
-class Asignatura extends Entity
+/**
+ * Created by PhpStorm.
+ * User: juan
+ * Date: 15/11/16
+ * Time: 00:10
+ */
+class AsignaturaCarrera extends Entity
 {
-    public $id;
-    public $nombre;
+    public $anio;
+    public $regimen;
+    public $asignatura;
+    public $carrera;
 
     /**
      * Retorna el nombre de la tabla correspondiente a ésta Entity
@@ -12,7 +19,7 @@ class Asignatura extends Entity
      */
     public function get_table_name()
     {
-        return 'asignatura';
+        return 'asignatura_carrera';
     }
 
     /**
@@ -21,7 +28,7 @@ class Asignatura extends Entity
      */
     public function get_property_column_names()
     {
-        return ['nombre'];
+        return ['anio', 'regimen'];
     }
 
     /**
@@ -31,6 +38,7 @@ class Asignatura extends Entity
     {
         return [];
     }
+
 
 
     /**
@@ -43,7 +51,18 @@ class Asignatura extends Entity
      */
     public function get_relations_many_to_one()
     {
-        return [];
+        [
+            [
+                'entity_class_name' => 'Asignatura',
+                'foreing_key_column_name' => 'Asignatura_id',
+                'property_name' => 'asignatura',
+            ],
+            [
+                'entity_class_name' => 'Carrera',
+                'foreing_key_column_name' => 'Carrera_id',
+                'property_name' => 'carrera'
+            ]
+        ];
     }
 
     /**
@@ -53,7 +72,6 @@ class Asignatura extends Entity
     {
         return [];
     }
-
 
     /**
      * @return mixed
@@ -68,7 +86,7 @@ class Asignatura extends Entity
      */
     public function get_id()
     {
-        return $this->id;
+        return null;
     }
 
     /**
@@ -78,8 +96,12 @@ class Asignatura extends Entity
      */
     public function from_row($data)
     {
-        if(isset($data['id'])) $this->id = $data['id'];
-        if(isset($data['nombre'])) $this->nombre = $data['nombre'];
+        if(isset($data['anio'])) $this->anio = $data['anio'];
+        if(isset($data['regimen'])) $this->regimen = $data['regomen'];
+        if(isset($data['asignatura'])) $this->asignatura = $data['asignatura'];
+        if(isset($data['carrera'])) $this->carrera = $data['carrera'];
+
+
     }
 
     /**
@@ -89,10 +111,10 @@ class Asignatura extends Entity
      */
     public function to_row()
     {
-        $data['id'] = $this->id;
-        $data['nombre'] = $this->nombre;
+        $data['anio'] = $this->anio;
+        $data['regimen'] = $this->regimen;
+        $data['Asignatura_id'] = $this->asignatura->id;
+        $data['Carrera_id'] = $this->carrera->id;
         return $data;
     }
-
-
 }
