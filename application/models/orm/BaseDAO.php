@@ -6,14 +6,15 @@
  * Time: 18:33
  */
 
-require_once APPPATH . '/models/entities/Aula.php';
 require_once APPPATH . '/models/entities/Asignatura.php';
+require_once APPPATH . '/models/entities/Aula.php';
 require_once APPPATH . '/models/entities/Carrera.php';
 require_once APPPATH . '/models/entities/Clase.php';
 require_once APPPATH . '/models/entities/Comision.php';
 require_once APPPATH . '/models/entities/Docente.php';
 require_once APPPATH . '/models/entities/Edificio.php';
 require_once APPPATH . '/models/entities/Evento.php';
+require_once APPPATH . '/models/entities/Grupo.php';
 require_once APPPATH . '/models/entities/Horario.php';
 require_once APPPATH . '/models/entities/Localidad.php';
 require_once APPPATH . '/models/entities/Periodo.php';
@@ -21,7 +22,6 @@ require_once APPPATH . '/models/entities/Recurso.php';
 require_once APPPATH . '/models/entities/Sede.php';
 require_once APPPATH . '/models/entities/TipoRecurso.php';
 require_once APPPATH . '/models/entities/Usuario.php';
-require_once APPPATH . '/models/entities/Grupo.php';
 
 /**
  * Class Base_DAO
@@ -177,6 +177,11 @@ abstract class BaseDAO extends CI_Model
         return $entity;
     }
 
+    public function get_total_rows() {
+        $this->db->from($this->entity->get_table_name());
+        return $this->db->count_all_results();
+    }
+
     /**
      * Realiza una validación contra la base de datos previa a la inserción.
      * Si el resultado de la validación es correcto devuelve FALSE. En caso contrario
@@ -303,9 +308,9 @@ abstract class BaseDAO extends CI_Model
     }
 
     public function do_paging($page, $size) {
-        $this->db->limit($size, ($page-1) * $size);
+        if( $page > 0 && $size > 0)
+            $this->db->limit($size, ($page-1) * $size);
     }
-
     public function get_result_entities($includes = []) {
         if($this->debug) return $this->db->get_compiled_select();
         $rows = $this->db->get()->result_array();

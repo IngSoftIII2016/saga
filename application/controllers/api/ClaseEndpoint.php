@@ -26,6 +26,11 @@ class ClaseEndpoint extends BaseEndpoint {
 
     }
 
+    protected function getDAO()
+    {
+        return $this->ClasesDAO;
+    }
+
     public function clases_get($id = null)
     {
         if ($id != null) {

@@ -18,7 +18,7 @@ require_once APPPATH . '/models/entities/TipoRecurso.php';
 require_once APPPATH . '/models/entities/Usuario.php';
 require_once APPPATH . '/models/entities/Grupo.php';
 
-class BaseEndpoint extends REST_Controller
+abstract class BaseEndpoint extends REST_Controller
 {
     private $entity_class;
 
@@ -26,6 +26,59 @@ class BaseEndpoint extends REST_Controller
     {
         parent::__construct();
         $this->entity_class = $entity_class;
+    }
+
+    protected abstract function getDAO();
+
+    protected function base_get($id = null) {
+
+        if ($id != null)
+            if($id == 0) // para obtener solo la cantidad de elementos
+                $this->response( ['data' => $this->getDAO()->get_total_rows()] );
+            else {
+                $result = $this->getDAO()->query(['id' => $id], [], ['aula']);
+                if(count($result) != 1) $this->response(['error' => 'not found' ], 404);
+                else $this->response(['data' => $result[0]]);
+            }
+        else {
+            $params = $this->parse_params();
+            $entities = $this->getDAO()->query($params['filters'], $params['sorts'], $params['includes'], $params['page'], $params['size']);
+            $this->response( ['data' => $entities, 'rowCount' => $this->getDAO()->get_total_rows()] );
+        }
+    }
+
+    protected function base_post() {
+        $json = $this->post('data');
+        $entity = $this->json_to_entity($json);
+        $result = $this->getDAO()->insert($entity);
+        if (array_key_exists('error', $result)) {
+            $this->response($result, 500);
+        }else {
+            $this->response(['data' => $result]);
+        }
+    }
+
+    protected function base_put() {
+        $json = $this->put('data');
+        $entity = $this->json_to_entity($json);
+        $result = $this->getDAO()->update($entity);
+        if (array_key_exists('error', $result)) {
+            $this->response($result, 500);
+        }else {
+            $this->response(['data' => $result]);
+        }
+    }
+
+    protected function base_delete($id) {
+        $entity = $this->getDAO()->query(['id' => $id], [], [])[0];
+        if($entity == null)
+            $this->response(['error' => "$entity->get_table_name() inexistente"], 404);
+        $result = $this->getDAO()->delete($entity);
+        if (is_array($result)) {
+            $this->response($result, 500);
+        }else {
+            $this->response(['data' => $result]);
+        }
     }
 
     protected function json_to_entity($json) {
@@ -85,6 +138,4 @@ class BaseEndpoint extends REST_Controller
         }
         return $params;
     }
-
-
 }

@@ -27,7 +27,12 @@ class RecursoEndpoint extends BaseEndpoint
 
 	}
 
-	/**
+	protected  function getDAO()
+    {
+        return $this->RecursoDAO;
+    }
+
+    /**
 	 * @param $id
 	 */
 	public function recursos_get($id = null)

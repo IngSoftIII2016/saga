@@ -27,7 +27,12 @@ class GrupoEndpoint extends BaseEndpoint
 
 	}
 
-	/**
+	protected  function getDAO()
+    {
+        return $this->GrupoDAO;
+    }
+
+    /**
 	 * @param $id
 	 */
 	public function grupos_get($id = null)

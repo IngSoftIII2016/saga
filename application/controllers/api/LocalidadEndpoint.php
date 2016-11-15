@@ -20,14 +20,18 @@ class LocalidadEndpoint extends BaseEndpoint
 
 	function __construct()
 	{
-
 		// Construct the parent class
 		parent::__construct('Localidad');
 		$this->load->model('LocalidadDAO');
 
 	}
 
-	/**
+	protected  function getDAO()
+    {
+        return $this->LocalidadDAO;
+    }
+
+    /**
 	 * @param $id
 	 */
 	public function localidades_get($id = null)

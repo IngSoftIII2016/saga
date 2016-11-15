@@ -28,7 +28,13 @@ class UsuarioEndpoint extends BaseEndpoint {
 
     }
 
-    public function index($id){
+    protected  function getDAO()
+    {
+        return $this->UsuarioDAO;
+    }
+
+    public function index($id)
+    {
         var_dump($id);
     }
 

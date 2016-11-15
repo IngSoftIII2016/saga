@@ -1,19 +1,24 @@
 <?php
 require_once APPPATH . '/controllers/api/BaseEndpoint.php';
 
-class ComicionEndpoint extends BaseEndpoint
+class ComisionEndpoint extends BaseEndpoint
 {
     function __construct()
     {
         // Construct the parent class
-        parent::__construct('Comicion');
-        $this->load->model('ComicionDAO');
+        parent::__construct('Comision');
+        $this->load->model('ComisionDAO');
+    }
+
+    protected  function getDAO()
+    {
+        return $this->ComisionDAO;
     }
 
     /**
      * @param $id
      */
-    public function comiciones_get($id = null)
+    public function comisiones_get($id = null)
     {
         if ($id != null) {
             $comicion = $this->ComicionDAO->query(['id' => $id], [], [])[0];
@@ -25,7 +30,7 @@ class ComicionEndpoint extends BaseEndpoint
         }
     }
 
-    public function comiciones_post()
+    public function comisiones_post()
     {
         $json = $this->post('data');
         $entity = $this->json_to_entity($json);
@@ -37,7 +42,7 @@ class ComicionEndpoint extends BaseEndpoint
         }
     }
 
-    public function comiciones_put()
+    public function comisiones_put()
     {
         $json = $this->put('data');
         $entity = $this->json_to_entity($json);
@@ -49,7 +54,7 @@ class ComicionEndpoint extends BaseEndpoint
         }
     }
 
-    public function comiciones_delete($id)
+    public function comisiones_delete($id)
     {
         $comicion = $this->ComicionDAO->query(['id' => $id], [], [])[0];
         if($comicion == null)

@@ -15,6 +15,10 @@ class HorarioEndpoint extends BaseEndpoint
         parent::__construct('Horario');
         $this->load->model('HorarioDAO');
     }
+    protected  function getDAO()
+    {
+        return $this->HorarioDAO;
+    }
 
     public function horarios_get($id = null)
     {

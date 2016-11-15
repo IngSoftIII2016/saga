@@ -27,7 +27,12 @@ class CarreraEndpoint extends BaseEndpoint
 
 	}
 
-	/**
+	protected function getDAO()
+    {
+        return $this->CarreraDAO;
+    }
+
+    /**
 	 * @param $id
 	 */
 	public function carreras_get($id = null)

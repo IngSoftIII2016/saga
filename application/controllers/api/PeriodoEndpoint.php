@@ -27,7 +27,12 @@ class PeriodoEndpoint extends BaseEndpoint
 
 	}
 
-	/**
+	protected  function getDAO()
+    {
+        return $this->PeriodoDAO;
+    }
+
+    /**
 	 * @param $id
 	 */
 	public function periodos_get($id = null)

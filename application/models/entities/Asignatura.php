@@ -77,7 +77,7 @@ class Asignatura extends Entity
      */
     public function get_id()
     {
-        $this->id;
+        return $this->id;
     }
 
     /**
@@ -105,7 +105,7 @@ class Asignatura extends Entity
         $data['nombre'] = $this->nombre;
 //        $data['anio'] = $this->anio;
 //        $data['regimen'] = $this->regimen;
-        $data['Carrera_id'] = $this->carrera->get_id();
+        return $data;
     }
 
 

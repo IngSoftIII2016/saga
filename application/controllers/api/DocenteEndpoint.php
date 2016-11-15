@@ -25,11 +25,14 @@ class DocenteEndpoint extends BaseEndpoint
 		parent::__construct('Docente');
 		$this->load->model('DocenteDAO');
 		$this->headers = apache_request_headers();
-
-
 	}
 
-	/**
+	protected  function getDAO()
+    {
+        return $this->DocenteDAO;
+    }
+
+    /**
 	 * @param $id
 	 */
 	public function docentes_get($id = null)

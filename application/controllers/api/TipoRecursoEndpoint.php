@@ -27,7 +27,12 @@ class TipoRecursoEndpoint extends BaseEndpoint
 
 	}
 
-	/**
+	protected  function getDAO()
+    {
+        return $this->TipoRecursoDAO;
+    }
+
+    /**
 	 * @param $id
 	 */
 	public function tiporecursos_get($id = null)

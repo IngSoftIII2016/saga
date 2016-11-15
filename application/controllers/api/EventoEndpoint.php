@@ -28,6 +28,11 @@ class EventoEndpoint extends BaseEndpoint
 
     }
 
+    protected  function getDAO()
+    {
+        return $this->EventoDAO;
+    }
+
     /**
      * @param $id
      */

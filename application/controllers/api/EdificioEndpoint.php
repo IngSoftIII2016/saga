@@ -27,7 +27,12 @@ class EdificioEndpoint extends BaseEndpoint
 
 	}
 
-	/**
+	protected  function getDAO()
+    {
+        return $this->EdificioDAO;
+    }
+
+    /**
 	 * @param $id
 	 */
 	public function edificios_get($id = null)

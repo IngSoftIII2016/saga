@@ -27,7 +27,12 @@ class SedeEndpoint extends BaseEndpoint
 
 	}
 
-	/**
+	protected  function getDAO()
+    {
+        return $this->SedeDAO;
+    }
+
+    /**
 	 * @param $id
 	 */
 	public function sedes_get($id = null)
