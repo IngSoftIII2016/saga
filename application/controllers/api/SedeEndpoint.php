@@ -93,6 +93,6 @@ class SedeEndpoint extends BaseEndpoint
 				$this->response(['data' => $result]);
 			}
 	    */
-        this->base_delete($id);
+            $this->base_delete($id);
 	}
 }
