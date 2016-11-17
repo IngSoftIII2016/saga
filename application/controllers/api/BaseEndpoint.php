@@ -36,13 +36,13 @@ abstract class BaseEndpoint extends REST_Controller
             if($id == 0) // para obtener solo la cantidad de elementos
                 $this->response( ['data' => $this->getDAO()->get_total_rows()] );
             else {
-                $result = $this->getDAO()->query(['id' => $id], [], ['aula']);
+                $result = $this->getDAO()->query(['id' => $id], [], []);
                 if(count($result) != 1) $this->response(['error' => 'not found' ], 404);
                 else $this->response(['data' => $result[0]]);
             }
         else {
             $params = $this->parse_params();
-            $entities = $this->getDAO()->query($params['filters'], $params['sorts'], $params['includes'], $params['page'], $params['size']);
+            $entities = $this->getDAO()->query($params['filters'], $params['sorts'], $params['includes'],$params['likes'] ,$params['page'], $params['size']);
             $this->response( ['data' => $entities, 'rowCount' => $this->getDAO()->get_total_rows()] );
         }
     }
@@ -104,6 +104,7 @@ abstract class BaseEndpoint extends REST_Controller
             'filters' => [],
             'sorts' => [],
             'includes' => [],
+            'likes' => [],
             'page' => 1,
             'size' => 20
         ];
@@ -123,9 +124,22 @@ abstract class BaseEndpoint extends REST_Controller
             $params['includes'] = explode(',', $get['include']);
             unset($get['include']);
         }
+        if(!empty($get['like'])) {
+            $likes = explode(',', $get['like']);
+            foreach($likes as $like) {
+
+                $arr = explode(':' , $like);
+                $arr[1] = str_replace('*','%',$arr[1]);
+                $params['likes'] [$arr[0]] = $arr[1];
+            }
+
+            //$params['likes'
+            unset($get['like']);
+        }
         if(!empty($get['page'])) {
             $params['page'] = $get['page'];
             unset($get['page']);
+
         }if(!empty($get['size'])) {
             $params['size'] = $get['size'];
             unset($get['size']);

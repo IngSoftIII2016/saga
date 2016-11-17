@@ -67,10 +67,11 @@ abstract class BaseDAO extends CI_Model
      * omite se utiliza un tamaño de 20.
      * @return array arreglo de Entity
      */
-    public function query($filters = [], $sorts = [], $includes = [], $page = 1, $size = 20)
+    public function query($filters = [], $sorts = [], $includes = [], $likes = [] ,$page = 1, $size = 20)
     {
         $this->do_base_query();
         $this->do_filter($filters);
+        $this->do_like($likes);
         $this->do_sort($sorts);
         $this->do_paging($page, $size);
         return $this->get_result_entities($includes);
@@ -288,6 +289,20 @@ abstract class BaseDAO extends CI_Model
                 $alias = implode('_', $exp_path) . '_';
                 $field = $alias . '.' . $column;
                 $this->db->where($field, $value);
+            }
+        }
+    }
+
+    public function do_like($likes)
+    {
+        foreach ($likes as $key => $value){
+            if(!empty($value)) {
+                $exp_path = explode('.', $key);
+                $column = array_pop($exp_path);
+                array_unshift($exp_path, $this->entity->get_table_name());
+                $alias = implode('_', $exp_path) . '_';
+                $field = $alias . '.' . $column;
+                $this->db->where("$field LIKE '$value'");
             }
         }
     }
