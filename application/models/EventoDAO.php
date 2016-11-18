@@ -31,7 +31,7 @@ class EventoDAO extends BaseDAO
 
     function evento_disponible($evento)
     {
-        $this->query(
+        return $this->query(
             [
                 'id !=' => $evento->id,
                 'fecha' => $evento->fecha,

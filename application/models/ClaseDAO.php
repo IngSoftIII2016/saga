@@ -21,8 +21,8 @@ class ClaseDAO extends BaseDAO
     {
         // TODO: Implement is_invalid() method.
         $col_clases = $this->clase_disponible($entity);
-        $this->load->model('ClaseDAO');
-        $col_eventos = $this->ClaseDAO->aula_disponible($entity);
+        $this->load->model('EventoDAO');
+        $col_eventos = $this->EventoDAO->evento_disponible($entity);
         $colisiones = array_merge($col_clases,$col_eventos);
 
 
@@ -40,8 +40,8 @@ class ClaseDAO extends BaseDAO
     {
         // TODO: Implement is_invalid() method.
         $col_clases = $this->clase_disponible($entity);
-        $this->load->model('ClaseDAO');
-        $col_eventos = $this->ClaseDAO->aula_disponible($entity);
+        $this->load->model('EventoDAO');
+        $col_eventos = $this->EventoDAO->evento_disponible($entity);
         $colisiones = array_merge($col_clases,$col_eventos);
 
 
@@ -61,7 +61,7 @@ class ClaseDAO extends BaseDAO
 
     function clase_disponible($clase)
     {
-        $this->query(
+       return $this->query(
             [
                 'id !=' => $clase->id,
                 'fecha' => $clase->fecha,
