@@ -124,5 +124,8 @@ $route['api/usuarios'] = 'api/UsuarioEndpoint/usuarios';
 $route['api/asignaturacarrera/(:num)'] = 'api/AsignaturaCarreraEndpoint/asignaturacarrera/$1';
 $route['api/asignaturacarrera'] = 'api/AsignaturaCarreraEndpoint/asignaturacarrera';
 
+$route['api/usuariogrupo/(:num)'] = 'api/UsuarioGrupoEndpoint/usuariogrupo/$1';
+$route['api/usuariogrupo'] = 'api/UsuarioGrupoEndpoint/usuariogrupo';
+
 
 $route['api/example/users/(:num)(\.)([a-zA-Z0-9_-]+)(.*)'] = 'api/example/users/id/$1/format/$3$4'; // Example 8

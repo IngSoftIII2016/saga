@@ -7,6 +7,7 @@
  */
 
 require_once APPPATH . '/models/relations/AsignaturaCarrera.php';
+require_once APPPATH . '/models/relations/UsuarioGrupo.php';
 
 
 /**
