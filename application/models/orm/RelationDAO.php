@@ -12,7 +12,7 @@ require_once APPPATH . '/models/relations/AsignaturaCarrera.php';
 /**
  * Class Base_DAO
  */
-abstract class BaseDAO extends CI_Model
+abstract class RelationDAO extends CI_Model
 {
     protected $entity_class = NULL;
 
@@ -64,16 +64,19 @@ abstract class BaseDAO extends CI_Model
     }
 
     /**
-     * @param $id
+     * @param $ids ["<realtion_property>"=> <id> ]
      * @return Entity
      */
-    public function get_by_id($id)
-    {
-        $this->do_base_query();
-        // $this->do_filter([$this->entity->get_table_name().".".$this->entity->get_primary_key_column_name() => $id]);
-        return $this->get_result_entities();
-    }
-
+    /*    public function get_by_id($ids)
+        {
+            $this->do_base_query();
+            $filters = [];
+            foreach ($this->entity->get_relations_many_to_one() as $relation)
+                $filters[] = $this->entity->get_relations_many_to_one()
+                $this->do_filter([$this->entity->get_table_name().".".$this->entity->get_primary_key_column_name() => $id]);
+            return $this->get_result_entities();
+        }
+    */
     /**
      * @param $entity
      * @return array
@@ -121,7 +124,9 @@ abstract class BaseDAO extends CI_Model
             return ['error' => $error];
         }
 
-
+        foreach ($entity->get_raltions_many_to_one() as $relation) {
+            $this->db->where($relation['foreign_key_column_name'], $entity->$relation['property_name']->get_id());
+        }
         if(!$this->db->update($entity->get_table_name(), $entity->to_row())) {
             $this->db->trans_rollback();
             return ['error' => 'Fails on update to db'];
@@ -149,7 +154,9 @@ abstract class BaseDAO extends CI_Model
             $this->db->trans_rollback();
             return ['error' => $error];
         }
-        $this->db->where();
+        foreach ($entity->get_raltions_many_to_one() as $relation) {
+            $this->db->where($relation['foreign_key_column_name'], $entity->$relation['property_name']->get_id());
+        }
         if(!$this->db->delete($entity->get_table_name())) {
             $this->db->trans_rollback();
             return ['error' => 'Fails on delete to db'];
@@ -324,22 +331,22 @@ abstract class BaseDAO extends CI_Model
 
 
     private static function build_base_query_arrays($entity, &$columns, &$joins, $alias_prefix = '', $foreign_key='') {
-        $table = $entity->get_table_name();
-
-        $alias = $alias_prefix . $table . "_";
-
+        if(!is_array($joins)) $joins = [];
         if(!is_array($columns)) $columns = [];
 
+        $table = $entity->get_table_name();
+        $alias = $alias_prefix . $table . "_";
+
+        if(count($joins) == 0)
+            $joins["$table AS $alias"] = '';
+        else{
+            $primary_key = $entity->get_primary_key_column_name();
+            $columns[] = "$alias.$primary_key AS $alias$primary_key";
+            $joins["$table AS $alias"] = "$alias_prefix.$foreign_key = $alias.$primary_key";
+        }
 
         foreach ($entity->get_property_column_names() as $column)
             $columns[] = "$alias.$column AS $alias$column";
-
-        if(!is_array($joins)) $joins = [];
-        if(count($joins) == 0)
-            $joins["$table AS $alias"] = '';
-        else {
-
-        }
 
         foreach ($entity->get_relations_many_to_one() as $relation) {
             $related_entity = new $relation['entity_class_name'];
@@ -352,7 +359,10 @@ abstract class BaseDAO extends CI_Model
         $table = $entity->get_table_name();
         $alias = $alias_prefix . $table . "_";
         $columns = $entity->get_property_column_names();
-        ;
+        if($alias_prefix != ''){
+            $primary_key = $entity->get_primary_key_column_name();
+            array_unshift($columns, $primary_key);
+        }
         $data = [];
         foreach ($columns as $column) {
             $data[$column] = $row[$alias.$column];

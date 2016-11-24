@@ -20,22 +20,19 @@ class HorarioEndpoint extends BaseEndpoint
         return $this->HorarioDAO;
     }
 
-    public function horarios_get($id = null)
-    {
-        /*
-        if ($id != null) {
-            $horarios = $this->HorarioDAO->query(['id' => $id], [], ['aula.edificio', 'comision.asignatura'])[0];
-            $this->response(['data' => $horarios]);
-        } else {
-            $horarios = $this->HorarioDAO->query([], [], ['aula.edificio', 'comision.asignatura']);
-            $this->response(['get' => $this->get(), 'data' => $horarios]);
-        }
-        */
+    public function horarios_get($id = null) {
         $this->base_get($id);
     }
 
-    public function horario_get() {
-        $query = $this->get();
-        var_dump(empty($query['sort']));
+    public function horarios_post() {
+        $this->base_post();
+    }
+
+    public function horarios_put() {
+        $this->base_put();
+    }
+
+    public function horarios_delete($id) {
+        $this->base_delete($id);
     }
 }

@@ -1,6 +1,6 @@
 <?php
 require_once APPPATH . '/models/orm/BaseDAO.php';
-class CarreraDAO extends BaseDAO {
+class CarreraDAO extends RelationDAO {
 	
 	public function __construct() {
 		parent::__construct ( 'Carrera' );

@@ -22,61 +22,21 @@ class AsignaturaCarreraEndpoint extends BaseEndpoint
      */
     public function asignaturacarrera_get($id = null)
     {
-/*        if ($id != null) {
-            $asignatura = $this->AsignaturaDAO->query(['id' => $id], [], [])[0];
-            $this->response(['data' => $asignatura]);
-        } else {
-            $params = $this->parse_params();
-            $asignaturas = $this->AsignaturaDAO->query($params['filters'], $params['sorts'], $params['includes'], $params['page'], $params['size']);
-            $this->response(['data' => $asignaturas]);
-        }
-*/
         $this->base_get($id);
     }
 
-    public function asignaturas_post()
+    public function asignaturacarrera_post()
     {
-        /*
-        $json = $this->post('data');
-        $entity = $this->json_to_entity($json);
-        $result = $this->AsignaturaDAO->insert($entity);
-        if (array_key_exists('error', $result)) {
-            $this->response($result, 500);
-        }else {
-            $this->response(['data' => $result]);
-        }
-        */
         $this->base_post();
     }
 
-    public function asignaturas_put()
+    public function asignaturacarrera_put()
     {
-        /*
-        $json = $this->put('data');
-        $entity = $this->json_to_entity($json);
-        $result = $this->AsignaturaDAO->update($entity);
-        if (array_key_exists('error', $result)) {
-            $this->response($result, 500);
-        }else {
-            $this->response(['data' => $result]);
-        }
-        */
         $this->base_put();
     }
 
-    public function asignaturas_delete($id)
+    public function asignaturacarrera_delete($id)
     {
-        /*
-        $asignatura = $this->AsignaturaDAO->query(['id' => $id], [], [])[0];
-        if($asignatura == null)
-            $this->response(['error' => 'Asignatura inexistente'], 404);
-        $result = $this->AsignaturaDAO->delete($asignatura);
-        if (is_array($result)) {
-            $this->response($result, 500);
-        }else {
-            $this->response(['data' => $result]);
-        }
-        */
         $this->base_delete($id);
     }
 }

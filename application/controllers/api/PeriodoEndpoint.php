@@ -37,62 +37,21 @@ class PeriodoEndpoint extends BaseEndpoint
 	 */
 	public function periodos_get($id = null)
 	{
-	    /*
-		if ($id != null) {
-			$periodo = $this->PeriodoDAO->query(['id' => $id], [], [])[0];
-			$this->response(['data' => $periodo]);
-		} else {
-			$params = $this->parse_params();
-			$periodos = $this->PeriodoDAO->query($params['filters'], $params['sorts'], $params['includes'], $params['page'], $params['size']);
-			$this->response(['data' => $periodos]);
-		}
-	    */
         $this->base_get($id);
 	}
 
 	public function periodos_post()
 	{
-	    /*
-		$json = $this->post('data');
-		$entity = $this->json_to_entity($json);
-		$result = $this->PeriodoDAO->insert($entity);
-		if (array_key_exists('error', $result)) {
-			$this->response($result, 500);
-		}else {
-			$this->response(['data' => $result]);
-		}
-	    */
         $this->base_post();
 	}
 
 	public function periodos_put()
 	{
-	    /*
-		$json = $this->put('data');
-		$entity = $this->json_to_entity($json);
-		$result = $this->PeriodoDAO->update($entity);
-		if (array_key_exists('error', $result)) {
-			$this->response($result, 500);
-		}else {
-			$this->response(['data' => $result]);
-		}
-	    */
         $this->base_put();
 	}
 
 	public function periodos_delete($id)
 	{
-	    /*
-		$periodo = $this->PeriodoDAO->query(['id' => $id], [], [])[0];
-		if($periodo == null)
-			$this->response(['error' => 'Periodo inexistente'], 404);
-			$result = $this->PeriodoDAO->delete($periodo);
-			if (is_array($result)) {
-				$this->response($result, 500);
-			}else {
-				$this->response(['data' => $result]);
-			}
-	    */
         $this->base_delete($id);
 	}
 }

@@ -47,22 +47,17 @@ class UsuarioEndpoint extends BaseEndpoint {
         $contraseña = $json['contraseña'];
         //$recordar= $json['recordar'];
 
-        if ($this->Login_Model->login($usuario, $contraseña, true))
-        {
-
+        if ($this->Login_Model->login($usuario, $contraseña, true)) {
 			$key = 'mi-secret-key';
 			$token = array(
-					"id" => $contraseña,
+                "id" => $contraseña,
 				"name" => $usuario,
 				"iat" => time(),
 				"exp" => time()+ 300
 			);
-			 
 			$jwt = JWT::encode($token, $key, 'HS256');
-			$this->response(array('status' => 200,'body'=>array('token'=> $jwt )));
-
-        }
-        else
+			$this->response(array('status' => 200, 'body'=> array('token'=> $jwt )));
+        }else
             $this->response(array('status' => 'failed'));
     }
 
@@ -75,62 +70,21 @@ class UsuarioEndpoint extends BaseEndpoint {
 	
 	public function usuarios_get($id = null)
 	{
-	    /*
-		if ($id != null) {
-			$usuario = $this->UsuarioDAO->query(['id' => $id], [], [])[0];
-			$this->response(['data' => $usuario]);
-		} else {
-			$params = $this->parse_params();
-			$usuarios = $this->UsuarioDAO->query($params['filters'], $params['sorts'], $params['includes'], $params['page'], $params['size']);
-			$this->response(['data' => $usuarios]);
-		}
-	    */
         $this->base_get($id);
 	}
 
 	public function usuarios_post()
 	{
-	    /*
-		$json = $this->post('data');
-		$entity = $this->json_to_entity($json);
-		$result = $this->UsuarioDAO->insert($entity);
-		if (array_key_exists('error', $result)) {
-			$this->response($result, 500);
-		}else {
-			$this->response(['data' => $result]);
-		}
-	    */
         $this->base_post();
 	}
 
 	public function usuarios_put()
 	{
-	    /*
-		$json = $this->put('data');
-		$entity = $this->json_to_entity($json);
-		$result = $this->UsuarioDAO->update($entity);
-		if (array_key_exists('error', $result)) {
-			$this->response($result, 500);
-		}else {
-			$this->response(['data' => $result]);
-		}
-	    */
         $this->base_put();
 	}
 
 	public function usuarios_delete($id)
 	{
-	    /*
-		$usuario = $this->UsuarioDAO->query(['id' => $id], [], [])[0];
-		if($usuario == null)
-			$this->response(['error' => 'Usuario inexistente'], 404);
-			$result = $this->UsuarioDAO->delete($usuario);
-			if (is_array($result)) {
-				$this->response($result, 500);
-			}else {
-				$this->response(['data' => $result]);
-			}
-	    */
         $this->base_delete($id);
 	}
 }

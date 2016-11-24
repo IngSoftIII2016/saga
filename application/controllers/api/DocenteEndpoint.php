@@ -37,63 +37,21 @@ class DocenteEndpoint extends BaseEndpoint
 	 */
 	public function docentes_get($id = null)
 	{
-	    /*
-		if ($id != null) {
-			$docente = $this->DocenteDAO->query(['id' => $id], [], [])[0];
-			$this->response(['data' => $docente]);
-		} else {
-			$params = $this->parse_params();
-			$docentes = $this->DocenteDAO->query($params['filters'], $params['sorts'], $params['includes'], $params['page'], $params['size']);
-			$this->response(['data' => $docentes]);
-			//$this->response(array('status' => 200,'body'=>$docentes));
-		}
-	    */
         $this->base_get($id);
 	}
 
 	public function docentes_post()
 	{
-	    /*
-		$json = $this->post('data');
-		$entity = $this->json_to_entity($json);
-		$result = $this->DocenteDAO->insert($entity);
-		if (array_key_exists('error', $result)) {
-			$this->response($result, 500);
-		}else {
-			$this->response(['data' => $result]);
-		}
-	    */
         $this->base_post();
 	}
 
 	public function docentes_put()
 	{
-	    /*
-		$json = $this->put('data');
-		$entity = $this->json_to_entity($json);
-		$result = $this->DocenteDAO->update($entity);
-		if (array_key_exists('error', $result)) {
-			$this->response($result, 500);
-		}else {
-			$this->response(['data' => $result]);
-		}
-	    */
         $this->base_put();
 	}
 
 	public function docentes_delete($id)
 	{
-	    /*
-		$docente = $this->DocenteDAO->query(['id' => $id], [], [])[0];
-		if($docente == null)
-			$this->response(['error' => 'Docente inexistente'], 404);
-			$result = $this->DocenteDAO->delete($docente);
-			if (is_array($result)) {
-				$this->response($result, 500);
-			}else {
-				$this->response(['data' => $result]);
-			}
-	    */
         $this->base_delete($id);
 	}
 }

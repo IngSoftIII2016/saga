@@ -33,61 +33,21 @@ class ClaseEndpoint extends BaseEndpoint {
 
     public function clases_get($id = null)
     {
-        /*
-        if ($id != null) {
-            $evento = $this->ClaseDAO->query(['id' => $id], [], ['aula'])[0];
-            $this->response(['data' => $evento]);
-        } else {
-            $params = $this->parse_params();
-            $eventos = $this->ClaseDAO->query($params['filters'], $params['sorts'], $params['includes'], $params['page'], $params['size']);
-            $this->response(['data' => $eventos]);
-        }
-        */
         $this->base_get($id);
     }
 
     public function clases_post()
     {
-        /*
-        $json = $this->post('data');
-        $entity = $this->json_to_entity($json);
-        $result = $this->ClaseDAO->insert($entity);
-        if (array_key_exists('error', $result)) {
-            $this->response($result, 500);
-        }else {
-            $this->response(['data' => $result]);
-        }
-        */
         $this->base_post();
     }
 
     public function clases_put()
     {
-        /*
-        $json = $this->put('data');
-        $entity = $this->json_to_entity($json);
-        $result = $this->ClaseDAO->update($entity);
-        if (array_key_exists('error', $result)) {
-            $this->response($result, 500);
-        }else {
-            $this->response(['data' => $result]);
-        }
-        */
         $this->base_put();
     }
 
     public function clases_delete($id)
     {
-        /*
-        $json = $this->delete('data');
-        $entity = $this->json_to_entity($json);
-        $result = $this->ClaseDAO->delete($entity);
-        if (array_key_exists('error', $result)) {
-            $this->response($result, 500);
-        }else {
-            $this->response(['data' => $result]);
-        }
-        */
         $this->base_delete($id);
     }
 

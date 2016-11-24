@@ -37,62 +37,21 @@ class SedeEndpoint extends BaseEndpoint
 	 */
 	public function sedes_get($id = null)
 	{
-	    /*
-		if ($id != null) {
-			$sede = $this->SedeDAO->query(['id' => $id], [], [])[0];
-			$this->response(['data' => $sede]);
-		} else {
-			$params = $this->parse_params();
-			$sedes = $this->SedeDAO->query($params['filters'], $params['sorts'], $params['includes'], $params['page'], $params['size']);
-			$this->response(['data' => $sedes]);
-		}
-	    */
         $this->base_get($id);
 	}
 
 	public function sedes_post()
 	{
-	    /*
-		$json = $this->post('data');
-		$entity = $this->json_to_entity($json);
-		$result = $this->SedeDAO->insert($entity);
-		if (array_key_exists('error', $result)) {
-			$this->response($result, 500);
-		}else {
-			$this->response(['data' => $result]);
-		}
-	    */
         $this->base_post();
 	}
 
 	public function sedes_put()
 	{
-	    /*
-		$json = $this->put('data');
-		$entity = $this->json_to_entity($json);
-		$result = $this->SedeDAO->update($entity);
-		if (array_key_exists('error', $result)) {
-			$this->response($result, 500);
-		}else {
-			$this->response(['data' => $result]);
-		}
-	    */
         $this->base_put();
 	}
 
 	public function sedes_delete($id)
 	{
-	    /*
-		$sede = $this->SedeDAO->query(['id' => $id], [], [])[0];
-		if($sede == null)
-			$this->response(['error' => 'Sede inexistente'], 404);
-			$result = $this->SedeDAO->delete($sede);
-			if (is_array($result)) {
-				$this->response($result, 500);
-			}else {
-				$this->response(['data' => $result]);
-			}
-	    */
-            $this->base_delete($id);
+        $this->base_delete($id);
 	}
 }

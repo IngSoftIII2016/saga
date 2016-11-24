@@ -8,25 +8,14 @@
  */
 abstract class Relation
 {
-
-
     /**
-     * Retorna el nombre de la tabla correspondiente a ésta Entity
-     * @return string Nombre de la tabla
+     * Retorna el nombre de la tabla correspondiente a ésta Relacion
+     * @return string Nombre de la tabla de relacion
      */
     public abstract function get_table_name();
 
     /**
-     * @return string
-     */
-    public function get_primary_key_column_name() {
-        return 'id';
-    }
-
-
-
-    /**
-     * Retorna un arreglo de las relaciones uno-a-uno o uno-a-muchos que posee ésta Entity.
+     * Retorna un arreglo de las entidades muchos a uno que posee ésta Relacion.
      * Cada relación se representa con un arreglo asociativo que contiene las siguientes claves:
      *  - entity_class_name : string Fully qualifiqued Name de la clase entity correspondiente a la entidad destino
      *  - foreign_key_column_name : string El nombre de la columna correspondiente a la clave foránea de esta relación
@@ -35,12 +24,6 @@ abstract class Relation
      */
     public abstract function get_relations_many_to_one();
 
-
-    /**
-     * @return mixed
-     */
-
-    public abstract function get_id();
     /**
      * Establece las propiedades de la Entity en base al arreglo asociativo recibido.
      * @param array $data

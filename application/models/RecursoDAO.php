@@ -1,6 +1,6 @@
 <?php
 require_once APPPATH . '/models/orm/BaseDAO.php';
-class RecursoDAO extends BaseDAO {
+class RecursoDAO extends RelationDAO {
 	
 	public function __construct() {
 		parent::__construct ( 'Recurso' );
