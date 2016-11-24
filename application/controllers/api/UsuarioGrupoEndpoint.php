@@ -41,8 +41,17 @@ class UsuarioGrupoEndpoint extends BaseEndpoint
         $this->base_put();
     }
 
-    public function usuariogrupo_delete($id)
+    public function usuariogrupo_delete()
     {
-        $this->base_delete($id);
+        $json = $this->delete('data');
+        $entity = $this->json_to_entity($json);
+        if($entity == null)
+            $this->response(['error' => "$entity->get_table_name() inexistente"], 404);
+        $result = $this->getDAO()->delete($entity);
+        if (is_array($result)) {
+            $this->response($result, 500);
+        }else {
+            $this->response(['data' => $result]);
+        }
     }
 }

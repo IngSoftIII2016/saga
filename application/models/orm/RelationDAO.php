@@ -99,9 +99,6 @@ abstract class RelationDAO extends CI_Model
             return ['error' => 'Fails on insert to db.'];
         }
 
-        $id = $this->db->insert_id();
-        $entity->from_row();
-
         $this->after_insert($entity);
 
         $this->db->trans_complete();
