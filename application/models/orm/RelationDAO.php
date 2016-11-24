@@ -122,8 +122,9 @@ abstract class RelationDAO extends CI_Model
             return ['error' => $error];
         }
 
-        foreach ($entity->get_raltions_many_to_one() as $relation) {
-            $this->db->where($relation['foreign_key_column_name'], $entity->$relation['property_name']->get_id());
+        foreach ($entity->get_relations_many_to_one() as $relation) {
+
+            $this->db->where($relation['foreign_key_column_name'], $entity->{$relation['property_name']}->get_id());
         }
         if(!$this->db->update($entity->get_table_name(), $entity->to_row())) {
             $this->db->trans_rollback();
