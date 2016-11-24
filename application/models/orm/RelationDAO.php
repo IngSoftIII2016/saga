@@ -385,20 +385,8 @@ abstract class RelationDAO extends CI_Model
                 $data[$relationship_property] = $related_entity;
             }
         }
-        /*
-                foreach ($entity->get_relations_one_to_many() as $relation) {
-                    $relationship_property = $relation['property_name'];
-                    if(in_array($relationship_property, $this_includes)) {
-                        $entity->do_one_to_many_query($relation['entity_class_name'], $relationship_property);
-                    }
-                }
-        */
 
         $entity->from_row($data);
     }
 
-
-    public static function do_one_to_many_query($entity, $relationship_entity, $relationship_property) {
-
-    }
 }

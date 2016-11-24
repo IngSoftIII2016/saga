@@ -1,7 +1,7 @@
 <?php
 require_once APPPATH . '/models/orm/BaseDAO.php';
 
-class UsuarioDAO extends RelationDAO {
+class UsuarioDAO extends BaseDAO {
 
 
     public function __construct() {

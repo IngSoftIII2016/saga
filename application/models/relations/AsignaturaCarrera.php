@@ -39,7 +39,7 @@ class AsignaturaCarrera extends Relation
      *  - entity_class_name : string Fully qualifiqued Name de la clase entity correspondiente a la entidad destino
      *  - foreign_key_column_name : string El nombre de la columna correspondiente a la clave foránea de esta relación
      *  - property_name : string Nombre de la propiedad en donde colocar el objeto Entity
-     * @return array Relaciones a uno-a-uno o muchos-a-uno
+     * @return array Relaciones muchos a uno
      */
     public function get_relations_many_to_one()
     {
@@ -66,8 +66,8 @@ class AsignaturaCarrera extends Relation
     {
         if(isset($data['anio'])) $this->anio = $data['anio'];
         if(isset($data['regimen'])) $this->regimen = $data['regimen'];
-        if(isset($data['asignatura'])) $this->Asignatura_id = $data['asignatura'];
-        if(isset($data['carrera'])) $this->Carrera_id = $data['carrera'];
+        if(isset($data['asignatura'])) $this->asignatura = $data['asignatura'];
+        if(isset($data['carrera'])) $this->carrera = $data['carrera'];
     }
 
     /**

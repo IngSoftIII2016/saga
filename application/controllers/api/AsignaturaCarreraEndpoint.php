@@ -10,6 +10,7 @@ class AsignaturaCarreraEndpoint extends BaseEndpoint
         // Construct the parent class
         parent::__construct('AsignaturaCarrera');
         $this->load->model('AsignaturaCarreraDAO');
+        $this->AsignaturaCarreraDAO->set_debug_enabled(false);
     }
 
     protected function getDAO()
