@@ -6,8 +6,16 @@
  * Date: 24/11/16
  * Time: 17:17
  */
+
+require_once APPPATH . '/controllers/api/BaseEndpoint.php';
+
 abstract class RelationEndpoint extends BaseEndpoint
 {
+
+    public function __construct($entity_class)
+    {
+        parent::__construct($entity_class);
+    }
     protected function json_to_entity($json) {
         $entity = new $this->entity_class;
 
@@ -27,7 +35,7 @@ abstract class RelationEndpoint extends BaseEndpoint
     }
 
 
-    protected function base_delete() {
+    protected function base_delete($id) {
         $json = $this->delete('data');
         $entity = $this->json_to_entity($json);
         if($entity == null)
