@@ -63,7 +63,7 @@ class ClaseDAO extends BaseDAO
     {
        return $this->query(
             [
-                'id !=' => $clase->id,
+                'clase_.id !=' => $clase->id,
                 'fecha' => $clase->fecha,
                 'aula.id' => $clase->aula->id,
                 'hora_inicio <' => $clase->hora_fin,
