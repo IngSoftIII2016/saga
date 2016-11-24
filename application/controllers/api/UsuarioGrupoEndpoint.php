@@ -7,9 +7,9 @@
  * Time: 05:12
  */
 
-require_once APPPATH . '/controllers/api/BaseEndpoint.php';
+require_once APPPATH . '/controllers/api/RelationEndpoint.php';
 
-class UsuarioGrupoEndpoint extends BaseEndpoint
+class UsuarioGrupoEndpoint extends RelationEndpoint
 {
 
     public function __construct()
@@ -43,15 +43,6 @@ class UsuarioGrupoEndpoint extends BaseEndpoint
 
     public function usuariogrupo_delete()
     {
-        $json = $this->delete('data');
-        $entity = $this->json_to_entity($json);
-        if($entity == null)
-            $this->response(['error' => "$entity->get_table_name() inexistente"], 404);
-        $result = $this->getDAO()->delete($entity);
-        if (is_array($result)) {
-            $this->response($result, 500);
-        }else {
-            $this->response(['data' => $result]);
-        }
+        $this->base_delete();
     }
 }

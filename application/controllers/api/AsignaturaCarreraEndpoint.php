@@ -1,9 +1,9 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 // This can be removed if you use __autoload() in config.php OR use Modular Extensions
-require_once APPPATH . '/controllers/api/BaseEndpoint.php';
+require_once APPPATH . '/controllers/api/RelationEndpoint.php';
 
-class AsignaturaCarreraEndpoint extends BaseEndpoint
+class AsignaturaCarreraEndpoint extends RelationEndpoint
 {
     function __construct()
     {
@@ -38,15 +38,6 @@ class AsignaturaCarreraEndpoint extends BaseEndpoint
 
     public function asignaturacarrera_delete()
     {
-        $json = $this->delete('data');
-        $entity = $this->json_to_entity($json);
-        if($entity == null)
-            $this->response(['error' => "$entity->get_table_name() inexistente"], 404);
-        $result = $this->getDAO()->delete($entity);
-        if (is_array($result)) {
-            $this->response($result, 500);
-        }else {
-            $this->response(['data' => $result]);
-        }
+        $this->base_delete();
     }
 }

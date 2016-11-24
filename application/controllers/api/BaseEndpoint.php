@@ -23,7 +23,7 @@ require_once APPPATH . '/models/relations/UsuarioGrupo.php';
 
 abstract class BaseEndpoint extends REST_Controller
 {
-    private $entity_class;
+    protected $entity_class;
 
     public function __construct($entity_class)
     {
