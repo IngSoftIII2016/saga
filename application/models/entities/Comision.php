@@ -11,8 +11,9 @@ class Comision extends Entity
 
     public $id;
     public $nombre;
-    public  $asignatura;
-    public  $periodo;
+    public $asignatura;
+    public $periodo;
+    public $docente;
 
 
     /**
@@ -62,7 +63,12 @@ class Comision extends Entity
         		'entity_class_name' => 'Periodo',
         		'foreign_key_column_name' => 'Periodo_id',
         		'property_name' => 'periodo'
-                ]
+                ],
+                [
+                'entity_class_name' => 'Docente',
+                'foreign_key_column_name' => 'Docente_id',
+                'property_name' => 'docente'
+                ],
         ];
     }
 
@@ -114,6 +120,7 @@ class Comision extends Entity
         if(isset($data['nombre'])) $this->nombre = $data['nombre'];
         if(isset($data['asignatura'])) $this->asignatura = $data['asignatura'];
         if(isset($data['periodo'])) $this->periodo= $data['periodo'];
+        if(isset($data['docente'])) $this->docente= $data['docente'];
     }
 
     /**
@@ -127,6 +134,7 @@ class Comision extends Entity
         $data['nombre'] = $this->nombre;
         $data['Asignatura_id'] = $this->asignatura->get_id();
         $data['Periodo_id'] = $this->periodo->get_id();
+        $data['Docente_id'] = $this->periodo->get_id();
         return $data;
     }
 
