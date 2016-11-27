@@ -31,14 +31,17 @@ class EventoDAO extends BaseDAO
 
     function evento_disponible($evento)
     {
+        $filtros = [
+            'fecha' => $evento->fecha,
+            'aula.id' => $evento->aula->id,
+            'hora_inicio <' => $evento->hora_fin,
+            'hora_fin >' => $evento->hora_inicio
+        ];
+        if(isset($evento->id))
+            $filtros['id !='] = $evento->id;
+
         return $this->query(
-            [
-                'id !=' => $evento->id,
-                'fecha' => $evento->fecha,
-                'aula.id' => $evento->aula->id,
-                'hora_inicio <' => $evento->hora_fin,
-                'hora_fin >' => $evento->hora_inicio
-                            ],
+            $filtros,
             [],
             ['']
         );

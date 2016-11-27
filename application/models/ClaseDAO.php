@@ -13,7 +13,8 @@ class ClaseDAO extends BaseDAO
      * @return mixed FALSE o array asociativo con información del error
      */
 
-    public function __construct() {
+    public function __construct()
+    {
         parent::__construct('Clase');
     }
 
@@ -23,8 +24,7 @@ class ClaseDAO extends BaseDAO
         $col_clases = $this->clase_disponible($entity);
         $this->load->model('EventoDAO');
         $col_eventos = $this->EventoDAO->evento_disponible($entity);
-        $colisiones = array_merge($col_clases,$col_eventos);
-
+        $colisiones = array_merge($col_clases, $col_eventos);
 
 
         if (count($colisiones) > 0) {
@@ -32,7 +32,7 @@ class ClaseDAO extends BaseDAO
                 'error' => 'Aula ocupada.',
                 'data' => $colisiones
             ];
-        }else
+        } else
             return FALSE;
     }
 
@@ -42,8 +42,7 @@ class ClaseDAO extends BaseDAO
         $col_clases = $this->clase_disponible($entity);
         $this->load->model('EventoDAO');
         $col_eventos = $this->EventoDAO->evento_disponible($entity);
-        $colisiones = array_merge($col_clases,$col_eventos);
-
+        $colisiones = array_merge($col_clases, $col_eventos);
 
 
         if (count($colisiones) > 0) {
@@ -51,30 +50,32 @@ class ClaseDAO extends BaseDAO
                 'error' => 'Aula ocupada.',
                 'data' => $colisiones
             ];
-        }else
+        } else
             return FALSE;
     }
 
-    protected function is_invalid_delete($entity) {
+    protected function is_invalid_delete($entity)
+    {
         return true;
     }
 
     function clase_disponible($clase)
     {
-       return $this->query(
-            [
-                'id !=' => $clase->id,
-                'fecha' => $clase->fecha,
-                'aula.id' => $clase->aula->id,
-                'hora_inicio <' => $clase->hora_fin,
-                'hora_fin >' => $clase->hora_inicio
-            ],
+        $filtros = [
+            'fecha' => $clase->fecha,
+            'aula.id' => $clase->aula->id,
+            'hora_inicio <' => $clase->hora_fin,
+            'hora_fin >' => $clase->hora_inicio
+        ];
+        if(isset($clase->id))
+            $filtros['id !='] = $clase->id;
+
+        return $this->query(
+            $filtros,
             [],
             ['comision.asignatura']
         );
     }
-
-
 
 
 }
