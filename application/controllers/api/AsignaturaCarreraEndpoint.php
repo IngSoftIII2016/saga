@@ -36,8 +36,8 @@ class AsignaturaCarreraEndpoint extends RelationEndpoint
         $this->base_put();
     }
 
-    public function asignaturacarrera_delete($id)
+    public function asignaturacarrera_delete()
     {
-        $this->base_delete($id);
+        $this->base_delete();
     }
 }
