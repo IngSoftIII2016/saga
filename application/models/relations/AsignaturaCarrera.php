@@ -9,6 +9,7 @@ require_once APPPATH . '/models/orm/Relation.php';
  */
 class AsignaturaCarrera extends Relation
 {
+	
     public $anio;
     public $regimen;
     public $asignatura;
@@ -56,6 +57,9 @@ class AsignaturaCarrera extends Relation
             ]
         ];
     }
+    
+
+   
 
     /**
      * Establece las propiedades de la Entity en base al arreglo asociativo recibido.
