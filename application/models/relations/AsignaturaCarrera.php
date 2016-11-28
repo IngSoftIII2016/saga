@@ -9,6 +9,7 @@ require_once APPPATH . '/models/orm/Relation.php';
  */
 class AsignaturaCarrera extends Relation
 {
+	public  $id;
     public $anio;
     public $regimen;
     public $asignatura;
@@ -56,6 +57,15 @@ class AsignaturaCarrera extends Relation
             ]
         ];
     }
+    
+
+    /**
+     * @return mixed
+     */
+    public function get_id()
+    {
+    	return $this->id;
+    }
 
     /**
      * Establece las propiedades de la Entity en base al arreglo asociativo recibido.
@@ -64,6 +74,7 @@ class AsignaturaCarrera extends Relation
      */
     public function from_row($data)
     {
+    	if(isset($data['id'])) $this->id = $data['id'];
         if(isset($data['anio'])) $this->anio = $data['anio'];
         if(isset($data['regimen'])) $this->regimen = $data['regimen'];
         if(isset($data['asignatura'])) $this->asignatura = $data['asignatura'];
@@ -77,6 +88,7 @@ class AsignaturaCarrera extends Relation
      */
     public function to_row()
     {
+    	$data['id'] = $this->id;
         $data['anio'] = $this->anio;
         $data['regimen'] = $this->regimen;
         $data['Asignatura_id'] = $this->asignatura->get_id();
