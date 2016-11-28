@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 // This can be removed if you use __autoload() in config.php OR use Modular Extensions
-require_once APPPATH . '/controllers/api/RelationEndpoint.php';
+require_once APPPATH . 'controllers/api/RelationEndpoint.php';
 
 class AsignaturaCarreraEndpoint extends RelationEndpoint
 {

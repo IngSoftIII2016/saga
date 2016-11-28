@@ -7,7 +7,7 @@
  * Time: 17:17
  */
 
-require_once APPPATH . '/controllers/api/BaseEndpoint.php';
+require_once APPPATH . 'controllers/api/BaseEndpoint.php';
 
 abstract class RelationEndpoint extends BaseEndpoint
 {

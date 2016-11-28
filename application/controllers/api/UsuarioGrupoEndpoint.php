@@ -7,7 +7,7 @@
  * Time: 05:12
  */
 
-require_once APPPATH . '/controllers/api/RelationEndpoint.php';
+require_once APPPATH . 'controllers/api/RelationEndpoint.php';
 
 class UsuarioGrupoEndpoint extends RelationEndpoint
 {
