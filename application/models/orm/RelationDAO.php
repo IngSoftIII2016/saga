@@ -154,7 +154,7 @@ abstract class RelationDAO extends CI_Model
             return ['error' => $error];
         }
         foreach ($entity->get_relations_many_to_one() as $relation) {
-            $this->db->where($relation['foreign_key_column_name'], $entity->$relation['property_name']->get_id());
+            $this->db->where($relation['foreign_key_column_name'], $entity->{$relation['property_name']}->get_id());
         }
         if(!$this->db->delete($entity->get_table_name())) {
             $this->db->trans_rollback();
@@ -292,7 +292,7 @@ abstract class RelationDAO extends CI_Model
                 array_unshift($exp_path, $this->entity->get_table_name());
                 $alias = implode('_', $exp_path) . '_';
                 $field = $alias . '.' . $column;
-                $this->db->where("$field LIKE '$value'");
+                $this->db->or_where("LOWER($field) LIKE LOWER('$value')");
             }
         }
     }

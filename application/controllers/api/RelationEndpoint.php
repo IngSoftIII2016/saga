@@ -36,7 +36,8 @@ abstract class RelationEndpoint extends BaseEndpoint
 
 
     protected function base_delete($id) {
-        $json = $this->delete('data');
+        $delete = $this->delete();
+        $json = json_decode(array_keys($delete)[0], true)['data'];
         $entity = $this->json_to_entity($json);
         if($entity == null)
             $this->response(['error' => "$entity->get_table_name() inexistente"], 404);

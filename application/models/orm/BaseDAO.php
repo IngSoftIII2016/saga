@@ -302,7 +302,7 @@ abstract class BaseDAO extends CI_Model
                 array_unshift($exp_path, $this->entity->get_table_name());
                 $alias = implode('_', $exp_path) . '_';
                 $field = $alias . '.' . $column;
-                $this->db->or_where("$field LIKE '$value'");
+                $this->db->or_where("LOWER($field) LIKE LOWER('$value')");
             }
         }
     }
