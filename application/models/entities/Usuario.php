@@ -67,7 +67,14 @@ class Usuario extends Entity
      */
     public function get_relations_many_to_many()
     {
-        return [];
+        return [
+        		[
+        		 'entity_class_name' => 'Grupo',
+        		 'junction_table' => 'usuario_grupo',
+        		 'this_foreign_key' => 'usuario_id',
+        		 'other_foreign_key' => 'grupo_id'
+        		 ]
+        ];
     }
     public function get_id()
     {

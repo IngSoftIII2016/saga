@@ -75,7 +75,7 @@ class UsuarioGrupo extends Relation
     public function to_row()
     {
         $data['usuario_id'] = $this->usuario->get_id();
-        $data['Grupo_id'] = $this->grupo->get_id();
+        $data['grupo_id'] = $this->grupo->get_id();
         return $data;
     }
 

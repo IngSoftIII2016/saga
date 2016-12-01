@@ -16,6 +16,8 @@ class UsuarioGrupoEndpoint extends RelationEndpoint
     {
         parent::__construct('UsuarioGrupo');
         $this->load->model('UsuarioGrupoDAO');
+        $this->UsuarioGrupoDAO->set_debug_enabled(false);
+        
     }
 
     protected function getDAO()
@@ -41,8 +43,8 @@ class UsuarioGrupoEndpoint extends RelationEndpoint
         $this->base_put();
     }
 
-    public function usuariogrupo_delete()
+    public function usuariogrupo_delete($id = null)
     {
-        $this->base_delete();
+        $this->base_delete($id);
     }
 }
