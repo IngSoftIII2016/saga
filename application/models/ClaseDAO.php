@@ -29,7 +29,7 @@ class ClaseDAO extends BaseDAO
 
         if (count($colisiones) > 0) {
             return [
-                'error' => 'Aula ocupada.',
+                'error' => self::generar_error('Aula Ocupada','El aula seleccionada está ocupada por Clases y/o Eventos en el rango horarios ingresado'),
                 'data' => $colisiones
             ];
         } else
@@ -47,7 +47,7 @@ class ClaseDAO extends BaseDAO
 
         if (count($colisiones) > 0) {
             return [
-                'error' => 'Aula ocupada.',
+                'error' => self::generar_error('Aula Ocupada','El aula seleccionada está ocupada por Clases y/o Eventos en el rango de horarios ingresado'),
                 'data' => $colisiones
             ];
         } else

@@ -24,7 +24,7 @@ class GrupoDAO extends BaseDAO {
 			
 			if(  $grupoBd[0]->nombre!==$grupo->nombre ){}
             return [
-                'message' => 'Esta prohibido modificar el nombre del grupo '.$grupoBd[0]->nombre.'.',
+                'error' => self::generar_error('Error','Esta prohibido modificar el nombre del grupo '.$grupoBd[0]->nombre)
             ];
 
         }else
@@ -34,9 +34,8 @@ class GrupoDAO extends BaseDAO {
     protected function is_invalid_delete($grupo){
         var_dump($grupo->to_row());
         if ( $grupo->nombre=="administrador" || $grupo->nombre=="bedel" ){
-            return [
-                'message' => 'Esta prohibido eliminar el grupo '.$grupo->nombre.'.',
-            ];
+
+           return ['error' => self::generar_error('Nombre invalido','Esta prohibido eliminar el grupo '.$grupo->nombre.'.')];
 
         }else
             return FALSE;

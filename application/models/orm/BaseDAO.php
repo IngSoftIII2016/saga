@@ -108,7 +108,13 @@ abstract class BaseDAO extends CI_Model
 
         if (!$this->db->insert($entity->get_table_name(), $entity->to_row())) {
             $this->db->trans_rollback();
-            return ['error' => 'Fails on insert to db.'];
+            ///foreing key
+            if ($this->db->_error_number() == 1451) return ['error' => self::generar_error('Error al insetar','No se pudo agregar el elemento')];
+            if ($this->db->_error_number() == 1169) return ['error' => self::generar_error('Error al insetar','No se pudo agregar el elemento')];
+
+            return ['error' => self::generar_error('Error al agregar '+get_table_name(),'No se pudo agregar el elemento')];
+            //return ['error' => 'Fails on insert to db.'];
+
         }
 
         $id = $this->db->insert_id();
@@ -140,7 +146,8 @@ abstract class BaseDAO extends CI_Model
         $this->db->where($entity->get_primary_key_column_name(), $entity->get_id());
         if(!$this->db->update($entity->get_table_name(), $entity->to_row())) {
             $this->db->trans_rollback();
-            return ['error' => 'Fails on update to db'];
+            //return ['error' => 'Fails on update to db'];
+            return ['error' => self::generar_error('Error al modificar  '+get_table_name(), 'No se pudo modificar el elemento' )];
         }
 
         $this->after_update($entity);
@@ -168,7 +175,10 @@ abstract class BaseDAO extends CI_Model
         $this->db->where($entity->get_primary_key_column_name(), $entity->get_id());
         if(!$this->db->delete($entity->get_table_name())) {
             $this->db->trans_rollback();
-            return ['error' => 'Fails on delete to db'];
+            //return ['error' => 'Fails on delete to db'];
+            if ($this->db->_error_number() == 1451)
+                return['error' => self::generar_error('Error al eliminar  '+get_table_name(),'No se pudo eliminar ya que '+get_table_name()+' tiene elementos asociados')];
+            return ['error' => self::generar_error('Error al eliminar  '+get_table_name(), 'No se pudo elimar el elemento' )];
         }
 
         $this->after_delete($entity);
@@ -410,4 +420,14 @@ abstract class BaseDAO extends CI_Model
     public static function do_one_to_many_query($entity, $relationship_entity, $relationship_property) {
 
     }
+
+
+    public static function generar_error($title, $detail) {
+        $error = [
+            'title' => $title,
+            'detail' => $detail
+        ];
+        return $error;
+    }
+
 }

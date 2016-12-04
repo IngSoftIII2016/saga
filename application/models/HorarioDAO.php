@@ -145,7 +145,7 @@ class HorarioDAO extends BaseDAO {
         $colisiones = $this->get_colisiones($entity);
         if (count($colisiones) > 0) {
             return [
-                'error' => 'Horario ocupado.',
+                'error' => self::generar_error('Horario ocupado','Ya existe un horario asignado a esa aula en el rango horario ingresado'),
                 'data' => $colisiones
             ];
         }else
