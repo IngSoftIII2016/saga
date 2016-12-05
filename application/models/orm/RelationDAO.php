@@ -48,7 +48,7 @@ abstract class RelationDAO extends BaseDAO
             if ($this->db->_error_number() == 1451) return ['error' => self::generar_error('Error al insetar','No se pudo agregar el elemento')];
             if ($this->db->_error_number() == 1169) return ['error' => self::generar_error('Error al insetar','No se pudo agregar el elemento')];
 
-            return ['error' => self::generar_error('Error al agregar '+get_table_name(),'No se pudo agregar el elemento')];
+            return ['error' => self::generar_error('Error al agregar '+$entity->get_table_name(),'No se pudo agregar el elemento')];
         }
 
         $this->after_insert($entity);
@@ -79,7 +79,7 @@ abstract class RelationDAO extends BaseDAO
         }
         if(!$this->db->update($entity->get_table_name(), $entity->to_row())) {
             $this->db->trans_rollback();
-            return ['error' => self::generar_error('Error al modificar  '+get_table_name(), 'No se pudo modificar el elemento' )];
+            return ['error' => self::generar_error('Error al modificar  '+$entity->get_table_name(), 'No se pudo modificar el elemento' )];
         }
 
         $this->after_update($entity);
@@ -110,8 +110,8 @@ abstract class RelationDAO extends BaseDAO
         if(!$this->db->delete($entity->get_table_name())) {
             $this->db->trans_rollback();
             if ($this->db->_error_number() == 1451)
-                return['error' => self::generar_error('Error al eliminar  '+get_table_name(),'No se pudo eliminar ya que '+get_table_name()+' tiene elementos asociados')];
-            return ['error' => self::generar_error('Error al eliminar  '+get_table_name(), 'No se pudo eliminar el elemento' )];
+                return['error' => self::generar_error('Error al eliminar  '+$entity->get_table_name(),'No se pudo eliminar ya que '+$entity->get_table_name()+' tiene elementos asociados')];
+            return ['error' => self::generar_error('Error al eliminar  '+$entity->get_table_name(), 'No se pudo eliminar el elemento' )];
         }
 
         $this->after_delete($entity);
