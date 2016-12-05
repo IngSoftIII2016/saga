@@ -3,7 +3,6 @@ require_once APPPATH . '/models/orm/BaseDAO.php';
 
 class ClaseDAO extends BaseDAO
 {
-
     /**
      * Realiza una validación contra la base de datos previa a la inserción o modificación.
      * Si el resultado de la validación es correcto devuelve FALSE. En caso contrario

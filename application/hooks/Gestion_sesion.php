@@ -28,13 +28,13 @@ class Gestion_sesion
         $url = $_SERVER["REQUEST_URI"];
         if (strtolower($url) != strtolower("/saga/api/UsuarioEndPoint/login")) {
 
-            if (!isset($this->ci->headers["authorization"]) || empty($this->ci->headers["authorization"])) {
+            if (!isset($this->ci->headers["Authorization"]) || empty($this->ci->headers["Authorization"])) {
                 $this->ci->response(['error' => 'No esta autenticado', 'status' => 401], 401);
 
             } else {
                 //////////////////////// DESENCRIPTACION///////////////////////////////////////
                 $secret_key = 'Riv1s9x80DA94@';
-                $token = str_replace('"', '', $this->ci->headers["authorization"]);
+                $token = str_replace('"', '', $this->ci->headers["Authorization"]);
                 try {
 
                     $tokenDesencriptado = JWT::decode($token, $secret_key, array('HS256'));

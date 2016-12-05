@@ -26,6 +26,10 @@ SET time_zone = "+00:00";
 -- Estructura de tabla para la tabla `usuario`
 --
 
+DELETE * FROM usuario_grupo;
+
+DROP TABLE usuario;
+
 CREATE TABLE `usuario` (
   `id` int(11) UNSIGNED NOT NULL,
   `nombre_usuario` varchar(100) NOT NULL,
@@ -37,6 +41,13 @@ CREATE TABLE `usuario` (
   `telefono` varchar(20) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+
+-- Indices de la tabla `usuario`
+--
+ALTER TABLE `usuario`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `nombre_usuario` (`nombre_usuario`),
+  ADD UNIQUE KEY `email` (`email`);
 --
 -- Volcado de datos para la tabla `usuario`
 --
@@ -45,18 +56,12 @@ INSERT INTO `usuario` (`id`, `nombre_usuario`, `contraseña`, `email`, `estado`,
 (1, 'administrador', '$2y$08$GjNYMBqLQ5e08LQtG5R/WOpK51JYTkkQZJal3Tj9F96dxWot.QqxK', 'admin@admin.com', 1, 'Elias', 'Relmuan', '43432423'),
 (24, 'juan perez', '$2y$08$QHYT4v4M60DOvZ5THflEjeMx2VHRip4pvD3giR6SirGHc4x3NxYCu', 'juan@otulook.es', 0, 'juan', 'perezs', '555555521'),
 (25, 'argento', '$2y$10$RDrWUYJqIvfy/uN3ia6g7OyIe8JGQVlU4GQQiDApQM1dJ2Xv3hcqq', 'esteabotero@gmail.com', 1, 'andres', 'gonzales', '23123123');
-
 --
 -- Índices para tablas volcadas
 --
 
 --
--- Indices de la tabla `usuario`
---
-ALTER TABLE `usuario`
-  ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `nombre_usuario` (`nombre_usuario`),
-  ADD UNIQUE KEY `email` (`email`);
+
 
 --
 -- AUTO_INCREMENT de las tablas volcadas

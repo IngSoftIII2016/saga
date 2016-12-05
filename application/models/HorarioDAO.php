@@ -9,9 +9,8 @@ class HorarioDAO extends BaseDAO {
     }
 
     public function get_colisiones($horario) {
-        $hora_fin = date("H:i:s", strtotime($this->hora_inicio) +
-            strtotime($this->duracion) - strtotime("00:00:00"));
-
+        $hora_fin = date("H:i:s", strtotime($horario->hora_inicio) +
+            strtotime($horario->duracion) - strtotime("00:00:00"));
         $this->query(
             [
                 'id !=' => $horario->id,
@@ -21,7 +20,7 @@ class HorarioDAO extends BaseDAO {
                 'hora_inicio <' => $hora_fin,
                 // al dejar el valor vacio, la clave es evaluada como una condicion WHERE en SQL unida al resto con AND.
                 // Hay que tener en cuenta los alias que genera BaseDAO. horario_ horario_comision_asignatura_
-                "(SELECT ADDTIME(horario_.hora_inicio, horario_.duracion)) > '$this->hora_inicio'" => ''
+                "(SELECT ADDTIME(horario_.hora_inicio, horario_.duracion)) > '$horario->hora_inicio'" => ''
             ],
             [],
             ['comision.asignatura']
@@ -60,7 +59,7 @@ class HorarioDAO extends BaseDAO {
             throw new Exception("Fuera del periodo");
 
         $interval = DateInterval::createFromDateString('1 day');
-        while ($start->format("w") != $this->dia)
+        while ($start->format("w") != $horario->dia)
             $start->add($interval);
 
         $dias = $horario->frecuencia_semanas * 7;
@@ -92,7 +91,7 @@ class HorarioDAO extends BaseDAO {
         if($start->diff($end)->invert==0 )
             throw new Exception("Fuera del periodo");
 
-        $this->db->where('Horario_id', $this->id);
+        $this->db->where('Horario_id', $horario->id);
         $this->db->where('fecha >=', $start->format("Y-m-d"));
         $this->db->delete('clase');
     }
