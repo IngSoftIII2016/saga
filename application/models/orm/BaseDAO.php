@@ -84,7 +84,7 @@ abstract class BaseDAO extends CI_Model
     public function get_by_id($id)
     {
         $this->do_base_query();
-        // $this->do_filter([$this->entity->get_table_name().".".$this->entity->get_primary_key_column_name() => $id]);
+       // $this->do_filter([$this->entity->get_table_name().".".$this->entity->get_primary_key_column_name() => $id]);
         $this->do_filter([$this->entity->get_primary_key_column_name() => $id]);
 
         return $this->get_result_entities();
@@ -108,9 +108,9 @@ abstract class BaseDAO extends CI_Model
 
         if (!$this->db->insert($entity->get_table_name(), $entity->to_row())) {
             $this->db->trans_rollback();
-            //foreing key
-            if ($this->db->_error_number() == 1451) return ['error' => self::generar_error('Error al insetar','No se pudo agregar el elemento')];
-            if ($this->db->_error_number() == 1169) return ['error' => self::generar_error('Error al insetar','No se pudo agregar el elemento')];
+            ///foreing key
+            if ($this->db->call_function('mysql_errno') == 1451) return ['error' => self::generar_error('Error al insetar','No se pudo agregar el elemento')];
+            if ($this->db->call_function('mysql_errno') == 1169) return ['error' => self::generar_error('Error al insetar','No se pudo agregar el elemento')];
 
             return ['error' => self::generar_error('Error al agregar '+get_table_name(),'No se pudo agregar el elemento')];
             //return ['error' => 'Fails on insert to db.'];
@@ -173,14 +173,14 @@ abstract class BaseDAO extends CI_Model
             return ['error' => $error];
         }
         $this->db->where($entity->get_primary_key_column_name(), $entity->get_id());
-
         if(!$this->db->delete($entity->get_table_name())) {
             $this->db->trans_rollback();
             //return ['error' => 'Fails on delete to db'];
-            if ($this->db->_error_number == 1451)
+            if ($this->db->call_function('mysql_errno') == 1451)
                 return['error' => self::generar_error('Error al eliminar  '+get_table_name(),'No se pudo eliminar ya que '+get_table_name()+' tiene elementos asociados')];
             return ['error' => self::generar_error('Error al eliminar  '+get_table_name(), 'No se pudo eliminar el elemento' )];
         }
+
         $this->after_delete($entity);
 
         $this->db->trans_complete();
