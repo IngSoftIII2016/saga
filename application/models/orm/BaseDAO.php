@@ -107,10 +107,11 @@ abstract class BaseDAO extends CI_Model
         }
 
         if (!$this->db->insert($entity->get_table_name(), $entity->to_row())) {
+            $codigo = $this->db->error()['code'];
             $this->db->trans_rollback();
             ///foreing key
-            if ($this->db->call_function('mysql_errno') == 1451) return ['error' => self::generar_error('Error al insetar','No se pudo agregar el elemento')];
-            if ($this->db->call_function('mysql_errno') == 1169) return ['error' => self::generar_error('Error al insetar','No se pudo agregar el elemento')];
+            if ($codigo == 1451) return ['error' => self::generar_error('Error al insetar','No se pudo agregar el elemento')];
+            if ($codigo == 1169) return ['error' => self::generar_error('Error al insetar','No se pudo agregar el elemento')];
 
             return ['error' => self::generar_error('Error al agregar '+$entity->get_table_name(),'No se pudo agregar el elemento')];
             //return ['error' => 'Fails on insert to db.'];
@@ -145,9 +146,10 @@ abstract class BaseDAO extends CI_Model
 
         $this->db->where($entity->get_primary_key_column_name(), $entity->get_id());
         if(!$this->db->update($entity->get_table_name(), $entity->to_row())) {
+            $codigo = $this->db->error()['code'];
             $this->db->trans_rollback();
             //return ['error' => 'Fails on update to db'];
-            return ['error' => self::generar_error('Error al modificar  '+$entity->get_table_name(), 'No se pudo modificar el elemento' )];
+            return ['error' => self::generar_error('Error al modificar '+$entity->get_table_name(),'No se pudo modificar el elemento')];
         }
 
         $this->after_update($entity);
@@ -174,9 +176,10 @@ abstract class BaseDAO extends CI_Model
         }
         $this->db->where($entity->get_primary_key_column_name(), $entity->get_id());
         if(!$this->db->delete($entity->get_table_name())) {
+            $codigo = $this->db->error()['code'];
             $this->db->trans_rollback();
             //return ['error' => 'Fails on delete to db'];
-            if ($this->db->call_function('mysql_errno') == 1451)
+            if ($codigo == 1451)
                 return['error' => self::generar_error('Error al eliminar  '+$entity->get_table_name(),'No se pudo eliminar ya que '+$entity->get_table_name()+' tiene elementos asociados')];
             return ['error' => self::generar_error('Error al eliminar  '+$entity->get_table_name(), 'No se pudo eliminar el elemento' )];
         }
