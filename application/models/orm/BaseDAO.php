@@ -84,7 +84,7 @@ abstract class BaseDAO extends CI_Model
     public function get_by_id($id)
     {
         $this->do_base_query();
-       // $this->do_filter([$this->entity->get_table_name().".".$this->entity->get_primary_key_column_name() => $id]);
+        // $this->do_filter([$this->entity->get_table_name().".".$this->entity->get_primary_key_column_name() => $id]);
         $this->do_filter([$this->entity->get_primary_key_column_name() => $id]);
 
         return $this->get_result_entities();
@@ -108,7 +108,7 @@ abstract class BaseDAO extends CI_Model
 
         if (!$this->db->insert($entity->get_table_name(), $entity->to_row())) {
             $this->db->trans_rollback();
-            ///foreing key
+            //foreing key
             if ($this->db->_error_number() == 1451) return ['error' => self::generar_error('Error al insetar','No se pudo agregar el elemento')];
             if ($this->db->_error_number() == 1169) return ['error' => self::generar_error('Error al insetar','No se pudo agregar el elemento')];
 
@@ -173,14 +173,14 @@ abstract class BaseDAO extends CI_Model
             return ['error' => $error];
         }
         $this->db->where($entity->get_primary_key_column_name(), $entity->get_id());
+
         if(!$this->db->delete($entity->get_table_name())) {
             $this->db->trans_rollback();
             //return ['error' => 'Fails on delete to db'];
-            if ($this->db->_error_number() == 1451)
+            if ($this->db->_error_number == 1451)
                 return['error' => self::generar_error('Error al eliminar  '+get_table_name(),'No se pudo eliminar ya que '+get_table_name()+' tiene elementos asociados')];
-            return ['error' => self::generar_error('Error al eliminar  '+get_table_name(), 'No se pudo elimar el elemento' )];
+            return ['error' => self::generar_error('Error al eliminar  '+get_table_name(), 'No se pudo eliminar el elemento' )];
         }
-
         $this->after_delete($entity);
 
         $this->db->trans_complete();
@@ -278,7 +278,7 @@ abstract class BaseDAO extends CI_Model
     public function do_base_query()
     {
         $columns = []; $joins = [];
-        self::build_base_query_arrays($this->entity, $columns, $joins);
+        $this->build_base_query_arrays($this->entity, $columns, $joins);
 
         $this->db->select(implode(', ', $columns));
 
@@ -342,14 +342,14 @@ abstract class BaseDAO extends CI_Model
         $results = [];
         foreach ($rows as $row) {
             $object = new $this->entity_class;
-            self::row_to_entity($object, $row, $includes);
+            $this->row_to_entity($object, $row, $includes);
             $results[] = $object;
         }
         return $results;
     }
 
 
-    private static function build_base_query_arrays($entity, &$columns, &$joins, $alias_prefix = '', $foreign_key='') {
+    protected function build_base_query_arrays($entity, &$columns, &$joins, $alias_prefix = '', $foreign_key='') {
         if(!is_array($joins)) $joins = [];
         if(!is_array($columns)) $columns = [];
 
@@ -367,8 +367,6 @@ abstract class BaseDAO extends CI_Model
         foreach ($entity->get_property_column_names() as $column)
             $columns[] = "$alias.$column AS $alias$column";
 
-
-
         foreach ($entity->get_relations_many_to_one() as $relation) {
             $related_entity = new $relation['entity_class_name'];
             $related_foreign_key = $relation['foreign_key_column_name'];
@@ -376,7 +374,7 @@ abstract class BaseDAO extends CI_Model
         }
     }
 
-    public static function row_to_entity(&$entity, $row, $includes = [], $alias_prefix = '') {
+    protected function row_to_entity(&$entity, $row, $includes = [], $alias_prefix = '') {
         $table = $entity->get_table_name();
         $primary_key = $entity->get_primary_key_column_name();
         $alias = $alias_prefix . $table . "_";
@@ -417,7 +415,7 @@ abstract class BaseDAO extends CI_Model
     }
 
 
-    public static function do_one_to_many_query($entity, $relationship_entity, $relationship_property) {
+    protected static function do_one_to_many_query($entity, $relationship_entity, $relationship_property) {
 
     }
 

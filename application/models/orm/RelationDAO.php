@@ -6,6 +6,7 @@
  * Time: 18:33
  */
 
+require_once APPPATH . '/models/orm/BaseDAO.php';
 require_once APPPATH . '/models/relations/AsignaturaCarrera.php';
 require_once APPPATH . '/models/relations/UsuarioGrupo.php';
 
@@ -13,71 +14,18 @@ require_once APPPATH . '/models/relations/UsuarioGrupo.php';
 /**
  * Class Base_DAO
  */
-abstract class RelationDAO extends CI_Model
+abstract class RelationDAO extends BaseDAO
 {
-    protected $entity_class = NULL;
-
-    protected $entity;
-
-    protected $debug = FALSE;
 
     public function __construct($entity_class)
     {
-        parent::__construct();
-        if(empty($entity_class)) throw new Exception("Empty Entity class name!");
-        $this->entity_class = $entity_class;
-        $this->entity = new $entity_class;
-        $this->load->database();
+        parent::__construct($entity_class);
     }
 
-    /**
-     * Realiza una consulta con filtros, ordenamiento, paginación e inclusion
-     * relaciones.
-     * @param array $filters arreglo asociativo de flitros. Cada filtro se
-     * representa por un par clave valor. La clave es una ruta hacia un
-     * atributo junto a un operador de comparación. La ruta se representa por 0
-     * o mas propiedades de Entity relacionados separados por puntos y un
-     * nombre de columna al final. El operador de comparación puede ser =, <,
-     * <=, >, >= o !=. Si se omite éste se sobreentiende =. El valor
-     * correspondiente a cada clave el valor con el que comparar el atributo.
-     * Si se omite el valor (es decir se coloca '') se interpretará la clave
-     * como una condicion literal de la clausula WHERE de sql (usar el modo de
-     * depuración para ver las alias asignadas).
-     * @param array $sorts arreglo asociativo de ordenamientos. Las claves son
-     * rutas a atributos iguales a las de filters aunque sin operador de
-     * comparación. Los valores indican si el ordenamiento debe ser ascendente
-     * o descendente, siendo 'ASC', '+' o '' ascendente y 'DESC' o '-' descendente.
-     * @param array $includes Un arreglo de rutas a subentidades que serán
-     * incluidas en los objetos Entity de resultado.
-     * @param int $page página actual resultados. Si se se devuelve la primera.
-     * @param int $size tamaño de página, en cantidad de resultados. Si se
-     * omite se utiliza un tamaño de 20.
-     * @return array arreglo de Entity
-     */
-    public function query($filters = [], $sorts = [], $includes = [], $likes = [] ,$page = 1, $size = 20)
-    {
-        $this->do_base_query();
-        $this->do_filter($filters);
-        $this->do_like($likes);
-        $this->do_sort($sorts);
-        $this->do_paging($page, $size);
-        return $this->get_result_entities($includes);
+    public function get_by_id($ids) {
+        return null;
     }
 
-    /**
-     * @param $ids ["<realtion_property>"=> <id> ]
-     * @return Entity
-     */
-    /*    public function get_by_id($ids)
-        {
-            $this->do_base_query();
-            $filters = [];
-            foreach ($this->entity->get_relations_many_to_one() as $relation)
-                $filters[] = $this->entity->get_relations_many_to_one()
-                $this->do_filter([$this->entity->get_table_name().".".$this->entity->get_primary_key_column_name() => $id]);
-            return $this->get_result_entities();
-        }
-    */
     /**
      * @param $entity
      * @return array
@@ -96,7 +44,11 @@ abstract class RelationDAO extends CI_Model
 
         if (!$this->db->insert($entity->get_table_name(), $entity->to_row())) {
             $this->db->trans_rollback();
-            return ['error' => 'Fails on insert to db.'];
+            //foreing key
+            if ($this->db->_error_number() == 1451) return ['error' => self::generar_error('Error al insetar','No se pudo agregar el elemento')];
+            if ($this->db->_error_number() == 1169) return ['error' => self::generar_error('Error al insetar','No se pudo agregar el elemento')];
+
+            return ['error' => self::generar_error('Error al agregar '+get_table_name(),'No se pudo agregar el elemento')];
         }
 
         $this->after_insert($entity);
@@ -123,12 +75,11 @@ abstract class RelationDAO extends CI_Model
         }
 
         foreach ($entity->get_relations_many_to_one() as $relation) {
-
             $this->db->where($relation['foreign_key_column_name'], $entity->{$relation['property_name']}->get_id());
         }
         if(!$this->db->update($entity->get_table_name(), $entity->to_row())) {
             $this->db->trans_rollback();
-            return ['error' => 'Fails on update to db'];
+            return ['error' => self::generar_error('Error al modificar  '+get_table_name(), 'No se pudo modificar el elemento' )];
         }
 
         $this->after_update($entity);
@@ -158,7 +109,9 @@ abstract class RelationDAO extends CI_Model
         }
         if(!$this->db->delete($entity->get_table_name())) {
             $this->db->trans_rollback();
-            return ['error' => 'Fails on delete to db'];
+            if ($this->db->_error_number() == 1451)
+                return['error' => self::generar_error('Error al eliminar  '+get_table_name(),'No se pudo eliminar ya que '+get_table_name()+' tiene elementos asociados')];
+            return ['error' => self::generar_error('Error al eliminar  '+get_table_name(), 'No se pudo eliminar el elemento' )];
         }
 
         $this->after_delete($entity);
@@ -168,168 +121,7 @@ abstract class RelationDAO extends CI_Model
         return $entity;
     }
 
-    public function get_total_rows() {
-        $this->db->from($this->entity->get_table_name());
-        return $this->db->count_all_results();
-    }
-
-    /**
-     * Realiza una validación contra la base de datos previa a la inserción.
-     * Si el resultado de la validación es correcto devuelve FALSE. En caso contrario
-     * devuelve un arreglo asociativo con un mensaje de error en la clave 'error' y
-     * opcionalmente un conjunto de datos asociados al error en la clave 'data'.
-     * @param $entity entidad a validar
-     * @return mixed FALSE o array asociativo con información del error
-     */
-    protected abstract function is_invalid_insert($entity);
-
-    /**
-     * Realiza una validación contra la base de datos previa a la modificación.
-     * Si el resultado de la validación es correcto devuelve FALSE. En caso contrario
-     * devuelve un arreglo asociativo con un mensaje de error en la clave 'error' y
-     * opcionalmente un conjunto de datos asociados al error en la clave 'data'.
-     * @param $entity entidad a validar
-     * @return mixed FALSE o array asociativo con información del error
-     */
-    protected abstract function is_invalid_update($entity);
-
-    /**
-     * Realiza una validación contra la base de datos previa a la eliminición.
-     * Si el resultado de la validación es correcto devuelve FALSE. En caso contrario
-     * devuelve un arreglo asociativo con un mensaje de error en la clave 'error' y
-     * opcionalmente un conjunto de datos asociados al error en la clave 'data'.
-     * @param $entity entidad a validar
-     * @return mixed FALSE o array asociativo con información del error
-     */
-    protected abstract function is_invalid_delete($entity);
-
-    /**
-     * @param $entity
-     * @return Entity
-     */
-    protected function before_insert($entity)
-    {
-    }
-
-    /**
-     * @param $entity
-     * @return Entity
-     */
-    protected function after_insert($entity)
-    {
-    }
-
-    /**
-     * @param $entity
-     * @return Entity
-     */
-    protected function before_update($entity)
-    {
-    }
-
-    /**
-     * @param $entity
-     * @return Entity
-     */
-    protected function after_update($entity)
-    {
-    }
-
-    /**
-     * @param $entity
-     * @return Entity
-     */
-    protected function before_delete($entity)
-    {
-    }
-
-    /**
-     * @param $entity
-     * @return Entity
-     */
-    protected function after_delete($entity)
-    {
-    }
-
-    public function set_debug_enabled($enabled) {
-        $this->debug = $enabled;
-    }
-
-    public function do_base_query()
-    {
-        $columns = []; $joins = [];
-        self::build_base_query_arrays($this->entity, $columns, $joins);
-
-        $this->db->select(implode(', ', $columns));
-
-        foreach($joins as $join_table => $join_condition) {
-            if (empty($join_condition)) $this->db->from($join_table);
-            else $this->db->join($join_table, $join_condition, 'left');
-        }
-    }
-
-    public function do_filter($filters)
-    {
-        foreach ($filters as $key => $value){
-            if(empty($value)) $this->db->where($key);
-            else {
-                $exp_path = explode('.', $key);
-                $column = array_pop($exp_path);
-                array_unshift($exp_path, $this->entity->get_table_name());
-                $alias = implode('_', $exp_path) . '_';
-                $field = $alias . '.' . $column;
-                $this->db->where($field, $value);
-            }
-        }
-    }
-
-    public function do_like($likes)
-    {
-        foreach ($likes as $key => $value){
-            if(!empty($value)) {
-                $exp_path = explode('.', $key);
-                $column = array_pop($exp_path);
-                array_unshift($exp_path, $this->entity->get_table_name());
-                $alias = implode('_', $exp_path) . '_';
-                $field = $alias . '.' . $column;
-                $this->db->or_where("LOWER($field) LIKE LOWER('$value')");
-            }
-        }
-    }
-
-    public function do_sort($sorts) {
-        foreach ($sorts as $key => $value) {
-            $exp_path = explode('.', $key);
-            $column = array_pop($exp_path);
-            array_unshift($exp_path, $this->entity->get_table_name());
-            $alias = implode('_', $exp_path) . '_';
-            $field = $alias . '.' . $column;
-            if($value == 'ASC' || $value == '+' || $value == '') {
-                $this->db->order_by($field, 'ASC');
-            }elseif($value == 'DESC' || $value == '-') {
-                $this->db->order_by($field, 'DESC');
-            }
-        }
-    }
-
-    public function do_paging($page, $size) {
-        if( $page > 0 && $size > 0)
-            $this->db->limit($size, ($page-1) * $size);
-    }
-    public function get_result_entities($includes = []) {
-        if($this->debug) return $this->db->get_compiled_select();
-        $rows = $this->db->get()->result_array();
-        $results = [];
-        foreach ($rows as $row) {
-            $object = new $this->entity_class;
-            self::row_to_entity($object, $row, $includes);
-            $results[] = $object;
-        }
-        return $results;
-    }
-
-
-    private static function build_base_query_arrays($entity, &$columns, &$joins, $alias_prefix = '', $foreign_key='') {
+    protected function build_base_query_arrays($entity, &$columns, &$joins, $alias_prefix = '', $foreign_key='') {
         if(!is_array($joins)) $joins = [];
         if(!is_array($columns)) $columns = [];
 
@@ -354,7 +146,7 @@ abstract class RelationDAO extends CI_Model
         }
     }
 
-    public static function row_to_entity(&$entity, $row, $includes = [], $alias_prefix = '') {
+    protected function row_to_entity(&$entity, $row, $includes = [], $alias_prefix = '') {
         $table = $entity->get_table_name();
         $alias = $alias_prefix . $table . "_";
         $columns = $entity->get_property_column_names();
