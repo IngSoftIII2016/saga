@@ -8,11 +8,9 @@ class Usuario extends Entity
     public $apellido;
     public $contraseña;
     public $email;
-    public $recordarme_codigo;
     public $estado;
     public $telefono;
 
-    ////////////////////////////ME FALTA ULTIMA SESSION!!!!!
     /**
      * Retorna el nombre de la tabla correspondiente a ésta Entity
      * @return string Nombre de la tabla
@@ -25,11 +23,10 @@ class Usuario extends Entity
      * Retorna un arreglo de string con los nombres de las columnas que no son claves primarias ni foráneas.
      * @return array columnas
      */
-    ////////////////////////////ME FALTA ULTIMA SESSION!!!!!
 
     public function get_property_column_names()
     {
-        return ['nombre_usuario','nombre', 'apellido', 'contraseña', 'email', 'recordarme_codigo','estado','telefono'];
+        return ['nombre_usuario','nombre', 'apellido', 'contraseña', 'email','estado','telefono'];
     }
     /**
      * @return mixed
@@ -94,7 +91,6 @@ class Usuario extends Entity
         if(isset($data['apellido'])) $this->apellido = $data['apellido'];
         if(isset($data['contraseña'])) $this->contraseña = $data['contraseña'];
         if(isset($data['email'])) $this->email = $data['email'];
-        if(isset($data['recordarme_codigo'])) $this->recordarme_codigo = $data['recordarme_codigo'];
         if(isset($data['estado'])) $this->estado = $data['estado'];
         if(isset($data['telefono'])) $this->telefono = $data['telefono'];
     }
@@ -111,7 +107,6 @@ class Usuario extends Entity
         $data['apellido'] = $this->apellido;
         $data['contraseña'] = $this->contraseña;
         $data['email'] = $this->email;
-        $data['recordarme_codigo'] = $this->recordarme_codigo;
         $data['estado'] = $this->estado;
         $data['telefono'] = $this->telefono;
         return $data;

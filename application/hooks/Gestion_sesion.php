@@ -1,41 +1,112 @@
 <?php defined('BASEPATH') OR exit('No direct script access allowed');
-class Gestion_sesion {
-/*    private $ci;
+require_once APPPATH . '/libraries/JWT.php';
+use \Firebase\JWT\JWT;
+
+class Gestion_sesion
+{
+    private $ci;
+    protected $headers;
+    protected static $encrypt = ['HS256'];
+    protected static $aud = null;
+
+
     public function __construct()
     {
         $this->ci =& get_instance();
-        !$this->ci->load->library(array('ion_auth','form_validation')) ? $this->ci->load->library(array('ion_auth','form_validation')) : false;
+        $this->ci->headers = apache_request_headers();
+        $this->ci->load->model('UsuarioDAO');
+        $this->ci->load->model('UsuarioGrupoDAO');
+        $this->ci->load->model('GrupoDAO');
+        $this->ci->load->library('bcrypt');
+
+
     }
 
-    function index(){
+    function index()
+    {
 
-        if(!$this->ci->ion_auth->logged_in() && $this->ci->uri->segment(1) != 'login'){
-            if ($this->ci->uri->uri_string() != 'api/usuario/login')
-                redirect(base_url('login'));
-        }
-        elseif ($this->ci->ion_auth->logged_in() ){
-            $user = $this->ci->ion_auth->user()->row();
-            $user_active = $user->estado;
+        $url = $_SERVER["REQUEST_URI"];
+        if (strtolower($url) != strtolower("/saga/api/UsuarioEndPoint/login")) {
 
-            if ($user_active==0){
-                $this->ci->session->set_flashdata('message', $this->ci->ion_auth->messages());
-                $logout = $this->ci->ion_auth->logout();
-                redirect('login', 'refresh');
-            }
+            if (!isset($this->ci->headers["authorization"]) || empty($this->ci->headers["authorization"])) {
+                $this->ci->response(['error' => 'No esta autenticado', 'status' => 401], 401);
 
-            if(!$this->ci->ion_auth->is_admin()) {
-                //El acceso permitido para el bedel.
-                $controlador = $this->ci->router->class;
-                $controladores_permitidos = array('planilla','horario','login','edificio');
+            } else {
+                //////////////////////// DESENCRIPTACION///////////////////////////////////////
+                $secret_key = 'Riv1s9x80DA94@';
+                $token = str_replace('"', '', $this->ci->headers["authorization"]);
+                try {
+
+                    $tokenDesencriptado = JWT::decode($token, $secret_key, array('HS256'));
+                } catch (Exception  $e) {
+                    $this->ci->response(['error' => $e->getMessage(), 'status' => 403], 403);
+                }
+
+                /////////////////////////VERIFICACION DE USUARIO Y CONTRASEÑA///////////////////////////////////////
+                $usuario = $this->ci->UsuarioDAO->query(['nombre_usuario' => $tokenDesencriptado->data->usuario]);
+
+                if (count($usuario) !== 1) {
+                    $this->ci->response(['message' => 'Usuario inexistente'], 500);
+                } else {
+                    //Comparar la contraseña de recibida con la contraseña de la base
+                    if (!$this->ci->bcrypt->verify($tokenDesencriptado->data->contraseña , $usuario[0]->contraseña))
+                        $this->ci->response(['message' => 'Contraseña invalida'], 500);
+                }
+                if ($usuario[0]->estado == 0)
+                    $this->ci->response(['message' => 'Usuario inactivo'], 500);
+
+                /////////////////////////VERIFICACION DE DIRECCION IP///////////////////////////////////////
+                if ($tokenDesencriptado->aud !== self::Aud())
+                    $this->ci->response(['message' => 'Invalid user logged in.', 'status' => 401], 401);
+                //////////////////////////////////////////////////////////////////
+			
+				/*
+
+                //Falta ver si el usuario no es administrador
+                //para comprobar el acceso permitido para el bedel.
+
+                $controlador = $_SERVER["PATH_INFO"];
+                $controladores_permitidos = array('/api/aulas','/api/edificios/1','/api/eventos','/api/clases');
 
                 if(!in_array($controlador,$controladores_permitidos)){
-                    if ($this->ci->router->method!=="cambiar_contrasena" && $this->ci->router->method!=="logout"){
-                        $message= $controlador.$this->ci->router->method.'Usted debe ser administrador para acceder a esta pagina. <a href="'.$this->ci->config->config['base_url'].'" >Ir a la planilla</a>';
-                        return show_error($message,500, $heading = 'Restricción de acceso');
-                    }
+					$this->ci->response(['message' => 'Debe poseer permiso de administrador'], 401);
+
                 }
+          */
+								
+				
             }
         }
 
-    }*/
+    }
+
+
+    private static function Aud()
+    {
+        $aud = '';
+
+        if (!empty($_SERVER['HTTP_CLIENT_IP'])) {
+            $aud = $_SERVER['HTTP_CLIENT_IP'];
+        } elseif (!empty($_SERVER['HTTP_X_FORWARDED_FOR'])) {
+            $aud = $_SERVER['HTTP_X_FORWARDED_FOR'];
+        } else {
+            $aud = $_SERVER['REMOTE_ADDR'];
+        }
+
+        $aud .= @$_SERVER['HTTP_USER_AGENT'];
+        $aud .= gethostname();
+
+        return sha1($aud);
+    }
+
+    function getData($token)
+    {
+        return JWT::decode(
+            $token,
+            self::$secret_key,
+            self::$encrypt
+        )->data;
+    }
+
+
 }

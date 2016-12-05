@@ -32,15 +32,15 @@ class GrupoDAO extends BaseDAO {
 		}
 
     protected function is_invalid_delete($grupo){
-        var_dump($grupo->to_row());
+        /*
+		var_dump($grupo->to_row());
         if ( $grupo->nombre=="administrador" || $grupo->nombre=="bedel" ){
 
            return ['error' => self::generar_error('Nombre invalido','Esta prohibido eliminar el grupo '.$grupo->nombre.'.')];
 
-        }else
+        }else */
             return FALSE;
 
     }
-
 
 }
