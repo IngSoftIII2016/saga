@@ -103,7 +103,7 @@ abstract class BaseDAO extends CI_Model
         $error = $this->is_invalid_insert($entity);
         if ($error) {
             $this->db->trans_rollback();
-            return ['error' => $error];
+            return $error;
         }
 
         if (!$this->db->insert($entity->get_table_name(), $entity->to_row())) {
@@ -141,7 +141,7 @@ abstract class BaseDAO extends CI_Model
         $error = $this->is_invalid_update($entity);
         if($error) {
             $this->db->trans_rollback();
-            return ['error' => $error];
+            return $error;
         }
 
         $this->db->where($entity->get_primary_key_column_name(), $entity->get_id());
@@ -172,7 +172,7 @@ abstract class BaseDAO extends CI_Model
         $error =  $this->is_invalid_delete($entity);
         if ($error) {
             $this->db->trans_rollback();
-            return ['error' => $error];
+            return $error;
         }
         $this->db->where($entity->get_primary_key_column_name(), $entity->get_id());
         if(!$this->db->delete($entity->get_table_name())) {
@@ -180,8 +180,8 @@ abstract class BaseDAO extends CI_Model
             $this->db->trans_rollback();
             //return ['error' => 'Fails on delete to db'];
             if ($codigo == 1451)
-                return['error' => self::generar_error('Error al eliminar  '.$entity->get_table_name(),'No se pudo eliminar ya que '.$entity->get_table_name().' tiene elementos asociados')];
-            return ['error' => self::generar_error('Error al eliminar  '.$entity->get_table_name(), 'No se pudo eliminar el elemento' )];
+                return['error' => self::generar_error('Error al eliminar '.$entity->get_table_name(),'No se pudo eliminar ya que '.$entity->get_table_name().' tiene elementos asociados')];
+            return ['error' => self::generar_error('Error al eliminar '.$entity->get_table_name(), 'No se pudo eliminar el elemento' )];
         }
 
         $this->after_delete($entity);

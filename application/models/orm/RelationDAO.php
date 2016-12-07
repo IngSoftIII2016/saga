@@ -39,7 +39,7 @@ abstract class RelationDAO extends BaseDAO
         $error = $this->is_invalid_insert($entity);
         if ($error) {
             $this->db->trans_rollback();
-            return ['error' => $error];
+            return $error;
         }
 
         if (!$this->db->insert($entity->get_table_name(), $entity->to_row())) {
@@ -71,7 +71,7 @@ abstract class RelationDAO extends BaseDAO
         $error = $this->is_invalid_update($entity);
         if($error) {
             $this->db->trans_rollback();
-            return ['error' => $error];
+            return $error;
         }
 
         foreach ($entity->get_relations_many_to_one() as $relation) {
@@ -102,7 +102,7 @@ abstract class RelationDAO extends BaseDAO
         $error =  $this->is_invalid_delete($entity);
         if ($error) {
             $this->db->trans_rollback();
-            return ['error' => $error];
+            return $error;
         }
         foreach ($entity->get_relations_many_to_one() as $relation) {
             $this->db->where($relation['foreign_key_column_name'], $entity->{$relation['property_name']}->get_id());

@@ -25,7 +25,6 @@ class ClaseDAO extends BaseDAO
         $col_eventos = $this->EventoDAO->evento_disponible($entity);
         $colisiones = array_merge($col_clases, $col_eventos);
 
-
         if (count($colisiones) > 0) {
             return [
                 'error' => self::generar_error('Aula Ocupada','El aula seleccionada está ocupada por Clases y/o Eventos en el rango horarios ingresado'),

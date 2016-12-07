@@ -14,7 +14,7 @@ class HorarioDAO extends BaseDAO {
         $this->query(
             [
                 'id !=' => $horario->id,
-                'comision.periodo.id' => $horario->comision->periodo->id,
+                'comision.periodo.id' => $horario->comision->periodo['id'],
                 'dia' => $horario->dia,
                 'aula.id' => $horario->aula->id,
                 'hora_inicio <' => $hora_fin,
