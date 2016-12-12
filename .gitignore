@@ -80,3 +80,4 @@ local.properties
 
 # Vscode    
 .vscode
+.idea/

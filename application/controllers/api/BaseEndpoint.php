@@ -74,7 +74,11 @@ abstract class BaseEndpoint extends REST_Controller
     }
 
     protected function base_delete($id) {
-        $entity = $this->getDAO()->query(['id' => $id], [], [])[0];
+        $entity = new $this->entity_class;
+        $rel_prop = [];
+        foreach ($entity->get_relations_many_to_one() as $rel)
+            $rel_prop[] = $rel['property_name'];
+        $entity = $this->getDAO()->query(['id' => $id], [], $rel_prop)[0];
         if($entity == null)
             $this->response(['error' => "$entity->get_table_name() inexistente"], 404);
         $result = $this->getDAO()->delete($entity);
