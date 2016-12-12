@@ -26,7 +26,7 @@ class Gestion_sesion
     {
 
         $url = $_SERVER["REQUEST_URI"];
-        if (strtolower($url) != strtolower("/saga/api/UsuarioEndPoint/login")) {
+        if (strtolower($url) != strtolower("/saga/api/UsuarioEndpoint/login")) {
 
             if (!isset($this->ci->headers["Authorization"]) || empty($this->ci->headers["Authorization"])) {
                 $this->ci->response(['error' => 'No esta autenticado', 'status' => 401], 401);

@@ -45,8 +45,9 @@ abstract class BaseEndpoint extends REST_Controller
             }
         else {
             $params = $this->parse_params();
-            $entities = $this->getDAO()->query($params['filters'], $params['sorts'], $params['includes'],$params['likes'] ,$params['page'], $params['size']);
-            $this->response( ['data' => $entities, 'rowCount' => $this->getDAO()->get_total_rows()] );
+            $rows = 0;
+            $entities = $this->getDAO()->query($params['filters'], $params['sorts'], $params['includes'],$params['likes'] ,$params['page'], $params['size'], $rows);
+            $this->response( ['data' => $entities, 'rowCount' => $rows] );
         }
     }
 

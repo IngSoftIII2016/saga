@@ -67,8 +67,20 @@ abstract class BaseDAO extends CI_Model
      * omite se utiliza un tamaño de 20.
      * @return array arreglo de Entity
      */
-    public function query($filters = [], $sorts = [], $includes = [], $likes = [] ,$page = 1, $size = 20)
+    public function query($filters = [], $sorts = [], $includes = [], $likes = [] ,$page = 1, $size = 20, &$rows = 0)
     {
+        /*
+        $this->do_base_query();
+        $this->do_filter($filters);
+        $this->do_like($likes);
+*/
+   //     $rows = $this->db->count_all_results($this->entity->get_table_name());
+
+        $this->do_base_query();
+        $this->do_filter($filters);
+        $this->do_like($likes);
+        $rows = $this->db->count_all_results();
+
         $this->do_base_query();
         $this->do_filter($filters);
         $this->do_like($likes);
@@ -192,9 +204,13 @@ abstract class BaseDAO extends CI_Model
     }
 
     public function get_total_rows() {
+        /*
         $this->db->from($this->entity->get_table_name());
         return $this->db->count_all_results();
+        */
+        return $this->db->count_all($this->entity->get_table_name());
     }
+
 
     /**
      * Realiza una validación contra la base de datos previa a la inserción.
@@ -278,13 +294,19 @@ abstract class BaseDAO extends CI_Model
         $this->debug = $enabled;
     }
 
-    public function do_base_query()
-    {
+    public function do_base_query() {
         $columns = []; $joins = [];
         $this->build_base_query_arrays($this->entity, $columns, $joins);
+        $this->do_select($columns);
+        $this->do_joins($joins);
+    }
 
+    public function do_select($columns) {
         $this->db->select(implode(', ', $columns));
+    }
 
+    public function do_joins($joins)
+    {
         foreach($joins as $join_table => $join_condition) {
             if (empty($join_condition)) $this->db->from($join_table);
             else $this->db->join($join_table, $join_condition, 'left');

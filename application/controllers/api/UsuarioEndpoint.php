@@ -59,15 +59,11 @@ class UsuarioEndpoint extends BaseEndpoint
 
         if (count($usuario) !== 1) {
             $this->response(['message' => 'Usuario inexistente'], 500);
-        } else {
-            //Comparar la contraseña de recibida con la contraseña de la base
-            if (!$this->bcrypt->verify($contraseña, $usuario[0]->contraseña))
-                $this->response(['message' => 'Contraseña invalida'], 500);
-        }
-        if ($usuario[0]->estado == 0)
+        } else if (!$this->bcrypt->verify($contraseña, $usuario[0]->contraseña)) {
+            $this->response(['message' => 'Contraseña invalida'], 500);
+        } else if ($usuario[0]->estado == 0) {
             $this->response(['message' => 'Usuario inactivo'], 500);
-        else {
-
+        } else {
             $time = time();
 			//604800 seg = semana
             $token = array(

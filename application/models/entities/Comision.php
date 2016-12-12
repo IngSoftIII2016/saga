@@ -134,7 +134,7 @@ class Comision extends Entity
         $data['nombre'] = $this->nombre;
         $data['Asignatura_id'] = $this->asignatura->get_id();
         $data['Periodo_id'] = $this->periodo->get_id();
-        $data['Docente_id'] = $this->periodo->get_id();
+        $data['Docente_id'] = $this->docente->get_id();
         return $data;
     }
 
