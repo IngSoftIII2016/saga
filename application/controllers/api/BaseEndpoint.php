@@ -62,6 +62,7 @@ abstract class BaseEndpoint extends REST_Controller
         }
     }
 
+
     protected function base_put() {
         $json = $this->put('data');
         $entity = $this->json_to_entity($json);
@@ -90,6 +91,8 @@ abstract class BaseEndpoint extends REST_Controller
     }
 
     protected function json_to_entity($json) {
+        return self::array_to_entity_rec($json, $this->entity_class);
+        /*
         $entity = new $this->entity_class;
 
         $columns = $entity->get_property_column_names();
@@ -102,6 +105,26 @@ abstract class BaseEndpoint extends REST_Controller
             $related_entity = new $relation['entity_class_name'];
             $related_entity->from_row($json[$relation['property_name']]);
             $data[$relation['property_name']] = $related_entity;
+        }
+        $entity->from_row($data);
+        return $entity;
+        */
+    }
+
+    protected static function array_to_entity_rec($array, $entity_class) {
+        $entity = new $entity_class;
+
+        $columns = $entity->get_property_column_names();
+        array_unshift($columns, $entity->get_primary_key_column_name());
+
+        $data = [];
+        foreach ($columns as $column)
+            $data[$column] = $array[$column];
+
+        foreach($entity->get_relations_many_to_one() as $relation) {
+            if(isset($array[$relation['property_name']]))
+                $data[$relation['property_name']] =
+                    self::array_to_entity_rec($array[$relation['property_name']], $relation['entity_class_name']);
         }
         $entity->from_row($data);
         return $entity;

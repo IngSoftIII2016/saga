@@ -69,13 +69,6 @@ abstract class BaseDAO extends CI_Model
      */
     public function query($filters = [], $sorts = [], $includes = [], $likes = [] ,$page = 1, $size = 20, &$rows = 0)
     {
-        /*
-        $this->do_base_query();
-        $this->do_filter($filters);
-        $this->do_like($likes);
-*/
-   //     $rows = $this->db->count_all_results($this->entity->get_table_name());
-
         $this->do_base_query();
         $this->do_filter($filters);
         $this->do_like($likes);

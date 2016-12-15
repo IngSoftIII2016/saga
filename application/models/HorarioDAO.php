@@ -11,17 +11,21 @@ class HorarioDAO extends BaseDAO {
     public function get_colisiones($horario) {
         $hora_fin = date("H:i:s", strtotime($horario->hora_inicio) +
             strtotime($horario->duracion) - strtotime("00:00:00"));
-        $this->query(
-            [
-                'id !=' => $horario->id,
-                'comision.periodo.id' => $horario->comision->periodo['id'],
-                'dia' => $horario->dia,
-                'aula.id' => $horario->aula->id,
-                'hora_inicio <' => $hora_fin,
-                // al dejar el valor vacio, la clave es evaluada como una condicion WHERE en SQL unida al resto con AND.
-                // Hay que tener en cuenta los alias que genera BaseDAO. horario_ horario_comision_asignatura_
-                "(SELECT ADDTIME(horario_.hora_inicio, horario_.duracion)) > '$horario->hora_inicio'" => ''
-            ],
+
+        $filtros = [
+            'comision.periodo.id' => $horario->comision->periodo->id,
+            'dia' => $horario->dia,
+            'aula.id' => $horario->aula->id,
+            'hora_inicio <' => $hora_fin,
+            // al dejar el valor vacio, la clave es evaluada como una condicion WHERE en SQL unida al resto con AND.
+            // Hay que tener en cuenta los alias que genera BaseDAO. horario_ horario_comision_asignatura_
+            "(SELECT ADDTIME(horario_.hora_inicio, horario_.duracion)) > '$horario->hora_inicio'" => ''
+        ];
+        if(isset($horario->id))
+            $filtros['id !='] = $horario->id;
+
+        return $this->query(
+            $filtros,
             [],
             ['comision.asignatura']
         );
@@ -55,7 +59,7 @@ class HorarioDAO extends BaseDAO {
 
         $end = DateTime::createFromFormat("Y-m-d", $horario->comision->periodo->fecha_fin);
 
-        if($start->diff($end)->invert==0 )
+        if($start->diff($end)->invert == 1)
             throw new Exception("Fuera del periodo");
 
         $interval = DateInterval::createFromDateString('1 day');
@@ -88,7 +92,7 @@ class HorarioDAO extends BaseDAO {
             $start = DateTime::createFromFormat("Y-m-d", $horario->comision->periodo->fecha_inicio);
         $end = DateTime::createFromFormat("Y-m-d", $horario->comision->periodo->fecha_fin);
 
-        if($start->diff($end)->invert==0 )
+        if($start->diff($end)->invert == 1 )
             throw new Exception("Fuera del periodo");
 
         $this->db->where('Horario_id', $horario->id);
