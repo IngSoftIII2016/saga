@@ -19,7 +19,7 @@ class Accion extends Entity
      */
     public function get_table_name()
     {
-       return "sccion";
+       return "accion";
     }
 
     /**
