@@ -6,10 +6,9 @@ class Usuario extends Entity
     public $nombre_usuario;
     public $nombre;
     public $apellido;
-    public $contraseña;
+    public $password;
     public $email;
     public $estado;
-    public $telefono;
 
     /**
      * Retorna el nombre de la tabla correspondiente a ésta Entity
@@ -26,7 +25,7 @@ class Usuario extends Entity
 
     public function get_property_column_names()
     {
-        return ['nombre_usuario','nombre', 'apellido', 'contraseña', 'email','estado','telefono'];
+        return ['nombre_usuario','nombre', 'apellido', 'password', 'email','estado'];
     }
     /**
      * @return mixed
@@ -89,10 +88,9 @@ class Usuario extends Entity
 	    if(isset($data['nombre_usuario'])) $this->nombre_usuario = $data['nombre_usuario'];
         if(isset($data['nombre'])) $this->nombre = $data['nombre'];
         if(isset($data['apellido'])) $this->apellido = $data['apellido'];
-        if(isset($data['contraseña'])) $this->contraseña = $data['contraseña'];
+        if(isset($data['password'])) $this->contraseña = $data['password'];
         if(isset($data['email'])) $this->email = $data['email'];
         if(isset($data['estado'])) $this->estado = $data['estado'];
-        if(isset($data['telefono'])) $this->telefono = $data['telefono'];
     }
     /**
      * Devuelve un arreglo asociativo con una representación de ésta instancia de la Entity, cuyas claves coinciden
@@ -105,10 +103,9 @@ class Usuario extends Entity
 		$data['nombre_usuario']= $this->nombre_usuario;
         $data['nombre'] = $this->nombre;
         $data['apellido'] = $this->apellido;
-        $data['contraseña'] = $this->contraseña;
+        $data['password'] = $this->password;
         $data['email'] = $this->email;
         $data['estado'] = $this->estado;
-        $data['telefono'] = $this->telefono;
         return $data;
     }
 }

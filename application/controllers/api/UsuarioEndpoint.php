@@ -53,29 +53,89 @@ class UsuarioEndpoint extends BaseEndpoint
     public function login_post()
     {
         $json = $this->post('data');
-        $nombre_usuario = $json['usuario'];
-        $contraseña = $json['contraseña'];
-        $usuario = $this->getDAO()->query(['nombre_usuario' => $nombre_usuario]);
+
+        try {
+            $email = $json['usuario'];
+            $contraseña = $json['contraseña'];
+            $usuario = $this->getDAO()->query(['email' => $email]);
+
+            if (count($usuario) !== 1) {
+                $this->response(['message' => 'Usuario inexistente'], 500);
+            } else if (!$this->bcrypt->verify($contraseña, $usuario[0]->contraseña)) {
+                $this->response(['message' => 'Contraseña invalida'], 500);
+            } else if ($usuario[0]->estado == 0) {
+                $this->response(['message' => 'Usuario inactivo'], 500);
+            } else {
+                $time = time();
+                // 43200 seg = 12 horas
+                $token = array(
+                    'exp' => $time + (43200),
+                    'aud' => self::Aud(),
+                    'data' => $json
+                );
+
+                $jwt = JWT::encode($token, self::$secret_key);
+
+                $this->response(['body' => ['token' => $jwt, 'usuario' => $usuario[0]->nombre_usuario , 'nombre_apellido'=>$usuario[0]->nombre.' '.$usuario[0]->apellido]], 200);
+            }
+        } catch (Exception $e) {
+            $this->response(['message' => $json], 500);
+        }
+    }
+
+    public function reset_pass_post() {
+        $this->load->library("email");
+        $json = $this->post('data');
+
+        $usuario = $this->getDAO()->query(['email' => $email]);
 
         if (count($usuario) !== 1) {
             $this->response(['message' => 'Usuario inexistente'], 500);
-        } else if (!$this->bcrypt->verify($contraseña, $usuario[0]->contraseña)) {
-            $this->response(['message' => 'Contraseña invalida'], 500);
-        } else if ($usuario[0]->estado == 0) {
-            $this->response(['message' => 'Usuario inactivo'], 500);
         } else {
-            $time = time();
-			//604800 seg = semana
-            $token = array(
-                'exp' => $time + (604800),
-                'aud' => self::Aud(),
-                'data' => $json
+            $pass = get_random_password();
+            $usuario[0]->email = $this->encriptar($pass);
+
+            //configuracion para gmail
+            $configGmail = array(
+                'protocol' => 'smtp',
+                'smtp_host' => 'ssl://smtp.gmail.com',
+                'smtp_port' => 465,
+                'smtp_user' => 'noreplysagaingiii',
+                'smtp_pass' => 'ing3SAGA',
+                'mailtype' => 'html',
+                'charset' => 'utf-8',
+                'newline' => "\r\n"
             );
 
-            $jwt = JWT::encode($token, self::$secret_key);
+            //cargamos la configuración para enviar con gmail
+            $this->email->initialize($configGmail);
 
-            $this->response(['body' => ['token' => $jwt, 'usuario' => $usuario[0]->nombre_usuario , 'nombre_apellido'=>$usuario[0]->nombre.' '.$usuario[0]->apellido]], 200);
+            $this->email->from('Administracion y Gestion de Aulas UNRN');
+            $this->email->to($usuario[0]->email);
+            $this->email->subject('Contraseña Nueva');
+            $this->email->message('<h2>Este mensaje es egenerado automaticamente</h2><hr><br> Contraseña: ' , $pass);
+            $this->email->send();
         }
+    }
+
+    function get_random_password($chars_min=6, $chars_max=8, $use_upper_case=true, $include_numbers=true, $include_special_chars=true)
+    {
+        $length = rand($chars_min, $chars_max);
+        $selection = 'aeuoyibcdfghjklmnpqrstvwxz';
+        if($include_numbers) {
+            $selection .= "1234567890";
+        }
+        if($include_special_chars) {
+            $selection .= "@#$?";
+        }
+
+        $password = "";
+        for($i=0; $i<$length; $i++) {
+            $current_letter = $use_upper_case ? (rand(0,1) ? strtoupper($selection[(rand() % strlen($selection))]) : $selection[(rand() % strlen($selection))]) : $selection[(rand() % strlen($selection))];
+            $password .=  $current_letter;
+        }
+
+        return $password;
     }
 
     private static function Aud()
@@ -105,8 +165,7 @@ class UsuarioEndpoint extends BaseEndpoint
     public function usuarios_post()
     {
         $json = $this->post('data');
-        $contraseña_encrypt= $this->encriptar($json['contrasenia']);
-         $json['contraseña']=$contraseña_encrypt;
+        $json['contraseña']= $this->encriptar($json['contrasenia']);
         $entity = $this->json_to_entity($json);
         $result = $this->getDAO()->insert($entity);
         if (array_key_exists('error', $result)) {
