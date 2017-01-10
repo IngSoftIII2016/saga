@@ -19,10 +19,39 @@ INSERT INTO `gestion_aulas`.`rol` (`nombre`) VALUES ('bedel');
 INSERT INTO `gestion_aulas`.`rol` (`nombre`) VALUES ('alumno');
 
 -- -----------------------------------------------------
+-- INSERT Table `Usuario`
+-- -----------------------------------------------------
+
+DROP TABLE IF EXISTS `usuario`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `usuario` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `password` varchar(255) NOT NULL,
+  `email` varchar(100) NOT NULL,
+  `estado` tinyint(1) unsigned DEFAULT NULL,
+  `nombre` varchar(50) DEFAULT NULL,
+  `apellido` varchar(50) DEFAULT NULL,
+  `nombre_usuario` varchar(45) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `usuario`
+--
+
+LOCK TABLES `usuario` WRITE;
+/*!40000 ALTER TABLE `usuario` DISABLE KEYS */;
+INSERT INTO `usuario` VALUES (1,'$2y$08$GjNYMBqLQ5e08LQtG5R/WOpK51JYTkkQZJal3Tj9F96dxWot.QqxK','administrador',1,'administrador','saga','administrador');
+/*!40000 ALTER TABLE `usuario` ENABLE KEYS */;
+UNLOCK TABLES;
+
+-- -----------------------------------------------------
 -- COLUMN `rol` Table `gestion_aulas`.`usuario`
 -- -----------------------------------------------------
 
-ALTER TABLE `gestion_aulas`.`usuario` ADD COLUMN `rol` INT NOT NULL AFTER `phone`;
+ALTER TABLE `gestion_aulas`.`usuario` ADD COLUMN `rol` INT NOT NULL AFTER `nombre_usuario`;
 
 -- -----------------------------------------------------
 -- UPDATE roles a usuarios
