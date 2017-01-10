@@ -87,15 +87,28 @@ class UsuarioEndpoint extends BaseEndpoint
         $this->load->library("email");
         $json = $this->post('data');
 
-        $usuario = $this->getDAO()->query(['email' => $email]);
-
+        //obtengo el usuario por el email
+        $usuario = $this->getDAO()->query(['email' => $json['email']]);
 
         if (count($usuario) !== 1) {
             $this->response(['message' => 'Usuario inexistente'], 500);
         } else {
+
+            //genera contraseña aleatoria
             $pass = get_random_password();
+
+            //encripto el pass y se lo seteo al usuario
             $usuario[0]->email = $this->encriptar($pass);
 
+            //genero la entity del usuario
+            $entity = $this->load->model(Usuario);
+
+            //cargo los datos en la entity
+            $entity->from_row($usuario[0]);
+
+            //actualiso los datos
+            $this->getDAO()->update($entity);
+            
             //configuracion para gmail
             $configGmail = array(
                 'protocol' => 'smtp',
