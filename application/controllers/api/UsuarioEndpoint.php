@@ -98,7 +98,7 @@ class UsuarioEndpoint extends BaseEndpoint
             $pass = get_random_password();
 
             //encripto el pass y se lo seteo al usuario
-            $usuario[0]->email = $this->encriptar($pass);
+            $usuario[0]->password = $this->encriptar($pass);
 
             //genero la entity del usuario
             $entity = $this->load->model(Usuario);
@@ -108,7 +108,7 @@ class UsuarioEndpoint extends BaseEndpoint
 
             //actualiso los datos
             $this->getDAO()->update($entity);
-            
+
             //configuracion para gmail
             $configGmail = array(
                 'protocol' => 'smtp',
@@ -125,7 +125,7 @@ class UsuarioEndpoint extends BaseEndpoint
             $this->email->initialize($configGmail);
 
             $this->email->from('Administracion y Gestion de Aulas UNRN');
-            $this->email->to($usuario[0]->email);
+            $this->email->to($json['email']);
             $this->email->subject('Contraseña Nueva');
             $this->email->message('<h2>Este mensaje es egenerado automaticamente</h2><hr><br> Contraseña: ' , $pass);
             $this->email->send();
