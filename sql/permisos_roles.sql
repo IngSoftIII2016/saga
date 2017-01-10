@@ -72,3 +72,10 @@ CREATE  TABLE `gestion_aulas`.`accion` (
   ON UPDATE NO ACTION
 , ADD INDEX `fk_accion_has_rol_accion1_idx` (`Accion_id` ASC) 
 , ADD INDEX `fk_accion_has_rol_rol1_idx` (`Rol_id` ASC) ;
+
+
+-- -----------------------------------------------------
+-- COLUMN `recurso` Table `gestion_aulas`.`accion`
+-- -----------------------------------------------------
+
+ALTER TABLE `gestion_aulas`.`accion` ADD COLUMN `recurso` VARCHAR(45) NULL  AFTER `metodo` ;
