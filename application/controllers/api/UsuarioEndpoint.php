@@ -89,6 +89,7 @@ class UsuarioEndpoint extends BaseEndpoint
 
         $usuario = $this->getDAO()->query(['email' => $email]);
 
+
         if (count($usuario) !== 1) {
             $this->response(['message' => 'Usuario inexistente'], 500);
         } else {

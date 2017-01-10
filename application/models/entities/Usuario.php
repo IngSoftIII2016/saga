@@ -107,5 +107,6 @@ class Usuario extends Entity
         $data['email'] = $this->email;
         $data['estado'] = $this->estado;
         return $data;
+
     }
 }
