@@ -9,6 +9,8 @@ require_once APPPATH . '/models/orm/Relation.php';
  */
 class AccionRol extends Relation
 {
+    public $accion;
+    public $rol;
 
     /**
      * Retorna el nombre de la tabla correspondiente a ésta Relacion
@@ -51,6 +53,8 @@ class AccionRol extends Relation
     public function from_row($data)
     {
         // TODO: Implement from_row() method.
+        if(isset($data['accion'])) $this->asignatura = $data['accion'];
+        if(isset($data['rol'])) $this->carrera = $data['rol'];
     }
 
     /**
@@ -61,5 +65,8 @@ class AccionRol extends Relation
     public function to_row()
     {
         // TODO: Implement to_row() method.
+        $data['Accion_id'] = $this->accion->get_id();
+        $data['Rol_id'] = $this->rol->get_id();
+        return $data;
     }
 }
