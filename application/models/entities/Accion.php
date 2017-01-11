@@ -28,7 +28,7 @@ class Accion extends Entity
      */
     public function get_property_column_names()
     {
-        // TODO: Implement get_property_column_names() method.
+        return ['url', 'metodo', 'recurso'];
     }
 
     /**
@@ -36,7 +36,7 @@ class Accion extends Entity
      */
     public function get_relations_one_to_one()
     {
-        // TODO: Implement get_relations_one_to_one() method.
+        return [];
     }
 
     /**
@@ -49,8 +49,7 @@ class Accion extends Entity
      */
     public function get_relations_many_to_one()
     {
-        // TODO: Implement get_relations_many_to_one() method.
-
+        return [];
     }
 
     /**
@@ -58,7 +57,7 @@ class Accion extends Entity
      */
     public function get_relations_one_to_many()
     {
-        // TODO: Implement get_relations_one_to_many() method.
+        return [];
     }
 
     /**
@@ -66,7 +65,7 @@ class Accion extends Entity
      */
     public function get_relations_many_to_many()
     {
-        // TODO: Implement get_relations_many_to_many() method.
+        return [];
     }
 
     /**

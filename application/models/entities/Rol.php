@@ -12,6 +12,9 @@ class Rol extends Entity
     public $id;
     public $nombre;
 
+    // lazy and manual loaded
+    public $acciones;
+
     /**
      * Retorna el nombre de la tabla correspondiente a ésta Entity
      * @return string Nombre de la tabla
@@ -37,7 +40,7 @@ class Rol extends Entity
      */
     public function get_relations_one_to_one()
     {
-        // TODO: Implement get_relations_one_to_one() method.
+        return [];
     }
 
     /**
@@ -50,7 +53,7 @@ class Rol extends Entity
      */
     public function get_relations_many_to_one()
     {
-        // TODO: Implement get_relations_many_to_one() method.
+        return [];
     }
 
     /**
@@ -58,7 +61,7 @@ class Rol extends Entity
      */
     public function get_relations_one_to_many()
     {
-        // TODO: Implement get_relations_one_to_many() method.
+        return [];
     }
 
     /**
@@ -66,7 +69,7 @@ class Rol extends Entity
      */
     public function get_relations_many_to_many()
     {
-        // TODO: Implement get_relations_many_to_many() method.
+        return [];
     }
 
     /**

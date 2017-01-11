@@ -22,6 +22,14 @@ class AccionRol extends Relation
     }
 
     /**
+     * Retorna un arreglo de string con los nombres de las columnas que no son claves primarias ni foráneas.
+     * @return array columnas
+     */
+    public function get_property_column_names() {
+        return [];
+    }
+
+    /**
      * Retorna un arreglo de las entidades muchos a uno que posee ésta Relacion.
      * Cada relación se representa con un arreglo asociativo que contiene las siguientes claves:
      *  - entity_class_name : string Fully qualifiqued Name de la clase entity correspondiente a la entidad destino
@@ -34,7 +42,7 @@ class AccionRol extends Relation
         return [
             [
                 'entity_class_name' => 'Accion',
-                'foreign_key_column_name' => 'Accion',
+                'foreign_key_column_name' => 'Accion_id',
                 'property_name' => 'accion'
             ],
             [
@@ -52,9 +60,8 @@ class AccionRol extends Relation
      */
     public function from_row($data)
     {
-        // TODO: Implement from_row() method.
-        if(isset($data['accion'])) $this->asignatura = $data['accion'];
-        if(isset($data['rol'])) $this->carrera = $data['rol'];
+        if(isset($data['accion'])) $this->accion = $data['accion'];
+        if(isset($data['rol'])) $this->rol = $data['rol'];
     }
 
     /**
@@ -64,7 +71,6 @@ class AccionRol extends Relation
      */
     public function to_row()
     {
-        // TODO: Implement to_row() method.
         $data['Accion_id'] = $this->accion->get_id();
         $data['Rol_id'] = $this->rol->get_id();
         return $data;

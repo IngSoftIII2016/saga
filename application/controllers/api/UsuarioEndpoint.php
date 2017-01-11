@@ -20,30 +20,24 @@ use \Firebase\JWT\JWT;
  */
 class UsuarioEndpoint extends BaseEndpoint
 {
-    protected static $secret_key = 'Riv1s9x80DA94@';
+    //protected static $secret_key = 'Riv1s9x80DA94@';
 
     function __construct()
     {
         // Construct the parent class
         parent::__construct('Usuario');
-        $this->load->model('Login_Model');
+//        $this->load->model('Login_Model');
         $this->load->model('UsuarioDAO');
-        $this->load->library('bcrypt');
+//        $this->load->library('bcrypt');
 
-        $this->load->library(array('ion_auth', 'form_validation'));
+//        $this->load->library(array('ion_auth', 'form_validation'));
     }
 
     protected function getDAO()
     {
         return $this->UsuarioDAO;
     }
-
-    public function index($id)
-    {
-        var_dump($id);
-    }
-
-
+/*
     private function encriptar($contraseña)
     {
         $this->load->library('encrypt');
@@ -170,6 +164,7 @@ class UsuarioEndpoint extends BaseEndpoint
         return sha1($aud);
     }
 
+*/
 
     public function usuarios_get($id = null)
     {

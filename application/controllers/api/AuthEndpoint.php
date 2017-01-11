@@ -7,8 +7,11 @@ require_once APPPATH . '/controllers/api/BaseEndpoint.php';
 require_once APPPATH . '/libraries/JWT.php';
 use \Firebase\JWT\JWT;
 
-class AutenticacionEndpont extends BaseEndpoint
+class AuthEndpoint extends BaseEndpoint
 {
+
+    protected static $secret_key = 'Riv1s9x80DA94@';
+
     function __construct()
     {
         // Construct the parent class
@@ -16,6 +19,7 @@ class AutenticacionEndpont extends BaseEndpoint
         $this->load->model('Login_Model');
         $this->load->model('UsuarioDAO');
         $this->load->model('AccionDAO');
+        $this->load->model('AccionRolDAO');
         $this->load->library('bcrypt');
 
         $this->load->library(array('ion_auth', 'form_validation'));
@@ -31,31 +35,37 @@ class AutenticacionEndpont extends BaseEndpoint
         $json = $this->post('data');
 
         try {
-            $email = $json['usuario'];
-            $contraseña = $json['contraseña'];
-            $usuario = $this->getDAO()->query(['email' => $email]);
+            $email = $json['usuario']; // cambiar la propiedad json a email
+            $contraseña = $json['contraseña']; // cambiar la propiedad json a pass
+            $usuario = $this->getDAO()->query(['email' => $email], [], ['rol']);
 
-            if (count($usuario) !== 1) {
-                $this->response(['message' => 'Usuario inexistente'], 500);
-            } else if (!$this->bcrypt->verify($contraseña, $usuario[0]->contraseña)) {
-                $this->response(['message' => 'Contraseña invalida'], 500);
-            } else if ($usuario[0]->estado == 0) {
-                $this->response(['message' => 'Usuario inactivo'], 500);
+            if (count($usuario) !== 1){
+                $this->response(format_error('Usuario Inexistente', 'El correo electronico ingresado no corresponde a ningun usuario registrado'), 401);
+            } else if (!$this->bcrypt->verify($contraseña, $usuario[0]->password)) {
+                $this->response(format_error('Contraseña invalida', 'La contraseña ingresada es incorrecta'), 401);
+//            } else if ($usuario[0]->estado == 0) {
+  //              $this->response(format_error('Usuario inactivo', 'Su usuario ha sido inhabilitado temporalmente'), 401);
             } else {
+                $usuario = $usuario[0];
+                //var_dump($usuario);
+                $usuario->rol->acciones = [];
+                $ars = $this->AccionRolDAO->query(['rol.id' => $usuario->rol->id], [], ['accion']);
+                foreach ($ars as $ar)
+                    $usuario->rol->acciones[] = $ar->accion;
                 $time = time();
                 // 43200 seg = 12 horas
                 $token = array(
                     'exp' => $time + (43200),
                     'aud' => self::Aud(),
-                    'data' => $json
+                    'data' => $usuario
                 );
 
                 $jwt = JWT::encode($token, self::$secret_key);
 
-                $this->response(['body' => ['token' => $jwt, 'usuario' => $usuario[0]->nombre_usuario , 'nombre_apellido'=>$usuario[0]->nombre.' '.$usuario[0]->apellido]], 200);
+                $this->response(['body' => ['token' => $jwt, 'usuario' => $usuario->nombre_usuario , 'nombre_apellido'=>$usuario->nombre.' '.$usuario->apellido]], 200);
             }
         } catch (Exception $e) {
-            $this->response(['message' => $json], 500);
+            $this->response(format_error('Error al construir token', $e->getMessage()) , 500);
         }
     }
 
@@ -67,11 +77,11 @@ class AutenticacionEndpont extends BaseEndpoint
         $usuario = $this->getDAO()->query(['email' => $json['email']]);
 
         if (count($usuario) !== 1) {
-            $this->response(['message' => 'Usuario inexistente'], 500);
+            $this->response(['message' => 'Usuario inexistente'], 404);
         } else {
 
             //genera contraseña aleatoria
-            $pass = get_random_password();
+            $pass = $this->get_random_password();
 
             //encripto el pass y se lo seteo al usuario
             $usuario[0]->password = $this->encriptar($pass);
@@ -103,9 +113,29 @@ class AutenticacionEndpont extends BaseEndpoint
             $this->email->from('Administracion y Gestion de Aulas UNRN');
             $this->email->to($json['email']);
             $this->email->subject('Contraseña Nueva');
-            $this->email->message('<h2>Este mensaje es egenerado automaticamente</h2><hr><br> Contraseña: ' , $pass);
+            $this->email->message('<h2>Este mensaje es generado automaticamente</h2><hr><br> Contraseña: ' , $pass);
             $this->email->send();
         }
+    }
+
+    function get_random_password($chars_min=6, $chars_max=8, $use_upper_case=true, $include_numbers=true, $include_special_chars=true)
+    {
+        $length = rand($chars_min, $chars_max);
+        $selection = 'aeuoyibcdfghjklmnpqrstvwxz';
+        if($include_numbers) {
+            $selection .= "1234567890";
+        }
+        if($include_special_chars) {
+            $selection .= "@#$?";
+        }
+
+        $password = "";
+        for($i=0; $i<$length; $i++) {
+            $current_letter = $use_upper_case ? (rand(0,1) ? strtoupper($selection[(rand() % strlen($selection))]) : $selection[(rand() % strlen($selection))]) : $selection[(rand() % strlen($selection))];
+            $password .=  $current_letter;
+        }
+
+        return $password;
     }
 
     public function acciones_post()
@@ -124,6 +154,24 @@ class AutenticacionEndpont extends BaseEndpoint
          catch (Exception $e) {
             $this->response(['message' => $json], 500);
         }
+    }
+
+    private static function Aud()
+    {
+        $aud = '';
+
+        if (!empty($_SERVER['HTTP_CLIENT_IP'])) {
+            $aud = $_SERVER['HTTP_CLIENT_IP'];
+        } elseif (!empty($_SERVER['HTTP_X_FORWARDED_FOR'])) {
+            $aud = $_SERVER['HTTP_X_FORWARDED_FOR'];
+        } else {
+            $aud = $_SERVER['REMOTE_ADDR'];
+        }
+
+        $aud .= @$_SERVER['HTTP_USER_AGENT'];
+        $aud .= gethostname();
+
+        return sha1($aud);
     }
 
 }

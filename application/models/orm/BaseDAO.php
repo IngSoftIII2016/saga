@@ -6,6 +6,7 @@
  * Time: 18:33
  */
 
+require_once APPPATH . '/models/entities/Accion.php';
 require_once APPPATH . '/models/entities/Asignatura.php';
 require_once APPPATH . '/models/entities/Aula.php';
 require_once APPPATH . '/models/entities/Carrera.php';
@@ -19,6 +20,7 @@ require_once APPPATH . '/models/entities/Horario.php';
 require_once APPPATH . '/models/entities/Localidad.php';
 require_once APPPATH . '/models/entities/Periodo.php';
 require_once APPPATH . '/models/entities/Recurso.php';
+require_once APPPATH . '/models/entities/Rol.php';
 require_once APPPATH . '/models/entities/Sede.php';
 require_once APPPATH . '/models/entities/TipoRecurso.php';
 require_once APPPATH . '/models/entities/Usuario.php';
@@ -439,11 +441,10 @@ abstract class BaseDAO extends CI_Model
 
 
     public static function generar_error($title, $detail) {
-        $error = [
+        return [
             'title' => $title,
             'detail' => $detail
         ];
-        return $error;
     }
 
 }

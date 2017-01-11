@@ -26,7 +26,7 @@ class Usuario extends Entity
 
     public function get_property_column_names()
     {
-        return ['nombre_usuario','nombre', 'apellido', 'password', 'email','estado', 'rol'];
+        return ['nombre_usuario','nombre', 'apellido', 'password', 'email','estado'];
     }
     /**
      * @return mixed
@@ -47,7 +47,13 @@ class Usuario extends Entity
      */
     public function get_relations_many_to_one()
     {
-        return [];
+        return [
+            [
+                'entity_class_name' => 'Rol',
+                'foreign_key_column_name' => 'rol',
+                'property_name' => 'rol'
+            ]
+        ];
 
     }
     /**
@@ -64,14 +70,7 @@ class Usuario extends Entity
      */
     public function get_relations_many_to_many()
     {
-        return [
-        		[
-        		 'entity_class_name' => 'Grupo',
-        		 'junction_table' => 'usuario_grupo',
-        		 'this_foreign_key' => 'usuario_id',
-        		 'other_foreign_key' => 'grupo_id'
-        		 ]
-        ];
+        return [];
     }
     public function get_id()
     {
@@ -89,10 +88,10 @@ class Usuario extends Entity
 	    if(isset($data['nombre_usuario'])) $this->nombre_usuario = $data['nombre_usuario'];
         if(isset($data['nombre'])) $this->nombre = $data['nombre'];
         if(isset($data['apellido'])) $this->apellido = $data['apellido'];
-        if(isset($data['password'])) $this->contraseña = $data['password'];
+        if(isset($data['password'])) $this->password = $data['password'];
         if(isset($data['email'])) $this->email = $data['email'];
         if(isset($data['estado'])) $this->estado = $data['estado'];
-        if(isset($data['rol'])) $this->estado = $data['rol'];
+        if(isset($data['rol'])) $this->rol = $data['rol'];
     }
     /**
      * Devuelve un arreglo asociativo con una representación de ésta instancia de la Entity, cuyas claves coinciden
@@ -108,7 +107,7 @@ class Usuario extends Entity
         $data['password'] = $this->password;
         $data['email'] = $this->email;
         $data['estado'] = $this->estado;
-        $data['rol'] = $this->rol;
+        $data['rol'] = $this->rol->id;
         return $data;
 
     }
