@@ -114,11 +114,11 @@ class AutenticacionEndpont extends BaseEndpoint
 
         try {
             $email = $json['usuario'];
-            //$contraseña = $json['contraseña'];
-            $usuario = $this->getDAO()->query(['email' => $email],[],['rol.accion']);
+
+           $acciones = $this->AccionDAO->$this->query(['rol.usuario.email' => $email]);
 
 
-                $this->response(['body' => ['usuario' => $usuario[0]->nombre_usuario , 'nombre_apellido'=>$usuario[0]->nombre.' '.$usuario[0]->apellido]], 200);
+                $this->response(['body' => ['acciones' => $acciones ] ], 200);
             }
 
          catch (Exception $e) {
