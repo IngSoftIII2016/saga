@@ -30,6 +30,12 @@ class AuthEndpoint extends BaseEndpoint
         return $this->UsuarioDAO;
     }
 
+    private function encriptar($contraseña)
+    {
+        $this->load->library('encrypt');
+        return password_hash($contraseña, PASSWORD_DEFAULT);
+    }
+
     public function login_post()
     {
         $json = $this->post('data');
