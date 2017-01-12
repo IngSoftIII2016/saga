@@ -49,7 +49,7 @@ class Gestion_sesion
         } else {
             //////////////////////// DESENCRIPTACION///////////////////////////////////////
             $secret_key = 'Riv1s9x80DA94@';
-            $token = str_replace('"', '', $this->ci->headers["Authorization"]);
+            $token = str_replace('Bearer ', '', $this->ci->headers["Authorization"]);
 
             $acciones_permitidas = [];
 

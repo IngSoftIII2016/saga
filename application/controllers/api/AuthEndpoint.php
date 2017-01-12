@@ -39,12 +39,13 @@ class AuthEndpoint extends BaseEndpoint
             $contraseña = $json['contraseña']; // cambiar la propiedad json a pass
             $usuario = $this->getDAO()->query(['email' => $email], [], ['rol']);
 
-            if (count($usuario) !== 1){
-                $this->response(format_error('Usuario Inexistente', 'El correo electronico ingresado no corresponde a ningun usuario registrado'), 401);
+            if (count($usuario) !== 1) {
+                $this->response(format_error('Usuario Inexistente',
+                    'El correo electronico ingresado no corresponde a ningun usuario registrado'), 401);
             } else if (!$this->bcrypt->verify($contraseña, $usuario[0]->password)) {
                 $this->response(format_error('Contraseña invalida', 'La contraseña ingresada es incorrecta'), 401);
-//            } else if ($usuario[0]->estado == 0) {
-  //              $this->response(format_error('Usuario inactivo', 'Su usuario ha sido inhabilitado temporalmente'), 401);
+            } else if ($usuario[0]->estado == 0) {
+                $this->response(format_error('Usuario inactivo', 'Su usuario ha sido inhabilitado temporalmente'), 401);
             } else {
                 $usuario = $usuario[0];
                 //var_dump($usuario);
@@ -52,6 +53,7 @@ class AuthEndpoint extends BaseEndpoint
                 $ars = $this->AccionRolDAO->query(['rol.id' => $usuario->rol->id], [], ['accion']);
                 foreach ($ars as $ar)
                     $usuario->rol->acciones[] = $ar->accion;
+                $usuario->password = null;
                 $time = time();
                 // 43200 seg = 12 horas
                 $token = array(
@@ -62,14 +64,15 @@ class AuthEndpoint extends BaseEndpoint
 
                 $jwt = JWT::encode($token, self::$secret_key);
 
-                $this->response(['body' => ['token' => $jwt, 'usuario' => $usuario->nombre_usuario , 'nombre_apellido'=>$usuario->nombre.' '.$usuario->apellido]], 200);
+                $this->response(['body' => ['token' => $jwt, 'usuario' => $usuario->nombre_usuario, 'nombre_apellido' => $usuario->nombre . ' ' . $usuario->apellido]], 200);
             }
         } catch (Exception $e) {
-            $this->response(format_error('Error al construir token', $e->getMessage()) , 500);
+            $this->response(format_error('Error al construir token', $e->getMessage()), 500);
         }
     }
 
-    public function reset_pass_post() {
+    public function reset_pass_post()
+    {
         $this->load->library("email");
         $json = $this->post('data');
 
@@ -113,31 +116,31 @@ class AuthEndpoint extends BaseEndpoint
             $this->email->from('Administracion y Gestion de Aulas UNRN');
             $this->email->to($json['email']);
             $this->email->subject('Contraseña Nueva');
-            $this->email->message('<h2>Este mensaje es generado automaticamente</h2><hr><br> Contraseña: ' , $pass);
+            $this->email->message('<h2>Este mensaje es generado automaticamente</h2><hr><br> Contraseña: ', $pass);
             $this->email->send();
         }
     }
 
-    function get_random_password($chars_min=6, $chars_max=8, $use_upper_case=true, $include_numbers=true, $include_special_chars=true)
+    function get_random_password($chars_min = 6, $chars_max = 8, $use_upper_case = true, $include_numbers = true, $include_special_chars = true)
     {
         $length = rand($chars_min, $chars_max);
         $selection = 'aeuoyibcdfghjklmnpqrstvwxz';
-        if($include_numbers) {
+        if ($include_numbers) {
             $selection .= "1234567890";
         }
-        if($include_special_chars) {
+        if ($include_special_chars) {
             $selection .= "@#$?";
         }
 
         $password = "";
-        for($i=0; $i<$length; $i++) {
-            $current_letter = $use_upper_case ? (rand(0,1) ? strtoupper($selection[(rand() % strlen($selection))]) : $selection[(rand() % strlen($selection))]) : $selection[(rand() % strlen($selection))];
-            $password .=  $current_letter;
+        for ($i = 0; $i < $length; $i++) {
+            $current_letter = $use_upper_case ? (rand(0, 1) ? strtoupper($selection[(rand() % strlen($selection))]) : $selection[(rand() % strlen($selection))]) : $selection[(rand() % strlen($selection))];
+            $password .= $current_letter;
         }
 
         return $password;
     }
-
+/* NO VA A SER NECESARIO, EL CLIENTE PUEDE ACCEDER A ESA INFO EN EL JWT
     public function acciones_post()
     {
         $json = $this->post('data');
@@ -145,17 +148,16 @@ class AuthEndpoint extends BaseEndpoint
         try {
             $email = $json['usuario'];
 
-           $acciones = $this->AccionDAO->$this->query(['rol.usuario.email' => $email]);
+            //$acciones = $this->AccionDAO->$this->query(['rol.usuario.email' => $email]);
 
+            $acciones = [];
 
-                $this->response(['body' => ['acciones' => $acciones ] ], 200);
-            }
-
-         catch (Exception $e) {
+            $this->response(['body' => ['acciones' => $acciones]], 200);
+        } catch (Exception $e) {
             $this->response(['message' => $json], 500);
         }
     }
-
+*/
     private static function Aud()
     {
         $aud = '';
