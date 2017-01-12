@@ -31,8 +31,6 @@ class Gestion_sesion
         $this->ci->load->model('AccionRolDAO');
         $this->ci->load->model('RolDAO');
         $this->ci->load->library('bcrypt');
-
-
     }
 
     function index()
@@ -60,8 +58,9 @@ class Gestion_sesion
                         'Las creedenciales de acceso al sistema proporcionadas son invalidas'), 401);
                 $acciones_permitidas = $tokenDesencriptado->data->rol->acciones;
                 foreach ($acciones_permitidas as $accion)
-                    if(strtolower($url) == strtolower($accion->accion->url) && $metodo == $accion->accion->metodo)
-                        return; //tiene permiso con lo cual retornamos;
+                    if(substr(strtolower($url), 0, strlen($accion->url)) === $accion->url &&
+                        $metodo === $accion->metodo)
+                        return;
                 $this->ci->response(
                     format_error('Accion No Permitida', 'Su usuario no tiene permisos pera realizar esta accion.'), 403);
 

@@ -85,7 +85,7 @@ class Accion extends Entity
     {
         // TODO: Implement from_row() method.
         if(isset($data['id'])) $this->id = $data['id'];
-        if(isset($data['url'])) $this->nombre = $data['url'];
+        if(isset($data['url'])) $this->url = $data['url'];
         if(isset($data['metodo'])) $this->metodo = $data['metodo'];
         if(isset($data['recurso'])) $this->recurso = $data['recurso'];
     }

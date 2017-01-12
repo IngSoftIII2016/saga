@@ -100,9 +100,6 @@ $route['api/docentes'] = 'api/DocenteEndpoint/docentes';
 $route['api/edificios/(:num)'] = 'api/EdificioEndpoint/edificios/$1';
 $route['api/edificios'] = 'api/EdificioEndpoint/edificios';
 
-$route['api/grupos/(:num)'] = 'api/GrupoEndpoint/grupos/$1';
-$route['api/grupos'] = 'api/GrupoEndpoint/grupos';
-
 $route['api/localidades/(:num)'] = 'api/LocalidadEndpoint/localidades/$1';
 $route['api/localidades'] = 'api/LocalidadEndpoint/localidades';
 
@@ -124,8 +121,10 @@ $route['api/usuarios'] = 'api/UsuarioEndpoint/usuarios';
 $route['api/asignaturacarrera/(:num)'] = 'api/AsignaturaCarreraEndpoint/asignaturacarrera/$1';
 $route['api/asignaturacarrera'] = 'api/AsignaturaCarreraEndpoint/asignaturacarrera';
 
-$route['api/usuariogrupo/(:num)'] = 'api/UsuarioGrupoEndpoint/usuariogrupo/$1';
-$route['api/usuariogrupo'] = 'api/UsuarioGrupoEndpoint/usuariogrupo';
+$route['api/accionrol/(:num)'] = 'api/AccionRolEndpoint/accionrol/$1';
+$route['api/accionrol'] = 'api/AccionRolEndpoint/accionrol';
 
+$route['api/roles/(:num)'] = 'api/RolEndpoint/roles/$1';
+$route['api/roles'] = 'api/RolEndpoint/roles';
 
 $route['api/example/users/(:num)(\.)([a-zA-Z0-9_-]+)(.*)'] = 'api/example/users/id/$1/format/$3$4'; // Example 8
