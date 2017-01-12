@@ -20,7 +20,8 @@ class AuthEndpoint extends BaseEndpoint
         $this->load->model('UsuarioDAO');
         $this->load->model('AccionDAO');
         $this->load->model('AccionRolDAO');
-        $this->load->library('bcrypt');
+        //$this->load->library('bcrypt');
+        $this->load->library('encrypt');
 
         $this->load->library(array('ion_auth', 'form_validation'));
     }
@@ -36,6 +37,15 @@ class AuthEndpoint extends BaseEndpoint
         return password_hash($contraseña, PASSWORD_DEFAULT);
     }
 
+    private function comprobar_hash($contraseña, $pass) {
+        echo "contraseña actual:";
+        var_dump($contraseña);
+        $base = $this->encrypt->decode($pass);
+        echo "vieja";
+        var_dump($base);
+        return $contraseña == $base;
+    }
+
     public function login_post()
     {
         $json = $this->post('data');
@@ -48,7 +58,8 @@ class AuthEndpoint extends BaseEndpoint
             if (count($usuario) !== 1) {
                 $this->response(format_error('Usuario Inexistente',
                     'El correo electronico ingresado no corresponde a ningun usuario registrado'), 401);
-            } else if (!$this->bcrypt->verify($contraseña, $usuario[0]->password)) {
+            } else
+                if (!$this->comprobar_hash($contraseña,$usuario[0]->password)) {
                 $this->response(format_error('Contraseña invalida', 'La contraseña ingresada es incorrecta'), 401);
             } else if ($usuario[0]->estado == 0) {
                 $this->response(format_error('Usuario inactivo', 'Su usuario ha sido inhabilitado temporalmente'), 401);
@@ -82,7 +93,8 @@ class AuthEndpoint extends BaseEndpoint
         $json = $this->post('data');
 
         //obtengo el usuario por el email
-        $usuario = $this->getDAO()->query(['email' => $json['email']]);
+        $usuario = $this->getDAO()->query(['email' => $json['email']], [] , ['rol']);
+        var_dump($usuario[0]);
 
         if (count($usuario) !== 1) {
             $this->response(['message' => 'Usuario inexistente'], 500);
@@ -92,7 +104,8 @@ class AuthEndpoint extends BaseEndpoint
             $pass = $this->get_random_password();
 
             //encripto el pass y se lo seteo al usuario
-            $usuario[0]->password = $this->encriptar($pass);
+            $usuario[0]->password = $this->encrypt->encode($pass);
+            //$usuario[0]->password = $this->encriptar($pass);
 
             //actualiso los datos
             $this->getDAO()->update($usuario[0]);
