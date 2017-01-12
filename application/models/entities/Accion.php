@@ -100,7 +100,7 @@ class Accion extends Entity
         // TODO: Implement to_row() method.
         $data['id'] = $this->id;
         $data['url'] = $this->url;
-        $data['accion'] = $this->accion;
+        $data['metodo'] = $this->metodo;
         $data['recurso'] = $this->recurso;
         return $data;
     }
