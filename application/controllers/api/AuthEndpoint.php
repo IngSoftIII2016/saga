@@ -71,8 +71,7 @@ class AuthEndpoint extends BaseEndpoint
         }
     }
 
-    public function reset_pass_post()
-    {
+    public function reset_pass_post() {
         $this->load->library("email");
         $json = $this->post('data');
 
@@ -80,7 +79,7 @@ class AuthEndpoint extends BaseEndpoint
         $usuario = $this->getDAO()->query(['email' => $json['email']]);
 
         if (count($usuario) !== 1) {
-            $this->response(['message' => 'Usuario inexistente'], 404);
+            $this->response(['message' => 'Usuario inexistente'], 500);
         } else {
 
             //genera contraseña aleatoria
@@ -89,14 +88,8 @@ class AuthEndpoint extends BaseEndpoint
             //encripto el pass y se lo seteo al usuario
             $usuario[0]->password = $this->encriptar($pass);
 
-            //genero la entity del usuario
-            $entity = $this->load->model(Usuario);
-
-            //cargo los datos en la entity
-            $entity->from_row($usuario[0]);
-
             //actualiso los datos
-            $this->getDAO()->update($entity);
+            $this->getDAO()->update($usuario[0]);
 
             //configuracion para gmail
             $configGmail = array(
@@ -116,7 +109,7 @@ class AuthEndpoint extends BaseEndpoint
             $this->email->from('Administracion y Gestion de Aulas UNRN');
             $this->email->to($json['email']);
             $this->email->subject('Contraseña Nueva');
-            $this->email->message('<h2>Este mensaje es generado automaticamente</h2><hr><br> Contraseña: ', $pass);
+            $this->email->message('<h2>Este mensaje segenerado automaticamente</h2><hr><br> Contraseña: ' . $pass);
             $this->email->send();
         }
     }
