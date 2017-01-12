@@ -38,11 +38,7 @@ class AuthEndpoint extends BaseEndpoint
     }
 
     private function comprobar_hash($contraseña, $pass) {
-        echo "contraseña actual:";
-        var_dump($contraseña);
         $base = $this->encrypt->decode($pass);
-        echo "vieja";
-        var_dump($base);
         return $contraseña == $base;
     }
 
