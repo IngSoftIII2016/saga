@@ -127,4 +127,7 @@ $route['api/accionrol'] = 'api/AccionRolEndpoint/accionrol';
 $route['api/roles/(:num)'] = 'api/RolEndpoint/roles/$1';
 $route['api/roles'] = 'api/RolEndpoint/roles';
 
+$route['api/acciones/(:num)'] = 'api/AccionEndpoint/roles/$1';
+$route['api/acciones'] = 'api/AccionEndpoint/acciones';
+
 $route['api/example/users/(:num)(\.)([a-zA-Z0-9_-]+)(.*)'] = 'api/example/users/id/$1/format/$3$4'; // Example 8
