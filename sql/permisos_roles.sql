@@ -8,6 +8,8 @@ DROP TABLE IF EXISTS `gestion_aulas`.`usuario`;
 DROP TABLE IF EXISTS `gestion_aulas`.`accion_rol`;
 DROP TABLE IF EXISTS `gestion_aulas`.`accion`;
 DROP TABLE IF EXISTS `gestion_aulas`.`rol`;
+DROP TABLE IF EXISTS `gestion_aulas`.`grupo`;
+DROP TABLE IF EXISTS `gestion_aulas`.`usuario_grupo`;
 
 -- -----------------------------------------------------
 -- INSERT Table `Usuario`
