@@ -33,13 +33,15 @@ class AuthEndpoint extends BaseEndpoint
 
     private function encriptar($contraseña)
     {
-        $this->load->library('encrypt');
+        // $this->load->library('encrypt');
         return password_hash($contraseña, PASSWORD_DEFAULT);
     }
 
     private function comprobar_hash($contraseña, $pass) {
-        $base = $this->encrypt->decode($pass);
-        return $contraseña == $base;
+        //$this->load->library('encrypt');
+        // $base = $this->encrypt->decode($pass);
+        // return $contraseña == $base;
+        return password_verify ($contraseña , $pass);
     }
 
     public function login_post()

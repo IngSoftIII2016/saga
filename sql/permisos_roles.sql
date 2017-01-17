@@ -49,10 +49,8 @@ CREATE TABLE `gestion_aulas`.`rol` (
 -- INSERT Table `gestion_aulas`.`rol`
 -- -----------------------------------------------------
 
-INSERT INTO `gestion_aulas`.`rol` (`nombre`) VALUES ('admin');
-INSERT INTO `gestion_aulas`.`rol` (`nombre`) VALUES ('administracion academica');
-INSERT INTO `gestion_aulas`.`rol` (`nombre`) VALUES ('bedel');
-INSERT INTO `gestion_aulas`.`rol` (`nombre`) VALUES ('alumno');
+INSERT INTO `gestion_aulas`.`rol` (`nombre`) VALUES
+  ('Invitado'),('Admin'),('Administrador Academico'),('Bedel'),('Alumno');
 
 -- -----------------------------------------------------
 -- FOREIGN KEY `rol` Table `gestion_aulas`.`usuario`
@@ -116,7 +114,8 @@ ALTER TABLE `gestion_aulas`.`accion` ADD COLUMN `recurso` VARCHAR(45) NULL  AFTE
 --
 INSERT INTO gestion_aulas.usuario (password, email, estado, nombre, apellido, nombre_usuario, rol)
 VALUES
-  ('75DUkoxVPbiygl12cOyEHcUs7secdmVZx8aGSM/KmcrEbymZmCJOZUgcac7Tawkk9wYAK/KAdLU8ZZElPHv6RA==', 'administrador', 1, 'Administrador', 'Saga', 'administrador', 1);
+  ('$2y$10$0rC9sCYjceaKGekJMIeHkeIPYugGmo0igOzqqJ26DuSFsa.Vb23DO', 'invitado', 1, 'Invitado', 'Saga', 'invitado', 1),
+  ('$2y$10$p6M0oYUWI6xzXG/Cr.MI9e0RoNJxQ3baSTpU6l.lX4XSQYOp2F2Xm', 'administrador', 1, 'Administrador', 'Saga', 'administrador', 2);
 
 
 
@@ -201,8 +200,24 @@ INSERT INTO `gestion_aulas`.`accion` (`url`, `metodo`, `recurso`) VALUES
   ('/saga/api/usuarios', 'DELETE', 'Usuarios');
 
 -- ----------------------------------------------------------
--- Permisos de prueba
+-- Permisos
 -- ----------------------------------------------------------
 
 INSERT INTO gestion_aulas.accion_rol (Accion_id, Rol_id)
-VALUES (71, 1), (72, 1), (73, 1), (74, 1);
+VALUES
+
+  -- ROL INVITADO -------------------------------------------
+  -- ---- lectura
+  (7,1),(11,1),(15,1),(19,1),(23,1),(27,1),(31,1),(35,1),
+  (39,1),(43,1),(47,1),(51,1),(53,1),(63,1),(67,1),
+
+  -- ROL ADMIN ----------------------------------------------
+  -- ---- lectura
+  (3,2),(7,2),(11,2),(15,2),(19,2),(23,2),(27,2),(31,2),(35,2),
+  (39,2),(43,2),(47,2), (51,2),(53,2),(59,2),(63,2),(67,2),(71,2),
+  -- ---- escritura
+  (4,2),(5,2),(6,2),(60,2),(61,2),(62,2),(72,2),(73,2),(74,2)
+
+
+
+;
