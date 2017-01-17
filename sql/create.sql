@@ -6,9 +6,9 @@ CREATE SCHEMA IF NOT EXISTS `gestion_aulas` DEFAULT CHARACTER SET utf8 ;
 USE `gestion_aulas` ;
 
 -- -----------------------------------------------------
--- Table `gestion_aulas`.`asignatura`
+-- Table `asignatura`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `gestion_aulas`.`asignatura` (
+CREATE TABLE IF NOT EXISTS `asignatura` (
   `id` INT(11) NOT NULL AUTO_INCREMENT,
   `nombre` VARCHAR(140) NOT NULL,
   PRIMARY KEY (`id`))
@@ -16,9 +16,9 @@ CREATE TABLE IF NOT EXISTS `gestion_aulas`.`asignatura` (
   DEFAULT CHARACTER SET = utf8;
 
 -- -----------------------------------------------------
--- Table `gestion_aulas`.`carrera`
+-- Table `carrera`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `gestion_aulas`.`carrera` (
+CREATE TABLE IF NOT EXISTS `carrera` (
   `id` INT(11) NOT NULL AUTO_INCREMENT,
   `nombre` VARCHAR(45) NOT NULL,
   PRIMARY KEY (`id`))
@@ -27,9 +27,9 @@ CREATE TABLE IF NOT EXISTS `gestion_aulas`.`carrera` (
 
 
 -- -----------------------------------------------------
--- Table `gestion_aulas`.`asignatura_carrera`
+-- Table `asignatura_carrera`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `gestion_aulas`.`asignatura_carrera` (
+CREATE TABLE IF NOT EXISTS `asignatura_carrera` (
   `Asignatura_id` INT(11) NOT NULL,
   `Carrera_id` INT(11) NOT NULL,
   `anio` INT(11) NOT NULL,
@@ -39,12 +39,12 @@ CREATE TABLE IF NOT EXISTS `gestion_aulas`.`asignatura_carrera` (
   INDEX `fk_asignatura_has_carrera_asignatura1_idx` (`Asignatura_id` ASC),
   CONSTRAINT `fk_asignatura_has_carrera_asignatura1`
   FOREIGN KEY (`Asignatura_id`)
-  REFERENCES `gestion_aulas`.`asignatura` (`id`)
+  REFERENCES `asignatura` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_asignatura_has_carrera_carrera1`
   FOREIGN KEY (`Carrera_id`)
-  REFERENCES `gestion_aulas`.`carrera` (`id`)
+  REFERENCES `carrera` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
   ENGINE = InnoDB
@@ -52,9 +52,9 @@ CREATE TABLE IF NOT EXISTS `gestion_aulas`.`asignatura_carrera` (
 
 
 -- -----------------------------------------------------
--- Table `gestion_aulas`.`sede`
+-- Table `sede`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `gestion_aulas`.`sede` (
+CREATE TABLE IF NOT EXISTS `sede` (
   `id` INT(11) NOT NULL AUTO_INCREMENT,
   `nombre` VARCHAR(45) NOT NULL,
   PRIMARY KEY (`id`),
@@ -64,9 +64,9 @@ CREATE TABLE IF NOT EXISTS `gestion_aulas`.`sede` (
 
 
 -- -----------------------------------------------------
--- Table `gestion_aulas`.`localidad`
+-- Table `localidad`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `gestion_aulas`.`localidad` (
+CREATE TABLE IF NOT EXISTS `localidad` (
   `id` INT(11) NOT NULL AUTO_INCREMENT,
   `nombre` VARCHAR(45) NOT NULL,
   `Sede_id` INT(11) NOT NULL,
@@ -75,7 +75,7 @@ CREATE TABLE IF NOT EXISTS `gestion_aulas`.`localidad` (
   INDEX `fk_Localidad_Sede1_idx` (`Sede_id` ASC),
   CONSTRAINT `fk_Localidad_Sede1`
   FOREIGN KEY (`Sede_id`)
-  REFERENCES `gestion_aulas`.`sede` (`id`)
+  REFERENCES `sede` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
   ENGINE = InnoDB
@@ -83,9 +83,9 @@ CREATE TABLE IF NOT EXISTS `gestion_aulas`.`localidad` (
 
 
 -- -----------------------------------------------------
--- Table `gestion_aulas`.`edificio`
+-- Table `edificio`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `gestion_aulas`.`edificio` (
+CREATE TABLE IF NOT EXISTS `edificio` (
   `id` INT(11) NOT NULL AUTO_INCREMENT,
   `nombre` VARCHAR(45) NOT NULL,
   `Localidad_id` INT(11) NOT NULL,
@@ -94,7 +94,7 @@ CREATE TABLE IF NOT EXISTS `gestion_aulas`.`edificio` (
   INDEX `fk_Edificio_Localidad1_idx` (`Localidad_id` ASC),
   CONSTRAINT `fk_Edificio_Localidad1`
   FOREIGN KEY (`Localidad_id`)
-  REFERENCES `gestion_aulas`.`localidad` (`id`)
+  REFERENCES `localidad` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
   ENGINE = InnoDB
@@ -102,9 +102,9 @@ CREATE TABLE IF NOT EXISTS `gestion_aulas`.`edificio` (
 
 
 -- -----------------------------------------------------
--- Table `gestion_aulas`.`aula`
+-- Table `aula`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `gestion_aulas`.`aula` (
+CREATE TABLE IF NOT EXISTS `aula` (
   `id` INT(11) NOT NULL AUTO_INCREMENT,
   `nombre` VARCHAR(200) NOT NULL,
   `ubicacion` INT(11) NOT NULL,
@@ -114,7 +114,7 @@ CREATE TABLE IF NOT EXISTS `gestion_aulas`.`aula` (
   INDEX `fk_Aula_Edificio1_idx` (`Edificio_id` ASC),
   CONSTRAINT `fk_Aula_Edificio1`
   FOREIGN KEY (`Edificio_id`)
-  REFERENCES `gestion_aulas`.`edificio` (`id`)
+  REFERENCES `edificio` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
   ENGINE = InnoDB
@@ -122,9 +122,9 @@ CREATE TABLE IF NOT EXISTS `gestion_aulas`.`aula` (
 
 
 -- -----------------------------------------------------
--- Table `gestion_aulas`.`periodo`
+-- Table `periodo`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `gestion_aulas`.`periodo` (
+CREATE TABLE IF NOT EXISTS `periodo` (
   `id` INT(11) NOT NULL AUTO_INCREMENT,
   `fecha_inicio` DATE NOT NULL,
   `fecha_fin` DATE NOT NULL,
@@ -135,9 +135,20 @@ CREATE TABLE IF NOT EXISTS `gestion_aulas`.`periodo` (
 
 
 -- -----------------------------------------------------
--- Table `gestion_aulas`.`comision`
+-- Table `docente`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `gestion_aulas`.`comision` (
+CREATE TABLE IF NOT EXISTS `docente` (
+  `id` INT(11) NOT NULL AUTO_INCREMENT,
+  `nombre` VARCHAR(45) NOT NULL,
+  `apellido` VARCHAR(45) NOT NULL,
+  PRIMARY KEY (`id`))
+  ENGINE = InnoDB
+  DEFAULT CHARACTER SET = utf8;
+
+-- -----------------------------------------------------
+-- Table `comision`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `comision` (
   `id` INT(11) NOT NULL AUTO_INCREMENT,
   `nombre` VARCHAR(45) NOT NULL,
   `Periodo_id` INT(11) NOT NULL,
@@ -149,17 +160,17 @@ CREATE TABLE IF NOT EXISTS `gestion_aulas`.`comision` (
   INDEX `fk_Cursada_Docente1_idx` (`Docente_id` ASC),
   CONSTRAINT `fk_Cursada_Asignatura1`
   FOREIGN KEY (`Asignatura_id`)
-  REFERENCES `gestion_aulas`.`asignatura` (`id`)
+  REFERENCES `asignatura` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_Comision_Docente`
   FOREIGN KEY (`Docente_id`)
-  REFERENCES `gestion_aulas`.`docente` (`id`)
+  REFERENCES `docente` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_Cursada_Periodo1`
   FOREIGN KEY (`Periodo_id`)
-  REFERENCES `gestion_aulas`.`periodo` (`id`)
+  REFERENCES `periodo` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
   ENGINE = InnoDB
@@ -167,9 +178,9 @@ CREATE TABLE IF NOT EXISTS `gestion_aulas`.`comision` (
 
 
 -- -----------------------------------------------------
--- Table `gestion_aulas`.`horario`
+-- Table `horario`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `gestion_aulas`.`horario` (
+CREATE TABLE IF NOT EXISTS `horario` (
   `id` INT(11) NOT NULL AUTO_INCREMENT,
   `descripcion` VARCHAR(45) NULL DEFAULT NULL,
   `frecuencia_semanas` INT(11) NOT NULL DEFAULT '1',
@@ -183,12 +194,12 @@ CREATE TABLE IF NOT EXISTS `gestion_aulas`.`horario` (
   INDEX `fk_Horario_Aula1_idx` (`Aula_id` ASC),
   CONSTRAINT `fk_Horario_Aula1`
   FOREIGN KEY (`Aula_id`)
-  REFERENCES `gestion_aulas`.`aula` (`id`)
+  REFERENCES `aula` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_Horario_Cursada1`
   FOREIGN KEY (`Comision_id`)
-  REFERENCES `gestion_aulas`.`comision` (`id`)
+  REFERENCES `comision` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
   ENGINE = InnoDB
@@ -196,9 +207,9 @@ CREATE TABLE IF NOT EXISTS `gestion_aulas`.`horario` (
 
 
 -- -----------------------------------------------------
--- Table `gestion_aulas`.`clase`
+-- Table `clase`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `gestion_aulas`.`clase` (
+CREATE TABLE IF NOT EXISTS `clase` (
   `id` INT(11) NOT NULL AUTO_INCREMENT,
   `Aula_id` INT(11) NOT NULL,
   `fecha` DATE NOT NULL,
@@ -211,12 +222,12 @@ CREATE TABLE IF NOT EXISTS `gestion_aulas`.`clase` (
   INDEX `clase_fecha_index` (`fecha` ASC),
   CONSTRAINT `fk_Aula_has_Cursada_Aula1`
   FOREIGN KEY (`Aula_id`)
-  REFERENCES `gestion_aulas`.`aula` (`id`)
+  REFERENCES `aula` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_clase_horario1`
   FOREIGN KEY (`Horario_id`)
-  REFERENCES `gestion_aulas`.`horario` (`id`)
+  REFERENCES `horario` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
   ENGINE = InnoDB
@@ -224,9 +235,9 @@ CREATE TABLE IF NOT EXISTS `gestion_aulas`.`clase` (
 
 
 -- -----------------------------------------------------
--- Table `gestion_aulas`.`estado`
+-- Table `estado`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `gestion_aulas`.`estado` (
+CREATE TABLE IF NOT EXISTS `estado` (
   `id` INT(11) NOT NULL AUTO_INCREMENT,
   `nombre` VARCHAR(45) NOT NULL,
   PRIMARY KEY (`id`),
@@ -236,9 +247,9 @@ CREATE TABLE IF NOT EXISTS `gestion_aulas`.`estado` (
 
 
 -- -----------------------------------------------------
--- Table `gestion_aulas`.`clase_estado`
+-- Table `clase_estado`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `gestion_aulas`.`clase_estado` (
+CREATE TABLE IF NOT EXISTS `clase_estado` (
   `Estado_id` INT(11) NOT NULL,
   `Clase_id` INT(11) NOT NULL,
   `descripcion` VARCHAR(200) NOT NULL,
@@ -247,34 +258,24 @@ CREATE TABLE IF NOT EXISTS `gestion_aulas`.`clase_estado` (
   INDEX `fk_Estado_has_Clase_Estado1_idx` (`Estado_id` ASC),
   CONSTRAINT `fk_Estado_has_Clase_Clase1`
   FOREIGN KEY (`Clase_id`)
-  REFERENCES `gestion_aulas`.`clase` (`id`)
+  REFERENCES `clase` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_Estado_has_Clase_Estado1`
   FOREIGN KEY (`Estado_id`)
-  REFERENCES `gestion_aulas`.`estado` (`id`)
+  REFERENCES `estado` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
   ENGINE = InnoDB
   DEFAULT CHARACTER SET = utf8;
 
 
--- -----------------------------------------------------
--- Table `gestion_aulas`.`docente`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `gestion_aulas`.`docente` (
-  `id` INT(11) NOT NULL AUTO_INCREMENT,
-  `nombre` VARCHAR(45) NOT NULL,
-  `apellido` VARCHAR(45) NOT NULL,
-  PRIMARY KEY (`id`))
-  ENGINE = InnoDB
-  DEFAULT CHARACTER SET = utf8;
 
 
 -- -----------------------------------------------------
--- Table `gestion_aulas`.`evento`
+-- Table `evento`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `gestion_aulas`.`evento` (
+CREATE TABLE IF NOT EXISTS `evento` (
   `id` INT(11) NOT NULL AUTO_INCREMENT,
   `Aula_id` INT(11) NOT NULL,
   `fecha` DATE NOT NULL,
@@ -285,15 +286,15 @@ CREATE TABLE IF NOT EXISTS `gestion_aulas`.`evento` (
   INDEX `Aula_id` (`Aula_id` ASC),
   CONSTRAINT `evento_ibfk_1`
   FOREIGN KEY (`Aula_id`)
-  REFERENCES `gestion_aulas`.`aula` (`id`))
+  REFERENCES `aula` (`id`))
   ENGINE = InnoDB
   DEFAULT CHARACTER SET = utf8;
 
 
 -- -----------------------------------------------------
--- Table `gestion_aulas`.`grupo`
+-- Table `grupo`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `gestion_aulas`.`grupo` (
+CREATE TABLE IF NOT EXISTS `grupo` (
   `id` MEDIUMINT(8) UNSIGNED NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(20) NOT NULL,
   `description` VARCHAR(100) NOT NULL,
@@ -302,24 +303,10 @@ CREATE TABLE IF NOT EXISTS `gestion_aulas`.`grupo` (
   AUTO_INCREMENT = 4
   DEFAULT CHARACTER SET = utf8;
 
-
 -- -----------------------------------------------------
--- Table `gestion_aulas`.`login_attempts`
+-- Table `tipo_recurso`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `gestion_aulas`.`login_attempts` (
-  `id` INT(11) UNSIGNED NOT NULL AUTO_INCREMENT,
-  `ip_address` VARCHAR(15) NOT NULL,
-  `login` VARCHAR(100) NOT NULL,
-  `time` INT(11) UNSIGNED NULL DEFAULT NULL,
-  PRIMARY KEY (`id`))
-  ENGINE = InnoDB
-  DEFAULT CHARACTER SET = utf8;
-
-
--- -----------------------------------------------------
--- Table `gestion_aulas`.`tipo_recurso`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `gestion_aulas`.`tipo_recurso` (
+CREATE TABLE IF NOT EXISTS `tipo_recurso` (
   `id` INT(11) NOT NULL AUTO_INCREMENT,
   `nombre` VARCHAR(45) NOT NULL,
   PRIMARY KEY (`id`),
@@ -329,9 +316,9 @@ CREATE TABLE IF NOT EXISTS `gestion_aulas`.`tipo_recurso` (
 
 
 -- -----------------------------------------------------
--- Table `gestion_aulas`.`recurso`
+-- Table `recurso`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `gestion_aulas`.`recurso` (
+CREATE TABLE IF NOT EXISTS `recurso` (
   `id` INT(11) NOT NULL AUTO_INCREMENT,
   `Tipo_recurso_id` INT(11) NOT NULL,
   `Aula_id` INT(11) NOT NULL,
@@ -341,12 +328,12 @@ CREATE TABLE IF NOT EXISTS `gestion_aulas`.`recurso` (
   INDEX `Tipo_recurso_id` (`Tipo_recurso_id` ASC),
   CONSTRAINT `recurso_ibfk_1`
   FOREIGN KEY (`Aula_id`)
-  REFERENCES `gestion_aulas`.`aula` (`id`)
+  REFERENCES `aula` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `recurso_ibfk_2`
   FOREIGN KEY (`Tipo_recurso_id`)
-  REFERENCES `gestion_aulas`.`tipo_recurso` (`id`)
+  REFERENCES `tipo_recurso` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
   ENGINE = InnoDB
@@ -354,9 +341,9 @@ CREATE TABLE IF NOT EXISTS `gestion_aulas`.`recurso` (
 
 
 -- -----------------------------------------------------
--- Table `gestion_aulas`.`usuario`
+-- Table `usuario`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `gestion_aulas`.`usuario` (
+CREATE TABLE IF NOT EXISTS `usuario` (
   `id` INT(11) UNSIGNED NOT NULL AUTO_INCREMENT,
   `ip_address` VARCHAR(15) NOT NULL,
   `username` VARCHAR(100) NOT NULL,
@@ -380,9 +367,9 @@ CREATE TABLE IF NOT EXISTS `gestion_aulas`.`usuario` (
 
 
 -- -----------------------------------------------------
--- Table `gestion_aulas`.`usuario_grupo`
+-- Table `usuario_grupo`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `gestion_aulas`.`usuario_grupo` (
+CREATE TABLE IF NOT EXISTS `usuario_grupo` (
   `id` INT(11) UNSIGNED NOT NULL AUTO_INCREMENT,
   `user_id` INT(11) UNSIGNED NOT NULL,
   `group_id` MEDIUMINT(8) UNSIGNED NOT NULL,
@@ -392,12 +379,12 @@ CREATE TABLE IF NOT EXISTS `gestion_aulas`.`usuario_grupo` (
   INDEX `fk_users_groups_groups1_idx` (`group_id` ASC),
   CONSTRAINT `fk_users_groups_groups1`
   FOREIGN KEY (`group_id`)
-  REFERENCES `gestion_aulas`.`grupo` (`id`)
+  REFERENCES `grupo` (`id`)
     ON DELETE CASCADE
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_users_groups_users1`
   FOREIGN KEY (`user_id`)
-  REFERENCES `gestion_aulas`.`usuario` (`id`)
+  REFERENCES `usuario` (`id`)
     ON DELETE CASCADE
     ON UPDATE NO ACTION)
   ENGINE = InnoDB
