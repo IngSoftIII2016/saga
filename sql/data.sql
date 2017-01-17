@@ -564,7 +564,7 @@ INSERT INTO `asignatura_carrera` (`Asignatura_id`, `Carrera_id`, `anio`, `regime
   (161, 5, 3, '1C'),
   (162, 5, 3, '2C'),
   (163, 5, 3, '2C'),
-  (164, 5, 3, ''),
+  (164, 5, 3, 'C'),
   (165, 5, 3, '2C'),
   (166, 5, 3, '2C'),
   (168, 5, 4, '1C'),
