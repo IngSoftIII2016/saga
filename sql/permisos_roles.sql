@@ -197,7 +197,8 @@ INSERT INTO `gestion_aulas`.`accion` (`url`, `metodo`, `recurso`) VALUES
   ('/saga/api/usuarios', 'GET', 'Usuarios'),
   ('/saga/api/usuarios', 'POST', 'Usuarios'),
   ('/saga/api/usuarios', 'PUT', 'Usuarios'),
-  ('/saga/api/usuarios', 'DELETE', 'Usuarios');
+  ('/saga/api/usuarios', 'DELETE', 'Usuarios'),
+  ('/saga/api/acciones', 'GET', 'Acciones');
 
 -- ----------------------------------------------------------
 -- Permisos
@@ -214,7 +215,7 @@ VALUES
   -- ROL ADMIN ----------------------------------------------
   -- ---- lectura
   (3,2),(7,2),(11,2),(15,2),(19,2),(23,2),(27,2),(31,2),(35,2),
-  (39,2),(43,2),(47,2), (51,2),(53,2),(59,2),(63,2),(67,2),(71,2),
+  (39,2),(43,2),(47,2),(51,2),(53,2),(59,2),(63,2),(67,2),(71,2),(75,2),
   -- ---- escritura
   (4,2),(5,2),(6,2),(60,2),(61,2),(62,2),(72,2),(73,2),(74,2)
 
