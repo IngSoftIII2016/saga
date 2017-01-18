@@ -114,8 +114,10 @@ ALTER TABLE `gestion_aulas`.`accion` ADD COLUMN `recurso` VARCHAR(45) NULL  AFTE
 --
 INSERT INTO gestion_aulas.usuario (password, email, estado, nombre, apellido, nombre_usuario, rol)
 VALUES
-  ('$2y$10$0rC9sCYjceaKGekJMIeHkeIPYugGmo0igOzqqJ26DuSFsa.Vb23DO', 'invitado', 1, 'Invitado', 'Saga', 'invitado', 1),
-  ('$2y$10$p6M0oYUWI6xzXG/Cr.MI9e0RoNJxQ3baSTpU6l.lX4XSQYOp2F2Xm', 'administrador', 1, 'Administrador', 'Saga', 'administrador', 2);
+  ('$2y$10$0rC9sCYjceaKGekJMIeHkeIPYugGmo0igOzqqJ26DuSFsa.Vb23DO', 'invitado', 1, 'Invitado', 'Saga', 'invitado', 1), -- pass: invitado
+  ('$2y$10$p6M0oYUWI6xzXG/Cr.MI9e0RoNJxQ3baSTpU6l.lX4XSQYOp2F2Xm', 'administrador', 1, 'Administrador', 'Saga', 'administrador', 2), -- pass: password
+  ('$2y$10$6RmS/.ZoxDprnj1ErVl.ouY0YyffPJolU8BkCsRT11AHfPSGwFcr6', 'admin@unrn.edu.ar', 1, 'Administrador', 'Academico', 'admin', 3); -- pass: unrn
+
 
 
 
@@ -208,17 +210,25 @@ INSERT INTO gestion_aulas.accion_rol (Accion_id, Rol_id)
 VALUES
 
   -- ROL INVITADO -------------------------------------------
-  -- ---- lectura
   (7,1),(11,1),(15,1),(19,1),(23,1),(27,1),(31,1),(35,1),
-  (39,1),(43,1),(47,1),(51,1),(53,1),(63,1),(67,1),
+  (39,1),(43,1),(47,1),(51,1),(55,1),(63,1),(67,1),
 
   -- ROL ADMIN ----------------------------------------------
   -- ---- lectura
   (3,2),(7,2),(11,2),(15,2),(19,2),(23,2),(27,2),(31,2),(35,2),
-  (39,2),(43,2),(47,2),(51,2),(53,2),(59,2),(63,2),(67,2),(71,2),(75,2),
+  (39,2),(43,2),(47,2),(51,2),(55,2),(59,2),(63,2),(67,2),(71,2),(75,2),
   -- ---- escritura
-  (4,2),(5,2),(6,2),(60,2),(61,2),(62,2),(72,2),(73,2),(74,2)
+  (4,2),(5,2),(6,2),(60,2),(61,2),(62,2),(72,2),(73,2),(74,2),
 
-
+  -- ROL ADMINISTRADOR ACADEMICO ----------------------------
+  -- ---- lectura
+  (7,3),(11,3),(15,3),(19,3),(23,3),(27,3),(31,3),(35,3),
+  (39,3),(43,3),(47,3),(51,3),(55,3),(63,3),(67,3),
+  -- ---- escritura
+  (8,3),(9,3),(10,3),(12,3),(13,3),(14,3),(16,3),(17,3),(18,3),
+  (20,3),(21,3),(22,3),(24,3),(25,3),(26,3),(28,3),(29,3),(30,3),
+  (32,3),(33,3),(34,3),(36,3),(37,3),(38,3),(40,3),(41,3),(42,3),
+  (44,3),(45,3),(46,3),(48,3),(49,3),(50,3),(52,3),(53,3),(54,3),
+  (56,3),(57,3),(58,3),(64,3),(65,3),(66,3),(68,3),(69,3),(70,3)
 
 ;
