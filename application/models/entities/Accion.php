@@ -73,7 +73,7 @@ class Accion extends Entity
      */
     public function get_id()
     {
-        return id;
+        return $this->id;
     }
 
     /**
