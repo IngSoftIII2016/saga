@@ -20,7 +20,6 @@ class AuthEndpoint extends BaseEndpoint
         $this->load->model('UsuarioDAO');
         $this->load->model('AccionDAO');
         $this->load->model('AccionRolDAO');
-        //$this->load->library('bcrypt');
         $this->load->library('encrypt');
 
         $this->load->library(array('ion_auth', 'form_validation'));

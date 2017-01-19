@@ -50,7 +50,7 @@ class Usuario extends Entity
         return [
             [
                 'entity_class_name' => 'Rol',
-                'foreign_key_column_name' => 'rol',
+                'foreign_key_column_name' => 'Rol_id',
                 'property_name' => 'rol'
             ]
         ];
@@ -107,7 +107,7 @@ class Usuario extends Entity
         $data['password'] = $this->password;
         $data['email'] = $this->email;
         $data['estado'] = $this->estado;
-        $data['rol'] = $this->rol->id;
+        $data['Rol_id'] = $this->rol->id;
         return $data;
 
     }

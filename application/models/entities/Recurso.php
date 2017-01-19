@@ -5,6 +5,7 @@ class Recurso extends Entity
 {
 	public $id;
 	public $disponible;
+	public $detalles;
 	public $aula;
 	public $tipo_recurso;
 
@@ -23,7 +24,7 @@ class Recurso extends Entity
 	 */
 	public function get_property_column_names()
 	{
-		return ['disponible'];
+		return ['disponible', 'detalles'];
 	}
 
 	/**
@@ -93,6 +94,7 @@ class Recurso extends Entity
 	{
 		if(isset($data['id'])) $this->id = $data['id'];
 		if(isset($data['disponible'])) $this->disponible = $data['disponible'];
+		if(isset($data['detalles'])) $this->detalles = $data['detalles'];
 		if(isset($data['aula'])) $this->aula = $data['aula'];
 		if(isset($data['tipo_recurso'])) $this->tipo_recurso = $data['tipo_recurso'];
 	}
@@ -106,6 +108,7 @@ class Recurso extends Entity
 	{
 		$data['id'] = $this->id;
 		$data['disponible'] = $this->disponible;
+		$data['detalles'] = $this->detalles;
 		$data['Aula_id'] = $this->aula->get_id();
 		$data['Tipo_recurso_id'] = $this->tipo_recurso->get_id();
 		return $data;
