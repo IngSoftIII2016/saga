@@ -9,11 +9,11 @@ INSERT INTO `rol` (`nombre`) VALUES
 
 
 
-INSERT INTO `usuario` (`password`, `email`, `estado`, `nombre`, `apellido`, `nombre_usuario`, `rol`)
+INSERT INTO `usuario` (`password`, `email`, `estado`, `nombre`, `apellido`, `Rol_id`)
 VALUES
-  ('$2y$10$0rC9sCYjceaKGekJMIeHkeIPYugGmo0igOzqqJ26DuSFsa.Vb23DO', 'invitado', 1, 'Invitado', 'Saga', 'invitado', 1), -- pass: invitado
-  ('$2y$10$p6M0oYUWI6xzXG/Cr.MI9e0RoNJxQ3baSTpU6l.lX4XSQYOp2F2Xm', 'administrador', 1, 'Administrador', 'Saga', 'administrador', 2), -- pass: password
-  ('$2y$10$6RmS/.ZoxDprnj1ErVl.ouY0YyffPJolU8BkCsRT11AHfPSGwFcr6', 'admin@unrn.edu.ar', 1, 'Administrador', 'Academico', 'admin', 3); -- pass: unrn
+  ('$2y$10$0rC9sCYjceaKGekJMIeHkeIPYugGmo0igOzqqJ26DuSFsa.Vb23DO', 'invitado', 1, 'Invitado', 'Saga', 1), -- pass: invitado
+  ('$2y$10$p6M0oYUWI6xzXG/Cr.MI9e0RoNJxQ3baSTpU6l.lX4XSQYOp2F2Xm', 'administrador', 1, 'Administrador', 'Saga', 2), -- pass: password
+  ('$2y$10$6RmS/.ZoxDprnj1ErVl.ouY0YyffPJolU8BkCsRT11AHfPSGwFcr6', 'admin@unrn.edu.ar', 1, 'Administrador', 'Academico', 3); -- pass: unrn
 
 
 
@@ -190,17 +190,17 @@ INSERT INTO `aula` (`id`, `nombre`, `ubicacion`, `capacidad`, `Edificio_id`) VAL
   (15, 'Laboratorio de Docencia 2', 13, 18, 1),
   (16, 'Laboratorio de Docencia 3', 14, 30, 1),
   (17, 'Laboratorio de Docencia 4', 15, 18, 1),
-  (18, 'Aula 1', 0, 65, 2),
-  (19, 'Aula 2', 0, 65, 2),
-  (20, 'Aula 3', 0, 65, 2),
-  (21, 'Aula 4', 0, 50, 2),
+  (18, 'Aula 1', 1, 65, 2),
+  (19, 'Aula 2', 2, 65, 2),
+  (20, 'Aula 3', 3, 65, 2),
+  (21, 'Aula 4', 4, 50, 2),
   (22, 'INTA', 0, 20, 4),
   (23, 'Buffett', 19, 150, 1),
   (24, 'Sala LIA', 18, 8, 1),
-  (25, 'Aula 1', 0, 50, 3),
-  (26, 'Aula 2', 0, 50, 3),
-  (27, 'Aula 3', 0, 50, 3),
-  (28, 'Aula 4', 0, 50, 3),
+  (25, 'Aula 1', 1, 50, 3),
+  (26, 'Aula 2', 2, 50, 3),
+  (27, 'Aula 3', 3, 50, 3),
+  (28, 'Aula 4', 4, 50, 3),
   (29, 'Radio Encuentro', 0, 8, 5);
 
 -- --------------------------------------------------------
@@ -959,8 +959,6 @@ INSERT INTO `comision` (`id`, `nombre`, `Periodo_id`, `Docente_id`, `Asignatura_
   (71, '', 1, NULL, 119),
   (72, '', 1, NULL, 114),
   (73, '', 1, NULL, 120),
-  (74, '', 1, NULL, 121),
-  (75, '', 1, NULL, 124),
   (76, '', 1, NULL, 129),
   (77, '', 1, NULL, 128),
   (78, '', 1, NULL, 130),
@@ -1113,12 +1111,10 @@ INSERT INTO `comision` (`id`, `nombre`, `Periodo_id`, `Docente_id`, `Asignatura_
   (227, 'COMISIÓN 1', 2, 63, 10),
   (228, 'COMISIÓN 2', 2, 63, 10),
   (229, '', 2, 23, 11),
-  (230, '', 2, NULL, 11),
   (231, '', 2, 64, 13),
   (232, '', 2, 63, 12),
   (233, '', 2, 65, 9),
   (234, '', 2, 63, 17),
-  (235, '', 2, NULL, 25),
   (236, '', 2, 67, 19),
   (237, '', 2, 21, 15),
   (238, '', 2, 68, 16),
