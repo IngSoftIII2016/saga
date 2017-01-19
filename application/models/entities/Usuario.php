@@ -3,7 +3,6 @@ require_once APPPATH . '/models/orm/Entity.php';
 class Usuario extends Entity
 {
     public $id;
-    public $nombre_usuario;
     public $nombre;
     public $apellido;
     public $password;
@@ -26,7 +25,7 @@ class Usuario extends Entity
 
     public function get_property_column_names()
     {
-        return ['nombre_usuario','nombre', 'apellido', 'password', 'email','estado'];
+        return ['nombre', 'apellido', 'password', 'email','estado'];
     }
     /**
      * @return mixed
@@ -85,7 +84,6 @@ class Usuario extends Entity
     public function from_row($data)
     {
         if(isset($data['id'])) $this->id = $data['id'];
-	    if(isset($data['nombre_usuario'])) $this->nombre_usuario = $data['nombre_usuario'];
         if(isset($data['nombre'])) $this->nombre = $data['nombre'];
         if(isset($data['apellido'])) $this->apellido = $data['apellido'];
         if(isset($data['password'])) $this->password = $data['password'];
@@ -101,7 +99,6 @@ class Usuario extends Entity
     public function to_row()
     {
         $data['id'] = $this->id;
-		$data['nombre_usuario']= $this->nombre_usuario;
         $data['nombre'] = $this->nombre;
         $data['apellido'] = $this->apellido;
         $data['password'] = $this->password;
