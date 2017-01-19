@@ -369,7 +369,7 @@ DEFAULT CHARACTER SET = utf8;
 -- Table `usuario`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `usuario` (
-  `id` INT(11) UNSIGNED NOT NULL,
+  `id` INT(11) UNSIGNED NOT NULL AUTO_INCREMENT,
   `password` VARCHAR(255) NOT NULL,
   `email` VARCHAR(100) NOT NULL,
   `estado` TINYINT(1) UNSIGNED NULL DEFAULT NULL,
