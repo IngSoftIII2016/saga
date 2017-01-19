@@ -375,7 +375,7 @@ CREATE TABLE IF NOT EXISTS `usuario` (
   `estado` TINYINT(1) UNSIGNED NULL DEFAULT NULL,
   `nombre` VARCHAR(50) NULL DEFAULT NULL,
   `apellido` VARCHAR(50) NULL DEFAULT NULL,
-  `Rol_id` INT(11) NOT NULL,
+  `Rol_id` INT(11) UNSIGNED NOT NULL,
   PRIMARY KEY (`id`),
   INDEX `fk_usuario_rol_idx` (`Rol_id` ASC),
   UNIQUE INDEX `unique_email` (`email` ASC),
