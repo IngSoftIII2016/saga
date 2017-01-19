@@ -13,8 +13,6 @@ class Rol extends Entity
     public $nombre;
 
     // lazy and manual loaded
-    public $acciones;
-
     /**
      * Retorna el nombre de la tabla correspondiente a ésta Entity
      * @return string Nombre de la tabla
