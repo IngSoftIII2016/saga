@@ -78,7 +78,7 @@ class AuthEndpoint extends BaseEndpoint
 
                 $jwt = JWT::encode($token, self::$secret_key);
 
-                $this->response(['body' => ['token' => $jwt, 'usuario' => $usuario->nombre_usuario, 'nombre_apellido' => $usuario->nombre . ' ' . $usuario->apellido]], 200);
+                $this->response(['body' => ['token' => $jwt]], 200);
             }
         } catch (Exception $e) {
             $this->response(format_error('Error al construir token', $e->getMessage()), 500);

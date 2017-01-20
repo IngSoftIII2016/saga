@@ -104,7 +104,6 @@ VALUES
   -- ROL INVITADO -------------------------------------------
   (7,1),(11,1),(15,1),(19,1),(23,1),(27,1),(31,1),(35,1),
   (39,1),(43,1),(47,1),(51,1),(55,1),(63,1),(67,1),
-
   -- ROL ADMIN ----------------------------------------------
   -- ---- lectura
   (3,2),(7,2),(11,2),(15,2),(19,2),(23,2),(27,2),(31,2),(35,2),
@@ -194,14 +193,14 @@ INSERT INTO `aula` (`id`, `nombre`, `ubicacion`, `capacidad`, `Edificio_id`) VAL
   (19, 'Aula 2', 2, 65, 2),
   (20, 'Aula 3', 3, 65, 2),
   (21, 'Aula 4', 4, 50, 2),
-  (22, 'INTA', 0, 20, 4),
+  (22, 'INTA', 1, 20, 4),
   (23, 'Buffett', 19, 150, 1),
   (24, 'Sala LIA', 18, 8, 1),
   (25, 'Aula 1', 1, 50, 3),
   (26, 'Aula 2', 2, 50, 3),
   (27, 'Aula 3', 3, 50, 3),
   (28, 'Aula 4', 4, 50, 3),
-  (29, 'Radio Encuentro', 0, 8, 5);
+  (29, 'Radio Encuentro', 1, 8, 5);
 
 -- --------------------------------------------------------
 
@@ -885,7 +884,7 @@ INSERT INTO `docente` (`id`, `nombre`, `apellido`) VALUES
 -- Volcado de datos para la tabla `comision`
 --
 
-INSERT INTO `comision` (`id`, `nombre`, `Periodo_id`, `Docente_id`, `Asignatura_id`) VALUES
+INSERT IGNORE INTO `comision` (`id`, `nombre`, `Periodo_id`, `Docente_id`, `Asignatura_id`) VALUES
   (1, 'COMISIÓN A', 1, NULL, 1),
   (2, 'COMISIÓN B', 1, NULL, 1),
   (3, '', 1, NULL, 2),
@@ -959,6 +958,8 @@ INSERT INTO `comision` (`id`, `nombre`, `Periodo_id`, `Docente_id`, `Asignatura_
   (71, '', 1, NULL, 119),
   (72, '', 1, NULL, 114),
   (73, '', 1, NULL, 120),
+  (74, '', 1, NULL, 121),
+  (75, '', 1, NULL, 124),
   (76, '', 1, NULL, 129),
   (77, '', 1, NULL, 128),
   (78, '', 1, NULL, 130),
@@ -1111,10 +1112,12 @@ INSERT INTO `comision` (`id`, `nombre`, `Periodo_id`, `Docente_id`, `Asignatura_
   (227, 'COMISIÓN 1', 2, 63, 10),
   (228, 'COMISIÓN 2', 2, 63, 10),
   (229, '', 2, 23, 11),
+  (230, '', 2, NULL, 11),
   (231, '', 2, 64, 13),
   (232, '', 2, 63, 12),
   (233, '', 2, 65, 9),
   (234, '', 2, 63, 17),
+  (235, '', 2, NULL, 25),
   (236, '', 2, 67, 19),
   (237, '', 2, 21, 15),
   (238, '', 2, 68, 16),
@@ -1182,7 +1185,7 @@ INSERT INTO `comision` (`id`, `nombre`, `Periodo_id`, `Docente_id`, `Asignatura_
 -- Volcado de datos para la tabla `horario`
 --
 
-INSERT INTO `horario` (`id`, `descripcion`, `frecuencia_semanas`, `dia`, `hora_inicio`, `duracion`, `Comision_id`, `Aula_id`) VALUES
+INSERT IGNORE INTO `horario` (`id`, `descripcion`, `frecuencia_semanas`, `dia`, `hora_inicio`, `duracion`, `Comision_id`, `Aula_id`) VALUES
   (226, NULL, 1, 2, '18:00:00', '03:00:00', 1, 5),
   (227, NULL, 1, 4, '18:00:00', '03:00:00', 1, 5),
   (228, NULL, 1, 5, '14:00:00', '04:00:00', 2, 5),
@@ -1660,10 +1663,7 @@ INSERT INTO `horario` (`id`, `descripcion`, `frecuencia_semanas`, `dia`, `hora_i
   (700, NULL, 1, 1, '14:30:00', '03:00:00', 292, 28),
   (701, NULL, 1, 3, '14:30:00', '03:00:00', 292, 28);
 
-
-
 -- --------------------------------------------------------
-
 --
 -- Volcado de datos para la tabla `clase`
 --

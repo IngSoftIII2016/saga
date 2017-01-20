@@ -287,7 +287,7 @@ CREATE TABLE IF NOT EXISTS `clase` (
   `hora_inicio` TIME NOT NULL,
   `hora_fin` TIME NOT NULL,
   `Horario_id` INT(11) UNSIGNED NOT NULL,
-  `comentario` VARCHAR(300) NOT NULL,
+  `comentario` VARCHAR(300),
   PRIMARY KEY (`id`),
   INDEX `fk_Aula_has_Cursada_Aula1_idx` (`Aula_id` ASC),
   INDEX `fk_clase_horario1_idx` (`Horario_id` ASC),
