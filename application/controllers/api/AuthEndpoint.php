@@ -16,11 +16,9 @@ class AuthEndpoint extends BaseEndpoint
     {
         // Construct the parent class
         parent::__construct('Usuario');
-        $this->load->model('Login_Model');
         $this->load->model('UsuarioDAO');
         $this->load->model('AccionDAO');
         $this->load->model('AccionRolDAO');
-        $this->load->library('encrypt');
 
         $this->load->library(array('ion_auth', 'form_validation'));
     }
@@ -30,16 +28,11 @@ class AuthEndpoint extends BaseEndpoint
         return $this->UsuarioDAO;
     }
 
-    private function encriptar($contraseña)
-    {
-        // $this->load->library('encrypt');
+    private function encriptar($contraseña) {
         return password_hash($contraseña, PASSWORD_DEFAULT);
     }
 
     private function comprobar_hash($contraseña, $pass) {
-        //$this->load->library('encrypt');
-        // $base = $this->encrypt->decode($pass);
-        // return $contraseña == $base;
         return password_verify ($contraseña , $pass);
     }
 
@@ -56,7 +49,7 @@ class AuthEndpoint extends BaseEndpoint
                 $this->response(format_error('Usuario Inexistente',
                     'El correo electronico ingresado no corresponde a ningun usuario registrado'), 401);
             } else
-                if (!$this->comprobar_hash($contraseña,$usuario[0]->password)) {
+                if (!$this->comprobar_hash($contraseña, $usuario[0]->password)) {
                 $this->response(format_error('Contraseña invalida', 'La contraseña ingresada es incorrecta'), 401);
             } else if ($usuario[0]->estado == 0) {
                 $this->response(format_error('Usuario inactivo', 'Su usuario ha sido inhabilitado temporalmente'), 401);
@@ -64,7 +57,7 @@ class AuthEndpoint extends BaseEndpoint
                 $usuario = $usuario[0];
                 //var_dump($usuario);
                 $usuario->rol->acciones = [];
-                $ars = $this->AccionRolDAO->query(['rol.id' => $usuario->rol->id], [], ['accion']);
+                $ars = $this->AccionRolDAO->query(['rol.id' => $usuario->rol->id], [], ['accion'], [], -1);
                 foreach ($ars as $ar)
                     $usuario->rol->acciones[] = $ar->accion;
                 $usuario->password = null;
@@ -101,8 +94,7 @@ class AuthEndpoint extends BaseEndpoint
             $pass = $this->get_random_password();
 
             //encripto el pass y se lo seteo al usuario
-            $usuario[0]->password = $this->encrypt->encode($pass);
-            //$usuario[0]->password = $this->encriptar($pass);
+            $usuario[0]->password = $this->encriptar($pass);
 
             //actualiso los datos
             $this->getDAO()->update($usuario[0]);
@@ -149,24 +141,7 @@ class AuthEndpoint extends BaseEndpoint
 
         return $password;
     }
-/* NO VA A SER NECESARIO, EL CLIENTE PUEDE ACCEDER A ESA INFO EN EL JWT
-    public function acciones_post()
-    {
-        $json = $this->post('data');
 
-        try {
-            $email = $json['usuario'];
-
-            //$acciones = $this->AccionDAO->$this->query(['rol.usuario.email' => $email]);
-
-            $acciones = [];
-
-            $this->response(['body' => ['acciones' => $acciones]], 200);
-        } catch (Exception $e) {
-            $this->response(['message' => $json], 500);
-        }
-    }
-*/
     private static function Aud()
     {
         $aud = '';

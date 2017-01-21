@@ -30,7 +30,6 @@ class Gestion_sesion
         $this->ci->load->model('UsuarioDAO');
         $this->ci->load->model('AccionRolDAO');
         $this->ci->load->model('RolDAO');
-        $this->ci->load->library('bcrypt');
     }
 
     function index()
@@ -43,7 +42,6 @@ class Gestion_sesion
 
         if (!isset($this->ci->headers["Authorization"]) || empty($this->ci->headers["Authorization"])) {
             $this->ci->response(['error' => 'No esta autenticado', 'status' => 401], 401);
-
         } else {
             //////////////////////// DESENCRIPTACION///////////////////////////////////////
             $secret_key = 'Riv1s9x80DA94@';
