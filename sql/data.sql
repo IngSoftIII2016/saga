@@ -5,8 +5,6 @@ INSERT INTO gestion_aulas.grupo (name, description) VALUES ('bedel', 'bedel unrn
 
 INSERT INTO gestion_aulas.usuario (ip_address, username, password, salt, email, activation_code, forgotten_password_code, forgotten_password_time, remember_code, created_on, last_login, active, first_name, last_name, company, phone) VALUES ('::1', 'administrador unrn', '$2y$08$hMiSm0u6kFRZz4yuJJjWiuiRl8ySPYQduNU5g4Oecy./DIzYehma.', null, 'admin@admin.com', null, null, null, 'sjSR6G3KAyyP8.P2QI4cnO', 1475506909, 1475553375, 1, 'administrador', 'unrn', null, '');
 
-INSERT INTO gestion_aulas.usuario_grupo (user_id, group_id) VALUES (1, 1);
-INSERT INTO gestion_aulas.usuario_grupo (user_id, group_id) VALUES (1, 2);
 
 -- --------------------------------------------------------
 

@@ -8,6 +8,7 @@ class Clase extends Entity
 	public $hora_inicio;
 	public $hora_fin;
 	public $comentario;
+	public $hora_llegada;
 	public $aula;
 	public $horario;
 
@@ -26,7 +27,7 @@ class Clase extends Entity
 	 */
 	public function get_property_column_names()
 	{
-		return ['fecha', 'hora_inicio', 'hora_fin', 'comentario'];
+		return ['fecha', 'hora_inicio', 'hora_fin', 'comentario', 'hora_llegada'];
 	}
 
 	/**
@@ -99,6 +100,7 @@ class Clase extends Entity
 		if(isset($data['hora_inicio'])) $this->hora_inicio = $data['hora_inicio'];
 		if(isset($data['hora_fin'])) $this->hora_fin = $data['hora_fin'];
 		if(isset($data['comentario'])) $this->comentario = $data['comentario'];
+		if(isset($data['hora_llegada'])) $this->hora_llegada = $data['hora_llegada'];
 		if(isset($data['aula'])) $this->aula = $data['aula'];
 		if(isset($data['horario'])) $this->horario = $data['horario'];
 	}
@@ -115,6 +117,7 @@ class Clase extends Entity
 		$data['hora_inicio'] = $this->hora_inicio;
 		$data['hora_fin'] = $this->hora_fin;
 		$data['comentario'] = $this->comentario;
+		$data['hora_llegada'] = $this->hora_llegada;
 		$data['Aula_id'] = $this->aula->get_id();
 		$data['Horario_id'] = $this->horario->get_id();
 		return $data;
