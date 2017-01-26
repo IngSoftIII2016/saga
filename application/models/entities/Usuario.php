@@ -25,7 +25,7 @@ class Usuario extends Entity
 
     public function get_property_column_names()
     {
-        return ['nombre', 'apellido', 'password', 'email','estado'];
+        return ['nombre', 'apellido', 'password', 'email', 'estado'];
     }
     /**
      * @return mixed
@@ -81,8 +81,7 @@ class Usuario extends Entity
      * @return none
      */
 
-    public function from_row($data)
-    {
+    public function from_row($data) {
         if(isset($data['id'])) $this->id = $data['id'];
         if(isset($data['nombre'])) $this->nombre = $data['nombre'];
         if(isset($data['apellido'])) $this->apellido = $data['apellido'];

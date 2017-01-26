@@ -41,15 +41,15 @@ class AuthEndpoint extends BaseEndpoint
         $json = $this->post('data');
 
         try {
-            $email = $json['usuario']; // cambiar la propiedad json a email
-            $contraseña = $json['contraseña']; // cambiar la propiedad json a pass
+            $email = $json['email']; // cambiar la propiedad json a email
+            $password = $json['password']; // cambiar la propiedad json a pass
             $usuario = $this->getDAO()->query(['email' => $email], [], ['rol']);
 
             if (count($usuario) !== 1) {
                 $this->response(format_error('Usuario Inexistente',
                     'El correo electronico ingresado no corresponde a ningun usuario registrado'), 401);
             } else
-                if (!$this->comprobar_hash($contraseña, $usuario[0]->password)) {
+                if (!$this->comprobar_hash($password, $usuario[0]->password)) {
                 $this->response(format_error('Contraseña invalida', 'La contraseña ingresada es incorrecta'), 401);
             } else if ($usuario[0]->estado == 0) {
                 $this->response(format_error('Usuario inactivo', 'Su usuario ha sido inhabilitado temporalmente'), 401);

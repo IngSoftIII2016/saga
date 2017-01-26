@@ -86,6 +86,7 @@ class HorarioDAO extends BaseDAO {
 
     private function eliminar_clases($horario) {
         $fecha_desde = $horario->get_fecha_desde();
+        $horario = $this->query(['id' => $horario->id], [], ['comision.periodo'])[0];
         if($fecha_desde != null)
             $start = DateTime::createFromFormat("Y-m-d", $fecha_desde);
         else
