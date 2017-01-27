@@ -47,4 +47,15 @@ class saga
         $this->email->message('<h2>Este mensaje segenerado automaticamente</h2><hr><br> Contraseña: ' . $pass);
         $this->email->send();
     }
+
+    public function get_parametro($parametro) {
+        $clave = $this->getDAO()->query(['clave' => $parametro]);
+
+        if (count($clave) !== 1) {
+            return "ERROR CON PARAMETRO";
+        } else {
+            $parametro = $clave[0];
+            return $parametro->valor;
+        }
+    }
 }
