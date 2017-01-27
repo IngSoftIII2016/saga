@@ -25,20 +25,4 @@ class UsuarioDAO extends BaseDAO {
 	
     	return FALSE;
     }
-
-    public function login($email, $password)
-    {
-        $query = $this->db->select("id, email")
-            ->from("usuario")
-            ->where("email", $email)
-            ->where("contraseña", $password)
-            ->get();
-        if($query->num_rows() === 1)
-        {
-            return true;
-        }
-        return false;
-    }
-
-
 }
