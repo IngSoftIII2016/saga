@@ -24,7 +24,12 @@ class saga
     }
 
     public function mandar_correo($pass, $json) {
-        $this->load->library("email");
+        $CI =& get_instance();
+
+        $CI->load->library('email');
+        //$CI->email->do_something();
+
+        //$this->load->library("email");
 
         //configuracion para gmail
         $configGmail = array(
@@ -39,13 +44,13 @@ class saga
         );
 
         //cargamos la configuración para enviar con gmail
-        $this->email->initialize($configGmail);
+        $CI->email->initialize($configGmail);
 
-        $this->email->from('Administracion y Gestion de Aulas UNRN');
-        $this->email->to($json['email']);
-        $this->email->subject('Contraseña Nueva');
-        $this->email->message('<h2>Este mensaje segenerado automaticamente</h2><hr><br> Contraseña: ' . $pass);
-        $this->email->send();
+        $CI->email->from('Administracion y Gestion de Aulas UNRN');
+        $CI->email->to($json['email']);
+        $CI->email->subject('Contraseña Nueva');
+        $CI->email->message('<h2>Este mensaje segenerado automaticamente</h2><hr><br> Contraseña: ' . $pass);
+        $CI->email->send();
     }
 
     public function get_parametro($parametro) {
