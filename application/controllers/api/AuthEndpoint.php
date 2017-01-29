@@ -20,7 +20,7 @@ class AuthEndpoint extends BaseEndpoint
         $this->load->model('AccionDAO');
         $this->load->model('AccionRolDAO');
 
-        $this->load->library(array('ion_auth', 'form_validation'));
+        $this->load->library(array('ion_auth', 'form_validation', 'saga'));
     }
 
     protected function getDAO()
@@ -41,38 +41,38 @@ class AuthEndpoint extends BaseEndpoint
         $json = $this->post('data');
 
         try {
-            $email = $json['email']; // cambiar la propiedad json a email
-            $password = $json['password']; // cambiar la propiedad json a pass
+            $email = $json['usuario']; // cambiar la propiedad json a email
+            $contraseña = $json['contraseña']; // cambiar la propiedad json a pass
             $usuario = $this->getDAO()->query(['email' => $email], [], ['rol']);
 
             if (count($usuario) !== 1) {
                 $this->response(format_error('Usuario Inexistente',
                     'El correo electronico ingresado no corresponde a ningun usuario registrado'), 401);
             } else
-                if (!$this->comprobar_hash($password, $usuario[0]->password)) {
-                $this->response(format_error('Contraseña invalida', 'La contraseña ingresada es incorrecta'), 401);
-            } else if ($usuario[0]->estado == 0) {
-                $this->response(format_error('Usuario inactivo', 'Su usuario ha sido inhabilitado temporalmente'), 401);
-            } else {
-                $usuario = $usuario[0];
-                //var_dump($usuario);
-                $usuario->rol->acciones = [];
-                $ars = $this->AccionRolDAO->query(['rol.id' => $usuario->rol->id], [], ['accion'], [], -1);
-                foreach ($ars as $ar)
-                    $usuario->rol->acciones[] = $ar->accion;
-                $usuario->password = null;
-                $time = time();
-                // 43200 seg = 12 horas
-                $token = array(
-                    'exp' => $time + (43200),
-                    'aud' => self::Aud(),
-                    'data' => $usuario
-                );
+                if (!$this->comprobar_hash($contraseña, $usuario[0]->password)) {
+                    $this->response(format_error('Contraseña invalida', 'La contraseña ingresada es incorrecta'), 401);
+                } else if ($usuario[0]->estado == 0) {
+                    $this->response(format_error('Usuario inactivo', 'Su usuario ha sido inhabilitado temporalmente'), 401);
+                } else {
+                    $usuario = $usuario[0];
+                    //var_dump($usuario);
+                    $usuario->rol->acciones = [];
+                    $ars = $this->AccionRolDAO->query(['rol.id' => $usuario->rol->id], [], ['accion'], [], -1);
+                    foreach ($ars as $ar)
+                        $usuario->rol->acciones[] = $ar->accion;
+                    $usuario->password = null;
+                    $time = time();
+                    // 43200 seg = 12 horas
+                    $token = array(
+                        'exp' => $time + (43200),
+                        'aud' => self::Aud(),
+                        'data' => $usuario
+                    );
 
-                $jwt = JWT::encode($token, self::$secret_key);
+                    $jwt = JWT::encode($token, self::$secret_key);
 
-                $this->response(['body' => ['token' => $jwt]], 200);
-            }
+                    $this->response(['body' => ['token' => $jwt]], 200);
+                }
         } catch (Exception $e) {
             $this->response(format_error('Error al construir token', $e->getMessage()), 500);
         }
@@ -91,7 +91,7 @@ class AuthEndpoint extends BaseEndpoint
         } else {
 
             //genera contraseña aleatoria
-            $pass = $this->get_random_password();
+            $pass = $this->saga->get_random_password();
 
             //encripto el pass y se lo seteo al usuario
             $usuario[0]->password = $this->encriptar($pass);
@@ -103,29 +103,6 @@ class AuthEndpoint extends BaseEndpoint
             $this->saga->mandar_correo($pass, $json);
         }
     }
-
-    function change_pass_post() {
-        $json = $this->post('data');
-        $oldpassword = $json['oldpassword'];
-        $newpassword = $json['newpassword'];
-        //obtengo el usuario por el email
-        $usuario = $this->getDAO()->query(['email' => $json['email']], [] , ['rol']);
-        if (count($usuario) !== 1) {
-            $this->response(['message' => 'Usuario inexistente'], 500);
-        } else {
-            if (!$this->comprobar_hash($oldpassword, $usuario[0]->password)) {
-                //encripto el pass y se lo seteo al usuario
-                $usuario[0]->password = $this->encriptar($newpassword);
-
-                //actualiso los datos
-                $this->getDAO()->update($usuario[0]);
-            } else {
-                $this->response(['message' => 'Contraseña Actual Incorrecta'], 500);
-            }
-        }
-
-    }
-
 
     function get_random_password($chars_min = 6, $chars_max = 8, $use_upper_case = true, $include_numbers = true, $include_special_chars = true)
     {
@@ -163,6 +140,27 @@ class AuthEndpoint extends BaseEndpoint
         $aud .= gethostname();
 
         return sha1($aud);
+    }
+
+    function change_pass_post() {
+        $json = $this->post('data');
+        $oldpassword = $json['oldpassword'];
+        $newpassword = $json['newpassword'];
+        //obtengo el usuario por el email
+        $usuario = $this->getDAO()->query(['email' => $json['email']], [] , ['rol']);
+        if (count($usuario) !== 1) {
+            $this->response(['message' => 'Usuario inexistente'], 500);
+        } else {
+            if (!$this->comprobar_hash($oldpassword, $usuario[0]->password)) {
+                //encripto el pass y se lo seteo al usuario
+                $usuario[0]->password = $this->encriptar($newpassword);
+
+                //actualiso los datos
+                $this->getDAO()->update($usuario[0]);
+            } else {
+                $this->response(['message' => 'Contraseña Actual Incorrecta'], 500);
+            }
+        }
     }
 
 }
