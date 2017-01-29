@@ -122,14 +122,14 @@ class AuthEndpoint extends BaseEndpoint
         }
     }
 
-    function change_pass_post() {
+    public function change_pass_post() {
         $json = $this->post('data');
         $oldpassword = $json['oldpassword'];
         $newpassword = $json['newpassword'];
         //obtengo el usuario por el email
         $usuario = $this->getDAO()->query(['email' => $json['email']], [] , ['rol']);
         if (count($usuario) !== 1) {
-            $this->response(['message' => 'Usuario inexistente'], 500);
+            $this->response(format_error('Usuario Inexitent',''), 500);
         } else {
             if (!$this->comprobar_hash($oldpassword, $usuario[0]->password)) {
                 //encripto el pass y se lo seteo al usuario
@@ -138,12 +138,15 @@ class AuthEndpoint extends BaseEndpoint
                 //actualiso los datos
                 $this->getDAO()->update($usuario[0]);
             } else {
-                $this->response(['message' => 'Contraseña Actual Incorrecta'], 500);
+                $this->response(format_error('Error','Contraseña actual incorrecta, compruebe su contraseña y vuelva a intentarlo'), 500);
             }
         }
 
     }
 
+    function comprobar_contraseña($pass, $cripass) {
+        return $this->encriptar($pass) == $cripass;
+    }
 
     function get_random_password($chars_min = 6, $chars_max = 8, $use_upper_case = true, $include_numbers = true, $include_special_chars = true)
     {

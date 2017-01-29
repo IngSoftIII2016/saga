@@ -19,6 +19,11 @@ class Gestion_sesion
             'url' => '/saga/api/AuthEndpoint/reset_pass',
             'metodo' => 'POST',
             'recurso' => 'Login'
+        ],
+        [
+            'url' => '/saga/api/AuthEndpoint/change_pass',
+            'metodo' => 'POST',
+            'recurso' => 'Perfil'
         ]
     ];
 
