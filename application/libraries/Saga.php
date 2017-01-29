@@ -1,7 +1,7 @@
 <?php
 if ( ! defined('BASEPATH')) exit('No se permite el acceso directo al script');
 
-class saga
+class Saga
 {
     public function get_random_password($chars_min = 6, $chars_max = 8, $use_upper_case = true, $include_numbers = true, $include_special_chars = true)
     {
