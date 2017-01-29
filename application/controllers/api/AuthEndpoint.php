@@ -99,37 +99,19 @@ class AuthEndpoint extends BaseEndpoint
             //actualiso los datos
             $this->getDAO()->update($usuario[0]);
 
-            //configuracion para gmail
-            $configGmail = array(
-                'protocol' => 'smtp',
-                'smtp_host' => 'ssl://smtp.gmail.com',
-                'smtp_port' => 465,
-                'smtp_user' => 'noreplysagaingiii',
-                'smtp_pass' => 'ing3SAGA',
-                'mailtype' => 'html',
-                'charset' => 'utf-8',
-                'newline' => "\r\n"
-            );
-
-            //cargamos la configuración para enviar con gmail
-            $this->email->initialize($configGmail);
-
-            $this->email->from('Administracion y Gestion de Aulas UNRN');
-            $this->email->to($json['email']);
-            $this->email->subject('Contraseña Nueva');
-            $this->email->message('<h2>Este mensaje se generado automaticamente</h2><hr><br> Contraseña: ' . $pass);
-            $this->email->send();
+            //mando un correo
+            $this->saga->mandar_correo($pass, $json);
         }
     }
 
-    public function change_pass_post() {
+    function change_pass_post() {
         $json = $this->post('data');
         $oldpassword = $json['oldpassword'];
         $newpassword = $json['newpassword'];
         //obtengo el usuario por el email
         $usuario = $this->getDAO()->query(['email' => $json['email']], [] , ['rol']);
         if (count($usuario) !== 1) {
-            $this->response(format_error('Usuario Inexitent',''), 500);
+            $this->response(['message' => 'Usuario inexistente'], 500);
         } else {
             if (!$this->comprobar_hash($oldpassword, $usuario[0]->password)) {
                 //encripto el pass y se lo seteo al usuario
@@ -138,15 +120,12 @@ class AuthEndpoint extends BaseEndpoint
                 //actualiso los datos
                 $this->getDAO()->update($usuario[0]);
             } else {
-                $this->response(format_error('Error','Contraseña actual incorrecta, compruebe su contraseña y vuelva a intentarlo'), 500);
+                $this->response(['message' => 'Contraseña Actual Incorrecta'], 500);
             }
         }
 
     }
 
-    function comprobar_contraseña($pass, $cripass) {
-        return $this->encriptar($pass) == $cripass;
-    }
 
     function get_random_password($chars_min = 6, $chars_max = 8, $use_upper_case = true, $include_numbers = true, $include_special_chars = true)
     {
