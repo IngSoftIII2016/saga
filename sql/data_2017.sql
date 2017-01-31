@@ -17,82 +17,86 @@ VALUES
 
 
 
-INSERT INTO `accion` (`url`, `metodo`, `recurso`) VALUES
-  ('/saga/api/AuthEndpoint/login', 'POST', 'Login'),
-  ('/saga/api/AuthEndpoint/reset_pass', 'POST', 'Login'),
-  ('/saga/api/accionrol', 'GET', 'Permisos'),
-  ('/saga/api/accionrol', 'POST', 'Permisos'),
-  ('/saga/api/accionrol', 'PUT', 'Permisos'),
-  ('/saga/api/accionrol', 'DELETE', 'Permisos'),
-  ('/saga/api/asignaturas', 'GET', 'Asignaturas'),
-  ('/saga/api/asignaturas', 'POST', 'Asignaturas'),
-  ('/saga/api/asignaturas', 'PUT', 'Asignaturas'),
-  ('/saga/api/asignaturas', 'DELETE', 'Asignaturas'),
-  ('/saga/api/asignaturacarrera', 'GET', 'Planes de Estudio'),
-  ('/saga/api/asignaturacarrera', 'POST', 'Planes de Estudio'),
-  ('/saga/api/asignaturacarrera', 'PUT', 'Planes de Estudio'),
-  ('/saga/api/asignaturacarrera', 'DELETE', 'Planes de Estudio'),
-  ('/saga/api/aulas', 'GET', 'Aulas'),
-  ('/saga/api/aulas', 'POST', 'Aulas'),
-  ('/saga/api/aulas', 'PUT', 'Aulas'),
-  ('/saga/api/aulas', 'DELETE', 'Aulas'),
-  ('/saga/api/carreras', 'GET', 'Carreras'),
-  ('/saga/api/carreras', 'POST', 'Carreras'),
-  ('/saga/api/carreras', 'PUT', 'Carreras'),
-  ('/saga/api/carreras', 'DELETE', 'Carreras'),
-  ('/saga/api/clases', 'GET', 'Clases'),
-  ('/saga/api/clases', 'POST', 'Clases'),
-  ('/saga/api/clases', 'PUT', 'Clases'),
-  ('/saga/api/clases', 'DELETE', 'Clases'),
-  ('/saga/api/comisiones', 'GET', 'Comisiones'),
-  ('/saga/api/comisiones', 'POST', 'Comisiones'),
-  ('/saga/api/comisiones', 'PUT', 'Comisiones'),
-  ('/saga/api/comisiones', 'DELETE', 'Comisiones'),
-  ('/saga/api/docentes', 'GET', 'Docentes'),
-  ('/saga/api/docentes', 'POST', 'Docentes'),
-  ('/saga/api/docentes', 'PUT', 'Docentes'),
-  ('/saga/api/docentes', 'DELETE', 'Docentes'),
-  ('/saga/api/edificios', 'GET', 'Edificios'),
-  ('/saga/api/edificios', 'POST', 'Edificios'),
-  ('/saga/api/edificios', 'PUT', 'Edificios'),
-  ('/saga/api/edificios', 'DELETE', 'Edificios'),
-  ('/saga/api/eventos', 'GET', 'Eventos'),
-  ('/saga/api/eventos', 'POST', 'Eventos'),
-  ('/saga/api/eventos', 'PUT', 'Eventos'),
-  ('/saga/api/eventos', 'DELETE', 'Eventos'),
-  ('/saga/api/horarios', 'GET', 'Horarios'),
-  ('/saga/api/horarios', 'POST', 'Horarios'),
-  ('/saga/api/horarios', 'PUT', 'Horarios'),
-  ('/saga/api/horarios', 'DELETE', 'Horarios'),
-  ('/saga/api/localidades', 'GET', 'Localidades'),
-  ('/saga/api/localidades', 'POST', 'Localidades'),
-  ('/saga/api/localidades', 'PUT', 'Localidades'),
-  ('/saga/api/localidades', 'DELETE', 'Localidades'),
-  ('/saga/api/periodos', 'GET', 'Periodos'),
-  ('/saga/api/periodos', 'POST', 'Periodos'),
-  ('/saga/api/periodos', 'PUT', 'Periodos'),
-  ('/saga/api/periodos', 'DELETE', 'Periodos'),
-  ('/saga/api/recursos', 'GET', 'Recursos'),
-  ('/saga/api/recursos', 'POST', 'Recursos'),
-  ('/saga/api/recursos', 'PUT', 'Recursos'),
-  ('/saga/api/recursos', 'DELETE', 'Recursos'),
-  ('/saga/api/roles', 'GET', 'Roles'),
-  ('/saga/api/roles', 'POST', 'Roles'),
-  ('/saga/api/roles', 'PUT', 'Roles'),
-  ('/saga/api/roles', 'DELETE', 'Roles'),
-  ('/saga/api/sedes', 'GET', 'Sedes'),
-  ('/saga/api/sedes', 'POST', 'Sedes'),
-  ('/saga/api/sedes', 'PUT', 'Sedes'),
-  ('/saga/api/sedes', 'DELETE', 'Sedes'),
-  ('/saga/api/tiporecursos', 'GET', 'Tipos de Recursos'),
-  ('/saga/api/tiporecursos', 'POST', 'Tipos de Recursos'),
-  ('/saga/api/tiporecursos', 'PUT', 'Tipos de Recursos'),
-  ('/saga/api/tiporecursos', 'DELETE', 'Tipos de Recursos'),
-  ('/saga/api/usuarios', 'GET', 'Usuarios'),
-  ('/saga/api/usuarios', 'POST', 'Usuarios'),
-  ('/saga/api/usuarios', 'PUT', 'Usuarios'),
-  ('/saga/api/usuarios', 'DELETE', 'Usuarios'),
-  ('/saga/api/acciones', 'GET', 'Acciones');
+INSERT INTO `accion` (`id`, `url`, `metodo`, `recurso`) VALUES
+  (1, '/saga/api/AuthEndpoint/login', 'POST', 'Login'),
+  (2, '/saga/api/AuthEndpoint/reset_pass', 'POST', 'Login'),
+  (3, '/saga/api/accionrol', 'GET', 'Permisos'),
+  (4, '/saga/api/accionrol', 'POST', 'Permisos'),
+  (5, '/saga/api/accionrol', 'PUT', 'Permisos'),
+  (6, '/saga/api/accionrol', 'DELETE', 'Permisos'),
+  (7, '/saga/api/asignaturas', 'GET', 'Asignaturas'),
+  (8, '/saga/api/asignaturas', 'POST', 'Asignaturas'),
+  (9, '/saga/api/asignaturas', 'PUT', 'Asignaturas'),
+  (10, '/saga/api/asignaturas', 'DELETE', 'Asignaturas'),
+  (11, '/saga/api/asignaturacarrera', 'GET', 'Planes de Estudio'),
+  (12, '/saga/api/asignaturacarrera', 'POST', 'Planes de Estudio'),
+  (13, '/saga/api/asignaturacarrera', 'PUT', 'Planes de Estudio'),
+  (14, '/saga/api/asignaturacarrera', 'DELETE', 'Planes de Estudio'),
+  (15, '/saga/api/aulas', 'GET', 'Aulas'),
+  (16, '/saga/api/aulas', 'POST', 'Aulas'),
+  (17, '/saga/api/aulas', 'PUT', 'Aulas'),
+  (18, '/saga/api/aulas', 'DELETE', 'Aulas'),
+  (19, '/saga/api/carreras', 'GET', 'Carreras'),
+  (20, '/saga/api/carreras', 'POST', 'Carreras'),
+  (21, '/saga/api/carreras', 'PUT', 'Carreras'),
+  (22, '/saga/api/carreras', 'DELETE', 'Carreras'),
+  (23, '/saga/api/clases', 'GET', 'Clases'),
+  (24, '/saga/api/clases', 'POST', 'Clases'),
+  (25, '/saga/api/clases', 'PUT', 'Clases'),
+  (26, '/saga/api/clases', 'DELETE', 'Clases'),
+  (27, '/saga/api/comisiones', 'GET', 'Comisiones'),
+  (28, '/saga/api/comisiones', 'POST', 'Comisiones'),
+  (29, '/saga/api/comisiones', 'PUT', 'Comisiones'),
+  (30, '/saga/api/comisiones', 'DELETE', 'Comisiones'),
+  (31, '/saga/api/docentes', 'GET', 'Docentes'),
+  (32, '/saga/api/docentes', 'POST', 'Docentes'),
+  (33, '/saga/api/docentes', 'PUT', 'Docentes'),
+  (34, '/saga/api/docentes', 'DELETE', 'Docentes'),
+  (35, '/saga/api/edificios', 'GET', 'Edificios'),
+  (36, '/saga/api/edificios', 'POST', 'Edificios'),
+  (37, '/saga/api/edificios', 'PUT', 'Edificios'),
+  (38, '/saga/api/edificios', 'DELETE', 'Edificios'),
+  (39, '/saga/api/eventos', 'GET', 'Eventos'),
+  (40, '/saga/api/eventos', 'POST', 'Eventos'),
+  (41, '/saga/api/eventos', 'PUT', 'Eventos'),
+  (42, '/saga/api/eventos', 'DELETE', 'Eventos'),
+  (43, '/saga/api/horarios', 'GET', 'Horarios'),
+  (44, '/saga/api/horarios', 'POST', 'Horarios'),
+  (45, '/saga/api/horarios', 'PUT', 'Horarios'),
+  (46, '/saga/api/horarios', 'DELETE', 'Horarios'),
+  (47, '/saga/api/localidades', 'GET', 'Localidades'),
+  (48, '/saga/api/localidades', 'POST', 'Localidades'),
+  (49, '/saga/api/localidades', 'PUT', 'Localidades'),
+  (50, '/saga/api/localidades', 'DELETE', 'Localidades'),
+  (51, '/saga/api/periodos', 'GET', 'Periodos'),
+  (52, '/saga/api/periodos', 'POST', 'Periodos'),
+  (53, '/saga/api/periodos', 'PUT', 'Periodos'),
+  (54, '/saga/api/periodos', 'DELETE', 'Periodos'),
+  (55, '/saga/api/recursos', 'GET', 'Recursos'),
+  (56, '/saga/api/recursos', 'POST', 'Recursos'),
+  (57, '/saga/api/recursos', 'PUT', 'Recursos'),
+  (58, '/saga/api/recursos', 'DELETE', 'Recursos'),
+  (59, '/saga/api/roles', 'GET', 'Roles'),
+  (60, '/saga/api/roles', 'POST', 'Roles'),
+  (61, '/saga/api/roles', 'PUT', 'Roles'),
+  (62, '/saga/api/roles', 'DELETE', 'Roles'),
+  (63, '/saga/api/sedes', 'GET', 'Sedes'),
+  (64, '/saga/api/sedes', 'POST', 'Sedes'),
+  (65, '/saga/api/sedes', 'PUT', 'Sedes'),
+  (66, '/saga/api/sedes', 'DELETE', 'Sedes'),
+  (67, '/saga/api/tiporecursos', 'GET', 'Tipos de Recursos'),
+  (68, '/saga/api/tiporecursos', 'POST', 'Tipos de Recursos'),
+  (69, '/saga/api/tiporecursos', 'PUT', 'Tipos de Recursos'),
+  (70, '/saga/api/tiporecursos', 'DELETE', 'Tipos de Recursos'),
+  (71, '/saga/api/usuarios', 'GET', 'Usuarios'),
+  (72, '/saga/api/usuarios', 'POST', 'Usuarios'),
+  (73, '/saga/api/usuarios', 'PUT', 'Usuarios'),
+  (74, '/saga/api/usuarios', 'DELETE', 'Usuarios'),
+  (75, '/saga/api/acciones', 'GET', 'Acciones'),
+  (76, 'saga/api/parametros', 'GET', 'Parametros'),
+  (77, 'saga/api/parametros', 'POST', 'Parametros'),
+  (78, 'saga/api/parametros', 'PUT', 'Parametros'),
+  (79, 'saga/api/parametros', 'DELETE', 'Parametros');
 
 -- ----------------------------------------------------------
 -- Permisos
@@ -106,10 +110,9 @@ VALUES
   (39,1),(43,1),(47,1),(51,1),(55,1),(63,1),(67,1),
   -- ROL ADMIN ----------------------------------------------
   -- ---- lectura
-  (3,2),(7,2),(11,2),(15,2),(19,2),(23,2),(27,2),(31,2),(35,2),
-  (39,2),(43,2),(47,2),(51,2),(55,2),(59,2),(63,2),(67,2),(71,2),(75,2),
+  (3,2),(59,2),(71,2),(75,2),(76,2),
   -- ---- escritura
-  (4,2),(5,2),(6,2),(60,2),(61,2),(62,2),(72,2),(73,2),(74,2),
+  (4,2),(5,2),(6,2),(60,2),(61,2),(62,2),(72,2),(73,2),(74,2),(77,2),(78,2),(79,2),
 
   -- ROL ADMINISTRADOR ACADEMICO ----------------------------
   -- ---- lectura
@@ -1668,7 +1671,7 @@ INSERT IGNORE INTO `horario` (`id`, `descripcion`, `frecuencia_semanas`, `dia`, 
 -- Volcado de datos para la tabla `clase`
 --
 
-INSERT INTO `clase` (`id`, `Aula_id`, `fecha`, `hora_inicio`, `hora_fin`, `Horario_id`) VALUES
+INSERT IGNORE INTO `clase` (`id`, `Aula_id`, `fecha`, `hora_inicio`, `hora_fin`, `Horario_id`) VALUES
   (9053, 5, '2016-03-08', '18:00:00', '21:00:00', 226),
   (9054, 5, '2016-03-15', '18:00:00', '21:00:00', 226),
   (9055, 5, '2016-03-22', '18:00:00', '21:00:00', 226),
@@ -2622,7 +2625,7 @@ INSERT INTO `clase` (`id`, `Aula_id`, `fecha`, `hora_inicio`, `hora_fin`, `Horar
   (10003, 3, '2016-04-18', '17:00:00', '20:00:00', 285),
   (10004, 3, '2016-04-25', '17:00:00', '20:00:00', 285),
   (10005, 3, '2016-05-02', '17:00:00', '20:00:00', 285);
-INSERT INTO `clase` (`id`, `Aula_id`, `fecha`, `hora_inicio`, `hora_fin`, `Horario_id`) VALUES
+INSERT IGNORE INTO `clase` (`id`, `Aula_id`, `fecha`, `hora_inicio`, `hora_fin`, `Horario_id`) VALUES
   (10006, 3, '2016-05-09', '17:00:00', '20:00:00', 285),
   (10007, 3, '2016-05-16', '17:00:00', '20:00:00', 285),
   (10008, 3, '2016-05-23', '17:00:00', '20:00:00', 285),
@@ -3556,7 +3559,7 @@ INSERT INTO `clase` (`id`, `Aula_id`, `fecha`, `hora_inicio`, `hora_fin`, `Horar
   (10936, 14, '2016-05-23', '14:00:00', '18:00:00', 343),
   (10937, 14, '2016-05-30', '14:00:00', '18:00:00', 343),
   (10938, 14, '2016-06-06', '14:00:00', '18:00:00', 343);
-INSERT INTO `clase` (`id`, `Aula_id`, `fecha`, `hora_inicio`, `hora_fin`, `Horario_id`) VALUES
+INSERT IGNORE INTO `clase` (`id`, `Aula_id`, `fecha`, `hora_inicio`, `hora_fin`, `Horario_id`) VALUES
   (10939, 14, '2016-06-13', '14:00:00', '18:00:00', 343),
   (10940, 14, '2016-06-20', '14:00:00', '18:00:00', 343),
   (10941, 16, '2016-03-07', '08:30:00', '10:30:00', 344),
@@ -4484,7 +4487,7 @@ INSERT INTO `clase` (`id`, `Aula_id`, `fecha`, `hora_inicio`, `hora_fin`, `Horar
   (11863, 22, '2016-05-05', '11:30:00', '14:30:00', 401),
   (11864, 22, '2016-05-12', '11:30:00', '14:30:00', 401),
   (11865, 22, '2016-05-19', '11:30:00', '14:30:00', 401);
-INSERT INTO `clase` (`id`, `Aula_id`, `fecha`, `hora_inicio`, `hora_fin`, `Horario_id`) VALUES
+INSERT IGNORE INTO `clase` (`id`, `Aula_id`, `fecha`, `hora_inicio`, `hora_fin`, `Horario_id`) VALUES
   (11866, 22, '2016-05-26', '11:30:00', '14:30:00', 401),
   (11867, 22, '2016-06-02', '11:30:00', '14:30:00', 401),
   (11868, 22, '2016-06-09', '11:30:00', '14:30:00', 401),
@@ -5420,7 +5423,7 @@ INSERT INTO `clase` (`id`, `Aula_id`, `fecha`, `hora_inicio`, `hora_fin`, `Horar
   (12798, 4, '2016-10-19', '16:00:00', '20:00:00', 459),
   (12799, 4, '2016-10-26', '16:00:00', '20:00:00', 459),
   (12800, 4, '2016-11-02', '16:00:00', '20:00:00', 459);
-INSERT INTO `clase` (`id`, `Aula_id`, `fecha`, `hora_inicio`, `hora_fin`, `Horario_id`) VALUES
+INSERT IGNORE INTO `clase` (`id`, `Aula_id`, `fecha`, `hora_inicio`, `hora_fin`, `Horario_id`) VALUES
   (12801, 4, '2016-11-09', '16:00:00', '20:00:00', 459),
   (12802, 4, '2016-11-16', '16:00:00', '20:00:00', 459),
   (12803, 4, '2016-11-23', '16:00:00', '20:00:00', 459),
@@ -6355,7 +6358,7 @@ INSERT INTO `clase` (`id`, `Aula_id`, `fecha`, `hora_inicio`, `hora_fin`, `Horar
   (13732, 15, '2016-10-20', '08:00:00', '11:00:00', 514),
   (13733, 15, '2016-10-27', '08:00:00', '11:00:00', 514),
   (13734, 15, '2016-11-03', '08:00:00', '11:00:00', 514);
-INSERT INTO `clase` (`id`, `Aula_id`, `fecha`, `hora_inicio`, `hora_fin`, `Horario_id`) VALUES
+INSERT IGNORE INTO `clase` (`id`, `Aula_id`, `fecha`, `hora_inicio`, `hora_fin`, `Horario_id`) VALUES
   (13735, 15, '2016-11-10', '08:00:00', '11:00:00', 514),
   (13736, 15, '2016-11-17', '08:00:00', '11:00:00', 514),
   (13737, 15, '2016-11-24', '08:00:00', '11:00:00', 514),
@@ -7289,7 +7292,7 @@ INSERT INTO `clase` (`id`, `Aula_id`, `fecha`, `hora_inicio`, `hora_fin`, `Horar
   (14665, 12, '2016-11-03', '15:00:00', '18:00:00', 569),
   (14666, 12, '2016-11-10', '15:00:00', '18:00:00', 569),
   (14667, 12, '2016-11-17', '15:00:00', '18:00:00', 569);
-INSERT INTO `clase` (`id`, `Aula_id`, `fecha`, `hora_inicio`, `hora_fin`, `Horario_id`) VALUES
+INSERT IGNORE INTO `clase` (`id`, `Aula_id`, `fecha`, `hora_inicio`, `hora_fin`, `Horario_id`) VALUES
   (14668, 12, '2016-11-24', '15:00:00', '18:00:00', 569),
   (14669, 8, '2016-08-01', '15:00:00', '18:00:00', 570),
   (14670, 8, '2016-08-08', '15:00:00', '18:00:00', 570),
@@ -8225,7 +8228,7 @@ INSERT INTO `clase` (`id`, `Aula_id`, `fecha`, `hora_inicio`, `hora_fin`, `Horar
   (15600, 13, '2016-09-27', '14:00:00', '16:00:00', 625),
   (15601, 13, '2016-10-04', '14:00:00', '16:00:00', 625),
   (15602, 13, '2016-10-11', '14:00:00', '16:00:00', 625);
-INSERT INTO `clase` (`id`, `Aula_id`, `fecha`, `hora_inicio`, `hora_fin`, `Horario_id`) VALUES
+INSERT IGNORE INTO `clase` (`id`, `Aula_id`, `fecha`, `hora_inicio`, `hora_fin`, `Horario_id`) VALUES
   (15603, 13, '2016-10-18', '14:00:00', '16:00:00', 625),
   (15604, 13, '2016-10-25', '14:00:00', '16:00:00', 625),
   (15605, 13, '2016-11-01', '14:00:00', '16:00:00', 625),
@@ -9154,7 +9157,7 @@ INSERT INTO `clase` (`id`, `Aula_id`, `fecha`, `hora_inicio`, `hora_fin`, `Horar
   (16528, 25, '2016-08-25', '15:00:00', '17:00:00', 680),
   (16529, 25, '2016-09-01', '15:00:00', '17:00:00', 680),
   (16530, 25, '2016-09-08', '15:00:00', '17:00:00', 680);
-INSERT INTO `clase` (`id`, `Aula_id`, `fecha`, `hora_inicio`, `hora_fin`, `Horario_id`) VALUES
+INSERT IGNORE INTO `clase` (`id`, `Aula_id`, `fecha`, `hora_inicio`, `hora_fin`, `Horario_id`) VALUES
   (16531, 25, '2016-09-15', '15:00:00', '17:00:00', 680),
   (16532, 25, '2016-09-22', '15:00:00', '17:00:00', 680),
   (16533, 25, '2016-09-29', '15:00:00', '17:00:00', 680),

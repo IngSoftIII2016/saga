@@ -48,7 +48,6 @@ class Gestion_sesion
         if (!isset($this->ci->headers["Authorization"]) || empty($this->ci->headers["Authorization"])) {
             $this->ci->response(['error' => 'No esta autenticado', 'status' => 401], 401);
         } else {
-            //////////////////////// DESENCRIPTACION///////////////////////////////////////
             $secret_key = 'Riv1s9x80DA94@';
             $token = str_replace('Bearer ', '', $this->ci->headers["Authorization"]);
 
@@ -72,39 +71,6 @@ class Gestion_sesion
                     $this->ci->response(
                         format_error('Error al decodificar el token', $e->getMessage()), 401);
             }
-
-            /////////////////////////VERIFICACION DE USUARIO Y CONTRASEÑA///////////////////////////////////////
-            // ES ABSOLUTAMENTE INNECESARIO IR A LA BASE PARA COMPROBAR EL USUARIO
-            /*
-            $usuario = $this->ci->UsuarioDAO->query(['nombre_usuario' => $tokenDesencriptado->data->usuario]);
-
-            if (count($usuario) !== 1) {
-                $this->ci->response(['message' => 'Usuario inexistente'], 500);
-            } else {
-                //Comparar la contraseña de recibida con la contraseña de la base
-                if (!$this->ci->bcrypt->verify($tokenDesencriptado->data->contraseña, $usuario[0]->contraseña))
-                    $this->ci->response(['message' => 'Contraseña invalida'], 500);
-            }
-            if ($usuario[0]->estado == 0)
-                $this->ci->response(['message' => 'Usuario inactivo'], 500);
-            */
-            /////////////////////////VERIFICACION DE DIRECCION IP///////////////////////////////////////
-
-            //////////////////////////////////////////////////////////////////
-
-            /*
-
-            //Falta ver si el usuario no es administrador
-            //para comprobar el acceso permitido para el bedel.
-
-            $controlador = $_SERVER["PATH_INFO"];
-            $controladores_permitidos = array('/api/aulas','/api/edificios/1','/api/eventos','/api/clases');
-
-            if(!in_array($controlador,$controladores_permitidos)){
-                $this->ci->response(['message' => 'Debe poseer permiso de administrador'], 401);
-
-            }
-      */
         }
     }
 
