@@ -57,7 +57,7 @@ class AuthEndpoint extends BaseEndpoint
                 $usuario = $usuario[0];
                 //var_dump($usuario);
                 $usuario->rol->acciones = [];
-                $ars = $this->AccionRolDAO->query(['rol.id' => $usuario->rol->id], [], ['accion'], [], -1);
+                $ars = $this->AccionRolDAO->query(['rol.id' => $usuario->rol->id], ['accion.recurso' => 'ASC'], ['accion'], [], -1);
                 foreach ($ars as $ar)
                     $usuario->rol->acciones[] = $ar->accion;
                 $usuario->password = null;
