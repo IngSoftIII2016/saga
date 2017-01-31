@@ -1671,7 +1671,7 @@ INSERT IGNORE INTO `horario` (`id`, `descripcion`, `frecuencia_semanas`, `dia`, 
 -- Volcado de datos para la tabla `clase`
 --
 
-INSERT INTO `clase` (`id`, `Aula_id`, `fecha`, `hora_inicio`, `hora_fin`, `Horario_id`) VALUES
+INSERT IGNORE INTO `clase` (`id`, `Aula_id`, `fecha`, `hora_inicio`, `hora_fin`, `Horario_id`) VALUES
   (9053, 5, '2016-03-08', '18:00:00', '21:00:00', 226),
   (9054, 5, '2016-03-15', '18:00:00', '21:00:00', 226),
   (9055, 5, '2016-03-22', '18:00:00', '21:00:00', 226),
@@ -2625,7 +2625,7 @@ INSERT INTO `clase` (`id`, `Aula_id`, `fecha`, `hora_inicio`, `hora_fin`, `Horar
   (10003, 3, '2016-04-18', '17:00:00', '20:00:00', 285),
   (10004, 3, '2016-04-25', '17:00:00', '20:00:00', 285),
   (10005, 3, '2016-05-02', '17:00:00', '20:00:00', 285);
-INSERT INTO `clase` (`id`, `Aula_id`, `fecha`, `hora_inicio`, `hora_fin`, `Horario_id`) VALUES
+INSERT IGNORE INTO `clase` (`id`, `Aula_id`, `fecha`, `hora_inicio`, `hora_fin`, `Horario_id`) VALUES
   (10006, 3, '2016-05-09', '17:00:00', '20:00:00', 285),
   (10007, 3, '2016-05-16', '17:00:00', '20:00:00', 285),
   (10008, 3, '2016-05-23', '17:00:00', '20:00:00', 285),
@@ -3559,7 +3559,7 @@ INSERT INTO `clase` (`id`, `Aula_id`, `fecha`, `hora_inicio`, `hora_fin`, `Horar
   (10936, 14, '2016-05-23', '14:00:00', '18:00:00', 343),
   (10937, 14, '2016-05-30', '14:00:00', '18:00:00', 343),
   (10938, 14, '2016-06-06', '14:00:00', '18:00:00', 343);
-INSERT INTO `clase` (`id`, `Aula_id`, `fecha`, `hora_inicio`, `hora_fin`, `Horario_id`) VALUES
+INSERT IGNORE INTO `clase` (`id`, `Aula_id`, `fecha`, `hora_inicio`, `hora_fin`, `Horario_id`) VALUES
   (10939, 14, '2016-06-13', '14:00:00', '18:00:00', 343),
   (10940, 14, '2016-06-20', '14:00:00', '18:00:00', 343),
   (10941, 16, '2016-03-07', '08:30:00', '10:30:00', 344),
@@ -4487,7 +4487,7 @@ INSERT INTO `clase` (`id`, `Aula_id`, `fecha`, `hora_inicio`, `hora_fin`, `Horar
   (11863, 22, '2016-05-05', '11:30:00', '14:30:00', 401),
   (11864, 22, '2016-05-12', '11:30:00', '14:30:00', 401),
   (11865, 22, '2016-05-19', '11:30:00', '14:30:00', 401);
-INSERT INTO `clase` (`id`, `Aula_id`, `fecha`, `hora_inicio`, `hora_fin`, `Horario_id`) VALUES
+INSERT IGNORE INTO `clase` (`id`, `Aula_id`, `fecha`, `hora_inicio`, `hora_fin`, `Horario_id`) VALUES
   (11866, 22, '2016-05-26', '11:30:00', '14:30:00', 401),
   (11867, 22, '2016-06-02', '11:30:00', '14:30:00', 401),
   (11868, 22, '2016-06-09', '11:30:00', '14:30:00', 401),
@@ -5423,7 +5423,7 @@ INSERT INTO `clase` (`id`, `Aula_id`, `fecha`, `hora_inicio`, `hora_fin`, `Horar
   (12798, 4, '2016-10-19', '16:00:00', '20:00:00', 459),
   (12799, 4, '2016-10-26', '16:00:00', '20:00:00', 459),
   (12800, 4, '2016-11-02', '16:00:00', '20:00:00', 459);
-INSERT INTO `clase` (`id`, `Aula_id`, `fecha`, `hora_inicio`, `hora_fin`, `Horario_id`) VALUES
+INSERT IGNORE INTO `clase` (`id`, `Aula_id`, `fecha`, `hora_inicio`, `hora_fin`, `Horario_id`) VALUES
   (12801, 4, '2016-11-09', '16:00:00', '20:00:00', 459),
   (12802, 4, '2016-11-16', '16:00:00', '20:00:00', 459),
   (12803, 4, '2016-11-23', '16:00:00', '20:00:00', 459),
@@ -6358,7 +6358,7 @@ INSERT INTO `clase` (`id`, `Aula_id`, `fecha`, `hora_inicio`, `hora_fin`, `Horar
   (13732, 15, '2016-10-20', '08:00:00', '11:00:00', 514),
   (13733, 15, '2016-10-27', '08:00:00', '11:00:00', 514),
   (13734, 15, '2016-11-03', '08:00:00', '11:00:00', 514);
-INSERT INTO `clase` (`id`, `Aula_id`, `fecha`, `hora_inicio`, `hora_fin`, `Horario_id`) VALUES
+INSERT IGNORE INTO `clase` (`id`, `Aula_id`, `fecha`, `hora_inicio`, `hora_fin`, `Horario_id`) VALUES
   (13735, 15, '2016-11-10', '08:00:00', '11:00:00', 514),
   (13736, 15, '2016-11-17', '08:00:00', '11:00:00', 514),
   (13737, 15, '2016-11-24', '08:00:00', '11:00:00', 514),
@@ -7292,7 +7292,7 @@ INSERT INTO `clase` (`id`, `Aula_id`, `fecha`, `hora_inicio`, `hora_fin`, `Horar
   (14665, 12, '2016-11-03', '15:00:00', '18:00:00', 569),
   (14666, 12, '2016-11-10', '15:00:00', '18:00:00', 569),
   (14667, 12, '2016-11-17', '15:00:00', '18:00:00', 569);
-INSERT INTO `clase` (`id`, `Aula_id`, `fecha`, `hora_inicio`, `hora_fin`, `Horario_id`) VALUES
+INSERT IGNORE INTO `clase` (`id`, `Aula_id`, `fecha`, `hora_inicio`, `hora_fin`, `Horario_id`) VALUES
   (14668, 12, '2016-11-24', '15:00:00', '18:00:00', 569),
   (14669, 8, '2016-08-01', '15:00:00', '18:00:00', 570),
   (14670, 8, '2016-08-08', '15:00:00', '18:00:00', 570),
@@ -8228,7 +8228,7 @@ INSERT INTO `clase` (`id`, `Aula_id`, `fecha`, `hora_inicio`, `hora_fin`, `Horar
   (15600, 13, '2016-09-27', '14:00:00', '16:00:00', 625),
   (15601, 13, '2016-10-04', '14:00:00', '16:00:00', 625),
   (15602, 13, '2016-10-11', '14:00:00', '16:00:00', 625);
-INSERT INTO `clase` (`id`, `Aula_id`, `fecha`, `hora_inicio`, `hora_fin`, `Horario_id`) VALUES
+INSERT IGNORE INTO `clase` (`id`, `Aula_id`, `fecha`, `hora_inicio`, `hora_fin`, `Horario_id`) VALUES
   (15603, 13, '2016-10-18', '14:00:00', '16:00:00', 625),
   (15604, 13, '2016-10-25', '14:00:00', '16:00:00', 625),
   (15605, 13, '2016-11-01', '14:00:00', '16:00:00', 625),
@@ -9157,7 +9157,7 @@ INSERT INTO `clase` (`id`, `Aula_id`, `fecha`, `hora_inicio`, `hora_fin`, `Horar
   (16528, 25, '2016-08-25', '15:00:00', '17:00:00', 680),
   (16529, 25, '2016-09-01', '15:00:00', '17:00:00', 680),
   (16530, 25, '2016-09-08', '15:00:00', '17:00:00', 680);
-INSERT INTO `clase` (`id`, `Aula_id`, `fecha`, `hora_inicio`, `hora_fin`, `Horario_id`) VALUES
+INSERT IGNORE INTO `clase` (`id`, `Aula_id`, `fecha`, `hora_inicio`, `hora_fin`, `Horario_id`) VALUES
   (16531, 25, '2016-09-15', '15:00:00', '17:00:00', 680),
   (16532, 25, '2016-09-22', '15:00:00', '17:00:00', 680),
   (16533, 25, '2016-09-29', '15:00:00', '17:00:00', 680),
