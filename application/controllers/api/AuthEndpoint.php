@@ -113,7 +113,7 @@ class AuthEndpoint extends BaseEndpoint
         if (count($usuario) !== 1) {
             $this->response(['message' => 'Usuario inexistente'], 500);
         } else {
-            if (!$this->comprobar_hash($oldpassword, $usuario[0]->password)) {
+            if ($this->comprobar_hash($oldpassword, $usuario[0]->password)) {
                 //encripto el pass y se lo seteo al usuario
                 $usuario[0]->password = $this->encriptar($newpassword);
 
