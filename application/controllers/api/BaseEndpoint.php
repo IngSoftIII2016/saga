@@ -17,6 +17,7 @@ require_once APPPATH . '/models/entities/Sede.php';
 require_once APPPATH . '/models/entities/TipoRecurso.php';
 require_once APPPATH . '/models/entities/Usuario.php';
 require_once APPPATH . '/models/entities/Grupo.php';
+require_once APPPATH . '/models/entities/Parametros.php';
 require_once APPPATH . '/models/relations/AsignaturaCarrera.php';
 require_once APPPATH . '/models/relations/UsuarioGrupo.php';
 

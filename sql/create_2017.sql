@@ -388,6 +388,18 @@ CREATE TABLE IF NOT EXISTS `usuario` (
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8;
 
+-- -----------------------------------------------------
+-- Table `parametro`
+-- -----------------------------------------------------
+
+CREATE TABLE IF NOT EXISTS `parametro` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `clave` varchar(250) NOT NULL,
+  `valor` varchar(250) NOT NULL,
+  `descripcion` varchar(250) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
 
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
