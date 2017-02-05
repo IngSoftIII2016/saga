@@ -18,7 +18,7 @@ require_once APPPATH . '/models/entities/Evento.php';
 require_once APPPATH . '/models/entities/Grupo.php';
 require_once APPPATH . '/models/entities/Horario.php';
 require_once APPPATH . '/models/entities/Localidad.php';
-require_once APPPATH . '/models/entities/Parametros.php';
+require_once APPPATH . '/models/entities/Parametro.php';
 require_once APPPATH . '/models/entities/Periodo.php';
 require_once APPPATH . '/models/entities/Recurso.php';
 require_once APPPATH . '/models/entities/Rol.php';

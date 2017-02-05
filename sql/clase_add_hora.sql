@@ -1,1 +1,0 @@
-ALTER TABLE `clase` ADD `hora_llegada` TIME NULL DEFAULT NULL AFTER `comentario`;

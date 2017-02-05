@@ -5,7 +5,7 @@ require_once APPPATH . '/models/orm/BaseDAO.php';
 class ParametrosDAO extends BaseDAO
 {
     public function __construct() {
-        parent::__construct ( 'Parametros' );
+        parent::__construct ( 'Parametro' );
     }
 
     /**

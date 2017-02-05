@@ -5,16 +5,9 @@ SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='TRADITIONAL,ALLOW_INVALID_DATES';
 
 -- -----------------------------------------------------
--- Schema mydb
--- -----------------------------------------------------
--- -----------------------------------------------------
 -- Schema saga
 -- -----------------------------------------------------
-
--- -----------------------------------------------------
--- Schema saga
--- -----------------------------------------------------
-DROP SCHEMA `saga`;
+DROP SCHEMA IF EXISTS `saga`;
 CREATE SCHEMA `saga` DEFAULT CHARACTER SET utf8 ;
 USE `saga` ;
 
@@ -397,7 +390,8 @@ CREATE TABLE IF NOT EXISTS `parametro` (
   `clave` varchar(250) NOT NULL,
   `valor` varchar(250) NOT NULL,
   `descripcion` varchar(250) NOT NULL,
-  PRIMARY KEY (`id`)
+  PRIMARY KEY (`id`),
+  UNIQUE INDEX `unique_clave` (`clave` ASC)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 

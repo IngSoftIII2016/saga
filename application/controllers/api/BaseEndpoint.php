@@ -1,26 +1,25 @@
 <?php
 require APPPATH . '/libraries/REST_Controller.php';
 
-require_once APPPATH . '/models/entities/Aula.php';
+require_once APPPATH . '/models/relations/AccionRol.php';
 require_once APPPATH . '/models/entities/Asignatura.php';
+require_once APPPATH . '/models/relations/AsignaturaCarrera.php';
+require_once APPPATH . '/models/entities/Aula.php';
 require_once APPPATH . '/models/entities/Carrera.php';
 require_once APPPATH . '/models/entities/Clase.php';
 require_once APPPATH . '/models/entities/Comision.php';
 require_once APPPATH . '/models/entities/Docente.php';
 require_once APPPATH . '/models/entities/Edificio.php';
 require_once APPPATH . '/models/entities/Evento.php';
+require_once APPPATH . '/models/entities/Grupo.php';
 require_once APPPATH . '/models/entities/Horario.php';
 require_once APPPATH . '/models/entities/Localidad.php';
+require_once APPPATH . '/models/entities/Parametro.php';
 require_once APPPATH . '/models/entities/Periodo.php';
 require_once APPPATH . '/models/entities/Recurso.php';
 require_once APPPATH . '/models/entities/Sede.php';
 require_once APPPATH . '/models/entities/TipoRecurso.php';
 require_once APPPATH . '/models/entities/Usuario.php';
-require_once APPPATH . '/models/entities/Grupo.php';
-require_once APPPATH . '/models/entities/Parametros.php';
-require_once APPPATH . '/models/relations/AsignaturaCarrera.php';
-require_once APPPATH . '/models/relations/UsuarioGrupo.php';
-
 
 abstract class BaseEndpoint extends REST_Controller
 {

@@ -1,7 +1,7 @@
 <?php
 require_once APPPATH . '/models/orm/Entity.php';
 
-class Parametros extends Entity
+class Parametro extends Entity
 {
     public $id;
     public $clave;
@@ -14,7 +14,7 @@ class Parametros extends Entity
      */
     public function get_table_name()
     {
-        return 'parametros';
+        return 'parametro';
     }
 
     /**

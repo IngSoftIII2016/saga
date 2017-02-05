@@ -10,7 +10,7 @@ class ParametrosEndpoint extends BaseEndpoint
     function __construct()
     {
         // Construct the parent class
-        parent::__construct('Grupo');
+        parent::__construct('Parametro');
         $this->load->model('ParametrosDAO');
     }
 
