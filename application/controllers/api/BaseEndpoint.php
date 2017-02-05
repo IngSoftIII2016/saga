@@ -57,19 +57,18 @@ abstract class BaseEndpoint extends REST_Controller
         $entity = $this->json_to_entity($json);
         $result = $this->getDAO()->insert($entity);
         if (array_key_exists('error', $result)) {
-            $this->response($result, 500);
+            $this->response($result, 400);
         }else {
             $this->response(['data' => $result]);
         }
     }
-
 
     protected function base_put() {
         $json = $this->put('data');
         $entity = $this->json_to_entity($json);
         $result = $this->getDAO()->update($entity);
         if (array_key_exists('error', $result)) {
-            $this->response($result, 500);
+            $this->response($result, 400);
         }else {
             $this->response(['data' => $result]);
         }
@@ -85,7 +84,7 @@ abstract class BaseEndpoint extends REST_Controller
             $this->response(['error' => "$entity->get_table_name() inexistente"], 404);
         $result = $this->getDAO()->delete($entity);
         if (is_array($result)) {
-            $this->response($result, 500);
+            $this->response($result, 400);
         }else {
             $this->response(['data' => $result]);
         }
