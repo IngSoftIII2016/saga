@@ -40,7 +40,8 @@ abstract class BaseEndpoint extends REST_Controller
                 $this->response( ['data' => $this->getDAO()->get_total_rows()] );
             else {
                 $result = $this->getDAO()->query(['id' => $id], [], []);
-                if(count($result) != 1) $this->response(['error' => 'not found' ], 404);
+                if(count($result) != 1) $this->response(format_error('No encontrado',
+                    "No se ha podido localizar el/la $this->entity_class solicitado/a"), 404);
                 else $this->response(['data' => $result[0]]);
             }
         else {
@@ -54,6 +55,10 @@ abstract class BaseEndpoint extends REST_Controller
     protected function base_post() {
         $json = $this->post('data');
         $entity = $this->json_to_entity($json);
+        if (array_key_exists('error', $entity)) {
+            $this->response($entity, 400);
+            return;
+        }
         $result = $this->getDAO()->insert($entity);
         if (array_key_exists('error', $result)) {
             $this->response($result, 400);
@@ -65,6 +70,10 @@ abstract class BaseEndpoint extends REST_Controller
     protected function base_put() {
         $json = $this->put('data');
         $entity = $this->json_to_entity($json);
+        if (array_key_exists('error', $entity)) {
+            $this->response($entity, 400);
+            return;
+        }
         $result = $this->getDAO()->update($entity);
         if (array_key_exists('error', $result)) {
             $this->response($result, 400);
@@ -80,7 +89,9 @@ abstract class BaseEndpoint extends REST_Controller
             $rel_prop[] = $rel['property_name'];
         $entity = $this->getDAO()->query(['id' => $id], [], $rel_prop)[0];
         if($entity == null)
-            $this->response(['error' => "$entity->get_table_name() inexistente"], 404);
+            $this->response(format_error('No encontrado',
+                    "No se ha podido localizar el $entity->get_table_name() solicitado")
+                , 404);
         $result = $this->getDAO()->delete($entity);
         if (is_array($result)) {
             $this->response($result, 400);
@@ -117,9 +128,11 @@ abstract class BaseEndpoint extends REST_Controller
         array_unshift($columns, $entity->get_primary_key_column_name());
 
         $data = [];
-        foreach ($columns as $column)
+        foreach ($columns as $column) {
+            if (!array_key_exists($column, $array))
+                return format_error('Campo faltante', 'No se ha proporcionado el campo ' . $column);
             $data[$column] = $array[$column];
-
+        }
         foreach($entity->get_relations_many_to_one() as $relation) {
             if(isset($array[$relation['property_name']]))
                 $data[$relation['property_name']] =

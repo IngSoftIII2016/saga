@@ -40,7 +40,8 @@ abstract class RelationEndpoint extends BaseEndpoint
         $json = json_decode(array_keys($delete)[0], true)['data'];
         $entity = $this->json_to_entity($json);
         if($entity == null)
-            $this->response(['error' => "$entity->get_table_name() inexistente"], 404);
+            $this->response(format_error('No encontrado',
+                "No se ha podido localizar el $entity->get_table_name() solicitado"), 404);
         $result = $this->getDAO()->delete($entity);
         if (is_array($result)) {
             $this->response($result, 500);

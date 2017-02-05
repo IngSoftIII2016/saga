@@ -13,13 +13,14 @@ if(!function_exists('array_check_key'))
 if(!function_exists('format_error'))
 {
 
-    function format_error($title, $detail) {
-        return [
+    function format_error($title, $detail, $data = null) {
+        $error = [
             'error' => [
                 'title' => $title,
                 'detail' => $detail
-            ]
-        ];
+            ]];
+        if($data) $error['data'] = $data;
+        return $error;
     }
 
 }
