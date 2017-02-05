@@ -93,10 +93,10 @@ INSERT INTO `accion` (`id`, `url`, `metodo`, `recurso`) VALUES
   (73, '/saga/api/usuarios', 'PUT', 'Usuarios'),
   (74, '/saga/api/usuarios', 'DELETE', 'Usuarios'),
   (75, '/saga/api/acciones', 'GET', 'Acciones'),
-  (76, 'saga/api/parametros', 'GET', 'Parametros'),
-  (77, 'saga/api/parametros', 'POST', 'Parametros'),
-  (78, 'saga/api/parametros', 'PUT', 'Parametros'),
-  (79, 'saga/api/parametros', 'DELETE', 'Parametros');
+  (76, '/saga/api/parametros', 'GET', 'Parametros'),
+  (77, '/saga/api/parametros', 'POST', 'Parametros'),
+  (78, '/saga/api/parametros', 'PUT', 'Parametros'),
+  (79, '/saga/api/parametros', 'DELETE', 'Parametros');
 
 -- ----------------------------------------------------------
 -- Permisos
