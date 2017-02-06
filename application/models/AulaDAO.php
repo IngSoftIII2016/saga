@@ -21,7 +21,7 @@ class AulaDAO extends BaseDAO {
      * @return array|bool
      */
     protected function is_invalid_insert($entity){
-        return FALSE;
+        return $this->is_invalid($entity);
     }
     protected function is_invalid_update($entity){
         return FALSE;
