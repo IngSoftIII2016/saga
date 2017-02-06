@@ -100,7 +100,13 @@ class AuthEndpoint extends BaseEndpoint
             $this->getDAO()->update($usuario[0]);
 
             //mando un correo
-            $this->saga->mandar_correo($pass, $json);
+            try {
+                $this->saga->mandar_correo($pass, $json);
+                $this->response(format_error('Exito al resetear contraseña', "El correo fue enviado a la cuenta de correo"), 200);
+
+            } catch (Exception $e) {
+                $this->response(format_error('Error al mandar el correo', $e->getMessage()), 500);
+            }
         }
     }
 
