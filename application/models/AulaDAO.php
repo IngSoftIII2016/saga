@@ -24,7 +24,7 @@ class AulaDAO extends BaseDAO {
         return $this->is_invalid($entity);
     }
     protected function is_invalid_update($entity){
-        return FALSE;
+        return $this->is_invalid($entity);
     }
     protected function is_invalid_delete($entity){
         return FALSE;
