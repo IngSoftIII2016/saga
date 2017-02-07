@@ -170,7 +170,6 @@ CREATE TABLE IF NOT EXISTS `aula` (
   PRIMARY KEY (`id`),
   INDEX `fk_Aula_Edificio1_idx` (`Edificio_id` ASC),
   UNIQUE INDEX `unique_edificio_nombre` (`Edificio_id` ASC, `nombre` ASC),
-  UNIQUE INDEX `unique_edificio_ubicacion` (`Edificio_id` ASC, `ubicacion` ASC),
   CONSTRAINT `fk_Aula_Edificio1`
     FOREIGN KEY (`Edificio_id`)
     REFERENCES `edificio` (`id`)
