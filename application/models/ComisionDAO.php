@@ -11,6 +11,17 @@ class ComisionDAO extends BaseDAO{
      * @param $entity
      * @return array|bool
      */
+
+    protected function is_invalid($entity)
+    {
+        $colisiones = $this->comision_valida($entity);
+        if (count($colisiones) > 0) {
+            return format_error('Comision Duplicada','Ya existe una Comision en ese Periodo para la Asignatura con ese Nombre',$colisiones);
+        }else
+            return FALSE;
+    }
+
+
     protected function is_invalid_insert($entity){
         return $this->is_invalid($entity);
     }
@@ -24,11 +35,18 @@ class ComisionDAO extends BaseDAO{
 
     function comision_valida($comision)
     {
+
+
         $filtros = [
-            'asignatura' => $comision->asignatura->id,
-            'perdiodo' => $comision->periodo->id,
-            'nombre' => $comision->nombre
+            'asignatura.id' => $comision->asignatura->id,
+            'periodo.id' => $comision->periodo->id
         ];
+        if($comision->nombre != '') {
+            $filtros = ['nombre' => $comision->nombre];
+        }
+
+        if(isset($comision->id))
+            $filtros['id !='] = $comision->id;
 
         return $this->query(
             $filtros,
@@ -37,13 +55,5 @@ class ComisionDAO extends BaseDAO{
         );
     }
 
-    protected function is_invalid($entity)
-    {
-        $colisiones = $this->comision_valida($entity);
-        if (count($colisiones) > 0) {
-            return format_error('Comision Duplicada','Ya existe una comision en este para esa Asignatura con ese Docente y Nombre',$colisiones);
-        }else
-            return FALSE;
-    }
 
 }

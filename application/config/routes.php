@@ -117,6 +117,7 @@ $route['api/tiporecursos'] = 'api/TiporecursoEndpoint/tiporecurso';
 
 $route['api/usuarios/(:num)'] = 'api/UsuarioEndpoint/usuarios/$1';
 $route['api/usuarios'] = 'api/UsuarioEndpoint/usuarios';
+$route['api/usuarios/change_pass'] = 'api/UsuarioEndpoint/change_pass';
 
 $route['api/asignaturacarrera/(:num)'] = 'api/AsignaturaCarreraEndpoint/asignaturacarrera/$1';
 $route['api/asignaturacarrera'] = 'api/AsignaturaCarreraEndpoint/asignaturacarrera';
