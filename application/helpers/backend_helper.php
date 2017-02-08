@@ -24,3 +24,10 @@ if(!function_exists('format_error'))
     }
 
 }
+
+if(!function_exists('validate_not_empty'))
+{
+    function validate_not_empty($string) {
+        return trim($string) == "" ? NULL : $string;
+    }
+}
