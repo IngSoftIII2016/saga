@@ -46,6 +46,10 @@ class UsuarioEndpoint extends BaseEndpoint
         $json['password'] = $this->saga->get_random_password();
         $json['estado'] = 1;
         $entity = $this->json_to_entity($json);
+        if (array_key_exists('error', $entity)) {
+            $this->response($entity, 400);
+            return;
+        }
         $result = $this->getDAO()->insert($entity);
         if (array_key_exists('error', $result)) {
             $this->response($result, 500);
