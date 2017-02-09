@@ -12,12 +12,12 @@ class AulaDAO extends BaseDAO {
     	$entity->nombre = validate_not_empty($entity->nombre);
     	if ($entity->nombre == NULL) {
     		return format_error('Campo Faltante', 'el campo nombre es obligatorio');
-    	}      
-    	if ($entity->ubicacion <= 0) {
-    		return format_error('Campo Faltante', 'el campo ubicación es obligatorio');
     	}
-    	if ($entity->capacidad <= 0) {
-    		return format_error('Campo Faltante', 'el campo capacidad es obligatorio');
+    	if($entity->capacidad < 1){
+    		return format_error('Campo Faltante', 'el campo capacidad debe ser mayor que cero');
+    	}
+    	if( $entity->ubicacion < 1){
+    		return format_error('Campo Faltante', 'el campo ubicacion debe ser mayor que cero');
     	}
 		return FALSE;
     }
