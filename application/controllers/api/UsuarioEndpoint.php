@@ -51,10 +51,10 @@ class UsuarioEndpoint extends BaseEndpoint
             return;
         }
         $result = $this->getDAO()->insert($entity);
-        $this->saga->mandar_correo($json['password'], $json);
         if (array_key_exists('error', $result)) {
             $this->response($result, 500);
         }else {
+            $this->saga->mandar_correo($json['password'], $json);
             $this->response(['data' => $result]);
         }
     }
