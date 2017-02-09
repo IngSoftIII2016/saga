@@ -46,10 +46,10 @@ class Saga
         //cargamos la configuración para enviar con gmail
         $CI->email->initialize($configGmail);
 
-        $CI->email->from('Administracion y Gestion de Aulas UNRN');
+        $CI->email->from('UNRN - Administracion y Gestion de Aulas');
         $CI->email->to($json['email']);
-        $CI->email->subject('Contraseña Nueva');
-        $CI->email->message('<h2>Este mensaje segenerado automaticamente</h2><hr><br> Contraseña: ' . $pass);
+        $CI->email->subject('Nueva contraseña de acceso');
+        $CI->email->message('<h1>Sistema de Administracion y Gestion de Aulas UNRN</h1><h2>Su contraseña de acceso es: </h2><p><b>' . $pass . '</b></p>');
         $CI->email->send();
     }
 
