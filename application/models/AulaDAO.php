@@ -7,13 +7,19 @@ class AulaDAO extends BaseDAO {
         parent::__construct('Aula');
     }
 
-    protected function is_invalid($entity)
+ protected function is_invalid($entity)
     {
-
-        if ((strlen($entity->nombre)) <= 0) {
-            return format_error('Faltan Campos Requeridos','faltan campos requeridos', 500);
-        }else
-            return FALSE;
+    	$entity->nombre = validate_not_empty($entity->nombre);
+    	if ($entity->nombre == NULL) {
+    		return format_error('Campo Faltante', 'el campo nombre es obligatorio');
+    	}      
+    	if ($entity->ubicacion <= 0) {
+    		return format_error('Campo Faltante', 'el campo ubicación es obligatorio');
+    	}
+    	if ($entity->capacidad <= 0) {
+    		return format_error('Campo Faltante', 'el campo capacidad es obligatorio');
+    	}
+		return FALSE;
     }
 
     /**

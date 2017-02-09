@@ -10,11 +10,19 @@ class ParametrosDAO extends BaseDAO
 
     protected function is_invalid($entity)
     {
-
-        if ((strlen($entity->valor)) <= 0) {
-            return format_error('Faltan Campos Requeridos','faltan campos requeridos', 500);
-        }else
-            return FALSE;
+    	$entity->clave = validate_not_empty($entity->clave);
+    	if ($entity->clave == NULL) {
+    		return format_error('Campo Faltante', 'el campo clave es obligatorio');
+    	}
+    	$entity->valor = validate_not_empty($entity->valor);
+    	if ($entity->valor == NULL) {
+    		return format_error('Campo Faltante', 'el campo valor es obligatorio');
+    	}
+    	$entity->descripcion = validate_not_empty($entity->descripcion);
+    	if ($entity->descripcion == NULL) {
+    		return format_error('Campo Faltante', 'el campo descripción es obligatorio');
+    	}   
+		return FALSE;
     }
 
     /**
@@ -23,7 +31,7 @@ class ParametrosDAO extends BaseDAO
      * @return array|bool
      */
     protected function is_invalid_insert($entity){
-        return FALSE;
+        return $this->is_invalid($entity);
     }
     protected function is_invalid_update($entity){
         return $this->is_invalid($entity);

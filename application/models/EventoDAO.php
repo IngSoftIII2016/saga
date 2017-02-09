@@ -19,11 +19,15 @@ class EventoDAO extends BaseDAO
 
     protected function is_invalid($entity)
     {
+    	$entity->motivo = validate_not_empty($entity->motivo);
+    	if ($entity->motivo == NULL) {
+    		return format_error('Campo Faltante', 'el campo motivo es obligatorio');
+    	}
         $colisiones = $this->evento_disponible($entity);
         if (count($colisiones) > 0) {
             return format_error('Aula Ocupada','El aula seleccionada está ocupada por Clases y/o Eventos en el rango de horarios ingresado',$colisiones);
-        }else
-            return FALSE;
+        }
+        return FALSE;
     }
 
     function evento_disponible($evento)

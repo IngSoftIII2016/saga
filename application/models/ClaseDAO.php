@@ -16,10 +16,10 @@ class ClaseDAO extends BaseDAO
     {
         parent::__construct('Clase');
     }
-
-    protected function is_invalid_insert($entity)
+    
+    protected function is_invalid($entity)
     {
-        // TODO: Implement is_invalid() method.
+    	 // TODO: Implement is_invalid() method.
         $col_clases = $this->clase_disponible($entity);
         $this->load->model('EventoDAO');
         $col_eventos = $this->EventoDAO->evento_disponible($entity);
@@ -31,20 +31,14 @@ class ClaseDAO extends BaseDAO
             return FALSE;
     }
 
+    protected function is_invalid_insert($entity)
+    {
+    	return $this->is_invalid($entity);
+    }
+
     protected function is_invalid_update($entity)
     {
-        // TODO: Implement is_invalid() method.
-        $col_clases = $this->clase_disponible($entity);
-        $this->load->model('EventoDAO');
-        $col_eventos = $this->EventoDAO->evento_disponible($entity);
-        $colisiones = array_merge($col_clases, $col_eventos);
-
-
-        if (count($colisiones) > 0) {
-            return format_error('Aula Ocupada','El aula seleccionada está ocupada por Clases y/o Eventos en el rango de horarios ingresado',$colisiones);
-
-        } else
-            return FALSE;
+    	return $this->is_invalid($entity);
     }
 
     protected function is_invalid_delete($entity)
