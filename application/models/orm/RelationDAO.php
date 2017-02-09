@@ -44,12 +44,16 @@ abstract class RelationDAO extends BaseDAO
         }
 
         if (!$this->db->insert($entity->get_table_name(), $entity->to_row())) {
+            $codigo = $this->db->error()['code'];
             $this->db->trans_rollback();
-            //foreing key
-            if ($this->db->_error_number() == 1451) return ['error' => self::generar_error('Error al insetar','No se pudo agregar el elemento')];
-            if ($this->db->_error_number() == 1169) return ['error' => self::generar_error('Error al insetar','No se pudo agregar el elemento')];
 
-            return ['error' => self::generar_error('Error al agregar '+$entity->get_table_name(),'No se pudo agregar el elemento')];
+            //duplicate entry
+            if ($codigo == 1062) return format_error('Duplicado', 'el elemento ya existe');
+            //foreing key
+            if ($codigo == 1451) return format_error('Error al insetar','No se pudo agregar el elemento');
+            if ($codigo == 1169) return format_error('Error al insetar','No se pudo agregar el elemento');
+
+            return format_error("Error $codigo al agregar $entity->get_table_name()", 'No se pudo agregar el elemento');
         }
 
         $this->after_insert($entity);
@@ -79,8 +83,11 @@ abstract class RelationDAO extends BaseDAO
             $this->db->where($relation['foreign_key_column_name'], $entity->{$relation['property_name']}->get_id());
         }
         if(!$this->db->update($entity->get_table_name(), $entity->to_row())) {
+            $codigo = $this->db->error()['code'];
             $this->db->trans_rollback();
-            return ['error' => self::generar_error('Error al modificar  '+$entity->get_table_name(), 'No se pudo modificar el elemento' )];
+
+            if ($codigo == 1062) return format_error('Duplicado', 'el elemento ya existe');
+            return format_error("Error $codigo al modificar  $entity->get_table_name()", 'No se pudo modificar el elemento' );
         }
 
         $this->after_update($entity);
@@ -109,8 +116,9 @@ abstract class RelationDAO extends BaseDAO
             $this->db->where($relation['foreign_key_column_name'], $entity->{$relation['property_name']}->get_id());
         }
         if(!$this->db->delete($entity->get_table_name())) {
+            $codigo = $this->db->error()['code'];
             $this->db->trans_rollback();
-            if ($this->db->_error_number() == 1451)
+            if ($codigo == 1451)
                 return['error' => self::generar_error('Error al eliminar  '+$entity->get_table_name(),'No se pudo eliminar ya que '+$entity->get_table_name()+' tiene elementos asociados')];
             return ['error' => self::generar_error('Error al eliminar  '+$entity->get_table_name(), 'No se pudo eliminar el elemento' )];
         }

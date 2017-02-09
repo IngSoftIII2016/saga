@@ -13,10 +13,10 @@ class AsignaturaCarreraDAO extends RelationDAO {
      */
  protected function is_invalid($entity)
     {
-    	$entity->anio = validate_not_empty($entity->anio);
     	if ($entity->anio == NULL) {
-    		return format_error('Campo Faltante', 'el campo a�o es obligatorio');
-    	}  
+    		return format_error('Año Faltante', 'el campo año es obligatorio');
+    	}else if($entity->anio < 1 || $entity->anio > 6)
+            return format_error('Año Invalido', 'el campo año debe estar entre 1 y 6');
 		return FALSE;
     }
     protected function is_invalid_insert($entity){
