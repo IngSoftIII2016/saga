@@ -23,7 +23,11 @@ class EventoDAO extends BaseDAO
     	if ($entity->motivo == NULL) {
     		return format_error('Campo Faltante', 'el campo motivo es obligatorio');
     	}
-        $colisiones = $this->evento_disponible($entity);
+        $this->load->model('ClaseDAO');
+        $colisiones_eventos = $this->evento_disponible($entity);
+    	$colisiones_clases = $this->ClaseDAO->clase_disponible($entity);
+
+        $colisiones = array_merge($colisiones_eventos, $colisiones_clases);
         if (count($colisiones) > 0) {
             return format_error('Aula Ocupada','El aula seleccionada está ocupada por Clases y/o Eventos en el rango de horarios ingresado',$colisiones);
         }
@@ -41,11 +45,7 @@ class EventoDAO extends BaseDAO
         if(isset($evento->id))
             $filtros['id !='] = $evento->id;
 
-        return $this->query(
-            $filtros,
-            [],
-            ['']
-        );
+        return $this->query($filtros);
     }
 
 

@@ -50,10 +50,11 @@ class UsuarioEndpoint extends BaseEndpoint
             $this->response($entity, 400);
             return;
         }
+        $entity->password = $this->encriptar($entity->password);
         $result = $this->getDAO()->insert($entity);
         if (array_key_exists('error', $result)) {
             $this->response($result, 500);
-        }else {
+        } else {
             $this->saga->mandar_correo($json['password'], $json);
             $this->response(['data' => $result]);
         }
@@ -69,7 +70,19 @@ class UsuarioEndpoint extends BaseEndpoint
         $this->base_delete($id);
     }
 
-    public function reset_pass() {
+    public function reset_pass()
+    {
+
+    }
+
+    private function encriptar($contraseña)
+    {
+        return password_hash($contraseña, PASSWORD_DEFAULT);
+    }
+
+    private function comprobar_hash($contraseña, $pass)
+    {
+        return password_verify($contraseña, $pass);
 
     }
 }
