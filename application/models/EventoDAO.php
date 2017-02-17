@@ -23,6 +23,8 @@ class EventoDAO extends BaseDAO
     	if ($entity->motivo == NULL) {
     		return format_error('Campo Faltante', 'el campo motivo es obligatorio');
     	}
+    	//if($entity->fecha)
+
         $this->load->model('ClaseDAO');
         $colisiones_eventos = $this->evento_disponible($entity);
     	$colisiones_clases = $this->ClaseDAO->clase_disponible($entity);

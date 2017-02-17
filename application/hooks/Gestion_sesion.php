@@ -19,12 +19,12 @@ class Gestion_sesion
             'url' => '/saga/api/AuthEndpoint/reset_pass',
             'metodo' => 'POST',
             'recurso' => 'Login'
-        ],
+        ] /*,
         [
             'url' => '/saga/api/AuthEndpoint/change_pass',
             'metodo' => 'POST',
             'recurso' => 'Perfil'
-        ]
+        ] */
     ];
 
 
@@ -60,7 +60,7 @@ class Gestion_sesion
                         'Las creedenciales de acceso al sistema proporcionadas son invalidas'), 401);
                 $acciones_permitidas = $tokenDesencriptado->data->rol->acciones;
                 foreach ($acciones_permitidas as $accion)
-                    if(substr(strtolower($url), 0, strlen($accion->url)) === $accion->url &&
+                    if(substr(strtolower($url), 0, strlen($accion->url)) === strtolower($accion->url) &&
                         $metodo === $accion->metodo)
                         return;
                 $this->ci->response(
